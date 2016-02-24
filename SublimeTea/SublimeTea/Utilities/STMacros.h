@@ -1,0 +1,43 @@
+//
+//  STMacros.h
+//  SublimeTea
+//
+//  Created by Arpit Mishra on 24/02/16.
+//  Copyright © 2016 Arpit Mishra. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#define UIColorFromHex(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+#define UIColorFromRGB(rValue,gValue,bValue,alphaValue) [UIColor colorWithRed:((float)rValue)/255.0 green:((float)gValue)/255.0 blue:((float)bValue)/255.0 alpha:((float)alphaValue)]
+
+#define NO_INTERNET_MSG @"Please make sure you have an active Internet connection and try again."
+#define MDSDEBUG /*Uncomment this line to enable all debug logs*/
+
+#ifdef MDSDEBUG
+#   define DB_LOG
+#   define DB_FLOW_LOG
+#endif
+
+//#undef DB_LOG /*uncomment to disable only custom nslogs*/
+
+#ifdef DB_LOG
+#   define dbLine() NSLog(@"-------------------------------------------------------------");
+#   define dbLog NSLog
+#else
+#   define dbLine()
+#   define dbLog(x,...)
+#endif
+
+//#undef DB_FLOW_LOG /*uncomment to disable only flow logs*/
+
+#ifdef DB_FLOW_LOG
+#   define dbMETHOD_ENTER() NSLog(@"%s: Enter",__FUNCTION__)
+#   define dbMETHOD_EXIT()  NSLog(@"%s: Exit",__FUNCTION__)
+#else
+#   define dbMETHOD_ENTER()
+#   define dbMETHOD_EXIT()
+#endif
+
+#define MDSAppDelegate        ((AppDelegate*)[[UIApplication sharedApplication] delegate])
+
