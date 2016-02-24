@@ -1,15 +1,13 @@
 //
-//  ViewController.h
+//  STLoginViewController.h
 //  SublimeTea
 //
 //  Created by Arpit Mishra on 24/02/16.
 //  Copyright © 2016 Arpit Mishra. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "STViewController.h"
 
-@interface ViewController : UIViewController
-
+@interface STLoginViewController : STViewController
 
 @end
-

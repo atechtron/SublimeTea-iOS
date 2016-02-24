@@ -6,9 +6,9 @@
 //  Copyright © 2016 Arpit Mishra. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "STAppDelegate.h"
 
-@interface AppDelegate ()
+@interface STAppDelegate ()
 
 @end
 

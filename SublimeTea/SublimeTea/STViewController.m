@@ -6,13 +6,13 @@
 //  Copyright © 2016 Arpit Mishra. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "STViewController.h"
 
-@interface ViewController ()
+@interface STViewController ()
 
 @end
 
-@implementation ViewController
+@implementation STViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
