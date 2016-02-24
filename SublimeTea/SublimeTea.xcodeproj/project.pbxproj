@@ -1,0 +1,521 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2BA72EE71C7DC8F0006105B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EE61C7DC8F0006105B6 /* main.m */; };
+		2BA72EEA1C7DC8F0006105B6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EE91C7DC8F0006105B6 /* AppDelegate.m */; };
+		2BA72EED1C7DC8F0006105B6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EEC1C7DC8F0006105B6 /* ViewController.m */; };
+		2BA72EF01C7DC8F0006105B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BA72EEE1C7DC8F0006105B6 /* Main.storyboard */; };
+		2BA72EF21C7DC8F0006105B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BA72EF11C7DC8F0006105B6 /* Assets.xcassets */; };
+		2BA72EF51C7DC8F0006105B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BA72EF31C7DC8F0006105B6 /* LaunchScreen.storyboard */; };
+		2BA72F001C7DC8F0006105B6 /* SublimeTeaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EFF1C7DC8F0006105B6 /* SublimeTeaTests.m */; };
+		2BA72F0B1C7DC8F0006105B6 /* SublimeTeaUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72F0A1C7DC8F0006105B6 /* SublimeTeaUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2BA72EFC1C7DC8F0006105B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BA72EDA1C7DC8F0006105B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BA72EE11C7DC8F0006105B6;
+			remoteInfo = SublimeTea;
+		};
+		2BA72F071C7DC8F0006105B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BA72EDA1C7DC8F0006105B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BA72EE11C7DC8F0006105B6;
+			remoteInfo = SublimeTea;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2BA72EE21C7DC8F0006105B6 /* SublimeTea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SublimeTea.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BA72EE61C7DC8F0006105B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2BA72EE81C7DC8F0006105B6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2BA72EE91C7DC8F0006105B6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2BA72EEB1C7DC8F0006105B6 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		2BA72EEC1C7DC8F0006105B6 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		2BA72EEF1C7DC8F0006105B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2BA72EF11C7DC8F0006105B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2BA72EF41C7DC8F0006105B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2BA72EF61C7DC8F0006105B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BA72EFB1C7DC8F0006105B6 /* SublimeTeaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SublimeTeaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BA72EFF1C7DC8F0006105B6 /* SublimeTeaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SublimeTeaTests.m; sourceTree = "<group>"; };
+		2BA72F011C7DC8F0006105B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BA72F061C7DC8F0006105B6 /* SublimeTeaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SublimeTeaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BA72F0A1C7DC8F0006105B6 /* SublimeTeaUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SublimeTeaUITests.m; sourceTree = "<group>"; };
+		2BA72F0C1C7DC8F0006105B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2BA72EDF1C7DC8F0006105B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BA72EF81C7DC8F0006105B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BA72F031C7DC8F0006105B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2BA72ED91C7DC8F0006105B6 = {
+			isa = PBXGroup;
+			children = (
+				2BA72EE41C7DC8F0006105B6 /* SublimeTea */,
+				2BA72EFE1C7DC8F0006105B6 /* SublimeTeaTests */,
+				2BA72F091C7DC8F0006105B6 /* SublimeTeaUITests */,
+				2BA72EE31C7DC8F0006105B6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2BA72EE31C7DC8F0006105B6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2BA72EE21C7DC8F0006105B6 /* SublimeTea.app */,
+				2BA72EFB1C7DC8F0006105B6 /* SublimeTeaTests.xctest */,
+				2BA72F061C7DC8F0006105B6 /* SublimeTeaUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2BA72EE41C7DC8F0006105B6 /* SublimeTea */ = {
+			isa = PBXGroup;
+			children = (
+				2BA72EE81C7DC8F0006105B6 /* AppDelegate.h */,
+				2BA72EE91C7DC8F0006105B6 /* AppDelegate.m */,
+				2BA72EEB1C7DC8F0006105B6 /* ViewController.h */,
+				2BA72EEC1C7DC8F0006105B6 /* ViewController.m */,
+				2BA72EEE1C7DC8F0006105B6 /* Main.storyboard */,
+				2BA72EF11C7DC8F0006105B6 /* Assets.xcassets */,
+				2BA72EF31C7DC8F0006105B6 /* LaunchScreen.storyboard */,
+				2BA72EF61C7DC8F0006105B6 /* Info.plist */,
+				2BA72EE51C7DC8F0006105B6 /* Supporting Files */,
+			);
+			path = SublimeTea;
+			sourceTree = "<group>";
+		};
+		2BA72EE51C7DC8F0006105B6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2BA72EE61C7DC8F0006105B6 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2BA72EFE1C7DC8F0006105B6 /* SublimeTeaTests */ = {
+			isa = PBXGroup;
+			children = (
+				2BA72EFF1C7DC8F0006105B6 /* SublimeTeaTests.m */,
+				2BA72F011C7DC8F0006105B6 /* Info.plist */,
+			);
+			path = SublimeTeaTests;
+			sourceTree = "<group>";
+		};
+		2BA72F091C7DC8F0006105B6 /* SublimeTeaUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2BA72F0A1C7DC8F0006105B6 /* SublimeTeaUITests.m */,
+				2BA72F0C1C7DC8F0006105B6 /* Info.plist */,
+			);
+			path = SublimeTeaUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2BA72EE11C7DC8F0006105B6 /* SublimeTea */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BA72F0F1C7DC8F0006105B6 /* Build configuration list for PBXNativeTarget "SublimeTea" */;
+			buildPhases = (
+				2BA72EDE1C7DC8F0006105B6 /* Sources */,
+				2BA72EDF1C7DC8F0006105B6 /* Frameworks */,
+				2BA72EE01C7DC8F0006105B6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SublimeTea;
+			productName = SublimeTea;
+			productReference = 2BA72EE21C7DC8F0006105B6 /* SublimeTea.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2BA72EFA1C7DC8F0006105B6 /* SublimeTeaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BA72F121C7DC8F0006105B6 /* Build configuration list for PBXNativeTarget "SublimeTeaTests" */;
+			buildPhases = (
+				2BA72EF71C7DC8F0006105B6 /* Sources */,
+				2BA72EF81C7DC8F0006105B6 /* Frameworks */,
+				2BA72EF91C7DC8F0006105B6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BA72EFD1C7DC8F0006105B6 /* PBXTargetDependency */,
+			);
+			name = SublimeTeaTests;
+			productName = SublimeTeaTests;
+			productReference = 2BA72EFB1C7DC8F0006105B6 /* SublimeTeaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2BA72F051C7DC8F0006105B6 /* SublimeTeaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BA72F151C7DC8F0006105B6 /* Build configuration list for PBXNativeTarget "SublimeTeaUITests" */;
+			buildPhases = (
+				2BA72F021C7DC8F0006105B6 /* Sources */,
+				2BA72F031C7DC8F0006105B6 /* Frameworks */,
+				2BA72F041C7DC8F0006105B6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BA72F081C7DC8F0006105B6 /* PBXTargetDependency */,
+			);
+			name = SublimeTeaUITests;
+			productName = SublimeTeaUITests;
+			productReference = 2BA72F061C7DC8F0006105B6 /* SublimeTeaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2BA72EDA1C7DC8F0006105B6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Arpit Mishra";
+				TargetAttributes = {
+					2BA72EE11C7DC8F0006105B6 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					2BA72EFA1C7DC8F0006105B6 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 2BA72EE11C7DC8F0006105B6;
+					};
+					2BA72F051C7DC8F0006105B6 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 2BA72EE11C7DC8F0006105B6;
+					};
+				};
+			};
+			buildConfigurationList = 2BA72EDD1C7DC8F0006105B6 /* Build configuration list for PBXProject "SublimeTea" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2BA72ED91C7DC8F0006105B6;
+			productRefGroup = 2BA72EE31C7DC8F0006105B6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2BA72EE11C7DC8F0006105B6 /* SublimeTea */,
+				2BA72EFA1C7DC8F0006105B6 /* SublimeTeaTests */,
+				2BA72F051C7DC8F0006105B6 /* SublimeTeaUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2BA72EE01C7DC8F0006105B6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BA72EF51C7DC8F0006105B6 /* LaunchScreen.storyboard in Resources */,
+				2BA72EF21C7DC8F0006105B6 /* Assets.xcassets in Resources */,
+				2BA72EF01C7DC8F0006105B6 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BA72EF91C7DC8F0006105B6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BA72F041C7DC8F0006105B6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2BA72EDE1C7DC8F0006105B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BA72EED1C7DC8F0006105B6 /* ViewController.m in Sources */,
+				2BA72EEA1C7DC8F0006105B6 /* AppDelegate.m in Sources */,
+				2BA72EE71C7DC8F0006105B6 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BA72EF71C7DC8F0006105B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BA72F001C7DC8F0006105B6 /* SublimeTeaTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BA72F021C7DC8F0006105B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BA72F0B1C7DC8F0006105B6 /* SublimeTeaUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2BA72EFD1C7DC8F0006105B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2BA72EE11C7DC8F0006105B6 /* SublimeTea */;
+			targetProxy = 2BA72EFC1C7DC8F0006105B6 /* PBXContainerItemProxy */;
+		};
+		2BA72F081C7DC8F0006105B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2BA72EE11C7DC8F0006105B6 /* SublimeTea */;
+			targetProxy = 2BA72F071C7DC8F0006105B6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2BA72EEE1C7DC8F0006105B6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2BA72EEF1C7DC8F0006105B6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		2BA72EF31C7DC8F0006105B6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2BA72EF41C7DC8F0006105B6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2BA72F0D1C7DC8F0006105B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2BA72F0E1C7DC8F0006105B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2BA72F101C7DC8F0006105B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SublimeTea/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Atechtron.SublimeTea;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2BA72F111C7DC8F0006105B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SublimeTea/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Atechtron.SublimeTea;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		2BA72F131C7DC8F0006105B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SublimeTeaTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Atechtron.SublimeTeaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SublimeTea.app/SublimeTea";
+			};
+			name = Debug;
+		};
+		2BA72F141C7DC8F0006105B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SublimeTeaTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Atechtron.SublimeTeaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SublimeTea.app/SublimeTea";
+			};
+			name = Release;
+		};
+		2BA72F161C7DC8F0006105B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SublimeTeaUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Atechtron.SublimeTeaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SublimeTea;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		2BA72F171C7DC8F0006105B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SublimeTeaUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Atechtron.SublimeTeaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SublimeTea;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2BA72EDD1C7DC8F0006105B6 /* Build configuration list for PBXProject "SublimeTea" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BA72F0D1C7DC8F0006105B6 /* Debug */,
+				2BA72F0E1C7DC8F0006105B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BA72F0F1C7DC8F0006105B6 /* Build configuration list for PBXNativeTarget "SublimeTea" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BA72F101C7DC8F0006105B6 /* Debug */,
+				2BA72F111C7DC8F0006105B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		2BA72F121C7DC8F0006105B6 /* Build configuration list for PBXNativeTarget "SublimeTeaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BA72F131C7DC8F0006105B6 /* Debug */,
+				2BA72F141C7DC8F0006105B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		2BA72F151C7DC8F0006105B6 /* Build configuration list for PBXNativeTarget "SublimeTeaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BA72F161C7DC8F0006105B6 /* Debug */,
+				2BA72F171C7DC8F0006105B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2BA72EDA1C7DC8F0006105B6 /* Project object */;
+}
