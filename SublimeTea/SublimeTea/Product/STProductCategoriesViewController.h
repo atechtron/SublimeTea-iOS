@@ -9,5 +9,6 @@
 #import "STViewController.h"
 
 @interface STProductCategoriesViewController : STViewController
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
