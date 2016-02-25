@@ -13,7 +13,7 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gvi-Rc-e14">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="115"/>
-                    <color key="backgroundColor" red="0.53542852760000004" green="0.3534244091" blue="0.17693179240000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.53725490196078429" green="0.3529411764705882" blue="0.1764705882352941" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lO4-u4-fvf">
                     <rect key="frame" x="0.0" y="115" width="600" height="4"/>

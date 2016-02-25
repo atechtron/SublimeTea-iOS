@@ -9,5 +9,6 @@
 #import "STViewController.h"
 
 @interface STProductDetailViewController : STViewController
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

@@ -21,6 +21,13 @@
 		2B456FA31C7F5C4400C240A5 /* STMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456FA01C7F5C4400C240A5 /* STMenuTableViewCell.m */; };
 		2B456FA61C7F602100C240A5 /* STMenuUserInfoTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456FA51C7F602100C240A5 /* STMenuUserInfoTableHeaderView.m */; };
 		2B456FA81C7F603800C240A5 /* STMenuUserInfoTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B456FA71C7F603800C240A5 /* STMenuUserInfoTableHeaderView.xib */; };
+		2B456FAB1C7F77C600C240A5 /* STUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456FAA1C7F77C600C240A5 /* STUtility.m */; };
+		2B456FB01C7F80B100C240A5 /* STProductInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456FAE1C7F80B100C240A5 /* STProductInfoTableViewCell.m */; };
+		2B456FB11C7F80B100C240A5 /* STProductInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B456FAF1C7F80B100C240A5 /* STProductInfoTableViewCell.xib */; };
+		2B456FB51C7F80E600C240A5 /* STProductInfo2TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456FB31C7F80E600C240A5 /* STProductInfo2TableViewCell.m */; };
+		2B456FB61C7F80E600C240A5 /* STProductInfo2TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B456FB41C7F80E600C240A5 /* STProductInfo2TableViewCell.xib */; };
+		2B456FBB1C7F810F00C240A5 /* STProductDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456FB91C7F810F00C240A5 /* STProductDescriptionTableViewCell.m */; };
+		2B456FBC1C7F810F00C240A5 /* STProductDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B456FBA1C7F810F00C240A5 /* STProductDescriptionTableViewCell.xib */; };
 		2BA72EE71C7DC8F0006105B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EE61C7DC8F0006105B6 /* main.m */; };
 		2BA72EEA1C7DC8F0006105B6 /* STAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EE91C7DC8F0006105B6 /* STAppDelegate.m */; };
 		2BA72EED1C7DC8F0006105B6 /* STViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EEC1C7DC8F0006105B6 /* STViewController.m */; };
@@ -97,6 +104,17 @@
 		2B456FA41C7F602100C240A5 /* STMenuUserInfoTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STMenuUserInfoTableHeaderView.h; path = Menu/STMenuUserInfoTableHeaderView.h; sourceTree = "<group>"; };
 		2B456FA51C7F602100C240A5 /* STMenuUserInfoTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STMenuUserInfoTableHeaderView.m; path = Menu/STMenuUserInfoTableHeaderView.m; sourceTree = "<group>"; };
 		2B456FA71C7F603800C240A5 /* STMenuUserInfoTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = STMenuUserInfoTableHeaderView.xib; path = Menu/STMenuUserInfoTableHeaderView.xib; sourceTree = "<group>"; };
+		2B456FA91C7F77C600C240A5 /* STUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STUtility.h; sourceTree = "<group>"; };
+		2B456FAA1C7F77C600C240A5 /* STUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STUtility.m; sourceTree = "<group>"; };
+		2B456FAD1C7F80B100C240A5 /* STProductInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STProductInfoTableViewCell.h; path = Product/STProductInfoTableViewCell.h; sourceTree = "<group>"; };
+		2B456FAE1C7F80B100C240A5 /* STProductInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STProductInfoTableViewCell.m; path = Product/STProductInfoTableViewCell.m; sourceTree = "<group>"; };
+		2B456FAF1C7F80B100C240A5 /* STProductInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = STProductInfoTableViewCell.xib; path = Product/STProductInfoTableViewCell.xib; sourceTree = "<group>"; };
+		2B456FB21C7F80E600C240A5 /* STProductInfo2TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STProductInfo2TableViewCell.h; sourceTree = "<group>"; };
+		2B456FB31C7F80E600C240A5 /* STProductInfo2TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STProductInfo2TableViewCell.m; sourceTree = "<group>"; };
+		2B456FB41C7F80E600C240A5 /* STProductInfo2TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STProductInfo2TableViewCell.xib; sourceTree = "<group>"; };
+		2B456FB81C7F810F00C240A5 /* STProductDescriptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STProductDescriptionTableViewCell.h; path = Product/STProductDescriptionTableViewCell.h; sourceTree = "<group>"; };
+		2B456FB91C7F810F00C240A5 /* STProductDescriptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STProductDescriptionTableViewCell.m; path = Product/STProductDescriptionTableViewCell.m; sourceTree = "<group>"; };
+		2B456FBA1C7F810F00C240A5 /* STProductDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = STProductDescriptionTableViewCell.xib; path = Product/STProductDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		2BA72EE21C7DC8F0006105B6 /* SublimeTea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SublimeTea.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA72EE61C7DC8F0006105B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2BA72EE81C7DC8F0006105B6 /* STAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STAppDelegate.h; sourceTree = "<group>"; };
@@ -220,6 +238,16 @@
 			path = REFrostedViewController;
 			sourceTree = "<group>";
 		};
+		2B456FAC1C7F807700C240A5 /* productDetail */ = {
+			isa = PBXGroup;
+			children = (
+				2B456FAF1C7F80B100C240A5 /* STProductInfoTableViewCell.xib */,
+				2B456FB41C7F80E600C240A5 /* STProductInfo2TableViewCell.xib */,
+				2B456FBA1C7F810F00C240A5 /* STProductDescriptionTableViewCell.xib */,
+			);
+			name = productDetail;
+			sourceTree = "<group>";
+		};
 		2BA72ED91C7DC8F0006105B6 = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +321,8 @@
 				2BFA1B851C7E0121008C4833 /* STConstants.h */,
 				2BFA1B861C7E0121008C4833 /* STConstants.m */,
 				2BFA1BBE1C7E0C1B008C4833 /* STMacros.h */,
+				2B456FA91C7F77C600C240A5 /* STUtility.h */,
+				2B456FAA1C7F77C600C240A5 /* STUtility.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -329,6 +359,7 @@
 		2BFA1B6F1C7DFDCE008C4833 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2B456FAC1C7F807700C240A5 /* productDetail */,
 				2BA72EEE1C7DC8F0006105B6 /* Main.storyboard */,
 				2BA72EF31C7DC8F0006105B6 /* LaunchScreen.storyboard */,
 			);
@@ -387,6 +418,12 @@
 		2BFA1B991C7E0531008C4833 /* Product */ = {
 			isa = PBXGroup;
 			children = (
+				2B456FB81C7F810F00C240A5 /* STProductDescriptionTableViewCell.h */,
+				2B456FB91C7F810F00C240A5 /* STProductDescriptionTableViewCell.m */,
+				2B456FB21C7F80E600C240A5 /* STProductInfo2TableViewCell.h */,
+				2B456FB31C7F80E600C240A5 /* STProductInfo2TableViewCell.m */,
+				2B456FAD1C7F80B100C240A5 /* STProductInfoTableViewCell.h */,
+				2B456FAE1C7F80B100C240A5 /* STProductInfoTableViewCell.m */,
 				2BFA1BD51C7E39FD008C4833 /* ProductList */,
 				2BFA1BCC1C7E3058008C4833 /* Category */,
 				2BFA1BA01C7E058B008C4833 /* STProductDetailViewController.h */,
@@ -559,7 +596,10 @@
 				2BFA1BCB1C7E262D008C4833 /* _night_bg.jpg in Resources */,
 				2BA72EF21C7DC8F0006105B6 /* Assets.xcassets in Resources */,
 				2B456FA11C7F5C4400C240A5 /* STMenuTableHeaderView.xib in Resources */,
+				2B456FB11C7F80B100C240A5 /* STProductInfoTableViewCell.xib in Resources */,
 				2BA72EF01C7DC8F0006105B6 /* Main.storyboard in Resources */,
+				2B456FB61C7F80E600C240A5 /* STProductInfo2TableViewCell.xib in Resources */,
+				2B456FBC1C7F810F00C240A5 /* STProductDescriptionTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,6 +624,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B456FBB1C7F810F00C240A5 /* STProductDescriptionTableViewCell.m in Sources */,
 				2BFA1BB41C7E0966008C4833 /* STSignUpViewController.m in Sources */,
 				2BFA1B9F1C7E0574008C4833 /* STProductViewController.m in Sources */,
 				2BFA1BA21C7E058B008C4833 /* STProductDetailViewController.m in Sources */,
@@ -596,6 +637,7 @@
 				2B456FA31C7F5C4400C240A5 /* STMenuTableViewCell.m in Sources */,
 				2B456F8D1C7F550D00C240A5 /* RECommonFunctions.m in Sources */,
 				2BFA1BB71C7E09AA008C4833 /* STProductCategoriesViewController.m in Sources */,
+				2B456FB01C7F80B100C240A5 /* STProductInfoTableViewCell.m in Sources */,
 				2BA72EEA1C7DC8F0006105B6 /* STAppDelegate.m in Sources */,
 				2BFA1B981C7E0451008C4833 /* STDashboardViewController.m in Sources */,
 				2B456F911C7F550D00C240A5 /* UIView+REFrostedViewController.m in Sources */,
@@ -605,6 +647,7 @@
 				2B456FA21C7F5C4400C240A5 /* STMenuTableHeaderView.m in Sources */,
 				2BA72EE71C7DC8F0006105B6 /* main.m in Sources */,
 				2BFA1BD81C7E3A28008C4833 /* STProductListCollectionViewCell.m in Sources */,
+				2B456FAB1C7F77C600C240A5 /* STUtility.m in Sources */,
 				2BFA1B7B1C7DFF52008C4833 /* STGlobalCacheManager.m in Sources */,
 				2BFA1BBD1C7E0A21008C4833 /* STCartViewController.m in Sources */,
 				2BFA1BC81C7E0DCA008C4833 /* STHttpRequest.m in Sources */,
@@ -615,6 +658,7 @@
 				2B456F8E1C7F550D00C240A5 /* REFrostedContainerViewController.m in Sources */,
 				2BFA1BAA1C7E07F3008C4833 /* STUserProfileViewController.m in Sources */,
 				2B456F981C7F570E00C240A5 /* STMenuTableViewController.m in Sources */,
+				2B456FB51C7F80E600C240A5 /* STProductInfo2TableViewCell.m in Sources */,
 				2BFA1B841C7E00E3008C4833 /* XMLDictionary.m in Sources */,
 				2BFA1B871C7E0121008C4833 /* STConstants.m in Sources */,
 				2BFA1BCF1C7E30F6008C4833 /* STProductCategoryHeaderCollectionReusableView.m in Sources */,

@@ -9,7 +9,7 @@
         <!--Login-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="STLoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="STLoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="STLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -124,7 +124,7 @@
         <!--Forgot Password-->
         <scene sceneID="PK7-pI-bOq">
             <objects>
-                <viewController id="Iyx-0M-f9C" customClass="STForgotPasswordViewController" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="Iyx-0M-f9C" customClass="STForgotPasswordViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="brQ-yR-YBZ"/>
                         <viewControllerLayoutGuide type="bottom" id="0Ts-cS-mEv"/>
@@ -202,7 +202,7 @@
         <!--Product View Controller-->
         <scene sceneID="mAN-wc-BSs">
             <objects>
-                <viewController id="Ihn-pd-82P" customClass="STProductViewController" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ihn-pd-82P" customClass="STProductViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6UE-AY-MkP"/>
                         <viewControllerLayoutGuide type="bottom" id="oal-w6-z8p"/>
@@ -293,16 +293,55 @@
                     <navigationItem key="navigationItem" id="c6E-8i-FXx"/>
                     <connections>
                         <outlet property="collectionView" destination="CxJ-zO-NU3" id="lMB-FI-LOq"/>
+                        <segue destination="beT-y3-81V" kind="push" identifier="productDetailViewSegue" id="YQJ-9D-jWb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyC-xw-b4c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2482" y="956"/>
         </scene>
+        <!--Product Detail View Controller-->
+        <scene sceneID="0FI-Zc-eTH">
+            <objects>
+                <viewController storyboardIdentifier="STProductDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="beT-y3-81V" customClass="STProductDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fj4-9G-d2w"/>
+                        <viewControllerLayoutGuide type="bottom" id="wlS-0n-JZ8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5sF-z1-82Q">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="gpB-XW-Aia">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="beT-y3-81V" id="AIF-hc-JuD"/>
+                                    <outlet property="delegate" destination="beT-y3-81V" id="CDT-4z-Lad"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wlS-0n-JZ8" firstAttribute="top" secondItem="gpB-XW-Aia" secondAttribute="bottom" id="I3m-5q-iuc"/>
+                            <constraint firstItem="gpB-XW-Aia" firstAttribute="leading" secondItem="5sF-z1-82Q" secondAttribute="leading" id="Jou-v0-zww"/>
+                            <constraint firstItem="gpB-XW-Aia" firstAttribute="top" secondItem="fj4-9G-d2w" secondAttribute="bottom" id="anA-gW-9KR"/>
+                            <constraint firstAttribute="trailing" secondItem="gpB-XW-Aia" secondAttribute="trailing" id="j5R-FJ-5o3"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="O3x-OC-edr"/>
+                    <connections>
+                        <outlet property="tableView" destination="gpB-XW-Aia" id="Ezr-xo-SBx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8GI-nc-Cbl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3232" y="956"/>
+        </scene>
         <!--Dashboard View Controller-->
         <scene sceneID="fU9-J3-thC">
             <objects>
-                <viewController id="Hxn-dh-9mw" customClass="STDashboardViewController" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="Hxn-dh-9mw" customClass="STDashboardViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="D0j-Rz-RPz"/>
                         <viewControllerLayoutGuide type="bottom" id="BzN-Ne-33w"/>
@@ -362,7 +401,9 @@
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vGG-E2-Q2v">
                                     <rect key="frame" x="20" y="7" width="50" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="Back"/>
+                                    <state key="normal" title="Back">
+                                        <color key="titleColor" red="0.95367347710000006" green="0.62949855629999996" blue="0.31514039500000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
                                 </button>
                                 <connections>
                                     <action selector="navBackButtonAction:" destination="Hxn-dh-9mw" id="csE-9n-sZw"/>
@@ -372,7 +413,9 @@
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qHt-6k-wfh">
                                     <rect key="frame" x="78" y="7" width="50" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="Menu"/>
+                                    <state key="normal" title="Menu">
+                                        <color key="titleColor" red="0.95367347710000006" green="0.62949855629999996" blue="0.31514039500000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
                                     <connections>
                                         <action selector="menuButton:" destination="Hxn-dh-9mw" eventType="touchUpInside" id="ueG-Vy-W8f"/>
                                     </connections>
@@ -394,7 +437,7 @@
         <!--Product Categories View Controller-->
         <scene sceneID="o3b-oM-iMi">
             <objects>
-                <viewController id="pdb-GE-GUt" customClass="STProductCategoriesViewController" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="pdb-GE-GUt" customClass="STProductCategoriesViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XtH-YJ-mAf"/>
                         <viewControllerLayoutGuide type="bottom" id="6vG-2O-FT4"/>
