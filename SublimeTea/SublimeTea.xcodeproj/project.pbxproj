@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B456F8D1C7F550D00C240A5 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F821C7F550D00C240A5 /* RECommonFunctions.m */; };
+		2B456F8E1C7F550D00C240A5 /* REFrostedContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F841C7F550D00C240A5 /* REFrostedContainerViewController.m */; };
+		2B456F8F1C7F550D00C240A5 /* REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F861C7F550D00C240A5 /* REFrostedViewController.m */; };
+		2B456F901C7F550D00C240A5 /* UIImage+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F881C7F550D00C240A5 /* UIImage+REFrostedViewController.m */; };
+		2B456F911C7F550D00C240A5 /* UIView+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F8A1C7F550D00C240A5 /* UIView+REFrostedViewController.m */; };
+		2B456F921C7F550D00C240A5 /* UIViewController+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F8C1C7F550D00C240A5 /* UIViewController+REFrostedViewController.m */; };
+		2B456F951C7F558900C240A5 /* STRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F941C7F558900C240A5 /* STRootViewController.m */; };
+		2B456F981C7F570E00C240A5 /* STMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F971C7F570E00C240A5 /* STMenuTableViewController.m */; };
+		2B456F9B1C7F579C00C240A5 /* STNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F9A1C7F579C00C240A5 /* STNavigationController.m */; };
+		2B456FA11C7F5C4400C240A5 /* STMenuTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B456F9C1C7F5C4400C240A5 /* STMenuTableHeaderView.xib */; };
+		2B456FA21C7F5C4400C240A5 /* STMenuTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F9E1C7F5C4400C240A5 /* STMenuTableHeaderView.m */; };
+		2B456FA31C7F5C4400C240A5 /* STMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456FA01C7F5C4400C240A5 /* STMenuTableViewCell.m */; };
+		2B456FA61C7F602100C240A5 /* STMenuUserInfoTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456FA51C7F602100C240A5 /* STMenuUserInfoTableHeaderView.m */; };
+		2B456FA81C7F603800C240A5 /* STMenuUserInfoTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B456FA71C7F603800C240A5 /* STMenuUserInfoTableHeaderView.xib */; };
 		2BA72EE71C7DC8F0006105B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EE61C7DC8F0006105B6 /* main.m */; };
 		2BA72EEA1C7DC8F0006105B6 /* STAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EE91C7DC8F0006105B6 /* STAppDelegate.m */; };
 		2BA72EED1C7DC8F0006105B6 /* STViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EEC1C7DC8F0006105B6 /* STViewController.m */; };
@@ -57,6 +71,32 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B456F811C7F550D00C240A5 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
+		2B456F821C7F550D00C240A5 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
+		2B456F831C7F550D00C240A5 /* REFrostedContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedContainerViewController.h; sourceTree = "<group>"; };
+		2B456F841C7F550D00C240A5 /* REFrostedContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REFrostedContainerViewController.m; sourceTree = "<group>"; };
+		2B456F851C7F550D00C240A5 /* REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedViewController.h; sourceTree = "<group>"; };
+		2B456F861C7F550D00C240A5 /* REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REFrostedViewController.m; sourceTree = "<group>"; };
+		2B456F871C7F550D00C240A5 /* UIImage+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+REFrostedViewController.h"; sourceTree = "<group>"; };
+		2B456F881C7F550D00C240A5 /* UIImage+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+REFrostedViewController.m"; sourceTree = "<group>"; };
+		2B456F891C7F550D00C240A5 /* UIView+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+REFrostedViewController.h"; sourceTree = "<group>"; };
+		2B456F8A1C7F550D00C240A5 /* UIView+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+REFrostedViewController.m"; sourceTree = "<group>"; };
+		2B456F8B1C7F550D00C240A5 /* UIViewController+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+REFrostedViewController.h"; sourceTree = "<group>"; };
+		2B456F8C1C7F550D00C240A5 /* UIViewController+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+REFrostedViewController.m"; sourceTree = "<group>"; };
+		2B456F931C7F558900C240A5 /* STRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRootViewController.h; sourceTree = "<group>"; };
+		2B456F941C7F558900C240A5 /* STRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRootViewController.m; sourceTree = "<group>"; };
+		2B456F961C7F570E00C240A5 /* STMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STMenuTableViewController.h; path = Menu/STMenuTableViewController.h; sourceTree = "<group>"; };
+		2B456F971C7F570E00C240A5 /* STMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STMenuTableViewController.m; path = Menu/STMenuTableViewController.m; sourceTree = "<group>"; };
+		2B456F991C7F579C00C240A5 /* STNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STNavigationController.h; sourceTree = "<group>"; };
+		2B456F9A1C7F579C00C240A5 /* STNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STNavigationController.m; sourceTree = "<group>"; };
+		2B456F9C1C7F5C4400C240A5 /* STMenuTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STMenuTableHeaderView.xib; sourceTree = "<group>"; };
+		2B456F9D1C7F5C4400C240A5 /* STMenuTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMenuTableHeaderView.h; sourceTree = "<group>"; };
+		2B456F9E1C7F5C4400C240A5 /* STMenuTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMenuTableHeaderView.m; sourceTree = "<group>"; };
+		2B456F9F1C7F5C4400C240A5 /* STMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMenuTableViewCell.h; sourceTree = "<group>"; };
+		2B456FA01C7F5C4400C240A5 /* STMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMenuTableViewCell.m; sourceTree = "<group>"; };
+		2B456FA41C7F602100C240A5 /* STMenuUserInfoTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STMenuUserInfoTableHeaderView.h; path = Menu/STMenuUserInfoTableHeaderView.h; sourceTree = "<group>"; };
+		2B456FA51C7F602100C240A5 /* STMenuUserInfoTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STMenuUserInfoTableHeaderView.m; path = Menu/STMenuUserInfoTableHeaderView.m; sourceTree = "<group>"; };
+		2B456FA71C7F603800C240A5 /* STMenuUserInfoTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = STMenuUserInfoTableHeaderView.xib; path = Menu/STMenuUserInfoTableHeaderView.xib; sourceTree = "<group>"; };
 		2BA72EE21C7DC8F0006105B6 /* SublimeTea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SublimeTea.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA72EE61C7DC8F0006105B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2BA72EE81C7DC8F0006105B6 /* STAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STAppDelegate.h; sourceTree = "<group>"; };
@@ -143,6 +183,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B456F7F1C7F54DA00C240A5 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				2B456F9C1C7F5C4400C240A5 /* STMenuTableHeaderView.xib */,
+				2B456F9D1C7F5C4400C240A5 /* STMenuTableHeaderView.h */,
+				2B456F9E1C7F5C4400C240A5 /* STMenuTableHeaderView.m */,
+				2B456F9F1C7F5C4400C240A5 /* STMenuTableViewCell.h */,
+				2B456FA01C7F5C4400C240A5 /* STMenuTableViewCell.m */,
+				2B456F801C7F550D00C240A5 /* REFrostedViewController */,
+				2B456F961C7F570E00C240A5 /* STMenuTableViewController.h */,
+				2B456F971C7F570E00C240A5 /* STMenuTableViewController.m */,
+				2B456FA41C7F602100C240A5 /* STMenuUserInfoTableHeaderView.h */,
+				2B456FA51C7F602100C240A5 /* STMenuUserInfoTableHeaderView.m */,
+				2B456FA71C7F603800C240A5 /* STMenuUserInfoTableHeaderView.xib */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
+		2B456F801C7F550D00C240A5 /* REFrostedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2B456F811C7F550D00C240A5 /* RECommonFunctions.h */,
+				2B456F821C7F550D00C240A5 /* RECommonFunctions.m */,
+				2B456F831C7F550D00C240A5 /* REFrostedContainerViewController.h */,
+				2B456F841C7F550D00C240A5 /* REFrostedContainerViewController.m */,
+				2B456F851C7F550D00C240A5 /* REFrostedViewController.h */,
+				2B456F861C7F550D00C240A5 /* REFrostedViewController.m */,
+				2B456F871C7F550D00C240A5 /* UIImage+REFrostedViewController.h */,
+				2B456F881C7F550D00C240A5 /* UIImage+REFrostedViewController.m */,
+				2B456F891C7F550D00C240A5 /* UIView+REFrostedViewController.h */,
+				2B456F8A1C7F550D00C240A5 /* UIView+REFrostedViewController.m */,
+				2B456F8B1C7F550D00C240A5 /* UIViewController+REFrostedViewController.h */,
+				2B456F8C1C7F550D00C240A5 /* UIViewController+REFrostedViewController.m */,
+			);
+			path = REFrostedViewController;
+			sourceTree = "<group>";
+		};
 		2BA72ED91C7DC8F0006105B6 = {
 			isa = PBXGroup;
 			children = (
@@ -234,12 +311,17 @@
 		2BFA1B6E1C7DFDB6008C4833 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2B456F7F1C7F54DA00C240A5 /* Menu */,
 				2BFA1BAE1C7E08C4008C4833 /* Payment */,
 				2BFA1BA71C7E060E008C4833 /* User */,
 				2BFA1B991C7E0531008C4833 /* Product */,
 				2BFA1B951C7E040D008C4833 /* BaseViewController */,
 				2BFA1B961C7E0451008C4833 /* STDashboardViewController.h */,
 				2BFA1B971C7E0451008C4833 /* STDashboardViewController.m */,
+				2B456F931C7F558900C240A5 /* STRootViewController.h */,
+				2B456F941C7F558900C240A5 /* STRootViewController.m */,
+				2B456F991C7F579C00C240A5 /* STNavigationController.h */,
+				2B456F9A1C7F579C00C240A5 /* STNavigationController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -471,10 +553,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B456FA81C7F603800C240A5 /* STMenuUserInfoTableHeaderView.xib in Resources */,
 				2BA72EF51C7DC8F0006105B6 /* LaunchScreen.storyboard in Resources */,
 				2BFA1BD41C7E3763008C4833 /* teaCup.jpeg in Resources */,
 				2BFA1BCB1C7E262D008C4833 /* _night_bg.jpg in Resources */,
 				2BA72EF21C7DC8F0006105B6 /* Assets.xcassets in Resources */,
+				2B456FA11C7F5C4400C240A5 /* STMenuTableHeaderView.xib in Resources */,
 				2BA72EF01C7DC8F0006105B6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,26 +587,38 @@
 				2BFA1BB41C7E0966008C4833 /* STSignUpViewController.m in Sources */,
 				2BFA1B9F1C7E0574008C4833 /* STProductViewController.m in Sources */,
 				2BFA1BA21C7E058B008C4833 /* STProductDetailViewController.m in Sources */,
+				2B456F951C7F558900C240A5 /* STRootViewController.m in Sources */,
 				2BFA1BD21C7E3118008C4833 /* STProductCategoryCollectionViewCell.m in Sources */,
+				2B456F901C7F550D00C240A5 /* UIImage+REFrostedViewController.m in Sources */,
 				2BA72EED1C7DC8F0006105B6 /* STViewController.m in Sources */,
 				2BFA1BBA1C7E09EA008C4833 /* STOrderConfirmationViewController.m in Sources */,
 				2BFA1BA61C7E0604008C4833 /* STOrderListViewController.m in Sources */,
+				2B456FA31C7F5C4400C240A5 /* STMenuTableViewCell.m in Sources */,
+				2B456F8D1C7F550D00C240A5 /* RECommonFunctions.m in Sources */,
 				2BFA1BB71C7E09AA008C4833 /* STProductCategoriesViewController.m in Sources */,
 				2BA72EEA1C7DC8F0006105B6 /* STAppDelegate.m in Sources */,
 				2BFA1B981C7E0451008C4833 /* STDashboardViewController.m in Sources */,
+				2B456F911C7F550D00C240A5 /* UIView+REFrostedViewController.m in Sources */,
+				2B456F9B1C7F579C00C240A5 /* STNavigationController.m in Sources */,
+				2B456F8F1C7F550D00C240A5 /* REFrostedViewController.m in Sources */,
 				2BFA1B8D1C7E0381008C4833 /* STLoginViewController.m in Sources */,
+				2B456FA21C7F5C4400C240A5 /* STMenuTableHeaderView.m in Sources */,
 				2BA72EE71C7DC8F0006105B6 /* main.m in Sources */,
 				2BFA1BD81C7E3A28008C4833 /* STProductListCollectionViewCell.m in Sources */,
 				2BFA1B7B1C7DFF52008C4833 /* STGlobalCacheManager.m in Sources */,
 				2BFA1BBD1C7E0A21008C4833 /* STCartViewController.m in Sources */,
 				2BFA1BC81C7E0DCA008C4833 /* STHttpRequest.m in Sources */,
+				2B456F921C7F550D00C240A5 /* UIViewController+REFrostedViewController.m in Sources */,
 				2BFA1BC91C7E0DCA008C4833 /* Reachability.m in Sources */,
 				2BFA1B911C7E03B2008C4833 /* STForgotPasswordViewController.m in Sources */,
 				2BFA1B751C7DFEC1008C4833 /* MBProgressHUD.m in Sources */,
+				2B456F8E1C7F550D00C240A5 /* REFrostedContainerViewController.m in Sources */,
 				2BFA1BAA1C7E07F3008C4833 /* STUserProfileViewController.m in Sources */,
+				2B456F981C7F570E00C240A5 /* STMenuTableViewController.m in Sources */,
 				2BFA1B841C7E00E3008C4833 /* XMLDictionary.m in Sources */,
 				2BFA1B871C7E0121008C4833 /* STConstants.m in Sources */,
 				2BFA1BCF1C7E30F6008C4833 /* STProductCategoryHeaderCollectionReusableView.m in Sources */,
+				2B456FA61C7F602100C240A5 /* STMenuUserInfoTableHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

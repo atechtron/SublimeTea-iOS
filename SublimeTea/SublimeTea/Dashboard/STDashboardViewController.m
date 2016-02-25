@@ -104,4 +104,17 @@
     [self.collectionView reloadData];
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
+- (IBAction)navBackButtonAction:(id)sender {
+}
+
+- (IBAction)menuButton:(UIButton *)sender {
+    // Dismiss keyboard (optional)
+    //
+    [self.view endEditing:YES];
+    [self.frostedViewController.view endEditing:YES];
+    
+    // Present the view controller
+    //
+    [self.frostedViewController presentMenuViewController];
+}
 @end

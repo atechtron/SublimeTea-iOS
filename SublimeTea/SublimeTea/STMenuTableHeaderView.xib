@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Abn-NE-Rzs" customClass="STMenuTableHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a8B-4H-bR6">
+                    <rect key="frame" x="8" y="0.0" width="554" height="44"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.53542852760000004" green="0.3534244091" blue="0.17693179240000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PbO-JS-V4u">
+                    <rect key="frame" x="570" y="10" width="22" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="w0H-c7-CLi"/>
+                        <constraint firstAttribute="width" constant="22" id="xRr-3W-S4O"/>
+                    </constraints>
+                    <color key="tintColor" red="0.53542852760000004" green="0.3534244091" blue="0.17693179240000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="tapAction:" destination="Abn-NE-Rzs" eventType="touchUpInside" id="7Xm-pk-NSP"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="PbO-JS-V4u" secondAttribute="trailing" constant="8" id="O5x-lm-e8B"/>
+                <constraint firstItem="PbO-JS-V4u" firstAttribute="top" secondItem="Abn-NE-Rzs" secondAttribute="top" constant="10" id="iY4-tQ-zaL"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="accesoryBtn" destination="PbO-JS-V4u" id="Q2i-el-RQr"/>
+                <outlet property="titleLabel" destination="a8B-4H-bR6" id="eJa-xy-e0Y"/>
+            </connections>
+            <point key="canvasLocation" x="221" y="-117"/>
+        </view>
+    </objects>
+</document>
