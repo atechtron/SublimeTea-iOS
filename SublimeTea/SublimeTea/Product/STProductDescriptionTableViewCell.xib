@@ -16,6 +16,9 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZYW-a1-8lp">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="26" id="A3R-OS-aKC"/>
+                        </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="09D-jt-S1l">
                         <rect key="frame" x="8" y="34" width="584" height="21"/>
@@ -25,13 +28,13 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="ZYW-a1-8lp" secondAttribute="trailing" id="2c4-VC-C8n"/>
-                    <constraint firstItem="09D-jt-S1l" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="328-TE-oQG"/>
-                    <constraint firstItem="09D-jt-S1l" firstAttribute="top" secondItem="ZYW-a1-8lp" secondAttribute="bottom" constant="8" id="EMt-OO-EVP"/>
-                    <constraint firstAttribute="bottom" secondItem="09D-jt-S1l" secondAttribute="bottom" constant="8" id="XsP-WY-6Cr"/>
-                    <constraint firstItem="ZYW-a1-8lp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Xxo-o1-kiY"/>
-                    <constraint firstItem="ZYW-a1-8lp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="fE0-6y-tJx"/>
-                    <constraint firstAttribute="trailing" secondItem="09D-jt-S1l" secondAttribute="trailing" constant="8" id="i0u-R2-vQE"/>
+                    <constraint firstAttribute="trailing" secondItem="ZYW-a1-8lp" secondAttribute="trailing" id="9fl-3H-cpX"/>
+                    <constraint firstItem="09D-jt-S1l" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="FTS-wo-arR"/>
+                    <constraint firstItem="09D-jt-S1l" firstAttribute="top" secondItem="ZYW-a1-8lp" secondAttribute="bottom" constant="8" id="UNK-hW-QxP"/>
+                    <constraint firstAttribute="trailing" secondItem="09D-jt-S1l" secondAttribute="trailing" constant="8" id="VHV-ce-kms"/>
+                    <constraint firstItem="ZYW-a1-8lp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="k2v-mm-zNf"/>
+                    <constraint firstAttribute="bottom" secondItem="09D-jt-S1l" secondAttribute="bottom" constant="8" id="kck-ei-UUE"/>
+                    <constraint firstItem="ZYW-a1-8lp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="vcs-Kt-z7t"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

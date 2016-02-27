@@ -47,7 +47,7 @@
 #pragma UITableViewDelegates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 1;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -64,6 +64,7 @@
             _cell.numLabel.text = @"3160";
             _cell.statusLabel.text = @"in stock";
             _cell.extraLabel.text = @"Put your pincode here";
+            _cell.prodImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
             cell = _cell;
             break;
         }
@@ -72,17 +73,18 @@
             static NSString *cellidentifier = @"productAddToCartCell";
             STProductInfo2TableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
             NSString *desc = @"This is a pure Green Tea. Fresh tender tea leaves are carefully processed to minimize oxidation and rolled using a very special process.";
-            NSString *SKU = @"Tea007";
-            NSString *categ = @"Pure Green Tea, Tea Bags";
+            NSString *SKU = @"SKU: Tea007";
+            NSString *categ = @"Categories: Pure Green Tea, Tea Bags";
             NSString *descriptionStr = [NSString stringWithFormat:@"%@\n%@\n%@",desc,SKU,categ];
             _cell.descriptionLabel.text = descriptionStr;
             _cell.qtyLabel.text = @"290";
+            _cell.qtyLabel.text = [NSString stringWithFormat:@"Qty\n%d",2];
             _cell.qtyLabel.backgroundColor = [UIColor orangeColor];
             _cell.qtyLabel.layer.borderWidth = 1;
-            _cell.qtyLabel.layer.cornerRadius = _cell.amountLabel.frame.size.height/2;
+            _cell.qtyLabel.layer.cornerRadius = _cell.qtyLabel.bounds.size.height/2;
             _cell.qtyLabel.clipsToBounds = YES;
             _cell.qtyLabel.layer.borderColor = [UIColor clearColor].CGColor;
-            _cell.qtyLabel.text = [NSString stringWithFormat:@"Qty\n%d",2];
+            
             cell = _cell;
 
             break;

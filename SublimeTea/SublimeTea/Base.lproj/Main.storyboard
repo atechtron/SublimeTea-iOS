@@ -3,9 +3,67 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="g27-Mk-rYm">
+            <objects>
+                <viewController id="n50-TW-iqQ" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1im-Dp-w7g"/>
+                        <viewControllerLayoutGuide type="bottom" id="3TV-3X-TnT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jWu-1X-BZV">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vXo-iN-Esh">
+                                <rect key="frame" x="180" y="236" width="240" height="128"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0eV-JE-AYr">
+                                        <rect key="frame" x="34" y="19" width="173" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="0eV-JE-AYr" secondAttribute="height" multiplier="173:30" id="QAQ-ve-OHb"/>
+                                        </constraints>
+                                        <state key="normal" title="Login"/>
+                                        <connections>
+                                            <segue destination="BYZ-38-t0r" kind="push" identifier="loginSegue" id="DUh-ac-B1E"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgV-0q-ArR">
+                                        <rect key="frame" x="34" y="79" width="173" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="jgV-0q-ArR" secondAttribute="height" multiplier="173:30" id="yfW-0n-b3g"/>
+                                        </constraints>
+                                        <state key="normal" title="Sign Up"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="jgV-0q-ArR" secondAttribute="bottom" constant="19" id="6X8-zu-8QE"/>
+                                    <constraint firstItem="0eV-JE-AYr" firstAttribute="top" secondItem="vXo-iN-Esh" secondAttribute="top" constant="19" id="CrS-6M-11l"/>
+                                    <constraint firstItem="0eV-JE-AYr" firstAttribute="leading" secondItem="vXo-iN-Esh" secondAttribute="leading" constant="34" id="Mwe-Sx-wOY"/>
+                                    <constraint firstItem="jgV-0q-ArR" firstAttribute="top" secondItem="0eV-JE-AYr" secondAttribute="bottom" constant="30" id="RlR-69-2w0"/>
+                                    <constraint firstAttribute="trailing" secondItem="0eV-JE-AYr" secondAttribute="trailing" constant="33" id="Wcm-S9-OI5"/>
+                                    <constraint firstAttribute="trailing" secondItem="jgV-0q-ArR" secondAttribute="trailing" constant="33" id="b3u-WX-aQA"/>
+                                    <constraint firstItem="jgV-0q-ArR" firstAttribute="leading" secondItem="vXo-iN-Esh" secondAttribute="leading" constant="34" id="kpP-pu-BzK"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vXo-iN-Esh" firstAttribute="centerX" secondItem="jWu-1X-BZV" secondAttribute="centerX" id="OXb-xF-ou4"/>
+                            <constraint firstItem="vXo-iN-Esh" firstAttribute="centerY" secondItem="jWu-1X-BZV" secondAttribute="centerY" id="sO3-GC-JkP"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="eqG-nQ-BrC"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a2A-7Q-1bW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="548" y="304"/>
+        </scene>
         <!--Login-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -560,7 +618,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="DYg-jW-ztX"/>
+                        <segue destination="n50-TW-iqQ" kind="relationship" relationship="rootViewController" id="E8m-Hn-V65"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wOM-g3-oRG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -636,4 +694,5 @@
     <resources>
         <image name="_night_bg.jpg" width="1900" height="2000"/>
     </resources>
+    <color key="tintColor" red="0.69532830662828282" green="0.45897068093401694" blue="0.22977050580445335" alpha="1" colorSpace="calibratedRGB"/>
 </document>

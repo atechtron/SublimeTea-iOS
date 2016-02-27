@@ -20,13 +20,15 @@
     [super viewDidLoad];
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)]];
     self.navigationItem.hidesBackButton = YES;
-    self.navigationBar.backgroundColor = UIColorFromRGB(137, 90, 45, 1);
-//    [self.navigationBar setTranslucent:NO];
+    [self.navigationBar setTranslucent:NO];
     /* Making Toolbar background color to white */
     [self.toolbar setBarTintColor:UIColorFromRGB(137, 90, 45, 1)];
+    [self.navigationBar setBarTintColor:UIColorFromRGB(137, 90, 45, 1)];
+    self.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     
     /* Making NavigationBar background color to white */
-    [self.navigationBar setBackgroundImage:[self getImageWithColor:UIColorFromRGB(137, 90, 45, 1)] forBarMetrics:UIBarMetricsDefault];
+//    [self.navigationBar setBackgroundImage:[self getImageWithColor:UIColorFromRGB(137, 90, 45, 1)] forBarMetrics:UIBarMetricsDefault];
 
     /* Making NavigationBar Bottom shadow color to App Tint color */
     //    [[UINavigationBar appearance] setShadowImage:[UI_Utility getImageWithColor:[UI_Utility navigationBarShadowColor]]];
