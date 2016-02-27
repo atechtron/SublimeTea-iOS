@@ -10,19 +10,31 @@
 
 @interface STOrderConfirmationViewController ()
 
+@property(strong, nonatomic)NSMutableDictionary *jsondict;
 @end
 
 @implementation STOrderConfirmationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ResponseNew:) name:@"JSON_NEW" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"JSON_DICT" object:nil userInfo:nil];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void) ResponseNew:(NSNotification *)message
+{
+    if ([message.name isEqualToString:@"JSON_NEW"])
+    {
+        NSLog(@"Response = %@",[message object]);
+        _jsondict = [message object];
+    }
+}
+
 
 /*
 #pragma mark - Navigation

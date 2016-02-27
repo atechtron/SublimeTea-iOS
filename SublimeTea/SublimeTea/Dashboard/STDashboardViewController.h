@@ -15,4 +15,5 @@
 - (IBAction)navBackButtonAction:(id)sender;
 - (IBAction)menuButton:(UIButton *)sender;
 
+- (IBAction)cartButtonAction:(UIBarButtonItem *)sender;
 @end

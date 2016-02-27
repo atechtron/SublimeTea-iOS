@@ -28,6 +28,39 @@
 		2B456FB61C7F80E600C240A5 /* STProductInfo2TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B456FB41C7F80E600C240A5 /* STProductInfo2TableViewCell.xib */; };
 		2B456FBB1C7F810F00C240A5 /* STProductDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456FB91C7F810F00C240A5 /* STProductDescriptionTableViewCell.m */; };
 		2B456FBC1C7F810F00C240A5 /* STProductDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B456FBA1C7F810F00C240A5 /* STProductDescriptionTableViewCell.xib */; };
+		2B98821D1C81B58A00BA5234 /* STCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B98821C1C81B58A00BA5234 /* STCartTableViewCell.m */; };
+		2B9882AA1C81E4D100BA5234 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B98827E1C81E4D100BA5234 /* Config.plist */; };
+		2B9882AB1C81E4D100BA5234 /* EBSLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B98827F1C81E4D100BA5234 /* EBSLib.a */; };
+		2B9882AC1C81E4D100BA5234 /* CashAndNetBankingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882831C81E4D100BA5234 /* CashAndNetBankingCell.xib */; };
+		2B9882AD1C81E4D100BA5234 /* CashAndNetBankingCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882851C81E4D100BA5234 /* CashAndNetBankingCell_iPad.xib */; };
+		2B9882AE1C81E4D100BA5234 /* CreditAndDebitCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882871C81E4D100BA5234 /* CreditAndDebitCardCell.xib */; };
+		2B9882AF1C81E4D100BA5234 /* CreditCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882891C81E4D100BA5234 /* CreditCardCell.xib */; };
+		2B9882B01C81E4D100BA5234 /* CreditCardCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B98828B1C81E4D100BA5234 /* CreditCardCell_iPad.xib */; };
+		2B9882B11C81E4D100BA5234 /* DebitCardCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B98828D1C81E4D100BA5234 /* DebitCardCell_iPad.xib */; };
+		2B9882B21C81E4D100BA5234 /* PaymentModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882911C81E4D100BA5234 /* PaymentModeViewController.xib */; };
+		2B9882B31C81E4D100BA5234 /* PaymentModeViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882921C81E4D100BA5234 /* PaymentModeViewController_iPad.xib */; };
+		2B9882B41C81E4D100BA5234 /* StoredCardCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882951C81E4D100BA5234 /* StoredCardCell_iPad.xib */; };
+		2B9882B51C81E4D100BA5234 /* StoredCardCell_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882971C81E4D100BA5234 /* StoredCardCell_iPhone.xib */; };
+		2B9882B61C81E4D100BA5234 /* TIMERUIApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9882991C81E4D100BA5234 /* TIMERUIApplication.m */; };
+		2B9882B71C81E4D100BA5234 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B98829B1C81E4D100BA5234 /* WebViewController.xib */; };
+		2B9882B81C81E4D100BA5234 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B98829D1C81E4D100BA5234 /* arrow.png */; };
+		2B9882B91C81E4D100BA5234 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B98829E1C81E4D100BA5234 /* check.png */; };
+		2B9882BA1C81E4D100BA5234 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B98829F1C81E4D100BA5234 /* check@2x.png */; };
+		2B9882BB1C81E4D100BA5234 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882A01C81E4D100BA5234 /* close.png */; };
+		2B9882BC1C81E4D100BA5234 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882A11C81E4D100BA5234 /* close@2x.png */; };
+		2B9882BD1C81E4D100BA5234 /* cvv_no.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882A21C81E4D100BA5234 /* cvv_no.jpg */; };
+		2B9882BE1C81E4D100BA5234 /* inputBgDrop.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882A31C81E4D100BA5234 /* inputBgDrop.png */; };
+		2B9882BF1C81E4D100BA5234 /* RadioOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882A41C81E4D100BA5234 /* RadioOff.png */; };
+		2B9882C01C81E4D100BA5234 /* RadioOn.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882A51C81E4D100BA5234 /* RadioOn.png */; };
+		2B9882C11C81E4D100BA5234 /* sachin_book1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882A61C81E4D100BA5234 /* sachin_book1.png */; };
+		2B9882C21C81E4D100BA5234 /* uncheck.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882A71C81E4D100BA5234 /* uncheck.png */; };
+		2B9882C31C81E4D100BA5234 /* uncheck@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882A81C81E4D100BA5234 /* uncheck@2x.png */; };
+		2B9882C41C81E4D100BA5234 /* ReadMe.md in Sources */ = {isa = PBXBuildFile; fileRef = 2B9882A91C81E4D100BA5234 /* ReadMe.md */; };
+		2B9882C61C81E65500BA5234 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B9882C51C81E65500BA5234 /* MobileCoreServices.framework */; };
+		2B9882C81C81E65F00BA5234 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B9882C71C81E65F00BA5234 /* CFNetwork.framework */; };
+		2B9882CA1C81E67500BA5234 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B9882C91C81E67500BA5234 /* SystemConfiguration.framework */; };
+		2B9882CD1C81F47200BA5234 /* STCartFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882CC1C81F47200BA5234 /* STCartFooterView.xib */; };
+		2B9882D01C81F49700BA5234 /* STCartFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9882CF1C81F49700BA5234 /* STCartFooterView.m */; };
 		2BA72EE71C7DC8F0006105B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EE61C7DC8F0006105B6 /* main.m */; };
 		2BA72EEA1C7DC8F0006105B6 /* STAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EE91C7DC8F0006105B6 /* STAppDelegate.m */; };
 		2BA72EED1C7DC8F0006105B6 /* STViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EEC1C7DC8F0006105B6 /* STViewController.m */; };
@@ -115,6 +148,56 @@
 		2B456FB81C7F810F00C240A5 /* STProductDescriptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STProductDescriptionTableViewCell.h; path = Product/STProductDescriptionTableViewCell.h; sourceTree = "<group>"; };
 		2B456FB91C7F810F00C240A5 /* STProductDescriptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STProductDescriptionTableViewCell.m; path = Product/STProductDescriptionTableViewCell.m; sourceTree = "<group>"; };
 		2B456FBA1C7F810F00C240A5 /* STProductDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = STProductDescriptionTableViewCell.xib; path = Product/STProductDescriptionTableViewCell.xib; sourceTree = "<group>"; };
+		2B98821B1C81B58A00BA5234 /* STCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STCartTableViewCell.h; sourceTree = "<group>"; };
+		2B98821C1C81B58A00BA5234 /* STCartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STCartTableViewCell.m; sourceTree = "<group>"; };
+		2B98827E1C81E4D100BA5234 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
+		2B98827F1C81E4D100BA5234 /* EBSLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = EBSLib.a; sourceTree = "<group>"; };
+		2B9882811C81E4D100BA5234 /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
+		2B9882821C81E4D100BA5234 /* CashAndNetBankingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CashAndNetBankingCell.h; sourceTree = "<group>"; };
+		2B9882831C81E4D100BA5234 /* CashAndNetBankingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CashAndNetBankingCell.xib; sourceTree = "<group>"; };
+		2B9882841C81E4D100BA5234 /* CashAndNetBankingCell_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CashAndNetBankingCell_iPad.h; sourceTree = "<group>"; };
+		2B9882851C81E4D100BA5234 /* CashAndNetBankingCell_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CashAndNetBankingCell_iPad.xib; sourceTree = "<group>"; };
+		2B9882861C81E4D100BA5234 /* CreditAndDebitCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditAndDebitCardCell.h; sourceTree = "<group>"; };
+		2B9882871C81E4D100BA5234 /* CreditAndDebitCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreditAndDebitCardCell.xib; sourceTree = "<group>"; };
+		2B9882881C81E4D100BA5234 /* CreditCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditCardCell.h; sourceTree = "<group>"; };
+		2B9882891C81E4D100BA5234 /* CreditCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreditCardCell.xib; sourceTree = "<group>"; };
+		2B98828A1C81E4D100BA5234 /* CreditCardCell_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditCardCell_iPad.h; sourceTree = "<group>"; };
+		2B98828B1C81E4D100BA5234 /* CreditCardCell_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreditCardCell_iPad.xib; sourceTree = "<group>"; };
+		2B98828C1C81E4D100BA5234 /* DebitCardCell_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebitCardCell_iPad.h; sourceTree = "<group>"; };
+		2B98828D1C81E4D100BA5234 /* DebitCardCell_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebitCardCell_iPad.xib; sourceTree = "<group>"; };
+		2B98828E1C81E4D100BA5234 /* MRMSiOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMSiOS.h; sourceTree = "<group>"; };
+		2B98828F1C81E4D100BA5234 /* newViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newViewController.h; sourceTree = "<group>"; };
+		2B9882901C81E4D100BA5234 /* PaymentModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentModeViewController.h; sourceTree = "<group>"; };
+		2B9882911C81E4D100BA5234 /* PaymentModeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentModeViewController.xib; sourceTree = "<group>"; };
+		2B9882921C81E4D100BA5234 /* PaymentModeViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentModeViewController_iPad.xib; sourceTree = "<group>"; };
+		2B9882931C81E4D100BA5234 /* ResponseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseViewController.h; sourceTree = "<group>"; };
+		2B9882941C81E4D100BA5234 /* StoredCardCell_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoredCardCell_iPad.h; sourceTree = "<group>"; };
+		2B9882951C81E4D100BA5234 /* StoredCardCell_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoredCardCell_iPad.xib; sourceTree = "<group>"; };
+		2B9882961C81E4D100BA5234 /* StoredCardCell_iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoredCardCell_iPhone.h; sourceTree = "<group>"; };
+		2B9882971C81E4D100BA5234 /* StoredCardCell_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoredCardCell_iPhone.xib; sourceTree = "<group>"; };
+		2B9882981C81E4D100BA5234 /* TIMERUIApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIMERUIApplication.h; sourceTree = "<group>"; };
+		2B9882991C81E4D100BA5234 /* TIMERUIApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIMERUIApplication.m; sourceTree = "<group>"; };
+		2B98829A1C81E4D100BA5234 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		2B98829B1C81E4D100BA5234 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
+		2B98829D1C81E4D100BA5234 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		2B98829E1C81E4D100BA5234 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
+		2B98829F1C81E4D100BA5234 /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@2x.png"; sourceTree = "<group>"; };
+		2B9882A01C81E4D100BA5234 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		2B9882A11C81E4D100BA5234 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
+		2B9882A21C81E4D100BA5234 /* cvv_no.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cvv_no.jpg; sourceTree = "<group>"; };
+		2B9882A31C81E4D100BA5234 /* inputBgDrop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inputBgDrop.png; sourceTree = "<group>"; };
+		2B9882A41C81E4D100BA5234 /* RadioOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RadioOff.png; sourceTree = "<group>"; };
+		2B9882A51C81E4D100BA5234 /* RadioOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RadioOn.png; sourceTree = "<group>"; };
+		2B9882A61C81E4D100BA5234 /* sachin_book1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sachin_book1.png; sourceTree = "<group>"; };
+		2B9882A71C81E4D100BA5234 /* uncheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uncheck.png; sourceTree = "<group>"; };
+		2B9882A81C81E4D100BA5234 /* uncheck@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uncheck@2x.png"; sourceTree = "<group>"; };
+		2B9882A91C81E4D100BA5234 /* ReadMe.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
+		2B9882C51C81E65500BA5234 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		2B9882C71C81E65F00BA5234 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		2B9882C91C81E67500BA5234 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		2B9882CC1C81F47200BA5234 /* STCartFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = STCartFooterView.xib; path = Payment/STCartFooterView.xib; sourceTree = "<group>"; };
+		2B9882CE1C81F49700BA5234 /* STCartFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STCartFooterView.h; path = Payment/STCartFooterView.h; sourceTree = "<group>"; };
+		2B9882CF1C81F49700BA5234 /* STCartFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STCartFooterView.m; path = Payment/STCartFooterView.m; sourceTree = "<group>"; };
 		2BA72EE21C7DC8F0006105B6 /* SublimeTea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SublimeTea.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA72EE61C7DC8F0006105B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2BA72EE81C7DC8F0006105B6 /* STAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STAppDelegate.h; sourceTree = "<group>"; };
@@ -181,6 +264,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B9882CA1C81E67500BA5234 /* SystemConfiguration.framework in Frameworks */,
+				2B9882C81C81E65F00BA5234 /* CFNetwork.framework in Frameworks */,
+				2B9882C61C81E65500BA5234 /* MobileCoreServices.framework in Frameworks */,
+				2B9882AB1C81E4D100BA5234 /* EBSLib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,9 +335,85 @@
 			name = productDetail;
 			sourceTree = "<group>";
 		};
+		2B98827D1C81E4D100BA5234 /* PaymentGateway */ = {
+			isa = PBXGroup;
+			children = (
+				2B98827E1C81E4D100BA5234 /* Config.plist */,
+				2B98827F1C81E4D100BA5234 /* EBSLib.a */,
+				2B9882801C81E4D100BA5234 /* Files */,
+				2B98829C1C81E4D100BA5234 /* Images */,
+				2B9882A91C81E4D100BA5234 /* ReadMe.md */,
+			);
+			path = PaymentGateway;
+			sourceTree = "<group>";
+		};
+		2B9882801C81E4D100BA5234 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				2B9882811C81E4D100BA5234 /* AsyncImageView.h */,
+				2B9882821C81E4D100BA5234 /* CashAndNetBankingCell.h */,
+				2B9882831C81E4D100BA5234 /* CashAndNetBankingCell.xib */,
+				2B9882841C81E4D100BA5234 /* CashAndNetBankingCell_iPad.h */,
+				2B9882851C81E4D100BA5234 /* CashAndNetBankingCell_iPad.xib */,
+				2B9882861C81E4D100BA5234 /* CreditAndDebitCardCell.h */,
+				2B9882871C81E4D100BA5234 /* CreditAndDebitCardCell.xib */,
+				2B9882881C81E4D100BA5234 /* CreditCardCell.h */,
+				2B9882891C81E4D100BA5234 /* CreditCardCell.xib */,
+				2B98828A1C81E4D100BA5234 /* CreditCardCell_iPad.h */,
+				2B98828B1C81E4D100BA5234 /* CreditCardCell_iPad.xib */,
+				2B98828C1C81E4D100BA5234 /* DebitCardCell_iPad.h */,
+				2B98828D1C81E4D100BA5234 /* DebitCardCell_iPad.xib */,
+				2B98828E1C81E4D100BA5234 /* MRMSiOS.h */,
+				2B98828F1C81E4D100BA5234 /* newViewController.h */,
+				2B9882901C81E4D100BA5234 /* PaymentModeViewController.h */,
+				2B9882911C81E4D100BA5234 /* PaymentModeViewController.xib */,
+				2B9882921C81E4D100BA5234 /* PaymentModeViewController_iPad.xib */,
+				2B9882931C81E4D100BA5234 /* ResponseViewController.h */,
+				2B9882941C81E4D100BA5234 /* StoredCardCell_iPad.h */,
+				2B9882951C81E4D100BA5234 /* StoredCardCell_iPad.xib */,
+				2B9882961C81E4D100BA5234 /* StoredCardCell_iPhone.h */,
+				2B9882971C81E4D100BA5234 /* StoredCardCell_iPhone.xib */,
+				2B9882981C81E4D100BA5234 /* TIMERUIApplication.h */,
+				2B9882991C81E4D100BA5234 /* TIMERUIApplication.m */,
+				2B98829A1C81E4D100BA5234 /* WebViewController.h */,
+				2B98829B1C81E4D100BA5234 /* WebViewController.xib */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
+		2B98829C1C81E4D100BA5234 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				2B98829D1C81E4D100BA5234 /* arrow.png */,
+				2B98829E1C81E4D100BA5234 /* check.png */,
+				2B98829F1C81E4D100BA5234 /* check@2x.png */,
+				2B9882A01C81E4D100BA5234 /* close.png */,
+				2B9882A11C81E4D100BA5234 /* close@2x.png */,
+				2B9882A21C81E4D100BA5234 /* cvv_no.jpg */,
+				2B9882A31C81E4D100BA5234 /* inputBgDrop.png */,
+				2B9882A41C81E4D100BA5234 /* RadioOff.png */,
+				2B9882A51C81E4D100BA5234 /* RadioOn.png */,
+				2B9882A61C81E4D100BA5234 /* sachin_book1.png */,
+				2B9882A71C81E4D100BA5234 /* uncheck.png */,
+				2B9882A81C81E4D100BA5234 /* uncheck@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		2B9882CB1C81F44200BA5234 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				2B9882CC1C81F47200BA5234 /* STCartFooterView.xib */,
+			);
+			name = Cart;
+			sourceTree = "<group>";
+		};
 		2BA72ED91C7DC8F0006105B6 = {
 			isa = PBXGroup;
 			children = (
+				2B9882C91C81E67500BA5234 /* SystemConfiguration.framework */,
+				2B9882C71C81E65F00BA5234 /* CFNetwork.framework */,
+				2B9882C51C81E65500BA5234 /* MobileCoreServices.framework */,
 				2BA72EE41C7DC8F0006105B6 /* SublimeTea */,
 				2BA72EFE1C7DC8F0006105B6 /* SublimeTeaTests */,
 				2BA72F091C7DC8F0006105B6 /* SublimeTeaUITests */,
@@ -359,6 +522,7 @@
 		2BFA1B6F1C7DFDCE008C4833 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2B9882CB1C81F44200BA5234 /* Cart */,
 				2B456FAC1C7F807700C240A5 /* productDetail */,
 				2BA72EEE1C7DC8F0006105B6 /* Main.storyboard */,
 				2BA72EF31C7DC8F0006105B6 /* LaunchScreen.storyboard */,
@@ -457,8 +621,13 @@
 		2BFA1BAE1C7E08C4008C4833 /* Payment */ = {
 			isa = PBXGroup;
 			children = (
+				2B98827D1C81E4D100BA5234 /* PaymentGateway */,
+				2B98821B1C81B58A00BA5234 /* STCartTableViewCell.h */,
+				2B98821C1C81B58A00BA5234 /* STCartTableViewCell.m */,
 				2BFA1BBB1C7E0A21008C4833 /* STCartViewController.h */,
 				2BFA1BBC1C7E0A21008C4833 /* STCartViewController.m */,
+				2B9882CE1C81F49700BA5234 /* STCartFooterView.h */,
+				2B9882CF1C81F49700BA5234 /* STCartFooterView.m */,
 			);
 			name = Payment;
 			sourceTree = "<group>";
@@ -590,14 +759,39 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B9882BC1C81E4D100BA5234 /* close@2x.png in Resources */,
+				2B9882B21C81E4D100BA5234 /* PaymentModeViewController.xib in Resources */,
+				2B9882B81C81E4D100BA5234 /* arrow.png in Resources */,
 				2B456FA81C7F603800C240A5 /* STMenuUserInfoTableHeaderView.xib in Resources */,
 				2BA72EF51C7DC8F0006105B6 /* LaunchScreen.storyboard in Resources */,
+				2B9882B51C81E4D100BA5234 /* StoredCardCell_iPhone.xib in Resources */,
 				2BFA1BD41C7E3763008C4833 /* teaCup.jpeg in Resources */,
+				2B9882BF1C81E4D100BA5234 /* RadioOff.png in Resources */,
 				2BFA1BCB1C7E262D008C4833 /* _night_bg.jpg in Resources */,
+				2B9882AF1C81E4D100BA5234 /* CreditCardCell.xib in Resources */,
+				2B9882C01C81E4D100BA5234 /* RadioOn.png in Resources */,
+				2B9882C21C81E4D100BA5234 /* uncheck.png in Resources */,
+				2B9882AA1C81E4D100BA5234 /* Config.plist in Resources */,
 				2BA72EF21C7DC8F0006105B6 /* Assets.xcassets in Resources */,
 				2B456FA11C7F5C4400C240A5 /* STMenuTableHeaderView.xib in Resources */,
+				2B9882BD1C81E4D100BA5234 /* cvv_no.jpg in Resources */,
 				2B456FB11C7F80B100C240A5 /* STProductInfoTableViewCell.xib in Resources */,
 				2BA72EF01C7DC8F0006105B6 /* Main.storyboard in Resources */,
+				2B9882B01C81E4D100BA5234 /* CreditCardCell_iPad.xib in Resources */,
+				2B9882B41C81E4D100BA5234 /* StoredCardCell_iPad.xib in Resources */,
+				2B9882CD1C81F47200BA5234 /* STCartFooterView.xib in Resources */,
+				2B9882B31C81E4D100BA5234 /* PaymentModeViewController_iPad.xib in Resources */,
+				2B9882C11C81E4D100BA5234 /* sachin_book1.png in Resources */,
+				2B9882AC1C81E4D100BA5234 /* CashAndNetBankingCell.xib in Resources */,
+				2B9882BE1C81E4D100BA5234 /* inputBgDrop.png in Resources */,
+				2B9882B11C81E4D100BA5234 /* DebitCardCell_iPad.xib in Resources */,
+				2B9882B91C81E4D100BA5234 /* check.png in Resources */,
+				2B9882AD1C81E4D100BA5234 /* CashAndNetBankingCell_iPad.xib in Resources */,
+				2B9882BB1C81E4D100BA5234 /* close.png in Resources */,
+				2B9882C31C81E4D100BA5234 /* uncheck@2x.png in Resources */,
+				2B9882BA1C81E4D100BA5234 /* check@2x.png in Resources */,
+				2B9882AE1C81E4D100BA5234 /* CreditAndDebitCardCell.xib in Resources */,
+				2B9882B71C81E4D100BA5234 /* WebViewController.xib in Resources */,
 				2B456FB61C7F80E600C240A5 /* STProductInfo2TableViewCell.xib in Resources */,
 				2B456FBC1C7F810F00C240A5 /* STProductDescriptionTableViewCell.xib in Resources */,
 			);
@@ -628,6 +822,7 @@
 				2BFA1BB41C7E0966008C4833 /* STSignUpViewController.m in Sources */,
 				2BFA1B9F1C7E0574008C4833 /* STProductViewController.m in Sources */,
 				2BFA1BA21C7E058B008C4833 /* STProductDetailViewController.m in Sources */,
+				2B98821D1C81B58A00BA5234 /* STCartTableViewCell.m in Sources */,
 				2B456F951C7F558900C240A5 /* STRootViewController.m in Sources */,
 				2BFA1BD21C7E3118008C4833 /* STProductCategoryCollectionViewCell.m in Sources */,
 				2B456F901C7F550D00C240A5 /* UIImage+REFrostedViewController.m in Sources */,
@@ -639,6 +834,7 @@
 				2BFA1BB71C7E09AA008C4833 /* STProductCategoriesViewController.m in Sources */,
 				2B456FB01C7F80B100C240A5 /* STProductInfoTableViewCell.m in Sources */,
 				2BA72EEA1C7DC8F0006105B6 /* STAppDelegate.m in Sources */,
+				2B9882B61C81E4D100BA5234 /* TIMERUIApplication.m in Sources */,
 				2BFA1B981C7E0451008C4833 /* STDashboardViewController.m in Sources */,
 				2B456F911C7F550D00C240A5 /* UIView+REFrostedViewController.m in Sources */,
 				2B456F9B1C7F579C00C240A5 /* STNavigationController.m in Sources */,
@@ -648,6 +844,7 @@
 				2BA72EE71C7DC8F0006105B6 /* main.m in Sources */,
 				2BFA1BD81C7E3A28008C4833 /* STProductListCollectionViewCell.m in Sources */,
 				2B456FAB1C7F77C600C240A5 /* STUtility.m in Sources */,
+				2B9882C41C81E4D100BA5234 /* ReadMe.md in Sources */,
 				2BFA1B7B1C7DFF52008C4833 /* STGlobalCacheManager.m in Sources */,
 				2BFA1BBD1C7E0A21008C4833 /* STCartViewController.m in Sources */,
 				2BFA1BC81C7E0DCA008C4833 /* STHttpRequest.m in Sources */,
@@ -663,6 +860,7 @@
 				2BFA1B871C7E0121008C4833 /* STConstants.m in Sources */,
 				2BFA1BCF1C7E30F6008C4833 /* STProductCategoryHeaderCollectionReusableView.m in Sources */,
 				2B456FA61C7F602100C240A5 /* STMenuUserInfoTableHeaderView.m in Sources */,
+				2B9882D01C81F49700BA5234 /* STCartFooterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,6 +1004,13 @@
 				INFOPLIST_FILE = SublimeTea/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "./**/**";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-w",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Atechtron.SublimeTea;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -819,6 +1024,13 @@
 				INFOPLIST_FILE = SublimeTea/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "./**/**";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-w",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Atechtron.SublimeTea;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;

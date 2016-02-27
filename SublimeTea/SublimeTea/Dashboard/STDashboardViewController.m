@@ -117,4 +117,8 @@
     //
     [self.frostedViewController presentMenuViewController];
 }
+
+- (IBAction)cartButtonAction:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"carViewFromDashboardSegue" sender:self];
+}
 @end

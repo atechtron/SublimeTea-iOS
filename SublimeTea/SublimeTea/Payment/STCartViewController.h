@@ -10,4 +10,5 @@
 
 @interface STCartViewController : STViewController
 
+@property (weak, nonatomic)IBOutlet UITableView *tableView;
 @end
