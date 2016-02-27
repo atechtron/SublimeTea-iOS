@@ -77,31 +77,18 @@
     // return UIEdgeInsetsMake(0,8,0,8);  // top, left, bottom, right
     return UIEdgeInsetsMake(0,0,0,0);  // top, left, bottom, right
 }
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    CGSize size = CGSizeZero;
-//    
-//    CGFloat collHeight = self.view.frame.size.height;
-//    CGFloat collWidth = self.view.frame.size.width;
-//    
-//    switch (indexPath.row) {
-//        case 0:
-//        {
-//            size = CGSizeMake(collWidth, collHeight/2);
-//        }break;
-//            
-//        case 1:
-//        {
-//            size = CGSizeMake(collWidth, collHeight/5);
-//        }break;
-//            
-//        default:{
-//            size = CGSizeMake((collWidth/2)-3, collHeight/5);
-//        }
-//            break;
-//    }
-//    
-//    return size;
-//}
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGSize size = CGSizeZero;
+    if (self.view.bounds.size.width > self.view.bounds.size.height) {
+        // landscape
+       size = CGSizeMake(collectionView.frame.size.width/3-.5, 150);
+    }else {
+        //potrait
+     size = CGSizeMake(collectionView.frame.size.width/2-.5, 150);
+    }
+    
+    return size;
+}
 //- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
 //    return UIEdgeInsetsMake(0, 0, 0, 0);
 //}
