@@ -438,9 +438,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="CxJ-zO-NU3">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="CxJ-zO-NU3">
+                                <rect key="frame" x="20" y="64" width="560" height="536"/>
+                                <color key="backgroundColor" red="0.60000002379999995" green="0.40000000600000002" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="3Y5-ph-Ae8">
                                     <size key="itemSize" width="104" height="117"/>
                                     <size key="headerReferenceSize" width="50" height="50"/>
@@ -457,9 +457,6 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QCi-YA-cwo">
                                                     <rect key="frame" x="11" y="0.0" width="80" height="80"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="QCi-YA-cwo" secondAttribute="height" multiplier="1:1" id="vNV-Xg-sY4"/>
-                                                    </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7B-ec-PMo">
                                                     <rect key="frame" x="4" y="81" width="95" height="36"/>
@@ -473,6 +470,7 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="QCi-YA-cwo" firstAttribute="top" secondItem="mCG-qi-Fc6" secondAttribute="top" id="1Lu-DT-ulg"/>
                                             <constraint firstItem="b7B-ec-PMo" firstAttribute="leading" secondItem="mCG-qi-Fc6" secondAttribute="leading" constant="4" id="3tv-0E-bJc"/>
@@ -489,7 +487,7 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="productCategoryHeader" id="zh9-Uv-iGI" customClass="STProductCategoryHeaderCollectionReusableView">
-                                    <rect key="frame" x="0.0" y="64" width="600" height="50"/>
+                                    <rect key="frame" x="0.0" y="64" width="560" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MoD-Z0-i0C">
@@ -499,9 +497,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="MoD-Z0-i0C" firstAttribute="top" secondItem="zh9-Uv-iGI" secondAttribute="top" constant="8" id="CKB-dp-FPx"/>
-                                        <constraint firstAttribute="trailing" secondItem="MoD-Z0-i0C" secondAttribute="trailing" constant="8" id="gLW-fF-VEU"/>
+                                        <constraint firstAttribute="trailing" secondItem="MoD-Z0-i0C" secondAttribute="trailing" constant="-32" id="gLW-fF-VEU"/>
                                         <constraint firstAttribute="bottom" secondItem="MoD-Z0-i0C" secondAttribute="bottom" constant="8" id="lko-2B-aHn"/>
                                         <constraint firstItem="MoD-Z0-i0C" firstAttribute="leading" secondItem="zh9-Uv-iGI" secondAttribute="leading" constant="8" id="vu3-er-X3C"/>
                                     </constraints>
@@ -515,11 +514,11 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="oal-w6-z8p" firstAttribute="top" secondItem="CxJ-zO-NU3" secondAttribute="bottom" id="BWH-Q9-0j6"/>
-                            <constraint firstAttribute="trailing" secondItem="CxJ-zO-NU3" secondAttribute="trailing" id="FS1-O1-tMi"/>
-                            <constraint firstItem="CxJ-zO-NU3" firstAttribute="leading" secondItem="riw-He-guh" secondAttribute="leading" id="kXL-yc-R5k"/>
+                            <constraint firstAttribute="trailing" secondItem="CxJ-zO-NU3" secondAttribute="trailing" constant="20" id="FS1-O1-tMi"/>
+                            <constraint firstItem="CxJ-zO-NU3" firstAttribute="leading" secondItem="riw-He-guh" secondAttribute="leading" constant="20" id="kXL-yc-R5k"/>
                             <constraint firstItem="CxJ-zO-NU3" firstAttribute="top" secondItem="6UE-AY-MkP" secondAttribute="bottom" id="wXQ-Y4-tPa"/>
                         </constraints>
                     </view>
@@ -825,8 +824,8 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ruc-mZ-R3H">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="IVz-6j-Qb6">
+                                <color key="backgroundColor" red="0.93006234219999995" green="0.93006234219999995" blue="0.93006234219999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="IVz-6j-Qb6">
                                     <size key="itemSize" width="597" height="298"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -841,7 +840,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="_night_bg.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="E3z-lp-D2K">
-                                                    <rect key="frame" x="0.0" y="8" width="597" height="290"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="597" height="298"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -849,7 +848,7 @@
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="E3z-lp-D2K" secondAttribute="bottom" id="39d-Jk-VkK"/>
                                             <constraint firstAttribute="trailing" secondItem="E3z-lp-D2K" secondAttribute="trailing" id="eDP-gO-63N"/>
-                                            <constraint firstItem="E3z-lp-D2K" firstAttribute="top" secondItem="Zzr-gF-nMW" secondAttribute="top" constant="8" id="rz9-sr-TEI"/>
+                                            <constraint firstItem="E3z-lp-D2K" firstAttribute="top" secondItem="Zzr-gF-nMW" secondAttribute="top" id="rz9-sr-TEI"/>
                                             <constraint firstItem="E3z-lp-D2K" firstAttribute="leading" secondItem="Zzr-gF-nMW" secondAttribute="leading" id="tpF-kg-Ngy"/>
                                         </constraints>
                                     </collectionViewCell>
@@ -1128,7 +1127,7 @@
         <image name="chekboxUnselected" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CXD-3r-nry"/>
+        <segue reference="sDt-Dx-VQV"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.69532830662828282" green="0.45897068093401694" blue="0.22977050580445335" alpha="1" colorSpace="calibratedRGB"/>
 </document>

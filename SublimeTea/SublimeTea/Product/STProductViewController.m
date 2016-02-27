@@ -39,7 +39,7 @@
 #pragma mark-
 #pragma UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 10;
+    return 21;
 }
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -58,18 +58,18 @@
     headerView.titleLabel.text = @"Explore our Range of Teas";
     return headerView;
 }
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    CGSize size = CGSizeZero;
-//    if (self.view.bounds.size.width > self.view.bounds.size.height) {
-//        // landscape
-//        size = CGSizeMake(collectionView.frame.size.width/3-.5, 150);
-//    }else {
-//        //potrait
-//        size = CGSizeMake(collectionView.frame.size.width/2-.5, 150);
-//    }
-//    
-//    return size;
-//}
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGSize size = CGSizeZero;
+    if (self.view.bounds.size.width > self.view.bounds.size.height) {
+        // landscape
+        size = CGSizeMake(collectionView.frame.size.width/4-.5, 117);
+    }else {
+        //potrait
+        size = CGSizeMake(collectionView.frame.size.width/3-.5, 117);
+    }
+    
+    return size;
+}
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0.0;
 }

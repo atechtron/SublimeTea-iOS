@@ -111,6 +111,11 @@
 }
 
 - (void)continueShoppingButtonAction {
+    NSArray *viewControllerArray = self.navigationController.viewControllers;
+    [self.navigationController popToViewController:viewControllerArray[2] animated:YES];
+}
+
+- (void)checkoutButtonAction {
     float MERCHANT_PRICE = 1;
     NSString *MERCHANT_REFERENCENO = @"";
     
@@ -153,10 +158,6 @@
     //      paymentView.dynamicKeyValueDictionary = dynamicKeyValueDictionary;
     
     [self.navigationController pushViewController:paymentView animated:NO];
-}
-
-- (void)checkoutButtonAction {
-
 }
 
 @end

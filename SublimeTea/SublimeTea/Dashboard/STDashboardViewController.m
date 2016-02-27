@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.collectionView.scrollEnabled = NO;
     // Do any additional setup after loading the view.
 }
 
@@ -64,11 +65,11 @@
         
         case 1:
         {
-            size = CGSizeMake(collWidth, collHeight/5);
+            size = CGSizeMake(collWidth, collHeight/4);
         }break;
             
         default:{
-            size = CGSizeMake((collWidth/2)-3, collHeight/5);
+            size = CGSizeMake((collWidth/2)-3, collHeight/4);
         }
             break;
     }
@@ -84,17 +85,17 @@
     return UIEdgeInsetsMake(0, 0, 0, 0);
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 5.01f;
+    return 2;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 5.01f;
+    return 3.0f;
 }
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-    return CGSizeZero;
-}
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    return CGSizeZero;
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+//    return CGSizeZero;
+//}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+//    return CGSizeZero;
+//}
 
 
 #pragma mark -
