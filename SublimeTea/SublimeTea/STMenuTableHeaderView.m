@@ -14,12 +14,12 @@
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
-    if (_section == 2) {
+//    if (_section == 2) {
         UITapGestureRecognizer *singleFingerTap =
         [[UITapGestureRecognizer alloc] initWithTarget:self
                                                 action:@selector(tapAction:)];
         [self addGestureRecognizer:singleFingerTap];
-    }
+//    }
 }
 
 

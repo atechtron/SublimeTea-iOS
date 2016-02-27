@@ -69,6 +69,9 @@
 		2BA72EF51C7DC8F0006105B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BA72EF31C7DC8F0006105B6 /* LaunchScreen.storyboard */; };
 		2BA72F001C7DC8F0006105B6 /* SublimeTeaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EFF1C7DC8F0006105B6 /* SublimeTeaTests.m */; };
 		2BA72F0B1C7DC8F0006105B6 /* SublimeTeaUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72F0A1C7DC8F0006105B6 /* SublimeTeaUITests.m */; };
+		2BC0E50A1C823125001085F8 /* STOrderListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0E5091C823125001085F8 /* STOrderListHeaderView.m */; };
+		2BC0E50D1C823151001085F8 /* STOderListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0E50C1C823151001085F8 /* STOderListTableViewCell.m */; };
+		2BC0E5101C8231A1001085F8 /* STOrderListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BC0E50F1C8231A1001085F8 /* STOrderListHeaderView.xib */; };
 		2BFA1B751C7DFEC1008C4833 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA1B741C7DFEC1008C4833 /* MBProgressHUD.m */; };
 		2BFA1B7B1C7DFF52008C4833 /* STGlobalCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA1B7A1C7DFF52008C4833 /* STGlobalCacheManager.m */; };
 		2BFA1B841C7E00E3008C4833 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA1B831C7E00E3008C4833 /* XMLDictionary.m */; };
@@ -214,6 +217,11 @@
 		2BA72F061C7DC8F0006105B6 /* SublimeTeaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SublimeTeaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA72F0A1C7DC8F0006105B6 /* SublimeTeaUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SublimeTeaUITests.m; sourceTree = "<group>"; };
 		2BA72F0C1C7DC8F0006105B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BC0E5081C823125001085F8 /* STOrderListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STOrderListHeaderView.h; path = User/Orders/STOrderListHeaderView.h; sourceTree = "<group>"; };
+		2BC0E5091C823125001085F8 /* STOrderListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STOrderListHeaderView.m; path = User/Orders/STOrderListHeaderView.m; sourceTree = "<group>"; };
+		2BC0E50B1C823151001085F8 /* STOderListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STOderListTableViewCell.h; path = User/Orders/STOderListTableViewCell.h; sourceTree = "<group>"; };
+		2BC0E50C1C823151001085F8 /* STOderListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STOderListTableViewCell.m; path = User/Orders/STOderListTableViewCell.m; sourceTree = "<group>"; };
+		2BC0E50F1C8231A1001085F8 /* STOrderListHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = STOrderListHeaderView.xib; path = User/Orders/STOrderListHeaderView.xib; sourceTree = "<group>"; };
 		2BFA1B731C7DFEC1008C4833 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = Utilities/MBProgressHUD.h; sourceTree = "<group>"; };
 		2BFA1B741C7DFEC1008C4833 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = Utilities/MBProgressHUD.m; sourceTree = "<group>"; };
 		2BFA1B791C7DFF52008C4833 /* STGlobalCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STGlobalCacheManager.h; path = Utilities/STGlobalCacheManager.h; sourceTree = "<group>"; };
@@ -475,6 +483,14 @@
 			path = SublimeTeaUITests;
 			sourceTree = "<group>";
 		};
+		2BC0E50E1C82316E001085F8 /* OrederList */ = {
+			isa = PBXGroup;
+			children = (
+				2BC0E50F1C8231A1001085F8 /* STOrderListHeaderView.xib */,
+			);
+			name = OrederList;
+			sourceTree = "<group>";
+		};
 		2BFA1B6C1C7DFD69008C4833 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -522,6 +538,7 @@
 		2BFA1B6F1C7DFDCE008C4833 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2BC0E50E1C82316E001085F8 /* OrederList */,
 				2B9882CB1C81F44200BA5234 /* Cart */,
 				2B456FAC1C7F807700C240A5 /* productDetail */,
 				2BA72EEE1C7DC8F0006105B6 /* Main.storyboard */,
@@ -603,6 +620,10 @@
 				2BFA1BB91C7E09EA008C4833 /* STOrderConfirmationViewController.m */,
 				2BFA1BA41C7E0604008C4833 /* STOrderListViewController.h */,
 				2BFA1BA51C7E0604008C4833 /* STOrderListViewController.m */,
+				2BC0E5081C823125001085F8 /* STOrderListHeaderView.h */,
+				2BC0E5091C823125001085F8 /* STOrderListHeaderView.m */,
+				2BC0E50B1C823151001085F8 /* STOderListTableViewCell.h */,
+				2BC0E50C1C823151001085F8 /* STOderListTableViewCell.m */,
 			);
 			name = Orders;
 			sourceTree = "<group>";
@@ -780,6 +801,7 @@
 				2B9882B01C81E4D100BA5234 /* CreditCardCell_iPad.xib in Resources */,
 				2B9882B41C81E4D100BA5234 /* StoredCardCell_iPad.xib in Resources */,
 				2B9882CD1C81F47200BA5234 /* STCartFooterView.xib in Resources */,
+				2BC0E5101C8231A1001085F8 /* STOrderListHeaderView.xib in Resources */,
 				2B9882B31C81E4D100BA5234 /* PaymentModeViewController_iPad.xib in Resources */,
 				2B9882C11C81E4D100BA5234 /* sachin_book1.png in Resources */,
 				2B9882AC1C81E4D100BA5234 /* CashAndNetBankingCell.xib in Resources */,
@@ -823,6 +845,7 @@
 				2BFA1B9F1C7E0574008C4833 /* STProductViewController.m in Sources */,
 				2BFA1BA21C7E058B008C4833 /* STProductDetailViewController.m in Sources */,
 				2B98821D1C81B58A00BA5234 /* STCartTableViewCell.m in Sources */,
+				2BC0E50D1C823151001085F8 /* STOderListTableViewCell.m in Sources */,
 				2B456F951C7F558900C240A5 /* STRootViewController.m in Sources */,
 				2BFA1BD21C7E3118008C4833 /* STProductCategoryCollectionViewCell.m in Sources */,
 				2B456F901C7F550D00C240A5 /* UIImage+REFrostedViewController.m in Sources */,
@@ -835,6 +858,7 @@
 				2B456FB01C7F80B100C240A5 /* STProductInfoTableViewCell.m in Sources */,
 				2BA72EEA1C7DC8F0006105B6 /* STAppDelegate.m in Sources */,
 				2B9882B61C81E4D100BA5234 /* TIMERUIApplication.m in Sources */,
+				2BC0E50A1C823125001085F8 /* STOrderListHeaderView.m in Sources */,
 				2BFA1B981C7E0451008C4833 /* STDashboardViewController.m in Sources */,
 				2B456F911C7F550D00C240A5 /* UIView+REFrostedViewController.m in Sources */,
 				2B456F9B1C7F579C00C240A5 /* STNavigationController.m in Sources */,

@@ -9,5 +9,8 @@
 #import "STViewController.h"
 
 @interface STOrderListViewController : STViewController
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *continueShoppingButton;
 
+- (IBAction)continueShoppingButtonAction:(UIButton *)sender;
 @end

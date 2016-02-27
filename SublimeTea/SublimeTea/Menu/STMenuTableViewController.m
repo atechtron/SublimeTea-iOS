@@ -7,11 +7,15 @@
 //
 
 #import "STMenuTableViewController.h"
+#import "STNavigationController.h"
+
 #import "REFrostedViewController.h"
 #import "UIViewController+REFrostedViewController.h"
 #import "STMenuTableHeaderView.h"
 #import "STMenuTableViewCell.h"
 #import "STMenuUserInfoTableHeaderView.h"
+
+#import "STOrderListViewController.h"
 
 @interface STMenuTableViewController ()<STMenuTableHeaderViewDelegate>
 @property (strong, nonatomic)NSMutableArray *dataArr;
@@ -121,13 +125,52 @@
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
     }
+    STNavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
+    NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:navigationController.viewControllers];
+    switch (section) {
+        case 1: // Home
+            
+            break;
+        case 2: // Our Range
+        {
+            break;
+        }
+        case 3: // Our Recent Items
+            
+            break;
+        case 4: // Your Orders
+        {
+            STOrderListViewController *orderList = [self.storyboard instantiateViewControllerWithIdentifier:@"STOrderListViewController"];
+            [viewControllers addObject:orderList];
+            navigationController.viewControllers = viewControllers;
+            break;
+        }
+        case 5: // Your Account
+            
+            break;
+        case 6: // Customer Suppourt
+            
+            break;
+        case 7: // FAQ
+            
+            break;
+        case 8: // LogOut
+            [navigationController popToRootViewControllerAnimated:YES];
+            break;
+        default:
+            break;
+    }
+    if (section != 2) {
+        self.frostedViewController.contentViewController = navigationController;
+        [self.frostedViewController hideMenuViewController];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    DEMONavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
-//    
-//    if (indexPath.section == 0 && indexPath.row == 0) {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    STNavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
+    
+    //    if (indexPath.section == 0 && indexPath.row == 0) {
 //        DEMOHomeViewController *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"homeController"];
 //        navigationController.viewControllers = @[homeViewController];
 //    } else {

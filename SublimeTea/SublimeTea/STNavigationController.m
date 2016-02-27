@@ -26,7 +26,7 @@
     [self.navigationBar setBarTintColor:UIColorFromRGB(137, 90, 45, 1)];
     self.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-    
+
     /* Making NavigationBar background color to white */
 //    [self.navigationBar setBackgroundImage:[self getImageWithColor:UIColorFromRGB(137, 90, 45, 1)] forBarMetrics:UIBarMetricsDefault];
 
@@ -37,6 +37,23 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)addBarButtons {
+    self.navigationController.toolbarHidden = YES;
+    UIBarButtonItem *addAcc = [[UIBarButtonItem alloc]
+                               initWithTitle:@"Add"
+                               style:UIBarButtonItemStylePlain
+                               target:self
+                               action:@selector(addNewAcc)];
+    
+    UIBarButtonItem *delAcc = [[UIBarButtonItem alloc]
+                               initWithTitle:@"Del"
+                               style:UIBarButtonItemStylePlain
+                               target:self
+                               action:@selector(DeleteButtonAction)];
+    
+    NSArray *arrBtns = [[NSArray alloc]initWithObjects:addAcc,delAcc, nil];
+    self.navigationItem.rightBarButtonItems = arrBtns;
 }
 -(UIImage *)getImageWithColor:(UIColor *)color
 {
