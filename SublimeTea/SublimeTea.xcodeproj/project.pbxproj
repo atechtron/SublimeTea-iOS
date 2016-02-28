@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2B2DC0B21C82D25F00A29459 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B11C82D25F00A29459 /* JSBadgeView.m */; };
+		2B2DC0B41C82D76A00A29459 /* STCartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */; };
+		2B2DC0B71C82D7D300A29459 /* STCartHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B61C82D7D300A29459 /* STCartHeaderView.m */; };
 		2B456F8D1C7F550D00C240A5 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F821C7F550D00C240A5 /* RECommonFunctions.m */; };
 		2B456F8E1C7F550D00C240A5 /* REFrostedContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F841C7F550D00C240A5 /* REFrostedContainerViewController.m */; };
 		2B456F8F1C7F550D00C240A5 /* REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F861C7F550D00C240A5 /* REFrostedViewController.m */; };
@@ -117,6 +119,9 @@
 /* Begin PBXFileReference section */
 		2B2DC0B01C82D25F00A29459 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = "../../../../../Downloads/JSBadgeView-master/Pod/Classes/JSBadgeView.h"; sourceTree = "<group>"; };
 		2B2DC0B11C82D25F00A29459 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSBadgeView.m; path = "../../../../../Downloads/JSBadgeView-master/Pod/Classes/JSBadgeView.m"; sourceTree = "<group>"; };
+		2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCartHeaderView.xib; sourceTree = "<group>"; };
+		2B2DC0B51C82D7D300A29459 /* STCartHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STCartHeaderView.h; path = Payment/STCartHeaderView.h; sourceTree = "<group>"; };
+		2B2DC0B61C82D7D300A29459 /* STCartHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STCartHeaderView.m; path = Payment/STCartHeaderView.m; sourceTree = "<group>"; };
 		2B456F811C7F550D00C240A5 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
 		2B456F821C7F550D00C240A5 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
 		2B456F831C7F550D00C240A5 /* REFrostedContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedContainerViewController.h; sourceTree = "<group>"; };
@@ -424,6 +429,7 @@
 			isa = PBXGroup;
 			children = (
 				2B9882CC1C81F47200BA5234 /* STCartFooterView.xib */,
+				2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */,
 			);
 			name = Cart;
 			sourceTree = "<group>";
@@ -662,6 +668,8 @@
 				2BFA1BBC1C7E0A21008C4833 /* STCartViewController.m */,
 				2B9882CE1C81F49700BA5234 /* STCartFooterView.h */,
 				2B9882CF1C81F49700BA5234 /* STCartFooterView.m */,
+				2B2DC0B51C82D7D300A29459 /* STCartHeaderView.h */,
+				2B2DC0B61C82D7D300A29459 /* STCartHeaderView.m */,
 			);
 			name = Payment;
 			sourceTree = "<group>";
@@ -817,6 +825,7 @@
 				2BC0E5101C8231A1001085F8 /* STOrderListHeaderView.xib in Resources */,
 				2B9882B31C81E4D100BA5234 /* PaymentModeViewController_iPad.xib in Resources */,
 				2B9882C11C81E4D100BA5234 /* sachin_book1.png in Resources */,
+				2B2DC0B41C82D76A00A29459 /* STCartHeaderView.xib in Resources */,
 				2B9882AC1C81E4D100BA5234 /* CashAndNetBankingCell.xib in Resources */,
 				2B9882BE1C81E4D100BA5234 /* inputBgDrop.png in Resources */,
 				2B9882B11C81E4D100BA5234 /* DebitCardCell_iPad.xib in Resources */,
@@ -891,6 +900,7 @@
 				2BFA1B911C7E03B2008C4833 /* STForgotPasswordViewController.m in Sources */,
 				2BFA1B751C7DFEC1008C4833 /* MBProgressHUD.m in Sources */,
 				2B456F8E1C7F550D00C240A5 /* REFrostedContainerViewController.m in Sources */,
+				2B2DC0B71C82D7D300A29459 /* STCartHeaderView.m in Sources */,
 				2BFA1BAA1C7E07F3008C4833 /* STUserProfileViewController.m in Sources */,
 				2B456F981C7F570E00C240A5 /* STMenuTableViewController.m in Sources */,
 				2B456FB51C7F80E600C240A5 /* STProductInfo2TableViewCell.m in Sources */,

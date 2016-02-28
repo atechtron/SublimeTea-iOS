@@ -9,6 +9,7 @@
 #import "STCartViewController.h"
 #import "STCartTableViewCell.h"
 #import "STCartFooterView.h"
+#import "STCartHeaderView.h"
 
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <netdb.h>
@@ -25,7 +26,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"STCartFooterView" bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:@"STCartFooterView"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"STCartHeaderView" bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:@"STCartHeaderView"];
+    
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
@@ -103,10 +107,17 @@
     
     return footerView;
 }
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    STCartHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STCartHeaderView"];
+    headerView.titleLabel.text = @"Our Cart";
+    return headerView;
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 77;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 40;
+}
 - (void)checkBoxAction:(UIButton *)sender {
     
 }

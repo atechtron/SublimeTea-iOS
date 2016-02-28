@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="JXG-84-Qm0" customClass="STCartHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="36"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="55B-y8-D0y">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="36"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Our Cart" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B3x-rF-Xbp">
+                            <rect key="frame" x="8" y="8" width="584" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="B3x-rF-Xbp" secondAttribute="bottom" constant="7" id="8wM-FH-JxA"/>
+                        <constraint firstAttribute="trailing" secondItem="B3x-rF-Xbp" secondAttribute="trailing" constant="8" id="QDK-Ek-yml"/>
+                        <constraint firstItem="B3x-rF-Xbp" firstAttribute="leading" secondItem="55B-y8-D0y" secondAttribute="leading" constant="8" id="eho-Kb-dlX"/>
+                        <constraint firstItem="B3x-rF-Xbp" firstAttribute="top" secondItem="55B-y8-D0y" secondAttribute="top" constant="8" id="xDP-5M-K3Q"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="55B-y8-D0y" secondAttribute="trailing" id="OPx-iu-kbs"/>
+                <constraint firstItem="55B-y8-D0y" firstAttribute="leading" secondItem="JXG-84-Qm0" secondAttribute="leading" id="jD2-7v-sFa"/>
+                <constraint firstItem="55B-y8-D0y" firstAttribute="top" secondItem="JXG-84-Qm0" secondAttribute="top" id="jDd-pA-eUa"/>
+                <constraint firstAttribute="bottom" secondItem="55B-y8-D0y" secondAttribute="bottom" id="mK7-ee-4kj"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="titleLabel" destination="B3x-rF-Xbp" id="lki-Xa-CZN"/>
+            </connections>
+            <point key="canvasLocation" x="845" y="-225"/>
+        </view>
+    </objects>
+</document>
