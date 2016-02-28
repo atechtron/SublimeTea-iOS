@@ -42,6 +42,25 @@
                               delegate:nil
                      cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
 }
+
++ (NSString *)applyCurrencyFormat:(NSString *)priceStr
+{
+    NSString *formattedCurrencyTxt;
+    if (priceStr) {
+        
+        NSNumberFormatter *formatterCurrency;
+        formatterCurrency = [[NSNumberFormatter alloc] init];
+        formatterCurrency.numberStyle = NSNumberFormatterCurrencyStyle;
+        [formatterCurrency setGroupingSize:3];
+        [formatterCurrency setMaximumFractionDigits:2];
+        [formatterCurrency setCurrencySymbol:@"₹"];
+        [formatterCurrency setGroupingSeparator:@","];
+        // NSLog(@"%@", @([budgetTxt doubleValue]));
+        formattedCurrencyTxt = [formatterCurrency stringFromNumber: @([priceStr doubleValue])];
+    }
+    return formattedCurrencyTxt;
+}
+
 //+(UIImage *)getImageWithColor:(UIColor *)color
 //{
 //    UIImage *img = [UIImage imageNamed:@"gray-border.png"];

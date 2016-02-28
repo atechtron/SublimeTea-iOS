@@ -14,4 +14,6 @@
 + (BOOL)isNetworkAvailable;
 
 + (void)showAlertForNoInternetConnectionWithMessage:(NSString *)message;
+
++ (NSString *)applyCurrencyFormat:(NSString *)priceStr;
 @end

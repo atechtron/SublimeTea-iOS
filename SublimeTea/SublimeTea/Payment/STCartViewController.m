@@ -11,6 +11,7 @@
 #import "STCartFooterView.h"
 #import "STCartHeaderView.h"
 #import "STProductCategoriesViewController.h"
+#import "STUtility.h"
 
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <netdb.h>
@@ -33,6 +34,10 @@
     
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
+    [self.view addGestureRecognizer:tap];
+
 }
 - (void)viewWillAppear:(BOOL)animated {
     
@@ -51,6 +56,7 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 -(void) ResponseNew:(NSNotification *)message
 {
     if ([message.name isEqualToString:@"FAILED_DICT"])
@@ -70,6 +76,10 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (void)viewDidTapped:(id)sender {
+    [self.view endEditing:YES];
+}
+
 #pragma mark-
 #pragma UITableViewDelegates
 
@@ -84,7 +94,7 @@
     STCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
     cell.titleLabel.text = [NSString stringWithFormat:@"Product Description %ld",indexPath.row +1];
     cell.descriptionLabel.text = @"Short product description ...";
-    cell.priceLabel.text = @"1500";
+    cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%@",@1500]];
     cell.porudctImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
     cell.qtyTextbox.layer.borderColor = [UIColor lightGrayColor].CGColor;
     cell.qtyTextbox.layer.borderWidth = .8;

@@ -22,6 +22,10 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationItem.hidesBackButton = YES;
+    
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
+//    [self.view addGestureRecognizer:tap];
+    
      [self addNavBarButtons];
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -33,8 +37,10 @@
     
     // Dispose of any resources that can be recreated.
 }
-
--(void)addNavBarButtons {
+- (void)viewDidTapped:(id)sender {
+    [self.view endEditing:YES];
+}
+- (void)addNavBarButtons {
     CGRect btnFrame = CGRectMake(0, 5, 50, 30);
     
     if (!self.hideLeftBarItems) {
