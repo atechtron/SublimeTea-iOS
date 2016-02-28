@@ -8,9 +8,40 @@
 //
 
 #import "STUtility.h"
+#import "STMacros.h"
+#import "Reachability.h"
+
+@interface STUtility()
+{
+    BOOL isShowingNoNetworkAlert;
+}
+@end
 
 @implementation STUtility
 
++ (BOOL)isNetworkAvailable
+{
+    BOOL networkAvailable = YES;
+    Reachability *reachability = [Reachability reachabilityWithHostName:@"www.google.com"];
+    if([reachability currentReachabilityStatus] == NotReachable)
+    {
+        [self showAlertForNoInternetConnectionWithMessage:nil];
+        networkAvailable = NO;
+    }
+    return networkAvailable;
+}
+
++ (void)showAlertForNoInternetConnectionWithMessage:(NSString *)message
+{
+    NSString *msg = NO_INTERNET_MSG;
+    if (message.length) {
+        msg = message;
+    }
+    [[[UIAlertView alloc] initWithTitle:@"ERROR"
+                               message:msg
+                              delegate:nil
+                     cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+}
 //+(UIImage *)getImageWithColor:(UIColor *)color
 //{
 //    UIImage *img = [UIImage imageNamed:@"gray-border.png"];

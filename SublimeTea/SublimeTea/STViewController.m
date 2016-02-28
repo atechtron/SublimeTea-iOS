@@ -9,6 +9,7 @@
 #import "STViewController.h"
 #import "JSBadgeView.h"
 #import "STCartViewController.h"
+#import "STUserProfileViewController.h"
 
 @interface STViewController ()
 
@@ -117,6 +118,8 @@
 }
 - (void)accountButtonAction:(id)sender {
     
+    STUserProfileViewController *accountViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STUserProfileViewController"];
+    [self.navigationController pushViewController:accountViewController animated:YES];
 }
 - (void)cartButtonAction:(id)sender {
     STCartViewController *cartViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STCartViewController"];

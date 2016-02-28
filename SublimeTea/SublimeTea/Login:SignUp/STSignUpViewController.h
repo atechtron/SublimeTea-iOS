@@ -10,11 +10,12 @@
 
 @interface STSignUpViewController : STViewController
 @property (weak, nonatomic) IBOutlet UILabel *errorLabel;
-@property (weak, nonatomic) IBOutlet UITextField *emailAddressLabel;
-@property (weak, nonatomic) IBOutlet UITextField *passwordLabel;
-@property (weak, nonatomic) IBOutlet UITextField *confirmPasswordLabel;
-@property (weak, nonatomic) IBOutlet UITextField *mobileNumberLabel;
+@property (weak, nonatomic) IBOutlet UITextField *emailAddressTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *confirmPasswordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *mobileNumberTextField;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
+@property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
 
 - (IBAction)submitButtonAction:(UIButton *)sender;
 @end

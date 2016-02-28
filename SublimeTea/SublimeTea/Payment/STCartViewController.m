@@ -10,6 +10,7 @@
 #import "STCartTableViewCell.h"
 #import "STCartFooterView.h"
 #import "STCartHeaderView.h"
+#import "STProductCategoriesViewController.h"
 
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <netdb.h>
@@ -123,8 +124,15 @@
 }
 
 - (void)continueShoppingButtonAction {
+    
     NSArray *viewControllerArray = self.navigationController.viewControllers;
-    [self.navigationController popToViewController:viewControllerArray[2] animated:YES];
+    if (viewControllerArray.count > 3 && [viewControllerArray[3] isKindOfClass:[STProductCategoriesViewController class]]) {
+        [self.navigationController popToViewController:viewControllerArray[3] animated:YES];
+    }
+    else {
+        STProductCategoriesViewController *productCategoriesViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STProductCategoriesViewController"];
+        [self.navigationController pushViewController:productCategoriesViewController animated:YES];
+    }
 }
 
 - (void)checkoutButtonAction {

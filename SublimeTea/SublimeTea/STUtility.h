@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface STUtility : NSObject
 
++ (BOOL)isNetworkAvailable;
+
++ (void)showAlertForNoInternetConnectionWithMessage:(NSString *)message;
 @end
