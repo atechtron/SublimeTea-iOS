@@ -8,6 +8,7 @@
 
 #import "STViewController.h"
 
-@interface STProductViewController : STViewController
+@interface STProductViewController : STViewController<UICollectionViewDelegate, UICollectionViewDataSource>
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end

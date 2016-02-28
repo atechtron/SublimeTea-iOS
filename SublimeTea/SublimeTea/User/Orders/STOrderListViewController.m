@@ -7,8 +7,11 @@
 //
 
 #import "STOrderListViewController.h"
+#import "STOderListTableViewCell.h"
+#import "STOrderListHeaderView.h"
+#import "STDashboardViewController.h"
 
-@interface STOrderListViewController ()
+@interface STOrderListViewController ()<UITabBarDelegate, UITableViewDataSource>
 
 @end
 
@@ -16,7 +19,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"STOrderListHeaderView" bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:@"STOrderListHeaderView"];
+    self.tableView.estimatedRowHeight = 44;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,5 +39,48 @@
     // Pass the selected object to the new view controller.
 }
 */
+#pragma mark-
+#pragma UITableViewDelegates
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 10;
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+- ( UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellidentifier = @"orderListCell";
+    STOderListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
+    cell.titleLabel.text = @"GREEN LONG DING";
+    cell.descriptionLabel.text = @"This is a pure Green Tea. Fresh tender tea leaves are carefully processed to minimize oxidation and rolled using a very special process.";
+    cell.priceLabel.text = @"1500";
+    cell.imageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
+    cell.statusLabel.text = @"Status: Delivered";
+    cell.qtyLabel.text = @"QUANTITY: 2 (ITEMS)";
+
+    return cell;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    STOrderListHeaderView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderListHeaderView"];
+    footerView.titleLabel.text = @"Orders";
+    
+    return footerView;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 62;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.01f;
+}
+
+- (IBAction)continueShoppingButtonAction:(UIButton *)sender {
+    NSArray *viewControllerArray = self.navigationController.viewControllers;
+    if(viewControllerArray.count > 2) {
+        [self.navigationController popToViewController:viewControllerArray[2] animated:YES];
+    }
+    else {
+        STDashboardViewController *dashBoard = [self.storyboard instantiateViewControllerWithIdentifier:@"STDashboardViewController"];
+        [self.navigationController pushViewController:dashBoard animated:YES];
+    }
+}
 @end

@@ -8,6 +8,12 @@
 
 #import "STViewController.h"
 
-@interface STDashboardViewController : STViewController
+@interface STDashboardViewController : STViewController<UICollectionViewDataSource, UICollectionViewDelegate>
+@property (weak, nonatomic) IBOutlet UIButton *navigationBackButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *menuButton;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+- (IBAction)navBackButtonAction:(id)sender;
+- (IBAction)menuButton:(UIButton *)sender;
 
+- (IBAction)cartButtonAction:(UIBarButtonItem *)sender;
 @end

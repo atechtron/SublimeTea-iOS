@@ -7,12 +7,14 @@
 //
 
 #import "STAppDelegate.h"
+#import "ResponseViewController.h"
+#import "STGlobalCacheManager.h"
 
-@interface STAppDelegate ()
+@interface STAppDelegate ()<UITextFieldDelegate>
 
 @end
 
-@implementation AppDelegate
+@implementation STAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -40,6 +42,50 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[STGlobalCacheManager defaultManager] clearGlobalCache];
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    if (!url)
+    {
+        return NO;
+    }
+    
+    NSArray *parameterArray = [[url absoluteString] componentsSeparatedByString:@"?"];
+    
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
+    
+    ResponseViewController *controller = (ResponseViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"ResponseViewController"];
+    
+    controller.transaction_id=[parameterArray objectAtIndex:1];
+    
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    [navigationController pushViewController:controller animated:YES];
+    
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if (!url)
+    {
+        return NO;
+    }
+    
+    NSArray *parameterArray = [[url absoluteString] componentsSeparatedByString:@"?"];
+    
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
+    
+    ResponseViewController *controller = (ResponseViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"ResponseViewController"];
+    
+    controller.transaction_id = [parameterArray objectAtIndex:1];
+    
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    
+    [navigationController pushViewController:controller animated:YES];
+    
+    return YES;
 }
 
 @end

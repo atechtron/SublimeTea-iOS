@@ -15,6 +15,8 @@
 @implementation STSignUpViewController
 
 - (void)viewDidLoad {
+    self.menuButtonHidden = YES;
+    self.hideRightBarItems = YES;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -34,4 +36,7 @@
 }
 */
 
+
+- (IBAction)submitButtonAction:(UIButton *)sender {
+}
 @end
