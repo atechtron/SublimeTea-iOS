@@ -15,6 +15,8 @@
 @implementation STSignUpViewController
 
 - (void)viewDidLoad {
+    self.menuButtonHidden = YES;
+    self.hideRightBarItems = YES;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -33,6 +35,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 
 - (IBAction)submitButtonAction:(UIButton *)sender {
 }

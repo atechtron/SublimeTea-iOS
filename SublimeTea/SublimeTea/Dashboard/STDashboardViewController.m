@@ -15,6 +15,7 @@
 @implementation STDashboardViewController
 
 - (void)viewDidLoad {
+    self.backButtonHidden = YES;
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.collectionView.scrollEnabled = NO;

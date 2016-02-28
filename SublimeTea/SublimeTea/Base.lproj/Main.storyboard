@@ -4,7 +4,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -995,51 +994,9 @@
                             <constraint firstItem="BzN-Ne-33w" firstAttribute="top" secondItem="ruc-mZ-R3H" secondAttribute="bottom" id="oXG-af-1tg"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Vhl-lP-KTk">
-                        <leftBarButtonItems>
-                            <barButtonItem title="Back" id="d8l-18-4Hf">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vGG-E2-Q2v">
-                                    <rect key="frame" x="20" y="7" width="50" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="Back">
-                                        <color key="titleColor" red="0.95367347710000006" green="0.62949855629999996" blue="0.31514039500000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                </button>
-                                <connections>
-                                    <action selector="navBackButtonAction:" destination="Hxn-dh-9mw" id="csE-9n-sZw"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem id="c7S-av-Sym">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qHt-6k-wfh">
-                                    <rect key="frame" x="78" y="7" width="50" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="Menu">
-                                        <color key="titleColor" red="0.95367347710000006" green="0.62949855629999996" blue="0.31514039500000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="menuButton:" destination="Hxn-dh-9mw" eventType="touchUpInside" id="ueG-Vy-W8f"/>
-                                    </connections>
-                                </button>
-                            </barButtonItem>
-                        </leftBarButtonItems>
-                        <barButtonItem key="rightBarButtonItem" title="Cart" id="TOa-fY-79X">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4pf-pn-W72">
-                                <rect key="frame" x="530" y="7" width="50" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Cart"/>
-                                <connections>
-                                    <action selector="cartButtonAction:" destination="Hxn-dh-9mw" eventType="touchUpInside" id="mAg-VB-3js"/>
-                                </connections>
-                            </button>
-                            <connections>
-                                <action selector="cartButtonAction:" destination="Hxn-dh-9mw" id="uoY-Q5-rcq"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="Vhl-lP-KTk"/>
                     <connections>
                         <outlet property="collectionView" destination="ruc-mZ-R3H" id="sZd-Gr-WQi"/>
-                        <outlet property="menuButton" destination="c7S-av-Sym" id="oY2-cI-rVt"/>
-                        <outlet property="navigationBackButton" destination="vGG-E2-Q2v" id="9wl-ji-dzV"/>
                         <segue destination="pdb-GE-GUt" kind="push" identifier="productCategorySegue" id="FQA-OP-hVG"/>
                         <segue destination="6Mb-72-CF6" kind="push" identifier="carViewFromDashboardSegue" id="sDt-Dx-VQV"/>
                     </connections>
@@ -1255,7 +1212,7 @@
         <image name="chekboxUnselected" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6R8-jC-HyP"/>
+        <segue reference="sDt-Dx-VQV"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.69532830662828282" green="0.45897068093401694" blue="0.22977050580445335" alpha="1" colorSpace="calibratedRGB"/>
 </document>

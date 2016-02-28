@@ -25,12 +25,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self.tableView registerNib:[UINib nibWithNibName:@"STCartFooterView" bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:@"STCartFooterView"];
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
-- (void)viewWillAppear {
+- (void)viewWillAppear:(BOOL)animated {
+    
+    self.navigationController.navigationBarHidden = YES;
+    
     jsondict = [[NSMutableDictionary alloc]init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ResponseNew:) name:@"FAILED_DICT" object:nil];
     
@@ -89,7 +91,7 @@
     STCartFooterView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STCartFooterView"];
     footerView.topBorderView.backgroundColor = [UIColor blackColor];
     [footerView.continueShoppingButton addTarget:self action:@selector(continueShoppingButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [footerView.checkoutButton addTarget:self action:@selector(continueShoppingButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [footerView.checkoutButton addTarget:self action:@selector(checkoutButtonAction) forControlEvents:UIControlEventTouchUpInside];
     
     footerView.continueShoppingButton.layer.borderWidth = 1;
     footerView.continueShoppingButton.layer.borderColor = [UIColor blackColor].CGColor;

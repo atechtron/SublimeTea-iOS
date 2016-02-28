@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B2DC0B21C82D25F00A29459 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B11C82D25F00A29459 /* JSBadgeView.m */; };
 		2B456F8D1C7F550D00C240A5 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F821C7F550D00C240A5 /* RECommonFunctions.m */; };
 		2B456F8E1C7F550D00C240A5 /* REFrostedContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F841C7F550D00C240A5 /* REFrostedContainerViewController.m */; };
 		2B456F8F1C7F550D00C240A5 /* REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F861C7F550D00C240A5 /* REFrostedViewController.m */; };
@@ -114,6 +115,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B2DC0B01C82D25F00A29459 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = "../../../../../Downloads/JSBadgeView-master/Pod/Classes/JSBadgeView.h"; sourceTree = "<group>"; };
+		2B2DC0B11C82D25F00A29459 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSBadgeView.m; path = "../../../../../Downloads/JSBadgeView-master/Pod/Classes/JSBadgeView.m"; sourceTree = "<group>"; };
 		2B456F811C7F550D00C240A5 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
 		2B456F821C7F550D00C240A5 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
 		2B456F831C7F550D00C240A5 /* REFrostedContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedContainerViewController.h; sourceTree = "<group>"; };
@@ -296,6 +299,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B2DC0AF1C82D23E00A29459 /* Badge */ = {
+			isa = PBXGroup;
+			children = (
+				2B2DC0B01C82D25F00A29459 /* JSBadgeView.h */,
+				2B2DC0B11C82D25F00A29459 /* JSBadgeView.m */,
+			);
+			name = Badge;
+			sourceTree = "<group>";
+		};
 		2B456F7F1C7F54DA00C240A5 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -494,6 +506,7 @@
 		2BFA1B6C1C7DFD69008C4833 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				2B2DC0AF1C82D23E00A29459 /* Badge */,
 				2BFA1B7E1C7DFFD1008C4833 /* XMLParser */,
 				2BFA1B7D1C7DFFBC008C4833 /* LoadingIndicator */,
 				2BFA1B7C1C7DFFA5008C4833 /* CacheManager */,
@@ -849,6 +862,7 @@
 				2B456F951C7F558900C240A5 /* STRootViewController.m in Sources */,
 				2BFA1BD21C7E3118008C4833 /* STProductCategoryCollectionViewCell.m in Sources */,
 				2B456F901C7F550D00C240A5 /* UIImage+REFrostedViewController.m in Sources */,
+				2B2DC0B21C82D25F00A29459 /* JSBadgeView.m in Sources */,
 				2BA72EED1C7DC8F0006105B6 /* STViewController.m in Sources */,
 				2BFA1BBA1C7E09EA008C4833 /* STOrderConfirmationViewController.m in Sources */,
 				2BFA1BA61C7E0604008C4833 /* STOrderListViewController.m in Sources */,
