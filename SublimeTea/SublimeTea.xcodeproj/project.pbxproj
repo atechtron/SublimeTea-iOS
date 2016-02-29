@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B2DC0B21C82D25F00A29459 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B11C82D25F00A29459 /* JSBadgeView.m */; };
 		2B2DC0B41C82D76A00A29459 /* STCartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */; };
 		2B2DC0B71C82D7D300A29459 /* STCartHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B61C82D7D300A29459 /* STCartHeaderView.m */; };
 		2B2E57AF1C836FB900351F39 /* STOrderConfirmationHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2E57AE1C836FB900351F39 /* STOrderConfirmationHeaderView.m */; };
@@ -76,6 +75,7 @@
 		2BA72EF51C7DC8F0006105B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BA72EF31C7DC8F0006105B6 /* LaunchScreen.storyboard */; };
 		2BA72F001C7DC8F0006105B6 /* SublimeTeaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EFF1C7DC8F0006105B6 /* SublimeTeaTests.m */; };
 		2BA72F0B1C7DC8F0006105B6 /* SublimeTeaUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72F0A1C7DC8F0006105B6 /* SublimeTeaUITests.m */; };
+		2BB2F4291C8421960024BB26 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2F4281C8421960024BB26 /* JSBadgeView.m */; };
 		2BC0E50A1C823125001085F8 /* STOrderListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0E5091C823125001085F8 /* STOrderListHeaderView.m */; };
 		2BC0E50D1C823151001085F8 /* STOderListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0E50C1C823151001085F8 /* STOderListTableViewCell.m */; };
 		2BC0E5101C8231A1001085F8 /* STOrderListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BC0E50F1C8231A1001085F8 /* STOrderListHeaderView.xib */; };
@@ -121,8 +121,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2B2DC0B01C82D25F00A29459 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = "../../../../../Downloads/JSBadgeView-master/Pod/Classes/JSBadgeView.h"; sourceTree = "<group>"; };
-		2B2DC0B11C82D25F00A29459 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSBadgeView.m; path = "../../../../../Downloads/JSBadgeView-master/Pod/Classes/JSBadgeView.m"; sourceTree = "<group>"; };
 		2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCartHeaderView.xib; sourceTree = "<group>"; };
 		2B2DC0B51C82D7D300A29459 /* STCartHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STCartHeaderView.h; path = Payment/STCartHeaderView.h; sourceTree = "<group>"; };
 		2B2DC0B61C82D7D300A29459 /* STCartHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STCartHeaderView.m; path = Payment/STCartHeaderView.m; sourceTree = "<group>"; };
@@ -235,6 +233,8 @@
 		2BA72F061C7DC8F0006105B6 /* SublimeTeaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SublimeTeaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA72F0A1C7DC8F0006105B6 /* SublimeTeaUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SublimeTeaUITests.m; sourceTree = "<group>"; };
 		2BA72F0C1C7DC8F0006105B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BB2F4271C8421960024BB26 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = Utilities/JSBadgeView.h; sourceTree = "<group>"; };
+		2BB2F4281C8421960024BB26 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSBadgeView.m; path = Utilities/JSBadgeView.m; sourceTree = "<group>"; };
 		2BC0E5081C823125001085F8 /* STOrderListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STOrderListHeaderView.h; path = User/Orders/STOrderListHeaderView.h; sourceTree = "<group>"; };
 		2BC0E5091C823125001085F8 /* STOrderListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STOrderListHeaderView.m; path = User/Orders/STOrderListHeaderView.m; sourceTree = "<group>"; };
 		2BC0E50B1C823151001085F8 /* STOderListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STOderListTableViewCell.h; path = User/Orders/STOderListTableViewCell.h; sourceTree = "<group>"; };
@@ -317,8 +317,8 @@
 		2B2DC0AF1C82D23E00A29459 /* Badge */ = {
 			isa = PBXGroup;
 			children = (
-				2B2DC0B01C82D25F00A29459 /* JSBadgeView.h */,
-				2B2DC0B11C82D25F00A29459 /* JSBadgeView.m */,
+				2BB2F4271C8421960024BB26 /* JSBadgeView.h */,
+				2BB2F4281C8421960024BB26 /* JSBadgeView.m */,
 			);
 			name = Badge;
 			sourceTree = "<group>";
@@ -905,7 +905,6 @@
 				2B456F951C7F558900C240A5 /* STRootViewController.m in Sources */,
 				2BFA1BD21C7E3118008C4833 /* STProductCategoryCollectionViewCell.m in Sources */,
 				2B456F901C7F550D00C240A5 /* UIImage+REFrostedViewController.m in Sources */,
-				2B2DC0B21C82D25F00A29459 /* JSBadgeView.m in Sources */,
 				2B2E57AF1C836FB900351F39 /* STOrderConfirmationHeaderView.m in Sources */,
 				2BA72EED1C7DC8F0006105B6 /* STViewController.m in Sources */,
 				2BFA1BBA1C7E09EA008C4833 /* STOrderConfirmationViewController.m in Sources */,
@@ -932,6 +931,7 @@
 				2BFA1BBD1C7E0A21008C4833 /* STCartViewController.m in Sources */,
 				2BFA1BC81C7E0DCA008C4833 /* STHttpRequest.m in Sources */,
 				2B456F921C7F550D00C240A5 /* UIViewController+REFrostedViewController.m in Sources */,
+				2BB2F4291C8421960024BB26 /* JSBadgeView.m in Sources */,
 				2BFA1BC91C7E0DCA008C4833 /* Reachability.m in Sources */,
 				2BFA1B911C7E03B2008C4833 /* STForgotPasswordViewController.m in Sources */,
 				2BFA1B751C7DFEC1008C4833 /* MBProgressHUD.m in Sources */,
