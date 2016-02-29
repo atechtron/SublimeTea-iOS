@@ -10,4 +10,10 @@
 
 @interface STUserProfileViewController : STViewController
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *ordersButton;
+@property (weak, nonatomic) IBOutlet UIButton *saveChangesButton;
+- (IBAction)ordersButtonAction:(UIButton *)sender;
+- (IBAction)saveChangesButtonAction:(UIButton *)sender;
+
 @end
