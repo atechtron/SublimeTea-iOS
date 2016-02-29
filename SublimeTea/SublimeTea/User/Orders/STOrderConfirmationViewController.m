@@ -72,7 +72,7 @@
     cell.titleLabel.text = @"GREEN LONG DING";
     cell.descriptionLabel.text = @"This is a pure Green Tea. Fresh tender tea leaves are carefully processed to minimize oxidation and rolled using a very special process.";
     cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%d",200]];
-//    cell.prodImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
+    cell.prodImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
     cell.statusLabel.text = @"Status: Delivered";
     cell.qtyLabel.text = @"QUANTITY: 2 (ITEMS)";
     

@@ -38,23 +38,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)addBarButtons {
-    self.navigationController.toolbarHidden = YES;
-    UIBarButtonItem *addAcc = [[UIBarButtonItem alloc]
-                               initWithTitle:@"Add"
-                               style:UIBarButtonItemStylePlain
-                               target:self
-                               action:@selector(addNewAcc)];
-    
-    UIBarButtonItem *delAcc = [[UIBarButtonItem alloc]
-                               initWithTitle:@"Del"
-                               style:UIBarButtonItemStylePlain
-                               target:self
-                               action:@selector(DeleteButtonAction)];
-    
-    NSArray *arrBtns = [[NSArray alloc]initWithObjects:addAcc,delAcc, nil];
-    self.navigationItem.rightBarButtonItems = arrBtns;
-}
+
 -(UIImage *)getImageWithColor:(UIColor *)color
 {
     UIImage *img = [UIImage imageNamed:@"gray-border.png"];
