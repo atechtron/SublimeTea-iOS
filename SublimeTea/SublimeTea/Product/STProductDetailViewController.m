@@ -10,9 +10,10 @@
 #import "STProductInfoTableViewCell.h"
 #import "STProductInfo2TableViewCell.h"
 #import "STProductDescriptionTableViewCell.h"
+#import "STUtility.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface STProductDetailViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface STProductDetailViewController ()<UITableViewDataSource, UITableViewDelegate, STProductInfo2TableViewCellDelegate>
 
 @end
 
@@ -72,11 +73,13 @@
         {
             static NSString *cellidentifier = @"productAddToCartCell";
             STProductInfo2TableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
+            _cell.delegate = self;
             NSString *desc = @"This is a pure Green Tea. Fresh tender tea leaves are carefully processed to minimize oxidation and rolled using a very special process.";
             NSString *SKU = @"SKU: Tea007";
             NSString *categ = @"Categories: Pure Green Tea, Tea Bags";
             NSString *descriptionStr = [NSString stringWithFormat:@"%@\n%@\n%@",desc,SKU,categ];
             _cell.descriptionLabel.text = descriptionStr;
+            _cell.amountLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%d",290]];
             _cell.qtyLabel.text = @"290";
             _cell.qtyLabel.text = [NSString stringWithFormat:@"Qty\n%d",2];
             _cell.qtyLabel.backgroundColor = [UIColor orangeColor];
@@ -84,6 +87,7 @@
             _cell.qtyLabel.layer.cornerRadius = _cell.qtyLabel.bounds.size.height/2;
             _cell.qtyLabel.clipsToBounds = YES;
             _cell.qtyLabel.layer.borderColor = [UIColor clearColor].CGColor;
+            _cell.addToCartButton.tag = indexPath.row;
             
             cell = _cell;
 
@@ -106,4 +110,7 @@
     return cell;
 }
 
+- (void)addToCartClicked:(NSInteger)index {
+    [self performSegueWithIdentifier:@"carViewFromProductDetailSegue" sender:self];
+}
 @end

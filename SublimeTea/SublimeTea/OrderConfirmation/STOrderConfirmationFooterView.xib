@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="WI4-BS-0Ch" customClass="STOrderConfirmationFooterView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-u7-lVn">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ebu-Zd-fya">
+                            <rect key="frame" x="84" y="25" width="175" height="30"/>
+                            <state key="normal" title="Orders"/>
+                            <connections>
+                                <action selector="ordersButtonAction:" destination="WI4-BS-0Ch" eventType="touchUpInside" id="9Ti-LS-xwe"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7GI-Fv-AiM">
+                            <rect key="frame" x="341" y="25" width="175" height="30"/>
+                            <state key="normal" title="Continue Shopping"/>
+                            <connections>
+                                <action selector="continueShoppingButtonAction:" destination="WI4-BS-0Ch" eventType="touchUpInside" id="syw-JP-cj8"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Ebu-Zd-fya" firstAttribute="top" secondItem="RC8-u7-lVn" secondAttribute="top" constant="25" id="06j-LO-aKZ"/>
+                        <constraint firstItem="7GI-Fv-AiM" firstAttribute="leading" secondItem="Ebu-Zd-fya" secondAttribute="trailing" constant="82" id="Atb-Wv-Wxz"/>
+                        <constraint firstItem="Ebu-Zd-fya" firstAttribute="width" secondItem="7GI-Fv-AiM" secondAttribute="width" id="LQ9-AL-bp0"/>
+                        <constraint firstItem="Ebu-Zd-fya" firstAttribute="height" secondItem="7GI-Fv-AiM" secondAttribute="height" id="LpZ-6D-rIn"/>
+                        <constraint firstItem="7GI-Fv-AiM" firstAttribute="top" secondItem="RC8-u7-lVn" secondAttribute="top" constant="25" id="LvU-MN-zPy"/>
+                        <constraint firstAttribute="bottom" secondItem="7GI-Fv-AiM" secondAttribute="bottom" constant="25" id="V1M-VF-XfW"/>
+                        <constraint firstItem="Ebu-Zd-fya" firstAttribute="leading" secondItem="RC8-u7-lVn" secondAttribute="leading" constant="84" id="X5T-Xi-YLu"/>
+                        <constraint firstAttribute="bottom" secondItem="Ebu-Zd-fya" secondAttribute="bottom" constant="25" id="mJ7-ok-cwx"/>
+                        <constraint firstAttribute="trailing" secondItem="7GI-Fv-AiM" secondAttribute="trailing" constant="84" id="nZo-xE-5X3"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="RC8-u7-lVn" firstAttribute="leading" secondItem="WI4-BS-0Ch" secondAttribute="leading" id="Apa-Ge-7yn"/>
+                <constraint firstAttribute="bottom" secondItem="RC8-u7-lVn" secondAttribute="bottom" id="BWT-rU-CnK"/>
+                <constraint firstAttribute="trailing" secondItem="RC8-u7-lVn" secondAttribute="trailing" id="RZF-pO-RYv"/>
+                <constraint firstItem="RC8-u7-lVn" firstAttribute="top" secondItem="WI4-BS-0Ch" secondAttribute="top" id="eUX-CC-xs5"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="continueShoppingBUtton" destination="7GI-Fv-AiM" id="Vob-F2-coI"/>
+                <outlet property="ordersButton" destination="Ebu-Zd-fya" id="pXE-Lk-VRZ"/>
+            </connections>
+            <point key="canvasLocation" x="729" y="-140"/>
+        </view>
+    </objects>
+</document>

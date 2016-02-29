@@ -11,6 +11,9 @@
 #import "STCartViewController.h"
 #import "STUserProfileViewController.h"
 
+#import "STLoginViewController.h"
+#import "STSignUpViewController.h"
+
 @interface STViewController ()
 
 @end
@@ -43,6 +46,15 @@
 - (void)addNavBarButtons {
     CGRect btnFrame = CGRectMake(0, 5, 50, 30);
     
+    NSInteger count = self.navigationController.viewControllers.count;
+    if (count > 0) {
+        id topViewController = [self.navigationController viewControllers][count-1];
+        if ([topViewController isKindOfClass:[STLoginViewController class]] || [topViewController isKindOfClass:[STSignUpViewController class]]) {
+            self.backButtonHidden = YES;
+        }
+    }
+    
+    
     if (!self.hideLeftBarItems) {
         // Add left bar buttons
         [self addLeftBarItemsWithFrame:btnFrame];
@@ -52,9 +64,6 @@
         // Add right bar buttons
         [self addRightBarItemsWithFrame:btnFrame];
     }
-    
-    
-    
 }
 
 - (void)addLeftBarItemsWithFrame:(CGRect)btnFrame {

@@ -16,6 +16,9 @@
 #import "STMenuUserInfoTableHeaderView.h"
 
 #import "STOrderListViewController.h"
+#import "STDashboardViewController.h"
+#import "STProductCategoriesViewController.h"
+#import "STUserProfileViewController.h"
 
 @interface STMenuTableViewController ()<STMenuTableHeaderViewDelegate>
 @property (strong, nonatomic)NSMutableArray *dataArr;
@@ -129,10 +132,17 @@
     NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:navigationController.viewControllers];
     switch (section) {
         case 1: // Home
-            
+        {
+            STDashboardViewController *dashBoard = [self.storyboard instantiateViewControllerWithIdentifier:@"STDashboardViewController"];
+            [viewControllers addObject:dashBoard];
+            navigationController.viewControllers = viewControllers;
             break;
+        }
         case 2: // Our Range
         {
+//            STProductCategoriesViewController *productCategories = [self.storyboard instantiateViewControllerWithIdentifier:@"STProductCategoriesViewController"];
+//            [viewControllers addObject:productCategories];
+//            navigationController.viewControllers = viewControllers;
             break;
         }
         case 3: // Our Recent Items
@@ -146,8 +156,12 @@
             break;
         }
         case 5: // Your Account
-            
+        {
+            STUserProfileViewController *userProfile = [self.storyboard instantiateViewControllerWithIdentifier:@"STUserProfileViewController"];
+            [viewControllers addObject:userProfile];
+            navigationController.viewControllers = viewControllers;
             break;
+        }
         case 6: // Customer Suppourt
             
             break;

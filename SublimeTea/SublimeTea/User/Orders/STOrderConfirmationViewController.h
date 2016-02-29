@@ -9,5 +9,6 @@
 #import "STViewController.h"
 
 @interface STOrderConfirmationViewController : STViewController
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
