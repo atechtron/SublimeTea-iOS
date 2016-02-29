@@ -9,6 +9,10 @@
 #import "STViewController.h"
 #import "JSBadgeView.h"
 #import "STCartViewController.h"
+#import "STUserProfileViewController.h"
+
+#import "STLoginViewController.h"
+#import "STSignUpViewController.h"
 
 @interface STViewController ()
 
@@ -21,6 +25,10 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationItem.hidesBackButton = YES;
+    
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
+//    [self.view addGestureRecognizer:tap];
+    
      [self addNavBarButtons];
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -32,9 +40,20 @@
     
     // Dispose of any resources that can be recreated.
 }
-
--(void)addNavBarButtons {
+- (void)viewDidTapped:(id)sender {
+    [self.view endEditing:YES];
+}
+- (void)addNavBarButtons {
     CGRect btnFrame = CGRectMake(0, 5, 50, 30);
+    
+    NSInteger count = self.navigationController.viewControllers.count;
+    if (count > 0) {
+        id topViewController = [self.navigationController viewControllers][count-1];
+        if ([topViewController isKindOfClass:[STLoginViewController class]] || [topViewController isKindOfClass:[STSignUpViewController class]]) {
+            self.backButtonHidden = YES;
+        }
+    }
+    
     
     if (!self.hideLeftBarItems) {
         // Add left bar buttons
@@ -45,9 +64,6 @@
         // Add right bar buttons
         [self addRightBarItemsWithFrame:btnFrame];
     }
-    
-    
-    
 }
 
 - (void)addLeftBarItemsWithFrame:(CGRect)btnFrame {
@@ -117,6 +133,8 @@
 }
 - (void)accountButtonAction:(id)sender {
     
+    STUserProfileViewController *accountViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STUserProfileViewController"];
+    [self.navigationController pushViewController:accountViewController animated:YES];
 }
 - (void)cartButtonAction:(id)sender {
     STCartViewController *cartViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STCartViewController"];

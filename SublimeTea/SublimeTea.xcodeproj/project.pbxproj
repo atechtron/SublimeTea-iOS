@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B2DC0B21C82D25F00A29459 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B11C82D25F00A29459 /* JSBadgeView.m */; };
 		2B2DC0B41C82D76A00A29459 /* STCartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */; };
 		2B2DC0B71C82D7D300A29459 /* STCartHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B61C82D7D300A29459 /* STCartHeaderView.m */; };
+		2B2E57AF1C836FB900351F39 /* STOrderConfirmationHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2E57AE1C836FB900351F39 /* STOrderConfirmationHeaderView.m */; };
+		2B2E57B21C836FE200351F39 /* STOrderConfirmationHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B2E57B11C836FE200351F39 /* STOrderConfirmationHeaderView.xib */; };
+		2B2E57B41C836FFC00351F39 /* STOrderConfirmationFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B2E57B31C836FFC00351F39 /* STOrderConfirmationFooterView.xib */; };
+		2B2E57B71C83701000351F39 /* STOrderConfirmationFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2E57B61C83701000351F39 /* STOrderConfirmationFooterView.m */; };
+		2B3362961C8417CC0080ECD3 /* EBSLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B98827F1C81E4D100BA5234 /* EBSLib.a */; };
 		2B456F8D1C7F550D00C240A5 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F821C7F550D00C240A5 /* RECommonFunctions.m */; };
 		2B456F8E1C7F550D00C240A5 /* REFrostedContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F841C7F550D00C240A5 /* REFrostedContainerViewController.m */; };
 		2B456F8F1C7F550D00C240A5 /* REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B456F861C7F550D00C240A5 /* REFrostedViewController.m */; };
@@ -33,7 +37,6 @@
 		2B456FBC1C7F810F00C240A5 /* STProductDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B456FBA1C7F810F00C240A5 /* STProductDescriptionTableViewCell.xib */; };
 		2B98821D1C81B58A00BA5234 /* STCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B98821C1C81B58A00BA5234 /* STCartTableViewCell.m */; };
 		2B9882AA1C81E4D100BA5234 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B98827E1C81E4D100BA5234 /* Config.plist */; };
-		2B9882AB1C81E4D100BA5234 /* EBSLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B98827F1C81E4D100BA5234 /* EBSLib.a */; };
 		2B9882AC1C81E4D100BA5234 /* CashAndNetBankingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882831C81E4D100BA5234 /* CashAndNetBankingCell.xib */; };
 		2B9882AD1C81E4D100BA5234 /* CashAndNetBankingCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882851C81E4D100BA5234 /* CashAndNetBankingCell_iPad.xib */; };
 		2B9882AE1C81E4D100BA5234 /* CreditAndDebitCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882871C81E4D100BA5234 /* CreditAndDebitCardCell.xib */; };
@@ -72,6 +75,10 @@
 		2BA72EF51C7DC8F0006105B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BA72EF31C7DC8F0006105B6 /* LaunchScreen.storyboard */; };
 		2BA72F001C7DC8F0006105B6 /* SublimeTeaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EFF1C7DC8F0006105B6 /* SublimeTeaTests.m */; };
 		2BA72F0B1C7DC8F0006105B6 /* SublimeTeaUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72F0A1C7DC8F0006105B6 /* SublimeTeaUITests.m */; };
+		2BB2F4291C8421960024BB26 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2F4281C8421960024BB26 /* JSBadgeView.m */; };
+		2BB2F42D1C842ED10024BB26 /* STProfileHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2F42C1C842ED10024BB26 /* STProfileHeaderView.m */; };
+		2BB2F4301C842EFA0024BB26 /* STProfileFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2F42F1C842EFA0024BB26 /* STProfileFooterView.m */; };
+		2BB2F4331C842F3F0024BB26 /* STPrfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB2F4321C842F3F0024BB26 /* STPrfileTableViewCell.m */; };
 		2BC0E50A1C823125001085F8 /* STOrderListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0E5091C823125001085F8 /* STOrderListHeaderView.m */; };
 		2BC0E50D1C823151001085F8 /* STOderListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0E50C1C823151001085F8 /* STOderListTableViewCell.m */; };
 		2BC0E5101C8231A1001085F8 /* STOrderListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BC0E50F1C8231A1001085F8 /* STOrderListHeaderView.xib */; };
@@ -117,11 +124,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2B2DC0B01C82D25F00A29459 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = "../../../../../Downloads/JSBadgeView-master/Pod/Classes/JSBadgeView.h"; sourceTree = "<group>"; };
-		2B2DC0B11C82D25F00A29459 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSBadgeView.m; path = "../../../../../Downloads/JSBadgeView-master/Pod/Classes/JSBadgeView.m"; sourceTree = "<group>"; };
 		2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCartHeaderView.xib; sourceTree = "<group>"; };
 		2B2DC0B51C82D7D300A29459 /* STCartHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STCartHeaderView.h; path = Payment/STCartHeaderView.h; sourceTree = "<group>"; };
 		2B2DC0B61C82D7D300A29459 /* STCartHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STCartHeaderView.m; path = Payment/STCartHeaderView.m; sourceTree = "<group>"; };
+		2B2E57AD1C836FB900351F39 /* STOrderConfirmationHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STOrderConfirmationHeaderView.h; path = OrderConfirmation/STOrderConfirmationHeaderView.h; sourceTree = "<group>"; };
+		2B2E57AE1C836FB900351F39 /* STOrderConfirmationHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STOrderConfirmationHeaderView.m; path = OrderConfirmation/STOrderConfirmationHeaderView.m; sourceTree = "<group>"; };
+		2B2E57B11C836FE200351F39 /* STOrderConfirmationHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = STOrderConfirmationHeaderView.xib; path = OrderConfirmation/STOrderConfirmationHeaderView.xib; sourceTree = "<group>"; };
+		2B2E57B31C836FFC00351F39 /* STOrderConfirmationFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = STOrderConfirmationFooterView.xib; path = OrderConfirmation/STOrderConfirmationFooterView.xib; sourceTree = "<group>"; };
+		2B2E57B51C83701000351F39 /* STOrderConfirmationFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STOrderConfirmationFooterView.h; path = OrderConfirmation/STOrderConfirmationFooterView.h; sourceTree = "<group>"; };
+		2B2E57B61C83701000351F39 /* STOrderConfirmationFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STOrderConfirmationFooterView.m; path = OrderConfirmation/STOrderConfirmationFooterView.m; sourceTree = "<group>"; };
 		2B456F811C7F550D00C240A5 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
 		2B456F821C7F550D00C240A5 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
 		2B456F831C7F550D00C240A5 /* REFrostedContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedContainerViewController.h; sourceTree = "<group>"; };
@@ -225,6 +236,14 @@
 		2BA72F061C7DC8F0006105B6 /* SublimeTeaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SublimeTeaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA72F0A1C7DC8F0006105B6 /* SublimeTeaUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SublimeTeaUITests.m; sourceTree = "<group>"; };
 		2BA72F0C1C7DC8F0006105B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BB2F4271C8421960024BB26 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = Utilities/JSBadgeView.h; sourceTree = "<group>"; };
+		2BB2F4281C8421960024BB26 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSBadgeView.m; path = Utilities/JSBadgeView.m; sourceTree = "<group>"; };
+		2BB2F42B1C842ED10024BB26 /* STProfileHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STProfileHeaderView.h; path = User/STProfileHeaderView.h; sourceTree = "<group>"; };
+		2BB2F42C1C842ED10024BB26 /* STProfileHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STProfileHeaderView.m; path = User/STProfileHeaderView.m; sourceTree = "<group>"; };
+		2BB2F42E1C842EFA0024BB26 /* STProfileFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STProfileFooterView.h; path = User/STProfileFooterView.h; sourceTree = "<group>"; };
+		2BB2F42F1C842EFA0024BB26 /* STProfileFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STProfileFooterView.m; path = User/STProfileFooterView.m; sourceTree = "<group>"; };
+		2BB2F4311C842F3F0024BB26 /* STPrfileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPrfileTableViewCell.h; path = User/STPrfileTableViewCell.h; sourceTree = "<group>"; };
+		2BB2F4321C842F3F0024BB26 /* STPrfileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STPrfileTableViewCell.m; path = User/STPrfileTableViewCell.m; sourceTree = "<group>"; };
 		2BC0E5081C823125001085F8 /* STOrderListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STOrderListHeaderView.h; path = User/Orders/STOrderListHeaderView.h; sourceTree = "<group>"; };
 		2BC0E5091C823125001085F8 /* STOrderListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STOrderListHeaderView.m; path = User/Orders/STOrderListHeaderView.m; sourceTree = "<group>"; };
 		2BC0E50B1C823151001085F8 /* STOderListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STOderListTableViewCell.h; path = User/Orders/STOderListTableViewCell.h; sourceTree = "<group>"; };
@@ -280,10 +299,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B3362961C8417CC0080ECD3 /* EBSLib.a in Frameworks */,
 				2B9882CA1C81E67500BA5234 /* SystemConfiguration.framework in Frameworks */,
 				2B9882C81C81E65F00BA5234 /* CFNetwork.framework in Frameworks */,
 				2B9882C61C81E65500BA5234 /* MobileCoreServices.framework in Frameworks */,
-				2B9882AB1C81E4D100BA5234 /* EBSLib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,10 +326,30 @@
 		2B2DC0AF1C82D23E00A29459 /* Badge */ = {
 			isa = PBXGroup;
 			children = (
-				2B2DC0B01C82D25F00A29459 /* JSBadgeView.h */,
-				2B2DC0B11C82D25F00A29459 /* JSBadgeView.m */,
+				2BB2F4271C8421960024BB26 /* JSBadgeView.h */,
+				2BB2F4281C8421960024BB26 /* JSBadgeView.m */,
 			);
 			name = Badge;
+			sourceTree = "<group>";
+		};
+		2B2E57AC1C836C7F00351F39 /* OrderConfirmation */ = {
+			isa = PBXGroup;
+			children = (
+				2B2E57B51C83701000351F39 /* STOrderConfirmationFooterView.h */,
+				2B2E57B61C83701000351F39 /* STOrderConfirmationFooterView.m */,
+				2B2E57AD1C836FB900351F39 /* STOrderConfirmationHeaderView.h */,
+				2B2E57AE1C836FB900351F39 /* STOrderConfirmationHeaderView.m */,
+			);
+			name = OrderConfirmation;
+			sourceTree = "<group>";
+		};
+		2B2E57B01C836FC400351F39 /* OrderConfirmation */ = {
+			isa = PBXGroup;
+			children = (
+				2B2E57B31C836FFC00351F39 /* STOrderConfirmationFooterView.xib */,
+				2B2E57B11C836FE200351F39 /* STOrderConfirmationHeaderView.xib */,
+			);
+			name = OrderConfirmation;
 			sourceTree = "<group>";
 		};
 		2B456F7F1C7F54DA00C240A5 /* Menu */ = {
@@ -501,6 +540,21 @@
 			path = SublimeTeaUITests;
 			sourceTree = "<group>";
 		};
+		2BB2F42A1C842EA40024BB26 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				2BFA1BA81C7E07F3008C4833 /* STUserProfileViewController.h */,
+				2BFA1BA91C7E07F3008C4833 /* STUserProfileViewController.m */,
+				2BB2F42B1C842ED10024BB26 /* STProfileHeaderView.h */,
+				2BB2F42C1C842ED10024BB26 /* STProfileHeaderView.m */,
+				2BB2F42E1C842EFA0024BB26 /* STProfileFooterView.h */,
+				2BB2F42F1C842EFA0024BB26 /* STProfileFooterView.m */,
+				2BB2F4311C842F3F0024BB26 /* STPrfileTableViewCell.h */,
+				2BB2F4321C842F3F0024BB26 /* STPrfileTableViewCell.m */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		2BC0E50E1C82316E001085F8 /* OrederList */ = {
 			isa = PBXGroup;
 			children = (
@@ -557,6 +611,7 @@
 		2BFA1B6F1C7DFDCE008C4833 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2B2E57B01C836FC400351F39 /* OrderConfirmation */,
 				2BC0E50E1C82316E001085F8 /* OrederList */,
 				2B9882CB1C81F44200BA5234 /* Cart */,
 				2B456FAC1C7F807700C240A5 /* productDetail */,
@@ -635,6 +690,7 @@
 		2BFA1BA31C7E05BB008C4833 /* Orders */ = {
 			isa = PBXGroup;
 			children = (
+				2B2E57AC1C836C7F00351F39 /* OrderConfirmation */,
 				2BFA1BB81C7E09EA008C4833 /* STOrderConfirmationViewController.h */,
 				2BFA1BB91C7E09EA008C4833 /* STOrderConfirmationViewController.m */,
 				2BFA1BA41C7E0604008C4833 /* STOrderListViewController.h */,
@@ -650,10 +706,9 @@
 		2BFA1BA71C7E060E008C4833 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				2BB2F42A1C842EA40024BB26 /* Profile */,
 				2BFA1BA31C7E05BB008C4833 /* Orders */,
 				2BFA1B8E1C7E038A008C4833 /* Login/SignUp */,
-				2BFA1BA81C7E07F3008C4833 /* STUserProfileViewController.h */,
-				2BFA1BA91C7E07F3008C4833 /* STUserProfileViewController.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -821,7 +876,9 @@
 				2BA72EF01C7DC8F0006105B6 /* Main.storyboard in Resources */,
 				2B9882B01C81E4D100BA5234 /* CreditCardCell_iPad.xib in Resources */,
 				2B9882B41C81E4D100BA5234 /* StoredCardCell_iPad.xib in Resources */,
+				2B2E57B21C836FE200351F39 /* STOrderConfirmationHeaderView.xib in Resources */,
 				2B9882CD1C81F47200BA5234 /* STCartFooterView.xib in Resources */,
+				2B2E57B41C836FFC00351F39 /* STOrderConfirmationFooterView.xib in Resources */,
 				2BC0E5101C8231A1001085F8 /* STOrderListHeaderView.xib in Resources */,
 				2B9882B31C81E4D100BA5234 /* PaymentModeViewController_iPad.xib in Resources */,
 				2B9882C11C81E4D100BA5234 /* sachin_book1.png in Resources */,
@@ -862,6 +919,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BB2F42D1C842ED10024BB26 /* STProfileHeaderView.m in Sources */,
 				2B456FBB1C7F810F00C240A5 /* STProductDescriptionTableViewCell.m in Sources */,
 				2BFA1BB41C7E0966008C4833 /* STSignUpViewController.m in Sources */,
 				2BFA1B9F1C7E0574008C4833 /* STProductViewController.m in Sources */,
@@ -871,7 +929,7 @@
 				2B456F951C7F558900C240A5 /* STRootViewController.m in Sources */,
 				2BFA1BD21C7E3118008C4833 /* STProductCategoryCollectionViewCell.m in Sources */,
 				2B456F901C7F550D00C240A5 /* UIImage+REFrostedViewController.m in Sources */,
-				2B2DC0B21C82D25F00A29459 /* JSBadgeView.m in Sources */,
+				2B2E57AF1C836FB900351F39 /* STOrderConfirmationHeaderView.m in Sources */,
 				2BA72EED1C7DC8F0006105B6 /* STViewController.m in Sources */,
 				2BFA1BBA1C7E09EA008C4833 /* STOrderConfirmationViewController.m in Sources */,
 				2BFA1BA61C7E0604008C4833 /* STOrderListViewController.m in Sources */,
@@ -882,6 +940,7 @@
 				2BA72EEA1C7DC8F0006105B6 /* STAppDelegate.m in Sources */,
 				2B9882B61C81E4D100BA5234 /* TIMERUIApplication.m in Sources */,
 				2BC0E50A1C823125001085F8 /* STOrderListHeaderView.m in Sources */,
+				2B2E57B71C83701000351F39 /* STOrderConfirmationFooterView.m in Sources */,
 				2BFA1B981C7E0451008C4833 /* STDashboardViewController.m in Sources */,
 				2B456F911C7F550D00C240A5 /* UIView+REFrostedViewController.m in Sources */,
 				2B456F9B1C7F579C00C240A5 /* STNavigationController.m in Sources */,
@@ -896,7 +955,9 @@
 				2BFA1BBD1C7E0A21008C4833 /* STCartViewController.m in Sources */,
 				2BFA1BC81C7E0DCA008C4833 /* STHttpRequest.m in Sources */,
 				2B456F921C7F550D00C240A5 /* UIViewController+REFrostedViewController.m in Sources */,
+				2BB2F4291C8421960024BB26 /* JSBadgeView.m in Sources */,
 				2BFA1BC91C7E0DCA008C4833 /* Reachability.m in Sources */,
+				2BB2F4301C842EFA0024BB26 /* STProfileFooterView.m in Sources */,
 				2BFA1B911C7E03B2008C4833 /* STForgotPasswordViewController.m in Sources */,
 				2BFA1B751C7DFEC1008C4833 /* MBProgressHUD.m in Sources */,
 				2B456F8E1C7F550D00C240A5 /* REFrostedContainerViewController.m in Sources */,
@@ -904,6 +965,7 @@
 				2BFA1BAA1C7E07F3008C4833 /* STUserProfileViewController.m in Sources */,
 				2B456F981C7F570E00C240A5 /* STMenuTableViewController.m in Sources */,
 				2B456FB51C7F80E600C240A5 /* STProductInfo2TableViewCell.m in Sources */,
+				2BB2F4331C842F3F0024BB26 /* STPrfileTableViewCell.m in Sources */,
 				2BFA1B841C7E00E3008C4833 /* XMLDictionary.m in Sources */,
 				2BFA1B871C7E0121008C4833 /* STConstants.m in Sources */,
 				2BFA1BCF1C7E30F6008C4833 /* STProductCategoryHeaderCollectionReusableView.m in Sources */,

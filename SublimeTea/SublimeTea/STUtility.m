@@ -8,8 +8,58 @@
 //
 
 #import "STUtility.h"
+#import "STMacros.h"
+#import "Reachability.h"
+
+@interface STUtility()
+{
+    BOOL isShowingNoNetworkAlert;
+}
+@end
 
 @implementation STUtility
+
++ (BOOL)isNetworkAvailable
+{
+    BOOL networkAvailable = YES;
+    Reachability *reachability = [Reachability reachabilityWithHostName:@"www.google.com"];
+    if([reachability currentReachabilityStatus] == NotReachable)
+    {
+        [self showAlertForNoInternetConnectionWithMessage:nil];
+        networkAvailable = NO;
+    }
+    return networkAvailable;
+}
+
++ (void)showAlertForNoInternetConnectionWithMessage:(NSString *)message
+{
+    NSString *msg = NO_INTERNET_MSG;
+    if (message.length) {
+        msg = message;
+    }
+    [[[UIAlertView alloc] initWithTitle:@"ERROR"
+                               message:msg
+                              delegate:nil
+                     cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+}
+
++ (NSString *)applyCurrencyFormat:(NSString *)priceStr
+{
+    NSString *formattedCurrencyTxt;
+    if (priceStr) {
+        
+        NSNumberFormatter *formatterCurrency;
+        formatterCurrency = [[NSNumberFormatter alloc] init];
+        formatterCurrency.numberStyle = NSNumberFormatterCurrencyStyle;
+        [formatterCurrency setGroupingSize:3];
+        [formatterCurrency setMaximumFractionDigits:2];
+        [formatterCurrency setCurrencySymbol:@"₹"];
+        [formatterCurrency setGroupingSeparator:@","];
+        // NSLog(@"%@", @([budgetTxt doubleValue]));
+        formattedCurrencyTxt = [formatterCurrency stringFromNumber: @([priceStr doubleValue])];
+    }
+    return formattedCurrencyTxt;
+}
 
 //+(UIImage *)getImageWithColor:(UIColor *)color
 //{

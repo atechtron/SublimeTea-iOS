@@ -10,6 +10,7 @@
 #import "STOderListTableViewCell.h"
 #import "STOrderListHeaderView.h"
 #import "STDashboardViewController.h"
+#import "STUtility.h"
 
 @interface STOrderListViewController ()<UITabBarDelegate, UITableViewDataSource>
 
@@ -53,8 +54,8 @@
     STOderListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
     cell.titleLabel.text = @"GREEN LONG DING";
     cell.descriptionLabel.text = @"This is a pure Green Tea. Fresh tender tea leaves are carefully processed to minimize oxidation and rolled using a very special process.";
-    cell.priceLabel.text = @"1500";
-    cell.imageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
+    cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%d",200]];
+    cell.prodImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
     cell.statusLabel.text = @"Status: Delivered";
     cell.qtyLabel.text = @"QUANTITY: 2 (ITEMS)";
 

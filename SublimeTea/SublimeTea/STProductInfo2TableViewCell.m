@@ -21,6 +21,9 @@
 }
 
 - (IBAction)addToCartAction:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(addToCartClicked:)]) {
+        [self.delegate addToCartClicked:self.addToCartButton.tag];
+    }
 }
 
 - (IBAction)upArrowButtonAction:(UIButton *)sender {
