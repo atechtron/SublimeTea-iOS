@@ -10,5 +10,5 @@
 
 @interface STProductViewController : STViewController<UICollectionViewDelegate, UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-
+@property (strong, nonatomic) NSArray *productsInSelectedCat;
 @end

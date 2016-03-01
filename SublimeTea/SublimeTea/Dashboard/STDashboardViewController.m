@@ -7,9 +7,11 @@
 //
 
 #import "STDashboardViewController.h"
+#import "STHttpRequest.h"
+#import "STProductCategoriesViewController.h"
 
 @interface STDashboardViewController ()<UICollectionViewDelegateFlowLayout>
-
+@property (strong, nonatomic)NSArray *categories;
 @end
 
 @implementation STDashboardViewController
@@ -33,7 +35,8 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"productCategorySegue"]) {
-        
+        STProductCategoriesViewController *catVC = segue.destinationViewController;
+        catVC.prodCategories = self.categories;
     }
 }
 
@@ -63,7 +66,7 @@
         {
             size = CGSizeMake(collWidth, collHeight/2);
         }break;
-        
+            
         case 1:
         {
             size = CGSizeMake(collWidth, collHeight/4);
@@ -79,7 +82,8 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        [self performSegueWithIdentifier:@"productCategorySegue" sender:self];
+        [STUtility startActivityIndicatorOnView:nil withText:@"Loading Range of Teas, Please wait.."];
+        [self fetchProductCategories];
     }
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -122,5 +126,52 @@
 
 - (IBAction)cartButtonAction:(UIBarButtonItem *)sender {
     [self performSegueWithIdentifier:@"carViewFromDashboardSegue" sender:self];
+}
+- (void)fetchProductCategories {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
+    
+    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                             "<soapenv:Header/>"
+                             "<soapenv:Body>"
+                             "<urn:catalogCategoryTree soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                             "<parentId xsi:type=\"xsd:string\">%@</parentId>"
+                             "<storeView xsi:type=\"xsd:string\">%@</storeView>"
+                             "</urn:catalogCategoryTree>"
+                             "</soapenv:Body>"
+                             "</soapenv:Envelope>",sessionId,@"2",@"default"];
+    
+    NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                         methodType:@"POST"
+                                                               body:requestBody
+                                                responseHeaderBlock:^(NSURLResponse *response)
+                                  {
+                                      
+                                  }successBlock:^(NSData *responseData){
+                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                      NSLog(@"%@",xmlDic);
+                                      
+                                      [STUtility stopActivityIndicatorFromView:nil];
+//                                      self.categories
+                                      [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];
+                                  }failureBlock:^(NSError *error) {
+                                      [STUtility stopActivityIndicatorFromView:nil];
+                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                  message:@"Unexpected error has occured, Please try after some time."
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil] show];
+                                      NSLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
+                                  }];
+    
+    [httpRequest start];
+}
+- (void)loadProductCategories {
+    [self performSegueWithIdentifier:@"productCategorySegue" sender:self];
 }
 @end

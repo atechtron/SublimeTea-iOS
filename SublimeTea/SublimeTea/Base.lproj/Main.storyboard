@@ -29,7 +29,7 @@
                                         </constraints>
                                         <state key="normal" title="Login"/>
                                         <connections>
-                                            <segue destination="BYZ-38-t0r" kind="push" identifier="loginSegue" id="DUh-ac-B1E"/>
+                                            <segue destination="BYZ-38-t0r" kind="push" identifier="loginSegue" id="QG6-wc-oc2"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgV-0q-ArR">
@@ -39,7 +39,7 @@
                                         </constraints>
                                         <state key="normal" title="Sign Up"/>
                                         <connections>
-                                            <segue destination="sod-tq-efW" kind="push" identifier="signUPSegue" id="Ior-Jn-Iu4"/>
+                                            <segue destination="sod-tq-efW" kind="push" identifier="signUPSegue" id="Wx8-Gr-FI7"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -232,11 +232,12 @@
                         <outlet property="mobileNumberTextField" destination="NUv-vs-xdu" id="8dd-St-ZNa"/>
                         <outlet property="passwordTextField" destination="LR4-Ky-b5z" id="tfW-hx-QWT"/>
                         <outlet property="submitButton" destination="ZJw-cy-bM6" id="mzA-Gc-zqr"/>
+                        <segue destination="Hxn-dh-9mw" kind="push" identifier="dashBoardFromSignUpSegue" id="1xQ-H7-Nbe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CZD-14-ans" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1164" y="-388"/>
+            <point key="canvasLocation" x="1199" y="-388"/>
         </scene>
         <!--Login-->
         <scene sceneID="tne-QT-ifu">
@@ -305,7 +306,6 @@
                                                 <state key="normal" title="Submit"/>
                                                 <connections>
                                                     <action selector="submitButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XsC-Es-L6o"/>
-                                                    <segue destination="Hxn-dh-9mw" kind="push" id="vfJ-GY-HhU"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfr-Kh-CsT">
@@ -368,6 +368,7 @@
                         <outlet property="submitButton" destination="eko-Ma-gx5" id="hiy-2x-xhM"/>
                         <outlet property="userNameHeadingLabel" destination="yK4-in-XXc" id="kPb-1I-ne3"/>
                         <outlet property="useraNameTextField" destination="nav-0P-Jk5" id="VJ0-YG-Zdr"/>
+                        <segue destination="Sgg-7i-Frp" kind="push" identifier="dashBoardFromSigInSegue" id="e7C-Ob-pNt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -565,7 +566,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyC-xw-b4c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2482" y="956"/>
+            <point key="canvasLocation" x="3294" y="956"/>
         </scene>
         <!--Product Detail View Controller-->
         <scene sceneID="0FI-Zc-eTH">
@@ -604,7 +605,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8GI-nc-Cbl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3232" y="956"/>
+            <point key="canvasLocation" x="4044" y="956"/>
         </scene>
         <!--User Profile View Controller-->
         <scene sceneID="czv-7S-Iph">
@@ -1318,7 +1319,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uts-BI-boC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1224" y="956"/>
+            <point key="canvasLocation" x="2036" y="956"/>
         </scene>
         <!--Product Categories View Controller-->
         <scene sceneID="o3b-oM-iMi">
@@ -1435,7 +1436,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ddL-KM-vwj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1847" y="956"/>
+            <point key="canvasLocation" x="2659" y="956"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nVQ-c5-kyD">
@@ -1522,13 +1523,33 @@
             </objects>
             <point key="canvasLocation" x="-500" y="391"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Ng9-RI-vyd">
+            <objects>
+                <navigationController storyboardIdentifier="dashBoardNavController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Sgg-7i-Frp" customClass="STNavigationController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="W3o-7T-cvc"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mg1-Ax-Wu7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Hxn-dh-9mw" kind="relationship" relationship="rootViewController" id="Cqv-Oa-wKY"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k95-Vl-A79" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1199" y="1084"/>
+        </scene>
     </scenes>
     <resources>
         <image name="_night_bg.jpg" width="1900" height="2000"/>
         <image name="chekboxUnselected" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ivy-OH-3ld"/>
+        <segue reference="Cqv-Oa-wKY"/>
+        <segue reference="sDt-Dx-VQV"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.69532830662828282" green="0.45897068093401694" blue="0.22977050580445335" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -9,9 +9,13 @@
 #import "STProductCategoriesViewController.h"
 #import "STProductCategoryCollectionViewCell.h"
 #import "STProductCategoryHeaderCollectionReusableView.h"
+#import "STHttpRequest.h"
+#import "STProductViewController.h"
 
 @interface STProductCategoriesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
-
+{
+    NSInteger selectedCatId;
+}
 @end
 
 @implementation STProductCategoriesViewController
@@ -27,19 +31,21 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"productListSegue"]) {
+        STProductViewController *vC = segue.destinationViewController;
+        vC.productsInSelectedCat = self.prodCategories[selectedCatId];
+    }
 }
-*/
+
 #pragma mark-
 #pragma UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 20;
+    return 20;//self.prodCategories.count;
 }
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -59,8 +65,10 @@
     return headerView;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    [self performSegueWithIdentifier:@"productListSegue" sender:self];
+    [STUtility startActivityIndicatorOnView:nil withText:@"Loading Teas, Please wait.."];
+    selectedCatId = indexPath.row;
+    [self fetchProducts];
+//    [self performSegueWithIdentifier:@"productListSegue" sender:self];
     
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
@@ -109,4 +117,56 @@
     [self.collectionView reloadData];
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
+
+- (void)fetchProducts {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
+    
+    NSDictionary *selectedProdCatDict = self.prodCategories[selectedCatId];
+    NSString *selectedCategoryId = selectedProdCatDict[@""];
+    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                             "<soapenv:Header/>"
+                             "<soapenv:Body>"
+                             "<urn:catalogProductInfo soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                             "<productId xsi:type=\"xsd:string\">%@</productId>"
+                             "<storeView xsi:type=\"xsd:string\">%@</storeView>"
+                             "<attributes xsi:type=\"urn:catalogProductRequestAttributes\">"
+                             "</urn:catalogProductInfo>"
+                             "</soapenv:Body>"
+                             "</soapenv:Envelope>",sessionId,selectedCategoryId,@"default"];
+    
+    NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                         methodType:@"POST"
+                                                               body:requestBody
+                                                responseHeaderBlock:^(NSURLResponse *response)
+                                  {
+                                      
+                                  }successBlock:^(NSData *responseData){
+                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                      NSLog(@"%@",xmlDic);
+                                      
+                                      [STUtility stopActivityIndicatorFromView:nil];
+                                      
+                                      [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];
+                                  }failureBlock:^(NSError *error) {
+                                      [STUtility stopActivityIndicatorFromView:nil];
+                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                  message:@"Unexpected error has occured, Please try after some time."
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil] show];
+                                      NSLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
+                                  }];
+    
+    [httpRequest start];
+}
+- (void)loadProductCategories {
+    [self performSegueWithIdentifier:@"productListSegue" sender:self];
+}
+
 @end

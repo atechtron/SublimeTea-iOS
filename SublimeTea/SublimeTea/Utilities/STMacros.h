@@ -39,5 +39,9 @@
 #   define dbMETHOD_EXIT()
 #endif
 
-#define MDSAppDelegate        ((AppDelegate*)[[UIApplication sharedApplication] delegate])
+#define AppDelegate        ((STAppDelegate*)[[UIApplication sharedApplication] delegate])
 
+
+
+
+#define kUSerSession_Key @"USER_SESSIONID"

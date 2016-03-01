@@ -9,6 +9,7 @@
 #import "STProductViewController.h"
 #import "STProductCategoryHeaderCollectionReusableView.h"
 #import "STProductListCollectionViewCell.h"
+#import "STHttpRequest.h"
 
 @interface STProductViewController ()
 
@@ -137,5 +138,54 @@
 {
     [self.collectionView reloadData];
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+}
+- (void)fetchProducts {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
+    
+//    NSDictionary *selectedProdCatDict = self.prodCategories[selectedCatId];
+//    NSString *selectedCategoryId = selectedProdCatDict[@""];
+    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                             "<soapenv:Header/>"
+                             "<soapenv:Body>"
+                             "<urn:catalogProductList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                             "<filters xsi:type=\"urn:filters\">"
+                             "<storeView xsi:type=\"xsd:string]\">%@</storeView>"
+                             "</urn:catalogProductList>"
+                             "</soapenv:Body>"
+                             "</soapenv:Envelope>",sessionId,@"default"];
+    
+    NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                         methodType:@"POST"
+                                                               body:requestBody
+                                                responseHeaderBlock:^(NSURLResponse *response)
+                                  {
+                                      
+                                  }successBlock:^(NSData *responseData){
+                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                      NSLog(@"%@",xmlDic);
+                                      
+                                      [STUtility stopActivityIndicatorFromView:nil];
+                                      
+                                      [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];
+                                  }failureBlock:^(NSError *error) {
+                                      [STUtility stopActivityIndicatorFromView:nil];
+                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                  message:@"Unexpected error has occured, Please try after some time."
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil] show];
+                                      NSLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
+                                  }];
+    
+    [httpRequest start];
+}
+- (void)loadProductCategories {
+    [self performSegueWithIdentifier:@"productListSegue" sender:self];
 }
 @end

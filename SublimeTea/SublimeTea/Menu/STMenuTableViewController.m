@@ -20,6 +20,9 @@
 #import "STProductCategoriesViewController.h"
 #import "STUserProfileViewController.h"
 
+#import "STHttpRequest.h"
+#import "STConstants.h"
+
 @interface STMenuTableViewController ()<STMenuTableHeaderViewDelegate>
 @property (strong, nonatomic)NSMutableArray *dataArr;
 @property (strong, nonatomic)NSArray *sectionTitleDataArr;
@@ -169,6 +172,8 @@
             
             break;
         case 8: // LogOut
+            [STUtility startActivityIndicatorOnView:nil withText:@"Loggin Out Please wait.."];
+            [self endUserSession];
             [navigationController popToRootViewControllerAnimated:YES];
             break;
         default:
@@ -196,58 +201,44 @@
 //    [self.frostedViewController hideMenuViewController];
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+- (void)endUserSession {
     
-    // Configure the cell...
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userSessionId = [defaults objectForKey:kUSerSession_Key];
     
-    return cell;
+    NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                             "<soapenv:Header/>"
+                             "<soapenv:Body>"
+                             "<urn:endSession soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                             "</urn:endSession>"
+                             "</soapenv:Body>"
+                             "</soapenv:Envelope>",userSessionId];
+    
+    
+    STHttpRequest *featureNSpecHttpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                                     methodType:@"POST"
+                                                                           body:requestBody
+                                                            responseHeaderBlock:^(NSURLResponse *response)
+                                              {
+                                                  
+                                              }successBlock:^(NSData *responseData){
+                                                  NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                                  NSLog(@"%@",xmlDic);
+                                                  NSDictionary *resultDict = xmlDic[@"SOAP-ENV:Body"][@"ns1:endSessionResponse"][@"endSessionReturn"];
+                                                  if ([resultDict[@"__text"] boolValue]) {
+                                                      [defaults removeObjectForKey:kUSerSession_Key];
+                                                      [defaults synchronize];
+                                                      
+                                                  }
+                                                  [STUtility stopActivityIndicatorFromView:nil];
+                                              }failureBlock:^(NSError *error) {
+                                                  NSLog(@"SublimeTea-STSignUpViewController-endUserSession:- %@",error);
+                                                  [STUtility stopActivityIndicatorFromView:nil];
+                                              }];
+    
+    [featureNSpecHttpRequest start];
 }
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

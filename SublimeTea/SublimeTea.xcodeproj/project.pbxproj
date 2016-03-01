@@ -82,6 +82,8 @@
 		2BC0E50A1C823125001085F8 /* STOrderListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0E5091C823125001085F8 /* STOrderListHeaderView.m */; };
 		2BC0E50D1C823151001085F8 /* STOderListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC0E50C1C823151001085F8 /* STOderListTableViewCell.m */; };
 		2BC0E5101C8231A1001085F8 /* STOrderListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BC0E50F1C8231A1001085F8 /* STOrderListHeaderView.xib */; };
+		2BE835041C85E278008BA172 /* FileDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE835031C85E278008BA172 /* FileDownloader.m */; };
+		2BE835071C85E49C008BA172 /* NSMutableURLRequest+URLCookie.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BE835061C85E49C008BA172 /* NSMutableURLRequest+URLCookie.m */; };
 		2BFA1B751C7DFEC1008C4833 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA1B741C7DFEC1008C4833 /* MBProgressHUD.m */; };
 		2BFA1B7B1C7DFF52008C4833 /* STGlobalCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA1B7A1C7DFF52008C4833 /* STGlobalCacheManager.m */; };
 		2BFA1B841C7E00E3008C4833 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA1B831C7E00E3008C4833 /* XMLDictionary.m */; };
@@ -249,6 +251,10 @@
 		2BC0E50B1C823151001085F8 /* STOderListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STOderListTableViewCell.h; path = User/Orders/STOderListTableViewCell.h; sourceTree = "<group>"; };
 		2BC0E50C1C823151001085F8 /* STOderListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STOderListTableViewCell.m; path = User/Orders/STOderListTableViewCell.m; sourceTree = "<group>"; };
 		2BC0E50F1C8231A1001085F8 /* STOrderListHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = STOrderListHeaderView.xib; path = User/Orders/STOrderListHeaderView.xib; sourceTree = "<group>"; };
+		2BE835021C85E278008BA172 /* FileDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileDownloader.h; path = Network/FileDownloader.h; sourceTree = "<group>"; };
+		2BE835031C85E278008BA172 /* FileDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileDownloader.m; path = Network/FileDownloader.m; sourceTree = "<group>"; };
+		2BE835051C85E49C008BA172 /* NSMutableURLRequest+URLCookie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableURLRequest+URLCookie.h"; path = "Network/NSMutableURLRequest+URLCookie.h"; sourceTree = "<group>"; };
+		2BE835061C85E49C008BA172 /* NSMutableURLRequest+URLCookie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableURLRequest+URLCookie.m"; path = "Network/NSMutableURLRequest+URLCookie.m"; sourceTree = "<group>"; };
 		2BFA1B731C7DFEC1008C4833 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = Utilities/MBProgressHUD.h; sourceTree = "<group>"; };
 		2BFA1B741C7DFEC1008C4833 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = Utilities/MBProgressHUD.m; sourceTree = "<group>"; };
 		2BFA1B791C7DFF52008C4833 /* STGlobalCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STGlobalCacheManager.h; path = Utilities/STGlobalCacheManager.h; sourceTree = "<group>"; };
@@ -582,6 +588,10 @@
 		2BFA1B6D1C7DFDAC008C4833 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				2BE835051C85E49C008BA172 /* NSMutableURLRequest+URLCookie.h */,
+				2BE835061C85E49C008BA172 /* NSMutableURLRequest+URLCookie.m */,
+				2BE835021C85E278008BA172 /* FileDownloader.h */,
+				2BE835031C85E278008BA172 /* FileDownloader.m */,
 				2BFA1BC41C7E0DCA008C4833 /* STHttpRequest.h */,
 				2BFA1BC51C7E0DCA008C4833 /* STHttpRequest.m */,
 				2BFA1BC61C7E0DCA008C4833 /* Reachability.h */,
@@ -919,10 +929,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BE835041C85E278008BA172 /* FileDownloader.m in Sources */,
 				2BB2F42D1C842ED10024BB26 /* STProfileHeaderView.m in Sources */,
 				2B456FBB1C7F810F00C240A5 /* STProductDescriptionTableViewCell.m in Sources */,
 				2BFA1BB41C7E0966008C4833 /* STSignUpViewController.m in Sources */,
 				2BFA1B9F1C7E0574008C4833 /* STProductViewController.m in Sources */,
+				2BE835071C85E49C008BA172 /* NSMutableURLRequest+URLCookie.m in Sources */,
 				2BFA1BA21C7E058B008C4833 /* STProductDetailViewController.m in Sources */,
 				2B98821D1C81B58A00BA5234 /* STCartTableViewCell.m in Sources */,
 				2BC0E50D1C823151001085F8 /* STOderListTableViewCell.m in Sources */,

@@ -87,5 +87,19 @@
     
     return YES;
 }
+- (void)didStartNetworking
+{
+    if (self.networkActivityCounter >= 0) {
+        self.networkActivityCounter += 1;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    }
+}
 
+- (void)didStopNetworking
+{
+    if (self.networkActivityCounter > 0) {
+        self.networkActivityCounter -= 1;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = (self.networkActivityCounter != 0);
+    }
+}
 @end
