@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,8 +15,12 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s1h-RL-hsA">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="62"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sX9-87-fkr">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_logo" translatesAutoresizingMaskIntoConstraints="NO" id="sX9-87-fkr">
                             <rect key="frame" x="180" y="8" width="240" height="46"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="240" id="3dS-CF-zbD"/>
+                                <constraint firstAttribute="height" constant="46" id="PG1-Jz-76Q"/>
+                            </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Orders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JU6-yc-Z8A">
                             <rect key="frame" x="8" y="21" width="584" height="21"/>
@@ -24,19 +29,24 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.90588235289999997" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="JU6-yc-Z8A" secondAttribute="trailing" constant="8" id="14i-sh-6It"/>
                         <constraint firstAttribute="trailing" secondItem="sX9-87-fkr" secondAttribute="trailing" constant="180" id="2xb-og-XHe"/>
                         <constraint firstItem="JU6-yc-Z8A" firstAttribute="top" secondItem="s1h-RL-hsA" secondAttribute="top" constant="21" id="AvL-5o-PH8"/>
-                        <constraint firstAttribute="bottom" secondItem="sX9-87-fkr" secondAttribute="bottom" constant="8" id="PJO-aG-vGh"/>
-                        <constraint firstItem="sX9-87-fkr" firstAttribute="centerX" secondItem="s1h-RL-hsA" secondAttribute="centerX" id="Pen-Lh-kMS"/>
-                        <constraint firstItem="sX9-87-fkr" firstAttribute="centerY" secondItem="s1h-RL-hsA" secondAttribute="centerY" id="Q8G-zP-dww"/>
                         <constraint firstAttribute="bottom" secondItem="JU6-yc-Z8A" secondAttribute="bottom" constant="20" id="YMv-CU-csf"/>
+                        <constraint firstItem="sX9-87-fkr" firstAttribute="centerX" secondItem="s1h-RL-hsA" secondAttribute="centerX" id="YzL-mq-5lk"/>
+                        <constraint firstItem="sX9-87-fkr" firstAttribute="top" secondItem="s1h-RL-hsA" secondAttribute="topMargin" id="c8w-jC-AuX"/>
                         <constraint firstItem="sX9-87-fkr" firstAttribute="leading" secondItem="s1h-RL-hsA" secondAttribute="leading" constant="180" id="nwk-wk-fEu"/>
-                        <constraint firstItem="sX9-87-fkr" firstAttribute="top" secondItem="s1h-RL-hsA" secondAttribute="top" constant="8" id="sOc-M8-Um4"/>
+                        <constraint firstItem="sX9-87-fkr" firstAttribute="bottom" secondItem="s1h-RL-hsA" secondAttribute="bottomMargin" id="wat-so-pJ5"/>
                         <constraint firstItem="JU6-yc-Z8A" firstAttribute="leading" secondItem="s1h-RL-hsA" secondAttribute="leading" constant="8" id="z50-HV-v8F"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="2xb-og-XHe"/>
+                            <exclude reference="nwk-wk-fEu"/>
+                        </mask>
+                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -55,4 +65,7 @@
             <point key="canvasLocation" x="529" y="401"/>
         </view>
     </objects>
+    <resources>
+        <image name="image_logo" width="778" height="202"/>
+    </resources>
 </document>

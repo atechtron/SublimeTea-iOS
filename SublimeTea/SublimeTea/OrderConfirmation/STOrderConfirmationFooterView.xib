@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -14,33 +14,49 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-u7-lVn">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ebu-Zd-fya">
-                            <rect key="frame" x="84" y="25" width="175" height="30"/>
-                            <state key="normal" title="Orders"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ebu-Zd-fya">
+                            <rect key="frame" x="133" y="17" width="140" height="46"/>
+                            <state key="normal" title="Orders" backgroundImage="image_button">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                             <connections>
                                 <action selector="ordersButtonAction:" destination="WI4-BS-0Ch" eventType="touchUpInside" id="9Ti-LS-xwe"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7GI-Fv-AiM">
-                            <rect key="frame" x="341" y="25" width="175" height="30"/>
-                            <state key="normal" title="Continue Shopping"/>
+                            <rect key="frame" x="326" y="17" width="140" height="46"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="46" id="qxf-vR-Mrz"/>
+                                <constraint firstAttribute="width" constant="140" id="yzS-JV-FVz"/>
+                            </constraints>
+                            <state key="normal" title="Continue Shopping" backgroundImage="image_button">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                             <connections>
                                 <action selector="continueShoppingButtonAction:" destination="WI4-BS-0Ch" eventType="touchUpInside" id="syw-JP-cj8"/>
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.90588235289999997" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="Ebu-Zd-fya" firstAttribute="top" secondItem="RC8-u7-lVn" secondAttribute="top" constant="25" id="06j-LO-aKZ"/>
-                        <constraint firstItem="7GI-Fv-AiM" firstAttribute="leading" secondItem="Ebu-Zd-fya" secondAttribute="trailing" constant="82" id="Atb-Wv-Wxz"/>
+                        <constraint firstItem="Ebu-Zd-fya" firstAttribute="top" secondItem="RC8-u7-lVn" secondAttribute="top" constant="17" id="06j-LO-aKZ"/>
+                        <constraint firstItem="7GI-Fv-AiM" firstAttribute="leading" secondItem="Ebu-Zd-fya" secondAttribute="trailing" constant="53" id="Ac5-K8-tQ0"/>
                         <constraint firstItem="Ebu-Zd-fya" firstAttribute="width" secondItem="7GI-Fv-AiM" secondAttribute="width" id="LQ9-AL-bp0"/>
                         <constraint firstItem="Ebu-Zd-fya" firstAttribute="height" secondItem="7GI-Fv-AiM" secondAttribute="height" id="LpZ-6D-rIn"/>
-                        <constraint firstItem="7GI-Fv-AiM" firstAttribute="top" secondItem="RC8-u7-lVn" secondAttribute="top" constant="25" id="LvU-MN-zPy"/>
-                        <constraint firstAttribute="bottom" secondItem="7GI-Fv-AiM" secondAttribute="bottom" constant="25" id="V1M-VF-XfW"/>
-                        <constraint firstItem="Ebu-Zd-fya" firstAttribute="leading" secondItem="RC8-u7-lVn" secondAttribute="leading" constant="84" id="X5T-Xi-YLu"/>
-                        <constraint firstAttribute="bottom" secondItem="Ebu-Zd-fya" secondAttribute="bottom" constant="25" id="mJ7-ok-cwx"/>
-                        <constraint firstAttribute="trailing" secondItem="7GI-Fv-AiM" secondAttribute="trailing" constant="84" id="nZo-xE-5X3"/>
+                        <constraint firstItem="7GI-Fv-AiM" firstAttribute="top" secondItem="RC8-u7-lVn" secondAttribute="top" constant="17" id="LvU-MN-zPy"/>
+                        <constraint firstItem="Ebu-Zd-fya" firstAttribute="centerX" secondItem="RC8-u7-lVn" secondAttribute="centerX" constant="-97" id="Nky-yt-3q6"/>
+                        <constraint firstItem="7GI-Fv-AiM" firstAttribute="centerX" secondItem="RC8-u7-lVn" secondAttribute="centerX" id="PX7-Nz-dcZ"/>
+                        <constraint firstAttribute="bottom" secondItem="7GI-Fv-AiM" secondAttribute="bottom" constant="17" id="V1M-VF-XfW"/>
+                        <constraint firstItem="Ebu-Zd-fya" firstAttribute="centerY" secondItem="RC8-u7-lVn" secondAttribute="centerY" id="kHU-qu-xKK"/>
+                        <constraint firstAttribute="bottom" secondItem="Ebu-Zd-fya" secondAttribute="bottom" constant="17" id="mJ7-ok-cwx"/>
+                        <constraint firstItem="7GI-Fv-AiM" firstAttribute="centerY" secondItem="RC8-u7-lVn" secondAttribute="centerY" id="nat-xN-tCE"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="PX7-Nz-dcZ"/>
+                            <exclude reference="V1M-VF-XfW"/>
+                        </mask>
+                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -59,4 +75,7 @@
             <point key="canvasLocation" x="729" y="-140"/>
         </view>
     </objects>
+    <resources>
+        <image name="image_button" width="449" height="192"/>
+    </resources>
 </document>
