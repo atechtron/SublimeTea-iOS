@@ -7,7 +7,6 @@
 //
 
 #import "STProductViewController.h"
-#import "STProductCategoryHeaderCollectionReusableView.h"
 #import "STProductListCollectionViewCell.h"
 #import "STHttpRequest.h"
 
@@ -20,9 +19,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    // Do any additional setup after loading the view.
+    self.titleLabel.text = @"Pure Green Tea";
+    
 }
+- (void)viewDidAppear:(BOOL)animated {
+    
+    self.pageControl.currentPage = 0;
+    NSInteger totalItems = [self.collectionView numberOfItemsInSection:0];
 
+//    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width /
+//                                          (totalItems*104));
+//    [self.view bringSubviewToFront:self.pageControl];
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -54,29 +63,29 @@
     cell.productImageView.contentMode = UIViewContentModeScaleToFill;
     return cell;
 }
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    STProductCategoryHeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"productCategoryHeader" forIndexPath:indexPath];
-    headerView.titleLabel.text = @"Explore our Range of Teas";
-    return headerView;
-}
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGSize size = CGSizeZero;
-    if (self.view.bounds.size.width > self.view.bounds.size.height) {
-        // landscape
-        size = CGSizeMake(collectionView.frame.size.width/4-.5, 117);
-    }else {
-        //potrait
-        size = CGSizeMake(collectionView.frame.size.width/3-.5, 117);
-    }
-    
-    return size;
-}
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+//    STProductCategoryHeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"productCategoryHeader" forIndexPath:indexPath];
+//    headerView.titleLabel.text = @"Explore our Range of Teas";
+//    return headerView;
+//}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+//    CGSize size = CGSizeZero;
+//    if (self.view.bounds.size.width > self.view.bounds.size.height) {
+//        // landscape
+//        size = CGSizeMake(collectionView.frame.size.width/4-.5, 117);
+//    }else {
+//        //potrait
+//        size = CGSizeMake(collectionView.frame.size.width/3-.5, 117);
+//    }
+//    
+//    return size;
+//}
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0.0;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 1.0;
+    return 2.0;
 }
 
 // Layout: Set Edges

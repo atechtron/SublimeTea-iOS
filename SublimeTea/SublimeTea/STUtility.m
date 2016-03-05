@@ -127,7 +127,7 @@
         mLoadingScreen = [[MBProgressHUD alloc]initWithView:inView];
         mLoadingScreen.labelText = inStr;
         mLoadingScreen.tag = 123123123;
-        mLoadingScreen.alpha = 0;
+        mLoadingScreen.alpha = 1;
         [inView addSubview:mLoadingScreen];
     }
     else {

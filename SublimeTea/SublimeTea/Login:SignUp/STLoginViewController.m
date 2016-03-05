@@ -64,6 +64,8 @@
     // Check Internet Connsection
     if ([STUtility isNetworkAvailable] && [self validateInputs]) {
         // call webservice
+//        [self startUserSession];
+        [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
     }
 }
 

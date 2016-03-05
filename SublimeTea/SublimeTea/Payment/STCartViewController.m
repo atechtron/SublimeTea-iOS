@@ -92,7 +92,7 @@
 - ( UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellidentifier = @"cartCell";
     STCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
-    cell.titleLabel.text = [NSString stringWithFormat:@"Product Description %ld",indexPath.row +1];
+    cell.titleLabel.text = [NSString stringWithFormat:@"Product Description %d",indexPath.row +1];
     cell.descriptionLabel.text = @"Short product description ...";
     cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%@",@1500]];
     cell.porudctImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];

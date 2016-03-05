@@ -177,14 +177,24 @@
                                                                            body:requestBody
                                                             responseHeaderBlock:^(NSURLResponse *response)
                                               {
-                                                  
+                                                  NSLog(@"%@",response);
                                               }successBlock:^(NSData *responseData){
                                                   NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
                                                   NSLog(@"%@",xmlDic);
+                                                  if(!xmlDic[@"SOAP-ENV:Body"][@"SOAP-ENV:Fault"])
+                                                  {
+                                                      [STUtility stopActivityIndicatorFromView:nil];
                                                   
-                                                  [STUtility stopActivityIndicatorFromView:nil];
-                                                  
-                                                  [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
+                                                      [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
+                                                  }
+                                                  else {
+                                                      [STUtility stopActivityIndicatorFromView:nil];
+                                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                                  message:@"SignUp Failed, Please try after some time."
+                                                                                 delegate:nil
+                                                                        cancelButtonTitle:@"OK"
+                                                                        otherButtonTitles: nil] show];
+                                                }
                                               }failureBlock:^(NSError *error) {
                                                   [STUtility stopActivityIndicatorFromView:nil];
                                                   [[[UIAlertView alloc] initWithTitle:@"Alert"
@@ -198,7 +208,7 @@
     [httpRequest start];
 }
 -(void)loadDashboard {
-    [self performSegueWithIdentifier:@"dashBoardFromSignUpSegue" sender:self
+    [self performSegueWithIdentifier:@"dashBoardFromSigInSegue" sender:self
      ];
 }
 #define kOFFSET_FOR_KEYBOARD 80.0

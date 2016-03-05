@@ -20,6 +20,7 @@
 //    STDashboardViewController
     NSString *identifier = nil;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    [defaults removeObjectForKey:kUSerSession_Key];
     if ([defaults objectForKey:kUSerSession_Key]) {
         identifier = @"dashBoardNavController";
     }

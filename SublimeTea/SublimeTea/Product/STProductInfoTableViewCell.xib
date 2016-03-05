@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -76,14 +76,25 @@
                             <constraint firstItem="WzD-Dq-oiu" firstAttribute="leading" secondItem="itq-wK-Afj" secondAttribute="leading" id="q9d-DI-oYf"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_logo" translatesAutoresizingMaskIntoConstraints="NO" id="7z0-v3-0Lj">
+                        <rect key="frame" x="180" y="13" width="240" height="45"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="240" id="GEf-Vd-SA5"/>
+                            <constraint firstAttribute="height" constant="45" id="nAw-6E-Q0d"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="7z0-v3-0Lj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="180" id="1Dt-m5-ePp"/>
                     <constraint firstItem="itq-wK-Afj" firstAttribute="centerX" secondItem="rLh-iU-PpK" secondAttribute="centerX" id="2nI-ke-m70"/>
                     <constraint firstItem="itq-wK-Afj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="173" id="3cv-sB-fkT"/>
                     <constraint firstAttribute="trailing" secondItem="itq-wK-Afj" secondAttribute="trailing" constant="173" id="4h5-cy-Tox"/>
                     <constraint firstItem="rLh-iU-PpK" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="CCh-Ad-EGY"/>
                     <constraint firstItem="JaN-H4-YAJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Dl5-cU-3L7"/>
+                    <constraint firstItem="7z0-v3-0Lj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="DrT-NQ-fDD"/>
+                    <constraint firstItem="rLh-iU-PpK" firstAttribute="top" secondItem="7z0-v3-0Lj" secondAttribute="bottom" constant="13" id="Inx-Yd-VSa"/>
                     <constraint firstAttribute="bottom" secondItem="itq-wK-Afj" secondAttribute="bottom" constant="6" id="NMN-f3-x8M"/>
+                    <constraint firstAttribute="trailing" secondItem="7z0-v3-0Lj" secondAttribute="trailing" constant="180" id="Rv9-6b-3mA"/>
                     <constraint firstAttribute="trailing" secondItem="JaN-H4-YAJ" secondAttribute="trailing" constant="8" id="YD0-M7-FYn"/>
                     <constraint firstItem="JaN-H4-YAJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="cgW-BM-7TH"/>
                     <constraint firstItem="rLh-iU-PpK" firstAttribute="top" secondItem="JaN-H4-YAJ" secondAttribute="bottom" constant="25" id="mIh-Bx-ukg"/>
@@ -108,4 +119,7 @@
             <point key="canvasLocation" x="361" y="322.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="image_logo" width="778" height="202"/>
+    </resources>
 </document>

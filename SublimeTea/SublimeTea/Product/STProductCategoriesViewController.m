@@ -8,11 +8,10 @@
 
 #import "STProductCategoriesViewController.h"
 #import "STProductCategoryCollectionViewCell.h"
-#import "STProductCategoryHeaderCollectionReusableView.h"
 #import "STHttpRequest.h"
 #import "STProductViewController.h"
 
-@interface STProductCategoriesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
+@interface STProductCategoriesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,UIScrollViewDelegate>
 {
     NSInteger selectedCatId;
 }
@@ -22,8 +21,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
-    // Do any additional setup after loading the view.
+    self.titleLabel.text = @"Explore our Range of Teas";
+    self.pageControl.currentPage = 0;
+    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width /
+                                          self.collectionView.frame.size.width);
+    [self.view bringSubviewToFront:self.pageControl];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,7 +35,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat pageWidth = scrollView.frame.size.width;
+    NSInteger page = (NSInteger)floor((scrollView.contentOffset.x * 2.0f + pageWidth) / (pageWidth * 2.0f));
+    [self.pageControl setCurrentPage:page];
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -59,11 +68,11 @@
     cell.categorySubTitleLabel.text = @"RANGE PER 100GM";
     return cell;
 }
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    STProductCategoryHeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"productCategoryHeader" forIndexPath:indexPath];
-    headerView.titleLabel.text = @"Explore our Range of Teas";
-    return headerView;
-}
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+//    STProductCategoryHeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"productCategoryHeader" forIndexPath:indexPath];
+//    headerView.titleLabel.text = @"Explore our Range of Teas";
+//    return headerView;
+//}
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [STUtility startActivityIndicatorOnView:nil withText:@"Loading Teas, Please wait.."];
     selectedCatId = indexPath.row;
@@ -83,7 +92,7 @@
 - (UIEdgeInsets)collectionView:
 (UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     // return UIEdgeInsetsMake(0,8,0,8);  // top, left, bottom, right
-    return UIEdgeInsetsMake(0,0,0,0);  // top, left, bottom, right
+    return UIEdgeInsetsMake(10,0,10,0);  // top, left, bottom, right
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGSize size = CGSizeZero;

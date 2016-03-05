@@ -9,6 +9,7 @@
 #import "STDashboardViewController.h"
 #import "STHttpRequest.h"
 #import "STProductCategoriesViewController.h"
+#import "STDashboardCollectionViewCell.h"
 
 @interface STDashboardViewController ()<UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic)NSArray *categories;
@@ -19,6 +20,7 @@
 - (void)viewDidLoad {
     self.backButtonHidden = YES;
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.collectionView.scrollEnabled = NO;
     // Do any additional setup after loading the view.
@@ -52,7 +54,25 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"dashboardCell";
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    STDashboardCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    UIImage *img;
+    switch (indexPath.row) {
+        case 0:
+            img = [UIImage imageNamed:@"tea_rangeImage"];
+            break;
+        case 1:
+            img = [UIImage imageNamed:@"customerTestimonial"];
+            break;
+        case 2:
+            img = [UIImage imageNamed:@"read-our-blog"];
+            break;
+        case 3:
+            img = [UIImage imageNamed:@"tea-recipes"];
+            break;
+        default:
+            break;
+    }
+    cell.OptionImageView.image = img;
     return cell;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -73,7 +93,7 @@
         }break;
             
         default:{
-            size = CGSizeMake((collWidth/2)-3, collHeight/4);
+            size = CGSizeMake((collWidth/2)-2, collHeight/4);
         }
             break;
     }
@@ -90,18 +110,11 @@
     return UIEdgeInsetsMake(0, 0, 0, 0);
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 2;
+    return 3;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 3.0f;
+    return 4.0f;
 }
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-//    return CGSizeZero;
-//}
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-//    return CGSizeZero;
-//}
-
 
 #pragma mark -
 #pragma UIViewController device rotation
