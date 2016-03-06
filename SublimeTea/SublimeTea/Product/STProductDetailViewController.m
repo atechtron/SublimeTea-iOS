@@ -18,6 +18,8 @@
 
 @end
 
+static NSInteger prodQtyCount = 0;
+
 @implementation STProductDetailViewController
 
 - (void)viewDidLoad {
@@ -82,7 +84,7 @@
             _cell.descriptionLabel.text = descriptionStr;
             _cell.amountLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%d",290]];
             _cell.qtyLabel.text = @"290";
-            _cell.qtyLabel.text = [NSString stringWithFormat:@"Qty\n%d",2];
+            _cell.qtyLabel.text = [NSString stringWithFormat:@"Qty\n%ld",(long)prodQtyCount];
             _cell.qtyLabel.backgroundColor = [UIColor orangeColor];
             _cell.qtyLabel.layer.borderWidth = 1;
             _cell.qtyLabel.layer.cornerRadius = _cell.qtyLabel.bounds.size.height/2;
@@ -111,9 +113,27 @@
     return cell;
 }
 
+#pragma mark-
+#pragma STProductInfo2TableViewCellDelegate
+
 - (void)addToCartClicked:(NSInteger)index {
     [self performSegueWithIdentifier:@"carViewFromProductDetailSegue" sender:self];
 }
+
+- (void)qtyDidIncremented:(id)sender {
+    ++prodQtyCount;
+    STProductInfo2TableViewCell *cell = sender;
+    cell.qtyLabel.text = [NSString stringWithFormat:@"Qty\n%ld",(long)prodQtyCount];
+}
+
+- (void)qtyDiddecremented:(id)sender {
+    if (prodQtyCount > 0) {
+        --prodQtyCount;
+        STProductInfo2TableViewCell *cell = sender;
+        cell.qtyLabel.text = [NSString stringWithFormat:@"Qty\n%ld",(long)prodQtyCount];
+    }
+}
+
 //- (void)fetchProducts {
 //    
 //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

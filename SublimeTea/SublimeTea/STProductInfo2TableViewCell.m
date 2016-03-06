@@ -27,8 +27,14 @@
 }
 
 - (IBAction)upArrowButtonAction:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(qtyDiddecremented:)]) {
+        [self.delegate qtyDiddecremented:self];
+    }
 }
 
 - (IBAction)downArrowButtonAction:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(qtyDidIncremented:)]) {
+        [self.delegate qtyDidIncremented:self];
+    }
 }
 @end

@@ -10,6 +10,9 @@
 
 @protocol STProductInfo2TableViewCellDelegate <NSObject>
 - (void)addToCartClicked:(NSInteger)index;
+- (void)qtyDidIncremented:(id)sender;
+- (void)qtyDiddecremented:(id)sender;
+
 @end
 
 @interface STProductInfo2TableViewCell : UITableViewCell
