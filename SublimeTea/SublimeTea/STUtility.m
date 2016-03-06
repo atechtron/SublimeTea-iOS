@@ -39,9 +39,9 @@
         msg = message;
     }
     [[[UIAlertView alloc] initWithTitle:@"ERROR"
-                               message:msg
-                              delegate:nil
-                     cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+                                message:msg
+                               delegate:nil
+                      cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
 }
 
 + (NSString *)applyCurrencyFormat:(NSString *)priceStr
@@ -120,27 +120,28 @@
     if (!inView) {
         inView = [[UIApplication sharedApplication] keyWindow];
     }
-    
-    MBProgressHUD *mLoadingScreen =(MBProgressHUD*)[inView viewWithTag:123123123];
-    if(mLoadingScreen == nil)
-    {
-        mLoadingScreen = [[MBProgressHUD alloc]initWithView:inView];
-        mLoadingScreen.labelText = inStr;
-        mLoadingScreen.tag = 123123123;
-        mLoadingScreen.alpha = 1;
-        [inView addSubview:mLoadingScreen];
-    }
-    else {
-        [inView bringSubviewToFront:mLoadingScreen];
-        mLoadingScreen.labelText = inStr;
-    }
-    
-    [UIView animateWithDuration:0.25
-                     animations:
-     ^{
-         mLoadingScreen.alpha = 1.0f;
-         
-     }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        MBProgressHUD *mLoadingScreen =(MBProgressHUD*)[inView viewWithTag:123123123];
+        if(mLoadingScreen == nil)
+        {
+            mLoadingScreen = [MBProgressHUD showHUDAddedTo:inView animated:YES];
+            mLoadingScreen.label.text = inStr;
+            mLoadingScreen.tag = 123123123;
+            mLoadingScreen.alpha = 1;
+            [inView addSubview:mLoadingScreen];
+        }
+        else {
+            [inView bringSubviewToFront:mLoadingScreen];
+            mLoadingScreen.label.text = inStr;
+        }
+        
+        [UIView animateWithDuration:0.25
+                         animations:
+         ^{
+             mLoadingScreen.alpha = 1.0f;
+             
+         }];
+    });
 }
 
 /**
@@ -153,32 +154,35 @@
     if (!inView) {
         inView = [[UIApplication sharedApplication] keyWindow];
     }
-    
-    if([inView viewWithTag:123123123])
-    {
-        MBProgressHUD *mLoadingScreen = (MBProgressHUD*)[inView viewWithTag:123123123];
+    dispatch_async(dispatch_get_main_queue(), ^{
         
-        [UIView animateWithDuration:0.15
-                         animations:
-         ^{
-             mLoadingScreen.alpha = 0.0f;
-         }
-                         completion:
-         ^(BOOL finished)
-         {
-             // Commenting code as it's not getting executed as expected
-             //             if (loaddingCount == 0) {
-             //                 [mLoadingScreen hide:YES];
-             //                 [mLoadingScreen removeFromSuperview];
-             //             }
-         }];
-    }
+        
+        if([inView viewWithTag:123123123])
+        {
+            MBProgressHUD *mLoadingScreen = (MBProgressHUD*)[inView viewWithTag:123123123];
+            
+            [UIView animateWithDuration:0.15
+                             animations:
+             ^{
+                 mLoadingScreen.alpha = 0.0f;
+             }
+                             completion:
+             ^(BOOL finished)
+             {
+                 // Commenting code as it's not getting executed as expected
+                 //             if (loaddingCount == 0) {
+                 //                 [mLoadingScreen hide:YES];
+                 //                 [mLoadingScreen removeFromSuperview];
+                 //             }
+             }];
+        }
+    });
 }
 
 //+(UIImage *)getImageWithColor:(UIColor *)color
 //{
 //    UIImage *img = [UIImage imageNamed:@"gray-border.png"];
-//    
+//
 //    // Make a rectangle the size of your image
 //    CGRect rect = CGRectMake(0, 0, img.size.width, img.size.height);
 //    // Create a new bitmap context based on the current image's size and scale, that has opacity

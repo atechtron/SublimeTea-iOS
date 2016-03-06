@@ -111,6 +111,7 @@
 - (void)startUserSession {
     
     NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    
     NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSString *requestBody = @"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
     "<soapenv:Header/>"
@@ -118,12 +119,12 @@
     "<urn:startSession soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"/>"
     "</soapenv:Body>"
     "</soapenv:Envelope>";
-    
+    NSLog(@"%@",requestBody);
     
     STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
-                                                                     methodType:@"POST"
-                                                                           body:requestBody
-                                                            responseHeaderBlock:^(NSURLResponse *response)
+                                                         methodType:@"POST"
+                                                               body:requestBody
+                                                responseHeaderBlock:^(NSURLResponse *response)
                                               {
                                                   
                                               }successBlock:^(NSData *responseData){

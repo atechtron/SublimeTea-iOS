@@ -18,28 +18,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)]];
+    
+    [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc]
+                                     initWithTarget:self
+                                     action:@selector(panGestureRecognized:)]];
+    
     self.navigationItem.hidesBackButton = YES;
     [self.navigationBar setTranslucent:NO];
+    
     /* Making Toolbar background color to white */
     [self.toolbar setBarTintColor:UIColorFromRGB(90, 37, 26, 1)];
     [self.navigationBar setBarTintColor:UIColorFromRGB(90, 37, 26, 1)];
     self.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-
-    /* Making NavigationBar background color to white */
-//    [self.navigationBar setBackgroundImage:[self getImageWithColor:UIColorFromRGB(137, 90, 45, 1)] forBarMetrics:UIBarMetricsDefault];
     
     //Change status bar style
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     /* Adding bottom border to navbar */
-//    CALayer *border = [CALayer layer];
-//    border.borderColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"header_seperator"]].CGColor;
-//    border.borderWidth = 3;
-//    CALayer *layer = self.navigationBar.layer;
-//    border.frame = CGRectMake(0, layer.bounds.size.height, layer.bounds.size.width, 3);
-//    [layer addSublayer:border];
+    [self.navigationBar setBackgroundImage:[[UIImage alloc] init]
+                                       forBarMetrics:UIBarMetricsDefault];
     /* Making NavigationBar Bottom shadow color to App Tint color */
     [self.navigationBar setShadowImage:[UIImage imageNamed:@"header_seperator"]];
 }

@@ -46,18 +46,20 @@
     
     if ([STUtility isNetworkAvailable]) {
         NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:self.url];
+//        [urlRequest clearCookiesForURL];
 //        [urlRequest setMazdaAppCookie];
         [urlRequest setHTTPMethod:self.methodType];
+        NSString *sMessageLength = [NSString stringWithFormat:@"%lu", (unsigned long)self.requestBody.length];
+        
+        [urlRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+        [urlRequest addValue: @"urn:Action" forHTTPHeaderField:@"SOAPAction"];
+        [urlRequest addValue:@"dev.sublime-house-of-tea.com" forHTTPHeaderField:@"Host"];
+        [urlRequest addValue: sMessageLength forHTTPHeaderField:@"Content-Length"];
         if(self.requestBody.length) {
-            if([[self.url absoluteString] rangeOfString:@"login"].location != NSNotFound) {
-                
-                //Percentile Escape encoding is needed only in LoginAPI as user might have % character as a Password.
-                NSString *escapedCharString = [self.requestBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                [urlRequest setHTTPBody:[escapedCharString dataUsingEncoding:NSUTF8StringEncoding]];
-            } else {
-                [urlRequest setHTTPBody:[self.requestBody dataUsingEncoding:NSUTF8StringEncoding]];
-            }
+            [urlRequest setHTTPBody:[self.requestBody dataUsingEncoding:NSUTF8StringEncoding]];
         }
+        NSLog(@"%@",urlRequest);
+        NSLog(@"%@",urlRequest.allHTTPHeaderFields);
         self.responseData = [[NSMutableData alloc] init];
         self.urlConnection = [[NSURLConnection alloc]initWithRequest:urlRequest
                                                             delegate:self];
