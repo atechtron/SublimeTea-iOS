@@ -22,16 +22,26 @@
     self.navigationItem.hidesBackButton = YES;
     [self.navigationBar setTranslucent:NO];
     /* Making Toolbar background color to white */
-    [self.toolbar setBarTintColor:UIColorFromRGB(137, 90, 45, 1)];
-    [self.navigationBar setBarTintColor:UIColorFromRGB(137, 90, 45, 1)];
+    [self.toolbar setBarTintColor:UIColorFromRGB(90, 37, 26, 1)];
+    [self.navigationBar setBarTintColor:UIColorFromRGB(90, 37, 26, 1)];
     self.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
 
     /* Making NavigationBar background color to white */
 //    [self.navigationBar setBackgroundImage:[self getImageWithColor:UIColorFromRGB(137, 90, 45, 1)] forBarMetrics:UIBarMetricsDefault];
-
+    
+    //Change status bar style
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    /* Adding bottom border to navbar */
+//    CALayer *border = [CALayer layer];
+//    border.borderColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"header_seperator"]].CGColor;
+//    border.borderWidth = 3;
+//    CALayer *layer = self.navigationBar.layer;
+//    border.frame = CGRectMake(0, layer.bounds.size.height, layer.bounds.size.width, 3);
+//    [layer addSublayer:border];
     /* Making NavigationBar Bottom shadow color to App Tint color */
-    //    [[UINavigationBar appearance] setShadowImage:[UI_Utility getImageWithColor:[UI_Utility navigationBarShadowColor]]];
+    [self.navigationBar setShadowImage:[UIImage imageNamed:@"header_seperator"]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,10 +51,10 @@
 
 -(UIImage *)getImageWithColor:(UIColor *)color
 {
-    UIImage *img = [UIImage imageNamed:@"gray-border.png"];
+    UIImage *img = [UIImage imageNamed:@"header_seperator"];
     
     // Make a rectangle the size of your image
-    CGRect rect = CGRectMake(0, 0, 600, 30);
+    CGRect rect = CGRectMake(0, 0, img.size.width, img.size.height);
     // Create a new bitmap context based on the current image's size and scale, that has opacity
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, img.scale);
     // Get a reference to the current context (which you just created)
@@ -86,5 +96,10 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+#pragma mark -
+#pragma UIViewController device rotation
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+}
 @end

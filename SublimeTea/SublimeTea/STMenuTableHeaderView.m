@@ -24,8 +24,8 @@
 
 
 - (IBAction)tapAction:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(didSelectHeaderAtSectionIndex:)]) {
-        [self.delegate didSelectHeaderAtSectionIndex:self.section];
+    if ([self.delegate respondsToSelector:@selector(didSelectHeader:AtSectionIndex:)]) {
+        [self.delegate didSelectHeader:self AtSectionIndex:self.section];
     }
 }
 @end

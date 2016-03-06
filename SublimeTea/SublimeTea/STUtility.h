@@ -11,9 +11,15 @@
 
 @interface STUtility : NSObject
 
-+ (BOOL)isNetworkAvailable;
++ (BOOL) isNetworkAvailable;
 
-+ (void)showAlertForNoInternetConnectionWithMessage:(NSString *)message;
++ (void) showAlertForNoInternetConnectionWithMessage:(NSString *)message;
 
-+ (NSString *)applyCurrencyFormat:(NSString *)priceStr;
++ (NSString *) applyCurrencyFormat:(NSString *)priceStr;
++ (NSURL *) smartURLForString:(NSString *)str;
++ (BOOL) NSStringIsValidEmail:(NSString *)checkString;
++ (BOOL) validatePhone:(NSString *)phoneNumber;
+
++ (void)startActivityIndicatorOnView:(UIView*)inView withText:(NSString*)inStr;
++ (void)stopActivityIndicatorFromView:(UIView*)inView;
 @end

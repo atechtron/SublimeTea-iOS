@@ -20,6 +20,10 @@
 #import "STProductCategoriesViewController.h"
 #import "STUserProfileViewController.h"
 
+#import "STHttpRequest.h"
+#import "STConstants.h"
+#import "STAppDelegate.h"
+
 @interface STMenuTableViewController ()<STMenuTableHeaderViewDelegate>
 @property (strong, nonatomic)NSMutableArray *dataArr;
 @property (strong, nonatomic)NSArray *sectionTitleDataArr;
@@ -35,6 +39,7 @@
     
     self.dataArr = [NSMutableArray new];
     self.sectionTitleDataArr = @[@"HOME",@"OUR RANGE",@"OUR RECENTLY VIEWED ITEMS",@"YOUR ORDERS",@"YOUR ACCOUNT",@"CUSTOMER SUPPORT",@"FAQ",@"LOGOUT"];
+    self.view.backgroundColor = UIColorFromRGB(231, 230, 230, 1);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,7 +64,7 @@
     STMenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"menuCell" forIndexPath:indexPath];
     
     cell.titleLabel.text = self.dataArr[indexPath.row];
-    
+    cell.titleLabel.textColor = UIColorFromRGB(90, 37, 26, 1);
     return cell;
 }
 
@@ -67,7 +72,7 @@
     UIView *sectionHeaderView;
     if (section == 0) {
         STMenuUserInfoTableHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STMenuUserInfoTableHeaderView"];
-        headerView.contentView.backgroundColor = [UIColor brownColor];
+        headerView.contentView.backgroundColor = UIColorFromRGB(90, 37, 26, 1);
         headerView.tintColor = [UIColor clearColor];
         sectionHeaderView = headerView;
         headerView.TitleLabel.text = @"NEHA JAIN";
@@ -77,9 +82,17 @@
         STMenuTableHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STMenuTableHeaderView"];
         sectionHeaderView = headerView;
         headerView.section = section;
+        headerView.titleLabel.textColor = UIColorFromRGB(90, 37, 26, 1);
         headerView.delegate = self;
-        
         headerView.titleLabel.text = self.sectionTitleDataArr[section-1];
+        if (section == 5 || section == 2)
+        {
+            headerView.bottomImageview.hidden = NO;
+        }
+        else
+        {
+            headerView.bottomImageview.hidden = YES;
+        }
         if (section == 2) {
             //        CALayer* layer = [headerView.titleLabel layer];
             
@@ -104,6 +117,7 @@
             headerView.accesoryBtn.hidden = YES;
         }
     }
+    
     return sectionHeaderView;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -116,16 +130,26 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.01f;
 }
-- (void)didSelectHeaderAtSectionIndex:(NSInteger )section {
+- (void)didSelectHeader:(STMenuTableHeaderView *)header AtSectionIndex:(NSInteger )section {
     NSLog(@"SectionClicked %ld",section);
     if (section == 2 && self.dataArr.count == 0) {
+        header.bottomImageview.hidden = YES;
         [self.dataArr addObjectsFromArray:@[@"flavoured green tea",@"pure green tea",@"limited edition tea",@"tisane",@"flavoured white tea",@"flavoured black tea"]];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
     else{
         if(section == 2){
+            header.bottomImageview.hidden = NO;
             [self.dataArr removeAllObjects];
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+        else if (section == 5)
+        {
+            header.bottomImageview.hidden = NO;
+        }
+        else
+        {
+            header.bottomImageview.hidden = YES;
         }
     }
     STNavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
@@ -169,6 +193,8 @@
             
             break;
         case 8: // LogOut
+            [STUtility startActivityIndicatorOnView:nil withText:@"Loggin Out Please wait.."];
+            [AppDelegate endUserSession];
             [navigationController popToRootViewControllerAnimated:YES];
             break;
         default:
@@ -196,58 +222,5 @@
 //    [self.frostedViewController hideMenuViewController];
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

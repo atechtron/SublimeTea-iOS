@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -17,31 +17,52 @@
                     <color key="textColor" red="0.53542852760000004" green="0.3534244091" blue="0.17693179240000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PbO-JS-V4u">
-                    <rect key="frame" x="570" y="10" width="22" height="22"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PbO-JS-V4u">
+                    <rect key="frame" x="582" y="17" width="10" height="10"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="22" id="w0H-c7-CLi"/>
-                        <constraint firstAttribute="width" constant="22" id="xRr-3W-S4O"/>
+                        <constraint firstAttribute="height" constant="10" id="w0H-c7-CLi"/>
+                        <constraint firstAttribute="width" constant="10" id="xRr-3W-S4O"/>
                     </constraints>
                     <color key="tintColor" red="0.53542852760000004" green="0.3534244091" blue="0.17693179240000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" backgroundImage="add_icon"/>
                     <connections>
                         <action selector="tapAction:" destination="Abn-NE-Rzs" eventType="touchUpInside" id="7Xm-pk-NSP"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line-seperator_menu-bar" translatesAutoresizingMaskIntoConstraints="NO" id="rDx-df-eAd">
+                    <rect key="frame" x="0.0" y="42" width="600" height="2"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="2" id="kBe-dh-Au6"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <gestureRecognizers/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="rDx-df-eAd" secondAttribute="trailing" id="3kI-E4-fo8"/>
                 <constraint firstAttribute="trailing" secondItem="PbO-JS-V4u" secondAttribute="trailing" constant="8" id="O5x-lm-e8B"/>
-                <constraint firstItem="PbO-JS-V4u" firstAttribute="top" secondItem="Abn-NE-Rzs" secondAttribute="top" constant="10" id="iY4-tQ-zaL"/>
+                <constraint firstAttribute="bottom" secondItem="rDx-df-eAd" secondAttribute="bottom" id="Z6Y-Kl-3va"/>
+                <constraint firstItem="rDx-df-eAd" firstAttribute="top" secondItem="PbO-JS-V4u" secondAttribute="bottom" constant="16" id="b8v-Jg-ER7"/>
+                <constraint firstItem="PbO-JS-V4u" firstAttribute="top" secondItem="Abn-NE-Rzs" secondAttribute="top" constant="17" id="iY4-tQ-zaL"/>
+                <constraint firstItem="rDx-df-eAd" firstAttribute="leading" secondItem="Abn-NE-Rzs" secondAttribute="leading" id="jay-eV-HPA"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="b8v-Jg-ER7"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="accesoryBtn" destination="PbO-JS-V4u" id="Q2i-el-RQr"/>
+                <outlet property="bottomImageview" destination="rDx-df-eAd" id="Gl6-w7-xTp"/>
                 <outlet property="titleLabel" destination="a8B-4H-bR6" id="eJa-xy-e0Y"/>
             </connections>
             <point key="canvasLocation" x="221" y="-117"/>
         </view>
     </objects>
+    <resources>
+        <image name="add_icon" width="32" height="33"/>
+        <image name="line-seperator_menu-bar" width="1480" height="6"/>
+    </resources>
 </document>

@@ -11,4 +11,6 @@
 
 @interface STConstants : NSObject
 
++ (NSString *)getAPIURLWithParams:(NSString *)param;
+
 @end

@@ -28,7 +28,8 @@
     
 //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
 //    [self.view addGestureRecognizer:tap];
-    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO
+                                            withAnimation:UIStatusBarAnimationFade];
      [self addNavBarButtons];
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -39,6 +40,10 @@
     [super didReceiveMemoryWarning];
     
     // Dispose of any resources that can be recreated.
+}
+
+-(BOOL)prefersStatusBarHidden {
+    return NO;
 }
 - (void)viewDidTapped:(id)sender {
     [self.view endEditing:YES];
@@ -67,15 +72,20 @@
 }
 
 - (void)addLeftBarItemsWithFrame:(CGRect)btnFrame {
-    UIButton *backButton = [[UIButton alloc] initWithFrame:btnFrame];
-    [backButton setTitle:@"Back" forState:UIControlStateNormal];
+    
+    UIImage *backBtnImg = [UIImage imageNamed:@"back_Btn"];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x, btnFrame.origin.y, backBtnImg.size.width, backBtnImg.size.height)];
+    [backButton setImage:backBtnImg forState:UIControlStateNormal];
+//    [backButton setTitle:@"Back" forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *menuButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x + 55, btnFrame.origin.y, btnFrame.size.width, btnFrame.size.height)];
-    [menuButton setTitle:@"Menu" forState:UIControlStateNormal];
+    UIImage *menuBtnImg = [UIImage imageNamed:@"menu"];
+    UIButton *menuButton = [[UIButton alloc] initWithFrame:CGRectMake(backButton.frame.origin.x + 35, backButton.frame.origin.y, menuBtnImg.size.width, menuBtnImg.size.height)];
+//    [menuButton setTitle:@"Menu" forState:UIControlStateNormal];
+    [menuButton setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
     [menuButton addTarget:self action:@selector(slideMenuButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIView *leftContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 110, 40)];
+    UIView *leftContainerView = [[UIView alloc] initWithFrame:CGRectMake(-5, 0, 110, 40)];
     leftContainerView.backgroundColor = [UIColor clearColor];
     [leftContainerView addSubview:backButton];
     [leftContainerView addSubview:menuButton];
@@ -96,26 +106,32 @@
 
 - (void)addRightBarItemsWithFrame:(CGRect)btnFrame {
     
-    UIButton *searchButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x, btnFrame.origin.y, btnFrame.size.width, btnFrame.size.height)];
+    UIImage *searchBtnImg = [UIImage imageNamed:@"search_btn"];
+    UIButton *searchButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x, btnFrame.origin.y, searchBtnImg.size.width, searchBtnImg.size.height)];
     searchButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [searchButton setTitle:@"Search" forState:UIControlStateNormal];
+    [searchButton setImage:searchBtnImg forState:UIControlStateNormal];
+//    [searchButton setTitle:@"Search" forState:UIControlStateNormal];
     [searchButton addTarget:self action:@selector(searchButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *accountButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x + 55, btnFrame.origin.y , btnFrame.size.width + 10, btnFrame.size.height)];
+    UIButton *accountButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x + 35, btnFrame.origin.y-10 , btnFrame.size.width + 10, btnFrame.size.height)];
     accountButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     [accountButton setTitle:@"My Account" forState:UIControlStateNormal];
     [accountButton addTarget:self action:@selector(accountButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *cartButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x + 115, btnFrame.origin.y + 1, btnFrame.size.width - 15.5, btnFrame.size.height)];
+    UIImage *cartBtnImg = [UIImage imageNamed:@"cart"];
+    UIButton *cartButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x + 105, btnFrame.origin.y, cartBtnImg.size.width+5, cartBtnImg.size.height)];
     cartButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [cartButton setTitle:@"Cart" forState:UIControlStateNormal];
+    [cartButton setImage:cartBtnImg forState:UIControlStateNormal];
+//    [cartButton setTitle:@"Cart" forState:UIControlStateNormal];
     [cartButton addTarget:self action:@selector(cartButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:cartButton alignment:JSBadgeViewAlignmentTopRight];
     badgeView.badgeAlignment = JSBadgeViewAlignmentTopCenter;
     badgeView.badgeText = @"3";
+    badgeView.badgeTextFont = [UIFont fontWithName:@"Helvetica" size:10];
+    badgeView.badgeBackgroundColor = [UIColor clearColor];
     
-    
-    UIView *rightContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
+    NSInteger viewWidth = searchBtnImg.size.width + cartBtnImg.size.width + accountButton.frame.size.width +20;
+    UIView *rightContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, 30)];
     rightContainerView.backgroundColor = [UIColor clearColor];
     [rightContainerView addSubview:searchButton];
     [rightContainerView addSubview:accountButton];

@@ -8,6 +8,20 @@
 
 #import "STConstants.h"
 
+#define kAPI_ENDPOINT @"http://dev.sublime-house-of-tea.com/index.php/api/v2_soap/index/"
+
 @implementation STConstants
+
++ (NSString *)getAPIURLWithParams:(NSString *)param {
+    NSString *str;
+    if (!param || !param.length) {
+        str = kAPI_ENDPOINT;
+    }
+    else
+    {
+        str = [NSString stringWithFormat:@"%@%@",kAPI_ENDPOINT,param];
+    }
+    return str;
+}
 
 @end

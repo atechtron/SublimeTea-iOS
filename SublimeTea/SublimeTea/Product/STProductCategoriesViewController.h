@@ -9,6 +9,10 @@
 #import "STViewController.h"
 
 @interface STProductCategoriesViewController : STViewController
+
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong, nonatomic)NSArray *prodCategories;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 
 @end

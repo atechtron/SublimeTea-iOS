@@ -9,6 +9,10 @@
 #import "STAppDelegate.h"
 #import "ResponseViewController.h"
 #import "STGlobalCacheManager.h"
+#import "STMacros.h"
+#import "STConstants.h"
+#import "STHttpRequest.h"
+#import "XMLDictionary.h"
 
 @interface STAppDelegate ()<UITextFieldDelegate>
 
@@ -18,7 +22,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    // remove user session info
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:kUSerSession_Key];
+    [defaults synchronize];
+    
     return YES;
 }
 
@@ -43,6 +52,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [[STGlobalCacheManager defaultManager] clearGlobalCache];
+    [self endUserSession];
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
@@ -87,5 +97,59 @@
     
     return YES;
 }
+- (void)didStartNetworking
+{
+    if (self.networkActivityCounter >= 0) {
+        self.networkActivityCounter += 1;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    }
+}
 
+- (void)didStopNetworking
+{
+    if (self.networkActivityCounter > 0) {
+        self.networkActivityCounter -= 1;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = (self.networkActivityCounter != 0);
+    }
+}
+
+- (void)endUserSession {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userSessionId = [defaults objectForKey:kUSerSession_Key];
+    
+    NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                             "<soapenv:Header/>"
+                             "<soapenv:Body>"
+                             "<urn:endSession soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                             "</urn:endSession>"
+                             "</soapenv:Body>"
+                             "</soapenv:Envelope>",userSessionId];
+    
+    
+    STHttpRequest *featureNSpecHttpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                                     methodType:@"POST"
+                                                                           body:requestBody
+                                                            responseHeaderBlock:^(NSURLResponse *response)
+                                              {
+                                                  
+                                              }successBlock:^(NSData *responseData){
+                                                  NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                                  NSLog(@"%@",xmlDic);
+                                                  NSDictionary *resultDict = xmlDic[@"SOAP-ENV:Body"][@"ns1:endSessionResponse"][@"endSessionReturn"];
+                                                  if ([resultDict[@"__text"] boolValue]) {
+                                                      [defaults removeObjectForKey:kUSerSession_Key];
+                                                      [defaults synchronize];
+                                                  }
+                                                  [STUtility stopActivityIndicatorFromView:nil];
+                                              }failureBlock:^(NSError *error) {
+                                                  NSLog(@"SublimeTea-STAppDelegate-endUserSession:- %@",error);
+                                                  [STUtility stopActivityIndicatorFromView:nil];
+                                              }];
+    
+    [featureNSpecHttpRequest start];
+}
 @end

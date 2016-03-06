@@ -7,6 +7,7 @@
 //
 
 #import "STRootViewController.h"
+#import "STMacros.h"
 
 @interface STRootViewController ()
 
@@ -16,7 +17,17 @@
 
 - (void)awakeFromNib
 {
-    self.contentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
+//    STDashboardViewController
+    NSString *identifier = nil;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    [defaults removeObjectForKey:kUSerSession_Key];
+    if ([defaults objectForKey:kUSerSession_Key]) {
+        identifier = @"dashBoardNavController";
+    }
+    else {
+        identifier = @"contentController";
+    }
+    self.contentViewController = [self.storyboard instantiateViewControllerWithIdentifier:identifier];
     self.menuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"menuController"];
 }
 

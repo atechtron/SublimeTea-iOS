@@ -8,6 +8,8 @@
 
 #import "STSignUpViewController.h"
 #import "STUtility.h"
+#import "STHttpRequest.h"
+
 @interface STSignUpViewController ()<UITextFieldDelegate>
 
 @end
@@ -84,22 +86,130 @@
     if (emailStr.length > 0 && passwordStr.length > 0 && confirmPasswordStr.length > 0 && mobNumStr.length > 0) {
         status = YES;
         self.errorLabel.hidden = YES;
-    }else {
+    }
+    else {
 //        self.errorLabel.text = @"UserName and Password is required.";
         self.errorLabel.hidden = NO;
     }
     if (![passwordStr isEqualToString:confirmPasswordStr]) {
-        self.errorLabel.text = @"Password and confirm password should match.";
+        self.errorLabel.text = @"Please enter valid data.";
         self.errorLabel.hidden = NO;
+        status = NO;
     }
     return status;
 }
 - (IBAction)submitButtonAction:(UIButton *)sender {
     [self.view endEditing:YES];
+    
     // Check Internet Connsection
     if ([STUtility isNetworkAvailable] && [self validateInputs]) {
-        // call webservice
+        [STUtility startActivityIndicatorOnView:nil withText:@"SigningIn, Please wait.."];
+        [self startUserSession];
+        
     }
+}
+- (void)startUserSession {
+    
+    NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSString *requestBody = @"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+    "<soapenv:Header/>"
+    "<soapenv:Body>"
+    "<urn:startSession soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"/>"
+    "</soapenv:Body>"
+    "</soapenv:Envelope>";
+    
+    
+    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                                     methodType:@"POST"
+                                                                           body:requestBody
+                                                            responseHeaderBlock:^(NSURLResponse *response)
+                                              {
+                                                  
+                                              }successBlock:^(NSData *responseData){
+                                                  NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                                  NSLog(@"%@",xmlDic);
+                                                  NSDictionary *resultDict = xmlDic[@"SOAP-ENV:Body"][@"ns1:startSessionResponse"][@"startSessionReturn"];
+                                                  NSString *sessionId = resultDict[@"__text"];
+                                                  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                                  [defaults setObject:sessionId forKey:kUSerSession_Key];
+                                                  [self userRegistration];
+                                              }failureBlock:^(NSError *error) {
+                                                  [STUtility stopActivityIndicatorFromView:nil];
+                                                  [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                             message:@"Unexpected error has occured, Please try after some time."
+                                                                            delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles: nil] show];
+                                                  NSLog(@"SublimeTea-STSignUpViewController-startSession:- %@",error);
+                                              }];
+    
+    [httpRequest start];
+}
+- (void)userRegistration {
+    
+    NSString *emailStr = [self.emailAddressTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *passwordStr = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    //        NSString *confirmPasswordStr = [self.confirmPasswordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    //        NSString *mobNumStr = [self.mobileNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
+    
+    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                             "<soapenv:Header/>"
+                             "<soapenv:Body>"
+                             "<urn:customerCustomerCreate soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                             "<customerData xsi:type=\"urn:customerCustomerEntityToCreate\">"
+                             "<email xsi:type=\"xsd:string\">%@</email>"
+                             "<password xsi:type=\"xsd:string\">%@</password>"
+                             "</customerData>"
+                             "</urn:customerCustomerCreate>"
+                             "</soapenv:Body>"
+                             "</soapenv:Envelope>",sessionId,emailStr,passwordStr];
+    
+    NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                                     methodType:@"POST"
+                                                                           body:requestBody
+                                                            responseHeaderBlock:^(NSURLResponse *response)
+                                              {
+                                                  NSLog(@"%@",response);
+                                              }successBlock:^(NSData *responseData){
+                                                  NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                                  NSLog(@"%@",xmlDic);
+                                                  if(!xmlDic[@"SOAP-ENV:Body"][@"SOAP-ENV:Fault"])
+                                                  {
+                                                      [STUtility stopActivityIndicatorFromView:nil];
+                                                  
+                                                      [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
+                                                  }
+                                                  else {
+                                                      [STUtility stopActivityIndicatorFromView:nil];
+                                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                                  message:@"SignUp Failed, Please try after some time."
+                                                                                 delegate:nil
+                                                                        cancelButtonTitle:@"OK"
+                                                                        otherButtonTitles: nil] show];
+                                                }
+                                              }failureBlock:^(NSError *error) {
+                                                  [STUtility stopActivityIndicatorFromView:nil];
+                                                  [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                              message:@"Unexpected error has occured, Please try after some time."
+                                                                             delegate:nil
+                                                                    cancelButtonTitle:@"OK"
+                                                                    otherButtonTitles: nil] show];
+                                                  NSLog(@"SublimeTea-STSignUpViewController-submitButtonAction:- %@",error);
+                                              }];
+    
+    [httpRequest start];
+}
+-(void)loadDashboard {
+    [self performSegueWithIdentifier:@"dashBoardFromSigInSegue" sender:self
+     ];
 }
 #define kOFFSET_FOR_KEYBOARD 80.0
 
@@ -148,6 +258,8 @@
     }
     return NO;
 }
+
+
 //method to move the view up/down whenever the keyboard is shown/dismissed
 -(void)setViewMovedUp:(BOOL)movedUp
 {
