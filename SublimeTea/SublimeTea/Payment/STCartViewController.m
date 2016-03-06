@@ -93,8 +93,9 @@
     static NSString *cellidentifier = @"cartCell";
     STCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
     cell.titleLabel.text = [NSString stringWithFormat:@"Product Title %d",indexPath.row +1];
-    cell.descriptionLabel.text = @"Short product description sdnsd dbvxbcv dxkv.xvx dkxv.vjx";
-    cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%@",@1500]];
+    cell.descriptionLabel.text = @"Short product description ---- ----- ----- -----";
+    cell.priceLabel.text = @"Price";
+    cell.priceTitleLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%@",@1500]];
     cell.porudctImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
     cell.qtyTextbox.layer.borderColor = [UIColor lightGrayColor].CGColor;
     cell.qtyTextbox.layer.borderWidth = .8;
