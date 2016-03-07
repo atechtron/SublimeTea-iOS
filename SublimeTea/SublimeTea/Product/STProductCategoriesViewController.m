@@ -25,11 +25,25 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.titleLabel.text = @"Explore our Range of Teas";
     self.pageControl.currentPage = 0;
-    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width /
-                                          self.collectionView.frame.size.width);
+    self.pageControl.numberOfPages = [self numberOfPages];
     [self.view bringSubviewToFront:self.pageControl];
 }
-
+- (NSInteger)numberOfPages {
+    NSInteger singlePageElementHeightCount = 0;
+    NSInteger singlePageElementWidthCount = 0;
+    if (self.view.bounds.size.width > self.view.bounds.size.height) {
+        // landscape
+        singlePageElementWidthCount = 3;
+        singlePageElementHeightCount = floor(self.collectionView.frame.size.width/150);
+    }else {
+        //potrait
+        singlePageElementWidthCount = 2;
+        singlePageElementHeightCount = floor(self.collectionView.frame.size.width/150);
+    }
+    
+    NSInteger totalPages = ceil(20 /(singlePageElementHeightCount*singlePageElementWidthCount));
+    return totalPages+1;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -124,6 +138,11 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [self.collectionView reloadData];
+    
+    self.pageControl.numberOfPages = [self numberOfPages];
+    NSLog(@"%f",self.collectionView.contentOffset.x);
+    [self.view bringSubviewToFront:self.pageControl];
+    
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 

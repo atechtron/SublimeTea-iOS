@@ -14,7 +14,7 @@
 #import "STLoginViewController.h"
 #import "STSignUpViewController.h"
 
-@interface STViewController ()
+@interface STViewController ()<UISearchBarDelegate>
 
 @end
 
@@ -144,8 +144,11 @@
 #pragma mark-
 #pragma RightBarButtonItems Action
 
-- (void)searchButtonAction:(id)sender {
-    
+- (void)searchButtonAction:(UIButton *)sender {
+    UIView *containerView = sender.superview;
+    UISearchBar  *sBar = [[UISearchBar alloc]initWithFrame:CGRectMake(containerView.frame.origin.x-150,10,175,self.navigationController.navigationBar.bounds.size.height/2)];
+    sBar.delegate = self;
+    [self.navigationController.navigationBar addSubview:sBar];
 }
 - (void)accountButtonAction:(id)sender {
     

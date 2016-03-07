@@ -10,7 +10,7 @@
 #import "STProductListCollectionViewCell.h"
 #import "STHttpRequest.h"
 
-@interface STProductViewController ()
+@interface STProductViewController ()<UIScrollViewDelegate>
 
 @end
 
@@ -25,12 +25,25 @@
 - (void)viewDidAppear:(BOOL)animated {
     
     self.pageControl.currentPage = 0;
-    NSInteger totalItems = [self.collectionView numberOfItemsInSection:0];
-
-//    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width /
-//                                          (totalItems*104));
-//    [self.view bringSubviewToFront:self.pageControl];
+    self.pageControl.numberOfPages = [self numberOfPages];
+    [self.view bringSubviewToFront:self.pageControl];
     
+}
+- (NSInteger)numberOfPages {
+    NSInteger singlePageElementHeightCount = 0;
+    NSInteger singlePageElementWidthCount = 0;
+    if (self.view.bounds.size.width > self.view.bounds.size.height) {
+        // landscape
+        singlePageElementWidthCount = 6;
+        singlePageElementHeightCount = floor(self.collectionView.frame.size.width/117);
+    }else {
+        //potrait
+        singlePageElementWidthCount = 3;
+        singlePageElementHeightCount = floor(self.collectionView.frame.size.height/117);
+    }
+    
+    NSInteger totalPages = ceil(21 /(singlePageElementHeightCount*singlePageElementWidthCount));
+    return totalPages+1;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -46,6 +59,14 @@
  // Pass the selected object to the new view controller.
  }
  */
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat pageWidth = scrollView.frame.size.width;
+    NSInteger page = (NSInteger)floor((scrollView.contentOffset.x * 2.0f + pageWidth) / (pageWidth * 2.0f));
+    [self.pageControl setCurrentPage:page];
+}
+
 #pragma mark-
 #pragma UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -146,6 +167,8 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [self.collectionView reloadData];
+    self.pageControl.numberOfPages = [self numberOfPages];
+    [self.view bringSubviewToFront:self.pageControl];
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 - (void)fetchProducts {
