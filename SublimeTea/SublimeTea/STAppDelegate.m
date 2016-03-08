@@ -27,7 +27,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:kUSerSession_Key];
     [defaults synchronize];
-    
+    [self startSession];
     return YES;
 }
 
@@ -112,7 +112,46 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = (self.networkActivityCounter != 0);
     }
 }
-
+- (void)startSession {
+    
+//    [STUtility startActivityIndicatorOnView:nil withText:@"Initializing..."];
+    
+    NSString *requestBody = [STConstants startSessionRequestBody];
+    
+    NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                         methodType:@"POST"
+                                                               body:requestBody
+                                                responseHeaderBlock:^(NSURLResponse *response)
+                                  {
+                                      
+                                  }successBlock:^(NSData *responseData){
+                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                      NSLog(@"%@",xmlDic);
+                                      NSDictionary *resutDict = xmlDic[@"SOAP-ENV:Body"][@"ns1:loginResponse"][@"loginReturn"];
+                                      NSString *sessionKey = resutDict[@"__text"];
+                                      if (sessionKey.length) {
+                                          NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                          [defaults setObject:sessionKey forKey:kUSerSession_Key];
+                                          [defaults synchronize];
+                                      }
+//                                      [STUtility stopActivityIndicatorFromView:nil];
+                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"APPVALIDATION" object:nil];
+//                                      [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
+                                  }failureBlock:^(NSError *error) {
+                                      [STUtility stopActivityIndicatorFromView:nil];
+                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                  message:@"Unexpected error has occured, Please try after some time."
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil] show];
+                                      NSLog(@"SublimeTea-STSignUpViewController-startSession:- %@",error);
+                                  }];
+    
+    [httpRequest start];
+}
 - (void)endUserSession {
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

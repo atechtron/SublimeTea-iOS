@@ -88,9 +88,12 @@
 //    return headerView;
 //}
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [STUtility startActivityIndicatorOnView:nil withText:@"Loading Teas, Please wait.."];
-    selectedCatId = indexPath.row;
-    [self fetchProducts];
+    if ([STUtility isNetworkAvailable]) {
+        [STUtility startActivityIndicatorOnView:nil withText:@"Loading Teas, Please wait.."];
+        selectedCatId = indexPath.row;
+        [self fetchProducts];
+    }
+    
 //    [self performSegueWithIdentifier:@"productListSegue" sender:self];
     
 }
@@ -147,25 +150,13 @@
 }
 
 - (void)fetchProducts {
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
-    
+
     NSDictionary *selectedProdCatDict = self.prodCategories[selectedCatId];
     NSString *selectedCategoryId = selectedProdCatDict[@""];
-    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                             "<soapenv:Header/>"
-                             "<soapenv:Body>"
-                             "<urn:catalogProductInfo soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
-                             "<productId xsi:type=\"xsd:string\">%@</productId>"
-                             "<storeView xsi:type=\"xsd:string\">%@</storeView>"
-                             "<attributes xsi:type=\"urn:catalogProductRequestAttributes\">"
-                             "</urn:catalogProductInfo>"
-                             "</soapenv:Body>"
-                             "</soapenv:Envelope>",sessionId,selectedCategoryId,@"default"];
+    NSString *requestBody = [STConstants productListRequestBody];
     
     NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    
     NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
@@ -178,9 +169,6 @@
                                       NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
                                       NSLog(@"%@",xmlDic);
                                       
-                                      [STUtility stopActivityIndicatorFromView:nil];
-                                      
-                                      [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];
                                   }failureBlock:^(NSError *error) {
                                       [STUtility stopActivityIndicatorFromView:nil];
                                       [[[UIAlertView alloc] initWithTitle:@"Alert"
@@ -193,6 +181,16 @@
     
     [httpRequest start];
 }
+- (void)parseResponseWithDict:(NSDictionary *)responseDict {
+    if (responseDict) {
+        [STUtility stopActivityIndicatorFromView:nil];
+        //                                      self.categories
+        [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];
+    }else {
+        //No products found.
+    }
+}
+
 - (void)loadProductCategories {
     [self performSegueWithIdentifier:@"productListSegue" sender:self];
 }

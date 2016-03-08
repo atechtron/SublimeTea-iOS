@@ -45,3 +45,4 @@
 
 
 #define kUSerSession_Key @"USER_SESSIONID"
+#define kUserInfo_Key @"USER_INFO"

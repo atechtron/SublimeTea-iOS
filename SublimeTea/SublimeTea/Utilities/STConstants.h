@@ -9,8 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "STMacros.h"
 
+#define kStoreID 1
+
 @interface STConstants : NSObject
 
 + (NSString *)getAPIURLWithParams:(NSString *)param;
++ (NSString *)storeId;
+
++ (NSString *)startSessionRequestBody;
++ (NSString *)categoryListRequestBody;
++ (NSString *)productListRequestBody;
++ (NSString *)prodInfoRequestBodyWithID:(NSString *)prodId;
 
 @end

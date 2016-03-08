@@ -9,18 +9,26 @@
 #import "STProductViewController.h"
 #import "STProductListCollectionViewCell.h"
 #import "STHttpRequest.h"
+#import "FileDownloader.h"
+#import "STGlobalCacheManager.h"
 
 @interface STProductViewController ()<UIScrollViewDelegate>
-
+{
+    NSURLSession *downloadSession;
+    NSURLSessionConfiguration *downloadConfig;
+    NSDictionary *prodDetailDict;
+}
 @end
 
 @implementation STProductViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.titleLabel.text = @"Pure Green Tea";
-    
+    downloadConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    downloadSession = [NSURLSession sessionWithConfiguration:downloadConfig];
 }
 - (void)viewDidAppear:(BOOL)animated {
     
@@ -80,8 +88,10 @@
     static NSString *cellIdentifier = @"productListCell";
     STProductListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.productTitleLabel.text = [NSString stringWithFormat:@"%@\n%@",@"GREEN",@"LONG DING"];
-    cell.productImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
+    
+    [self loadProdImageinView:cell.productImageView fromURL:@""];//[UIImage imageNamed:@"teaCup.jpeg"];
     cell.productImageView.contentMode = UIViewContentModeScaleToFill;
+    
     return cell;
 }
 //- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
@@ -98,7 +108,7 @@
 //        //potrait
 //        size = CGSizeMake(collectionView.frame.size.width/3-.5, 117);
 //    }
-//    
+//
 //    return size;
 //}
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
@@ -141,9 +151,9 @@
 //    return size;
 //}
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    [self performSegueWithIdentifier:@"productDetailViewSegue" sender:self];
-    
+    if ([STUtility isNetworkAvailable]) {
+        [self fetchProductDetails];
+    }
 }
 //- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
 //    return UIEdgeInsetsMake(0, 0, 0, 0);
@@ -171,23 +181,13 @@
     [self.view bringSubviewToFront:self.pageControl];
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
-- (void)fetchProducts {
+- (void)fetchProductDetails {
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
+    [STUtility startActivityIndicatorOnView:nil withText:@"Loading product details.."];
     
-//    NSDictionary *selectedProdCatDict = self.prodCategories[selectedCatId];
-//    NSString *selectedCategoryId = selectedProdCatDict[@""];
-    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                             "<soapenv:Header/>"
-                             "<soapenv:Body>"
-                             "<urn:catalogProductList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
-                             "<filters xsi:type=\"urn:filters\">"
-                             "<storeView xsi:type=\"xsd:string]\">%@</storeView>"
-                             "</urn:catalogProductList>"
-                             "</soapenv:Body>"
-                             "</soapenv:Envelope>",sessionId,@"default"];
+    //    NSDictionary *selectedProdCatDict = self.prodCategories[selectedCatId];
+    //    NSString *selectedCategoryId = selectedProdCatDict[@""];
+    NSString *requestBody = [STConstants prodInfoRequestBodyWithID:@""];
     
     NSString *urlString = [STConstants getAPIURLWithParams:nil];
     NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -201,22 +201,75 @@
                                   }successBlock:^(NSData *responseData){
                                       NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
                                       NSLog(@"%@",xmlDic);
+                                      [self parseResponseWithDict:xmlDic];
                                       
-                                      [STUtility stopActivityIndicatorFromView:nil];
-                                      
-                                      [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];
-                                  }failureBlock:^(NSError *error) {
-                                      [STUtility stopActivityIndicatorFromView:nil];
-                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
-                                                                  message:@"Unexpected error has occured, Please try after some time."
-                                                                 delegate:nil
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles: nil] show];
-                                      NSLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
-                                  }];
+                                  }
+                                                       failureBlock:^(NSError *error) {
+                                                           [STUtility stopActivityIndicatorFromView:nil];
+                                                           [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                                       message:@"Unexpected error has occured, Please try after some time."
+                                                                                      delegate:nil
+                                                                             cancelButtonTitle:@"OK"
+                                                                             otherButtonTitles: nil] show];
+                                                           NSLog(@"SublimeTea-STProductViewController-fetchProductDetails:- %@",error);
+                                                       }];
     
     [httpRequest start];
 }
+- (void)parseResponseWithDict:(NSDictionary *)responseDict {
+    if (responseDict) {
+        
+        [STUtility stopActivityIndicatorFromView:nil];
+//        prodDetailDict
+        [self performSegueWithIdentifier:@"productDetailViewSegue" sender:self];
+        
+    }else {
+        //No products found.
+    }
+}
+
+- (void)loadProdImageinView:(UIImageView *)imgView
+                    fromURL:(NSString *)imgURL {
+    
+    if (imgView && imgURL.length) {
+        
+        NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgURL];
+        UIImage *prodImg = [UIImage imageWithData:imgData];
+        if (prodImg) {
+            [UIView transitionWithView:imgView duration:0.5
+                               options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                   imgView.image = prodImg;
+                               } completion:nil];
+        }
+        else {
+            // Download Image
+            __block UIImageView *prodImgView = imgView;
+            NSURL *url  = [[NSURL alloc] initWithString:[imgURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            NSURLSessionDataTask *downloadTask = [[NSURLSessionDataTask alloc] init];
+            FileDownloader *downloader = [[FileDownloader alloc] init];
+            [downloader asynchronousFiledownload:downloadTask
+                          serviceUrlMethodString:url
+                                      urlSession:downloadSession
+                                       imageView:imgView
+                         displayLoadingIndicator:YES
+                                   completeBlock:^(NSData *data, NSURL *imgURL, UIView *imgView) {
+                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                           [[STGlobalCacheManager defaultManager] addItemToCache:data
+                                                                                         withKey:imgURL.absoluteString];
+                                           UIImage *_img = [UIImage imageWithData:data];
+                                           [UIView transitionWithView:imgView duration:0.5
+                                                              options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                                                  prodImgView.image = _img;
+                                                              } completion:nil];
+                                       });
+                                       
+                                   } errorBlock:^(NSError *error) {
+                                       NSLog(@"SublimeTea-STProductViewController-loadProdImageinView:- %@",error);
+                                   }];
+        }
+    }
+}
+
 - (void)loadProductCategories {
     [self performSegueWithIdentifier:@"productListSegue" sender:self];
 }

@@ -10,6 +10,7 @@
 #import "REFrostedViewController.h"
 #import "XMLDictionary.h"
 #import "STConstants.h"
+#import "STAppDelegate.h"
 
 @interface STViewController : UIViewController
 
