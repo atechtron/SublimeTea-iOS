@@ -7,10 +7,9 @@
 //
 
 #import "STViewController.h"
-#import "JSBadgeView.h"
 #import "STCartViewController.h"
 #import "STUserProfileViewController.h"
-
+#import "STCart.h"
 #import "STLoginViewController.h"
 #import "STSignUpViewController.h"
 
@@ -34,6 +33,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBarHidden = NO;
+    NSString *cartCount = [NSString stringWithFormat:@"%ld",(long)[[STCart defaultCart] numberOfProductsInCart]];
+    cartBadgeView.badgeText = [cartCount integerValue]>0?cartCount:@"";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -119,16 +120,17 @@
     [accountButton addTarget:self action:@selector(accountButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
     UIImage *cartBtnImg = [UIImage imageNamed:@"cart"];
-    UIButton *cartButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x + 105, btnFrame.origin.y, cartBtnImg.size.width+5, cartBtnImg.size.height)];
+     UIButton *cartButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x + 105, btnFrame.origin.y, cartBtnImg.size.width+5, cartBtnImg.size.height)];
     cartButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     [cartButton setImage:cartBtnImg forState:UIControlStateNormal];
 //    [cartButton setTitle:@"Cart" forState:UIControlStateNormal];
     [cartButton addTarget:self action:@selector(cartButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:cartButton alignment:JSBadgeViewAlignmentTopRight];
-    badgeView.badgeAlignment = JSBadgeViewAlignmentTopCenter;
-    badgeView.badgeText = @"3";
-    badgeView.badgeTextFont = [UIFont fontWithName:@"Helvetica" size:10];
-    badgeView.badgeBackgroundColor = [UIColor clearColor];
+    cartBadgeView = [[JSBadgeView alloc] initWithParentView:cartButton alignment:JSBadgeViewAlignmentTopRight];
+    cartBadgeView.badgeAlignment = JSBadgeViewAlignmentTopCenter;
+    NSString *cartCount = [NSString stringWithFormat:@"%ld",(long)[[STCart defaultCart] numberOfProductsInCart]];
+    cartBadgeView.badgeText = [cartCount integerValue]>0?cartCount:@"";
+    cartBadgeView.badgeTextFont = [UIFont fontWithName:@"Helvetica" size:10];
+    cartBadgeView.badgeBackgroundColor = [UIColor clearColor];
     
     NSInteger viewWidth = searchBtnImg.size.width + cartBtnImg.size.width + accountButton.frame.size.width +20;
     UIView *rightContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, 30)];

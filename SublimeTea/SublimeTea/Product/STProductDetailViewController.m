@@ -14,6 +14,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "STHttpRequest.h"
 #import "STGlobalCacheManager.h"
+#import "STCart.h"
 
 @interface STProductDetailViewController ()<UITableViewDataSource, UITableViewDelegate, STProductInfo2TableViewCellDelegate>
 
@@ -137,7 +138,12 @@ static NSInteger prodQtyCount = 0;
 #pragma STProductInfo2TableViewCellDelegate
 
 - (void)addToCartClicked:(NSInteger)index {
-    [self performSegueWithIdentifier:@"carViewFromProductDetailSegue" sender:self];
+    if (prodQtyCount >0) {
+        [[STCart defaultCart] addProductsInCart:self.productInfoDict withQty:prodQtyCount];
+        cartBadgeView.badgeText = [NSString stringWithFormat:@"%ld",(long)[[STCart defaultCart] numberOfProductsInCart]];
+    }
+    
+//    [self performSegueWithIdentifier:@"carViewFromProductDetailSegue" sender:self];
 }
 
 - (void)qtyDidIncremented:(id)sender {

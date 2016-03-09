@@ -10,6 +10,7 @@
 		181C13961C8DF60400A0A63A /* STShippingDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C13951C8DF60400A0A63A /* STShippingDetailsViewController.m */; };
 		181C13991C8DFE2600A0A63A /* STDropDownTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C13981C8DFE2600A0A63A /* STDropDownTableViewCell.m */; };
 		181C139C1C8E021B00A0A63A /* STCouponTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C139B1C8E021B00A0A63A /* STCouponTableViewCell.m */; };
+		18AC92501C9095A3002D91F4 /* STCart.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AC924F1C9095A3002D91F4 /* STCart.m */; };
 		18F61FB01C88B86B00FEB89C /* STDashboardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F61FAF1C88B86B00FEB89C /* STDashboardCollectionViewCell.m */; };
 		2B2DC0B41C82D76A00A29459 /* STCartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */; };
 		2B2DC0B71C82D7D300A29459 /* STCartHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B61C82D7D300A29459 /* STCartHeaderView.m */; };
@@ -134,6 +135,8 @@
 		181C13981C8DFE2600A0A63A /* STDropDownTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STDropDownTableViewCell.m; path = User/Shipping/STDropDownTableViewCell.m; sourceTree = "<group>"; };
 		181C139A1C8E021B00A0A63A /* STCouponTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STCouponTableViewCell.h; path = User/Shipping/STCouponTableViewCell.h; sourceTree = "<group>"; };
 		181C139B1C8E021B00A0A63A /* STCouponTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STCouponTableViewCell.m; path = User/Shipping/STCouponTableViewCell.m; sourceTree = "<group>"; };
+		18AC924E1C9095A3002D91F4 /* STCart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STCart.h; path = User/STCart.h; sourceTree = "<group>"; };
+		18AC924F1C9095A3002D91F4 /* STCart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STCart.m; path = User/STCart.m; sourceTree = "<group>"; };
 		18F61FAE1C88B86B00FEB89C /* STDashboardCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDashboardCollectionViewCell.h; path = Dashboard/STDashboardCollectionViewCell.h; sourceTree = "<group>"; };
 		18F61FAF1C88B86B00FEB89C /* STDashboardCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STDashboardCollectionViewCell.m; path = Dashboard/STDashboardCollectionViewCell.m; sourceTree = "<group>"; };
 		2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCartHeaderView.xib; sourceTree = "<group>"; };
@@ -737,6 +740,8 @@
 		2BFA1BA71C7E060E008C4833 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				18AC924E1C9095A3002D91F4 /* STCart.h */,
+				18AC924F1C9095A3002D91F4 /* STCart.m */,
 				181C13931C8DF5B500A0A63A /* Shipping */,
 				2BB2F42A1C842EA40024BB26 /* Profile */,
 				2BFA1BA31C7E05BB008C4833 /* Orders */,
@@ -960,6 +965,7 @@
 				2B98821D1C81B58A00BA5234 /* STCartTableViewCell.m in Sources */,
 				2BC0E50D1C823151001085F8 /* STOderListTableViewCell.m in Sources */,
 				2B456F951C7F558900C240A5 /* STRootViewController.m in Sources */,
+				18AC92501C9095A3002D91F4 /* STCart.m in Sources */,
 				2BFA1BD21C7E3118008C4833 /* STProductCategoryCollectionViewCell.m in Sources */,
 				2B456F901C7F550D00C240A5 /* UIImage+REFrostedViewController.m in Sources */,
 				2B2E57AF1C836FB900351F39 /* STOrderConfirmationHeaderView.m in Sources */,
