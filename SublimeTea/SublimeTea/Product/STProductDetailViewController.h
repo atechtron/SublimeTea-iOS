@@ -10,5 +10,7 @@
 
 @interface STProductDetailViewController : STViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (strong, nonatomic)NSDictionary *productInfoDict;
+@property (strong, nonatomic)NSDictionary *selectedProdDict;
+@property (strong, nonatomic)NSDictionary *selectedCategoryDict;
 @end
