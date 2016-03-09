@@ -78,7 +78,7 @@
 #pragma mark-
 #pragma UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 21;
+    return self.productsInSelectedCat.count;
 }
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -87,10 +87,17 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"productListCell";
     STProductListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.productTitleLabel.text = [NSString stringWithFormat:@"%@\n%@",@"GREEN",@"LONG DING"];
+    NSDictionary *prodDict = self.productsInSelectedCat[indexPath.row];
+    NSString *prodId = prodDict[@"product_id"][@"__text"];
+    NSString *name = prodDict[@"name"][@"__text"];
+    NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
+    if (prodImgArr.count) {
+        NSString *imgUrl = prodImgArr[0][@"url"];
+        [self loadProdImageinView:cell.productImageView fromURL:imgUrl];
+    }
+    cell.productTitleLabel.text = [name uppercaseString];
     
-    [self loadProdImageinView:cell.productImageView fromURL:@""];//[UIImage imageNamed:@"teaCup.jpeg"];
-    cell.productImageView.contentMode = UIViewContentModeScaleToFill;
+//    cell.productImageView.contentMode = UIViewContentModeScaleToFill;
     
     return cell;
 }
@@ -227,7 +234,6 @@
         //No products found.
     }
 }
-
 - (void)loadProdImageinView:(UIImageView *)imgView
                     fromURL:(NSString *)imgURL {
     

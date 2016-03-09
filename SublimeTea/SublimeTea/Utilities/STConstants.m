@@ -13,6 +13,7 @@
 #define kUSERNAME @"superuser"
 #define kPWD @"123456"
 
+#define kParentId @"1"
 
 //Start App Session
 
@@ -64,7 +65,7 @@
                          "<storeView xsi:type=\"xsd:string\">%@</storeView>"
                          "</urn:catalogCategoryTree>"
                          "</soapenv:Body>"
-                         "</soapenv:Envelope>",sessionId,@"",[STConstants storeId]];
+                         "</soapenv:Envelope>",sessionId,kParentId,[STConstants storeId]];
     
     return tempStr;
 }
@@ -79,11 +80,29 @@
                          "<soapenv:Body>"
                          "<urn:catalogProductList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
                          "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
-                         "<filters xsi:type=\"urn:filters\">"
                          "<storeView xsi:type=\"xsd:string]\">%@</storeView>"
                          "</urn:catalogProductList>"
                          "</soapenv:Body>"
                          "</soapenv:Envelope>",sessionId,[STConstants storeId]];
+    return tempStr;
+}
+
++ (NSString *)productImageListRequestBodyWithId:(NSString *)prodId {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+    
+    NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                         "<soapenv:Header/>"
+                         "<soapenv:Body>"
+                         "<urn:catalogProductAttributeMediaList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                         "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                         "<product xsi:type=\"xsd:string\">%@</product>"
+                         "<storeView xsi:type=\"xsd:string\">%@</storeView>"
+                         "<identifierType xsi:type=\"xsd:string\"/>"
+                         "</urn:catalogProductAttributeMediaList>"
+                         "</soapenv:Body>"
+                         "</soapenv:Envelope>",sessionId, prodId,[STConstants storeId]];
     return tempStr;
 }
 
@@ -103,7 +122,7 @@
                          "</urn:catalogProductInfo>"
                          "</soapenv:Body>"
                          "</soapenv:Envelope>",sessionId,prodId,[STConstants storeId],@""];
-
+    
     return tempStr;
 }
 

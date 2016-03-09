@@ -19,6 +19,7 @@
 + (NSString *)startSessionRequestBody;
 + (NSString *)categoryListRequestBody;
 + (NSString *)productListRequestBody;
++ (NSString *)productImageListRequestBodyWithId:(NSString *)prodId;
 + (NSString *)prodInfoRequestBodyWithID:(NSString *)prodId;
 
 @end

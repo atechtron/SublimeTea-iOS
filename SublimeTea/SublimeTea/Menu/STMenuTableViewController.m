@@ -40,13 +40,19 @@
     self.dataArr = [NSMutableArray new];
     self.sectionTitleDataArr = @[@"HOME",@"OUR RANGE",@"YOUR ORDERS",@"YOUR ACCOUNT",@"CUSTOMER SUPPORT",@"FAQ",@"LOGOUT"];
     self.view.backgroundColor = UIColorFromRGB(231, 230, 230, 1);
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(logOut)
+                                                 name:@"LOGOUT"
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)viewDidDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -78,10 +84,11 @@
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSDictionary *userInfoDict = [defaults objectForKey:kUserInfo_Key];
+        NSLog(@"User Details: %@",userInfoDict);
         
-        NSString *userEmail = userInfoDict[@"email"];
-        NSString *userFirstName = userInfoDict[@"firstname"] ? userInfoDict[@"firstname"] :@"";
-        NSString *userLastName = userInfoDict[@"lastname"] ? userInfoDict[@"lastname"] :@"";
+        NSString *userEmail = userInfoDict[@"email"][@"__text"];
+        NSString *userFirstName = userInfoDict[@"firstname"][@"__text"] ? userInfoDict[@"firstname"][@"__text"] :@"";
+        NSString *userLastName = userInfoDict[@"lastname"][@"__text"] ? userInfoDict[@"lastname"][@"__text"] :@"";
         NSString *userFullName = [NSString stringWithFormat:@"%@ %@",userFirstName,userLastName];
         
         headerView.TitleLabel.text = [userFullName uppercaseString];
@@ -200,8 +207,7 @@
             break;
         case 7: // LogOut
             [STUtility startActivityIndicatorOnView:nil withText:@"Loggin Out Please wait.."];
-            [AppDelegate endUserSession];
-            [navigationController popToRootViewControllerAnimated:YES];
+            [self logOut];
             break;
         default:
             break;
@@ -228,5 +234,11 @@
 //    [self.frostedViewController hideMenuViewController];
 }
 
-
+- (void)logOut {
+    STNavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
+    [AppDelegate endUserSession];
+    [navigationController popToRootViewControllerAnimated:YES];
+    self.frostedViewController.contentViewController = navigationController;
+    [self.frostedViewController hideMenuViewController];
+}
 @end

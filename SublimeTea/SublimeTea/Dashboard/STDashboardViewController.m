@@ -10,6 +10,7 @@
 #import "STHttpRequest.h"
 #import "STProductCategoriesViewController.h"
 #import "STDashboardCollectionViewCell.h"
+#import "STGlobalCacheManager.h"
 
 @interface STDashboardViewController ()<UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic)NSArray *categories;
@@ -104,7 +105,13 @@
     if (indexPath.row == 0) {
         if ([STUtility isNetworkAvailable]) {
             [STUtility startActivityIndicatorOnView:nil withText:@"Loading Range of Teas, Please wait.."];
-            [self fetchProductCategories];
+            NSDictionary *xmlDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductCategory_Key];
+            if (xmlDict) {
+                [self parseResponseWithDict:xmlDict];
+            }
+            else {
+                [self fetchProductCategories];
+            }
         }
     }
 }
@@ -156,9 +163,14 @@
                                   {
                                       
                                   }successBlock:^(NSData *responseData){
-                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                      NSLog(@"%@",xmlDic);
-                                      [self parseResponseWithDict:xmlDic];
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                          [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic
+                                                                                        withKey:kProductCategory_Key];
+                                          NSLog(@"%@",xmlDic);
+
+                                          [self parseResponseWithDict:xmlDic];
+                                      });
                                       
                                   }failureBlock:^(NSError *error) {
                                       [STUtility stopActivityIndicatorFromView:nil];
@@ -174,12 +186,25 @@
 }
 - (void)parseResponseWithDict:(NSDictionary *)responseDict {
     if (responseDict) {
-        [STUtility stopActivityIndicatorFromView:nil];
-        //                                      self.categories
-        [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];
+        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
+        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
+            NSArray *productCategoriesArr = responseDict[@"SOAP-ENV:Body"][@"ns1:catalogCategoryTreeResponse"][@"tree"][@"children"][@"item"][@"children"][@"item"][@"children"][@"item"];
+            NSLog(@"%@",productCategoriesArr);
+            if (productCategoriesArr.count) {
+                self.categories = [NSArray arrayWithArray:productCategoriesArr];
+                [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];
+            }
+            else{
+                // No categories found.
+            }
+        }
+        else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
+        }
     }else {
         //No categories found.
     }
+    [STUtility stopActivityIndicatorFromView:nil];
 }
 - (void)loadProductCategories {
     [self performSegueWithIdentifier:@"productCategorySegue" sender:self];

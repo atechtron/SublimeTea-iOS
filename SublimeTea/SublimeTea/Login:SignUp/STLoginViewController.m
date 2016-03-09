@@ -109,49 +109,51 @@
 }
 
 -(void)userLogInWIthSessionId:(id)Obj {
-    
-    NSString *sessionId = Obj;
-//    NSString *PasswordStr = [self.passwordTextfield.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (![Obj isKindOfClass:[NSString class]]) {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *_sessionId = [defaults objectForKey:kUSerSession_Key];
-        sessionId = _sessionId;
+    if ([self validateInputs]){
+        
+        NSString *sessionId = Obj;
+        //    NSString *PasswordStr = [self.passwordTextfield.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if (![Obj isKindOfClass:[NSString class]]) {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *_sessionId = [defaults objectForKey:kUSerSession_Key];
+            sessionId = _sessionId;
+        }
+        
+        NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                                 "<soapenv:Header/>"
+                                 "<soapenv:Body>"
+                                 "<urn:customerCustomerList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                                 "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                                 "</urn:customerCustomerList>"
+                                 "</soapenv:Body>"
+                                 "</soapenv:Envelope>",sessionId];
+        
+        NSString *urlString = [STConstants getAPIURLWithParams:nil];
+        NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        
+        STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                             methodType:@"POST"
+                                                                   body:requestBody
+                                                    responseHeaderBlock:^(NSURLResponse *response)
+                                      {
+                                          
+                                      }successBlock:^(NSData *responseData){
+                                          NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                          NSLog(@"%@",xmlDic);
+                                          [self parseResponseWithDict:xmlDic];
+                                          
+                                      }failureBlock:^(NSError *error) {
+                                          [STUtility stopActivityIndicatorFromView:nil];
+                                          [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                      message:@"Unexpected error has occured, Please try after some time."
+                                                                     delegate:nil
+                                                            cancelButtonTitle:@"OK"
+                                                            otherButtonTitles: nil] show];
+                                          NSLog(@"SublimeTea-STSignUpViewController-userLogIn:- %@",error);
+                                      }];
+        
+        [httpRequest start];
     }
-    
-    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                             "<soapenv:Header/>"
-                             "<soapenv:Body>"
-                             "<urn:customerCustomerList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
-                             "</urn:customerCustomerList>"
-                             "</soapenv:Body>"
-                             "</soapenv:Envelope>",sessionId];
-    
-    NSString *urlString = [STConstants getAPIURLWithParams:nil];
-    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
-    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
-                                                         methodType:@"POST"
-                                                               body:requestBody
-                                                responseHeaderBlock:^(NSURLResponse *response)
-                                  {
-                                      
-                                  }successBlock:^(NSData *responseData){
-                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                      NSLog(@"%@",xmlDic);
-                                      [self parseResponseWithDict:xmlDic];
-                                      
-                                  }failureBlock:^(NSError *error) {
-                                      [STUtility stopActivityIndicatorFromView:nil];
-                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
-                                                                  message:@"Unexpected error has occured, Please try after some time."
-                                                                 delegate:nil
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles: nil] show];
-                                      NSLog(@"SublimeTea-STSignUpViewController-userLogIn:- %@",error);
-                                  }];
-    
-    [httpRequest start];
 }
 - (void)parseResponseWithDict:(NSDictionary *)responseDict {
     if (responseDict) {
@@ -161,9 +163,10 @@
             NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"email.__text LIKE %@",userNameStr];
             NSArray *filteredUsersArr = [userList filteredArrayUsingPredicate:filterPredicate];
             if (filteredUsersArr.count) {
-                NSLog(@"User Details: %@",filteredUsersArr);
+                
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 [defaults setObject:filteredUsersArr[0] forKey:kUserInfo_Key];
+                NSLog(@"User Details: %@",[defaults objectForKey:kUserInfo_Key]);
                 [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
             }
             else { // Login Failed
