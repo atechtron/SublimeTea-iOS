@@ -7,6 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol STDropDownTableViewCellDeleagte <NSObject>
+
+- (void)dropDownItemDidSelect:(NSIndexPath *)indexPath withCell:(UITableViewCell *)cell;
+- (void)checkBoxStateDidChanged:(UITableViewCell *)cell;
+- (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture;
+
+@end
 
 @interface STDropDownTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *textFieldTitleLabel;
@@ -19,5 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *secondRadioButton;
 @property (weak, nonatomic) IBOutlet UILabel *secondRadioButtonTtitleLabel;
 
-- (IBAction)radioButtonAction:(UIButton *)sender;
+@property (weak, nonatomic) id<STDropDownTableViewCellDeleagte> delegate;
+
+- (IBAction)checkBoxButtonAction:(UIButton *)sender;
 @end
