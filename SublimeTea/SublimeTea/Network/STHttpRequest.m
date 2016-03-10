@@ -67,6 +67,31 @@
         self.failureBlock(nil);
     }
 }
+- (NSData *)synchronousStart {
+    NSData *data;
+    if ([STUtility isNetworkAvailable]) {
+        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:self.url];
+        //        [urlRequest clearCookiesForURL];
+        //        [urlRequest setMazdaAppCookie];
+        [urlRequest setHTTPMethod:self.methodType];
+        NSString *sMessageLength = [NSString stringWithFormat:@"%lu", (unsigned long)self.requestBody.length];
+        
+        [urlRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+        [urlRequest addValue: @"urn:Action" forHTTPHeaderField:@"SOAPAction"];
+        [urlRequest addValue:@"dev.sublime-house-of-tea.com" forHTTPHeaderField:@"Host"];
+        [urlRequest addValue: sMessageLength forHTTPHeaderField:@"Content-Length"];
+        if(self.requestBody.length) {
+            [urlRequest setHTTPBody:[self.requestBody dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+        NSLog(@"%@",urlRequest);
+        NSLog(@"%@",urlRequest.allHTTPHeaderFields);
+        
+        NSError *error = nil;
+        NSURLResponse *response = nil;
+        data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
+    }
+    return data;
+}
 //- (void)startSalesxMDS {
 //    [self startSalesxMDS:@"application/x-www-form-urlencoded" withAcceptHeader:@"application/xml"];
 //}

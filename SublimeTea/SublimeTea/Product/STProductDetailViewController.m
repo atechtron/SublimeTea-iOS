@@ -13,6 +13,8 @@
 #import "STUtility.h"
 #import <QuartzCore/QuartzCore.h>
 #import "STHttpRequest.h"
+#import "STGlobalCacheManager.h"
+#import "STCart.h"
 
 @interface STProductDetailViewController ()<UITableViewDataSource, UITableViewDelegate, STProductInfo2TableViewCellDelegate>
 
@@ -59,16 +61,34 @@ static NSInteger prodQtyCount = 0;
 - ( UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell;
+    NSString *prodId = self.selectedProdDict[@"product_id"][@"__text"];
     switch (indexPath.row) {
         case 0:
         {
             static NSString *cellidentifier = @"productInfoCell";
             STProductInfoTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
-            _cell.titleLabel.text = @"Green Long Dong Tea";
-            _cell.numLabel.text = @"3160";
+            
+            _cell.titleLabel.text = self.selectedProdDict[@"name"][@"__text"];
+            _cell.numLabel.text = @"";
             _cell.statusLabel.text = @"in stock";
-            _cell.extraLabel.text = @"Put your pincode here";
-            _cell.prodImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
+            _cell.extraLabel.text = @"";
+            NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
+            if (prodImgArr.count) {
+                NSDictionary *imgUrlDict = [prodImgArr lastObject];
+                NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
+                NSLog(@"Image URL %@",imgUrl);
+                NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgUrl];
+                if (imgData) {
+                    UIImage *prodImg = [UIImage imageWithData:imgData];
+                    if (prodImg) {
+                        [UIView transitionWithView:_cell.prodImageView duration:0.5
+                                           options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                               _cell.prodImageView.image = prodImg;
+                                               _cell.prodImageView.contentMode = UIViewContentModeScaleAspectFit;
+                                           } completion:nil];
+                    }
+                }
+            }
             cell = _cell;
             break;
         }
@@ -77,12 +97,14 @@ static NSInteger prodQtyCount = 0;
             static NSString *cellidentifier = @"productAddToCartCell";
             STProductInfo2TableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
             _cell.delegate = self;
-            NSString *desc = @"This is a pure Green Tea. Fresh tender tea leaves are carefully processed to minimize oxidation and rolled using a very special process.";
-            NSString *SKU = @"SKU: Tea007";
-            NSString *categ = @"Categories: Pure Green Tea, Tea Bags";
+            
+            
+            NSString *desc = self.productInfoDict[@"short_description"][@"__text"];
+            NSString *SKU = [NSString stringWithFormat:@"SKU: %@",self.productInfoDict[@"sku"][@"__text"]];
+            NSString *categ = [NSString stringWithFormat:@"Categories: %@",self.selectedCategoryDict[@"name"][@"__text"]];//@"Categories: Pure Green Tea, Tea Bags";
             NSString *descriptionStr = [NSString stringWithFormat:@"%@\n%@\n%@",desc,SKU,categ];
             _cell.descriptionLabel.text = descriptionStr;
-            _cell.amountLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%d",290]];
+            _cell.amountLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[self.productInfoDict[@"special_price"][@"__text"]floatValue]]];
             _cell.qtyLabel.text = @"290";
             _cell.qtyLabel.text = [NSString stringWithFormat:@"Qty\n%ld",(long)prodQtyCount];
             _cell.qtyLabel.backgroundColor = [UIColor orangeColor];
@@ -101,7 +123,7 @@ static NSInteger prodQtyCount = 0;
             static NSString *cellidentifier = @"productDescriptioncell";
             STProductDescriptionTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
             _cell.topBorderImageView = nil;
-            _cell.descriptionLabel.text = @"This is a pure Green Tea. Fresh tender tea leaves are carefully processed to minimize oxidation and rolled using a very special process.";
+            _cell.descriptionLabel.text = self.productInfoDict[@"description"][@"__text"];
             cell = _cell;
 
             break;
@@ -112,12 +134,16 @@ static NSInteger prodQtyCount = 0;
     }
     return cell;
 }
-
 #pragma mark-
 #pragma STProductInfo2TableViewCellDelegate
 
 - (void)addToCartClicked:(NSInteger)index {
-    [self performSegueWithIdentifier:@"carViewFromProductDetailSegue" sender:self];
+    if (prodQtyCount >0) {
+        [[STCart defaultCart] addProductsInCart:self.productInfoDict withQty:prodQtyCount];
+        cartBadgeView.badgeText = [NSString stringWithFormat:@"%ld",(long)[[STCart defaultCart] numberOfProductsInCart]];
+    }
+    
+//    [self performSegueWithIdentifier:@"carViewFromProductDetailSegue" sender:self];
 }
 
 - (void)qtyDidIncremented:(id)sender {

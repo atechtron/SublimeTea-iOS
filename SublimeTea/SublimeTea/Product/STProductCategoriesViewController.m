@@ -15,7 +15,6 @@
 @interface STProductCategoriesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,UIScrollViewDelegate>
 {
     NSInteger selectedCatId;
-    NSInteger imgCount;
 }
 @property(strong, nonatomic)NSArray *productList;
 @end
@@ -31,9 +30,7 @@
     self.pageControl.currentPage = 0;
     self.pageControl.numberOfPages = [self numberOfPages];
     [self.view bringSubviewToFront:self.pageControl];
-}
--(void)viewWillAppear:(BOOL)animated {
-imgCount = 0;
+    self.pageControl.hidden = YES;
 }
 - (NSInteger)numberOfPages {
     NSInteger singlePageElementHeightCount = 0;
@@ -69,6 +66,7 @@ imgCount = 0;
     if ([segue.identifier isEqualToString:@"productListSegue"]) {
         STProductViewController *vC = segue.destinationViewController;
         vC.productsInSelectedCat = self.productList;
+        vC.selectedCategoryDict = self.prodCategories[selectedCatId];
     }
 }
 
@@ -212,13 +210,17 @@ imgCount = 0;
             NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"category_ids.item.__text LIKE %@",selectedCategoryId];
             NSArray *productsInSelectedCat = [allProductsArr filteredArrayUsingPredicate:filterPredicate];
             self.productList = [NSArray arrayWithArray:productsInSelectedCat];
-            
+            [STUtility stopActivityIndicatorFromView:nil];
             [STUtility startActivityIndicatorOnView:nil withText:@"Loading Images, Please wait.."];
-            imgCount = self.productList.count;
             for (NSDictionary *prodDict in self.productList) {
-                NSLog(@"%@",prodDict);
-                [self fetchProductImages:prodDict[@"product_id"][@"__text"]];
+                NSString *prodId = prodDict[@"product_id"][@"__text"];
+                NSDictionary *imgXMLDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
+
+                if (!imgXMLDict) {
+                  [self fetchProductImages:prodId];
+                }
             }
+            [self performSelector:@selector(loadProductList) withObject:nil afterDelay:0.4];
         }
         else {
             [AppDelegate endUserSession];
@@ -240,44 +242,22 @@ imgCount = 0;
     STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
                                                          methodType:@"POST"
                                                                body:requestBody
-                                                responseHeaderBlock:^(NSURLResponse *response)
-                                  {
-                                      
-                                  }successBlock:^(NSData *responseData){
-                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                          NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                        
-                                          NSLog(@"%@",xmlDic);
-                                          [self parseImgData:xmlDic andProdId:prodId];
-                                          
-                                      });
-                                  }failureBlock:^(NSError *error) {
-                                      [STUtility stopActivityIndicatorFromView:nil];
-                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
-                                                                  message:@"Unexpected error has occured, Please try after some time."
-                                                                 delegate:nil
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles: nil] show];
-                                      NSLog(@"SublimeTea-STSignUpViewController-fetchProductImages:- %@",error);
-                                  }];
+                                                responseHeaderBlock:nil successBlock:nil failureBlock:nil];
     
-    [httpRequest start];
+    NSData *responseData = [httpRequest synchronousStart];
+    NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+//    NSLog(@"Image Data for ID %d %@",prodId, xmlDic);
+    [self parseImgData:xmlDic andProdId:prodId];
 }
 - (void)parseImgData:(NSDictionary *)responseDict andProdId:(NSString *)prodId {
     if(responseDict){
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
+//        NSLog(@"Image Data for ID %d %@",prodId, responseDict);
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
-            NSArray *imgArr = parentDataDict[@"ns1:catalogProductAttributeMediaListResponse"][@"result"][@"item"];
-            if (imgArr) {
-                [[STGlobalCacheManager defaultManager] addItemToCache:imgArr withKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
-                if (imgCount >0) {
-                --imgCount;
-                }
-                NSLog(@"count %d",imgCount);
-                if (imgCount == 0) {
-                    [self performSelector:@selector(loadProductList) withObject:nil afterDelay:0.4];
-  
-                }
+            NSDictionary *imgDataDict = parentDataDict[@"ns1:catalogProductAttributeMediaListResponse"][@"result"];
+            NSArray *imageURLList = imgDataDict[@"item"];
+            if (imageURLList) {
+                [[STGlobalCacheManager defaultManager] addItemToCache:imageURLList withKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
             }
         }
         else {

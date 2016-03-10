@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="YQh-v6-bTo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7ZO-OV-YOL">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -476,7 +476,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="CxJ-zO-NU3">
                                 <rect key="frame" x="20" y="136" width="560" height="428"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="3Y5-ph-Ae8">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="3Y5-ph-Ae8">
                                     <size key="itemSize" width="104" height="117"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -1038,7 +1038,7 @@
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RvV-Gd-w8T">
+                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RvV-Gd-w8T">
                                                             <rect key="frame" x="79" y="1" width="41" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="CCe-md-qhN"/>
@@ -1444,7 +1444,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2yf-kM-GcO">
                                 <rect key="frame" x="20" y="135" width="560" height="428"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="25" minimumInteritemSpacing="10" id="1Ix-Z3-x66">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="25" minimumInteritemSpacing="10" id="1Ix-Z3-x66">
                                     <size key="itemSize" width="139" height="150"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -1786,15 +1786,15 @@
                                                     <include reference="fL5-Su-glI"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <include reference="GNY-B3-5q1"/>
+                                                    <include reference="c9A-Cq-Fez"/>
+                                                    <include reference="rMf-qL-33C"/>
                                                     <include reference="70w-qu-xqh"/>
                                                     <include reference="Q37-RK-GXs"/>
                                                     <include reference="gJ8-cf-Vqp"/>
                                                     <include reference="zH3-E3-g86"/>
                                                     <include reference="Oqf-gv-PmT"/>
                                                     <include reference="btu-9l-c9y"/>
-                                                    <include reference="GNY-B3-5q1"/>
-                                                    <include reference="c9A-Cq-Fez"/>
-                                                    <include reference="rMf-qL-33C"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -1898,18 +1898,18 @@
                                                     <include reference="TYS-EF-ofp"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <include reference="4ay-XF-0bC"/>
+                                                    <include reference="y04-JY-6aA"/>
+                                                    <include reference="AOg-jw-Ahi"/>
+                                                    <include reference="LMy-Lq-1MN"/>
+                                                    <include reference="aYj-9G-DSF"/>
                                                     <include reference="PcM-su-V2A"/>
                                                     <include reference="dRk-TR-1ex"/>
                                                     <include reference="iOS-dk-KG8"/>
-                                                    <include reference="4ay-XF-0bC"/>
-                                                    <include reference="y04-JY-6aA"/>
                                                     <include reference="1lm-r5-efh"/>
                                                     <include reference="aio-RA-SMy"/>
                                                     <include reference="nDP-hA-I0S"/>
                                                     <include reference="ptN-Ff-NS5"/>
-                                                    <include reference="AOg-jw-Ahi"/>
-                                                    <include reference="LMy-Lq-1MN"/>
-                                                    <include reference="aYj-9G-DSF"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -2058,10 +2058,10 @@
                                                     <include reference="Sya-m8-lFY"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="2th-XJ-j0p"/>
-                                                    <include reference="9uS-25-zgr"/>
-                                                    <include reference="DhK-X2-qN8"/>
-                                                    <include reference="dAx-71-AJn"/>
+                                                    <include reference="5eh-XG-C6N"/>
+                                                    <include reference="Dz4-ny-5Fd"/>
+                                                    <include reference="EwZ-oa-WI7"/>
+                                                    <include reference="FAp-4A-rqR"/>
                                                     <include reference="0qe-wL-KKW"/>
                                                     <include reference="48L-iN-oa8"/>
                                                     <include reference="VEr-of-ZnX"/>
@@ -2070,10 +2070,10 @@
                                                     <include reference="Jgh-nU-MeY"/>
                                                     <include reference="hVz-gY-og4"/>
                                                     <include reference="rxu-W4-3w4"/>
-                                                    <include reference="5eh-XG-C6N"/>
-                                                    <include reference="Dz4-ny-5Fd"/>
-                                                    <include reference="EwZ-oa-WI7"/>
-                                                    <include reference="FAp-4A-rqR"/>
+                                                    <include reference="2th-XJ-j0p"/>
+                                                    <include reference="9uS-25-zgr"/>
+                                                    <include reference="DhK-X2-qN8"/>
+                                                    <include reference="dAx-71-AJn"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -2199,7 +2199,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lqO-Kr-Ux6"/>
-        <segue reference="sDt-Dx-VQV"/>
+        <segue reference="6R8-jC-HyP"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.6588235294117647" green="0.50196078431372548" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
 </document>

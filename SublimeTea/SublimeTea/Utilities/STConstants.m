@@ -118,10 +118,9 @@
                          "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
                          "<productId xsi:type=\"xsd:string\">%@</productId>"
                          "<storeView xsi:type=\"xsd:string\">%@</storeView>"
-                         "<identifierType xsi:type=\"xsd:string\">%@</identifierType>"
                          "</urn:catalogProductInfo>"
                          "</soapenv:Body>"
-                         "</soapenv:Envelope>",sessionId,prodId,[STConstants storeId],@""];
+                         "</soapenv:Envelope>",sessionId,prodId,[STConstants storeId]];
     
     return tempStr;
 }

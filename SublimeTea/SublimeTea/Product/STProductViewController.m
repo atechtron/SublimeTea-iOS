@@ -11,12 +11,14 @@
 #import "STHttpRequest.h"
 #import "FileDownloader.h"
 #import "STGlobalCacheManager.h"
+#import "STProductDetailViewController.h"
 
 @interface STProductViewController ()<UIScrollViewDelegate>
 {
     NSURLSession *downloadSession;
     NSURLSessionConfiguration *downloadConfig;
     NSDictionary *prodDetailDict;
+    NSInteger selectedProductIndex;
 }
 @end
 
@@ -26,7 +28,8 @@
     [super viewDidLoad];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.titleLabel.text = @"Pure Green Tea";
+    NSString *name = self.selectedCategoryDict[@"name"][@"__text"];
+    self.titleLabel.text = name;
     downloadConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
     downloadSession = [NSURLSession sessionWithConfiguration:downloadConfig];
 }
@@ -35,7 +38,7 @@
     self.pageControl.currentPage = 0;
     self.pageControl.numberOfPages = [self numberOfPages];
     [self.view bringSubviewToFront:self.pageControl];
-    
+    self.pageControl.hidden = YES;
 }
 - (NSInteger)numberOfPages {
     NSInteger singlePageElementHeightCount = 0;
@@ -58,16 +61,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
  #pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
+     if ([segue.identifier isEqualToString:@"productDetailViewSegue"]) {
+         STProductDetailViewController *viewController = segue.destinationViewController;
+         viewController.productInfoDict = prodDetailDict;
+         viewController.selectedProdDict = self.productsInSelectedCat[selectedProductIndex];
+         viewController.selectedCategoryDict = self.selectedCategoryDict;
+     }
  }
- */
-
+ 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat pageWidth = scrollView.frame.size.width;
@@ -92,7 +98,9 @@
     NSString *name = prodDict[@"name"][@"__text"];
     NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
     if (prodImgArr.count) {
-        NSString *imgUrl = prodImgArr[0][@"url"];
+        NSDictionary *imgUrlDict = [prodImgArr lastObject];
+        NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
+        NSLog(@"Image URL %@",imgUrl);
         [self loadProdImageinView:cell.productImageView fromURL:imgUrl];
     }
     cell.productTitleLabel.text = [name uppercaseString];
@@ -159,7 +167,16 @@
 //}
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([STUtility isNetworkAvailable]) {
-        [self fetchProductDetails];
+        selectedProductIndex = indexPath.row;
+        NSDictionary *prodDict = self.productsInSelectedCat[selectedProductIndex];
+        NSString *prodId = prodDict[@"product_id"][@"__text"];
+        NSDictionary*xmlDic = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductInfo_Key(prodId)];
+        if (xmlDic) {
+            [self parseResponseWithDict:xmlDic];
+        }
+        else{
+            [self fetchProductDetails];
+        }
     }
 }
 //- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -192,9 +209,9 @@
     
     [STUtility startActivityIndicatorOnView:nil withText:@"Loading product details.."];
     
-    //    NSDictionary *selectedProdCatDict = self.prodCategories[selectedCatId];
-    //    NSString *selectedCategoryId = selectedProdCatDict[@""];
-    NSString *requestBody = [STConstants prodInfoRequestBodyWithID:@""];
+    NSDictionary *prodDict = self.productsInSelectedCat[selectedProductIndex];
+    NSString *prodId = prodDict[@"product_id"][@"__text"];
+    NSString *requestBody = [STConstants prodInfoRequestBodyWithID:prodId];
     
     NSString *urlString = [STConstants getAPIURLWithParams:nil];
     NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -206,9 +223,15 @@
                                   {
                                       
                                   }successBlock:^(NSData *responseData){
-                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                      NSLog(@"%@",xmlDic);
-                                      [self parseResponseWithDict:xmlDic];
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                          [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic
+                                                                                        withKey:kProductInfo_Key(prodId)];
+                                          
+                                          NSLog(@"%@",xmlDic);
+                                          [self parseResponseWithDict:xmlDic];
+                                      });
+                                      
                                       
                                   }
                                                        failureBlock:^(NSError *error) {
@@ -225,14 +248,21 @@
 }
 - (void)parseResponseWithDict:(NSDictionary *)responseDict {
     if (responseDict) {
-        
-        [STUtility stopActivityIndicatorFromView:nil];
-//        prodDetailDict
-        [self performSegueWithIdentifier:@"productDetailViewSegue" sender:self];
+        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
+        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
+            NSDictionary *dataDict = parentDataDict[@"ns1:catalogProductInfoResponse"][@"info"];
+            prodDetailDict = dataDict;
+            [self performSegueWithIdentifier:@"productDetailViewSegue" sender:self];
+        }
+        else {
+            [AppDelegate endUserSession];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
         
     }else {
         //No products found.
     }
+    [STUtility stopActivityIndicatorFromView:nil];
 }
 - (void)loadProdImageinView:(UIImageView *)imgView
                     fromURL:(NSString *)imgURL {
@@ -240,20 +270,23 @@
     if (imgView && imgURL.length) {
         
         NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgURL];
-        UIImage *prodImg = [UIImage imageWithData:imgData];
-        if (prodImg) {
-            [UIView transitionWithView:imgView duration:0.5
-                               options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-                                   imgView.image = prodImg;
-                               } completion:nil];
+        if (imgData) {
+            UIImage *prodImg = [UIImage imageWithData:imgData];
+            if (prodImg) {
+                [UIView transitionWithView:imgView duration:0.5
+                                   options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                       imgView.image = prodImg;
+                                   } completion:nil];
+        }
+        
         }
         else {
             // Download Image
             __block UIImageView *prodImgView = imgView;
             NSURL *url  = [[NSURL alloc] initWithString:[imgURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-            NSURLSessionDataTask *downloadTask = [[NSURLSessionDataTask alloc] init];
+            NSURLSessionDataTask *imageDownloadTask;
             FileDownloader *downloader = [[FileDownloader alloc] init];
-            [downloader asynchronousFiledownload:downloadTask
+            [downloader asynchronousFiledownload:imageDownloadTask
                           serviceUrlMethodString:url
                                       urlSession:downloadSession
                                        imageView:imgView

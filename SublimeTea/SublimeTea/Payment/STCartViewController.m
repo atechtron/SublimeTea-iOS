@@ -17,11 +17,14 @@
 #import <netdb.h>
 #import "MRMSiOS.h"
 #import "PaymentModeViewController.h"
+#import "STCart.h"
+#import "STGlobalCacheManager.h"
 
 @interface STCartViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
     NSMutableDictionary *jsondict;
 }
+@property (strong, nonatomic)NSArray *cartArr;
 @end
 
 @implementation STCartViewController
@@ -38,6 +41,7 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
 
+    self.cartArr = [[STCart defaultCart] productsDataArr];
 }
 - (void)viewWillAppear:(BOOL)animated {
     
@@ -84,7 +88,7 @@
 #pragma UITableViewDelegates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.cartArr.count;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -92,11 +96,37 @@
 - ( UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellidentifier = @"cartCell";
     STCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
-    cell.titleLabel.text = [NSString stringWithFormat:@"Product Title %d",indexPath.row +1];
-    cell.descriptionLabel.text = @"Short product description ---- ----- ----- -----";
+    Product *prod = self.cartArr[indexPath.row];
+    
+    NSString *prodId = prod.prodDict[@"product_id"][@"__text"];
+    NSString *name = prod.prodDict[@"name"][@"__text"];
+    NSString *shortDesc = prod.prodDict[@"short_description"][@"__text"];
+    NSString *price = prod.prodDict[@"special_price"][@"__text"];
+    NSLog(@"%@",prod.prodDict);
+    NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
+    if (prodImgArr.count) {
+        NSDictionary *imgUrlDict = [prodImgArr lastObject];
+        NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
+        NSLog(@"Image URL %@",imgUrl);
+        NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgUrl];
+        if (imgData) {
+            UIImage *prodImg = [UIImage imageWithData:imgData];
+            if (prodImg) {
+                [UIView transitionWithView:cell.porudctImageView duration:0.5
+                                   options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                       cell.porudctImageView.image = prodImg;
+                                       cell.porudctImageView.contentMode = UIViewContentModeScaleAspectFit;
+                                   } completion:nil];
+            }
+        }
+    }
+    
+    
+    cell.titleLabel.text = name;
+    cell.descriptionLabel.text = shortDesc;
     cell.priceLabel.text = @"Price";
-    cell.priceTitleLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%@",@1500]];
-    cell.porudctImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
+    cell.priceTitleLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[price floatValue]]];
+    cell.qtyTextbox.text = prod.prodQty> 0 ?[NSString stringWithFormat:@"%ld",(long)prod.prodQty]:@"";
     cell.qtyTextbox.layer.borderColor = [UIColor lightGrayColor].CGColor;
     cell.qtyTextbox.layer.borderWidth = .8;
     [cell.checkboxButton addTarget:self action:@selector(checkBoxAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -131,7 +161,14 @@
     return 40;
 }
 - (void)checkBoxAction:(UIButton *)sender {
-    
+    UIImage *checkBoxSelectedImg = [UIImage imageNamed:@"checkboxSelected"];
+    UIImage *checkBoxUnSelectedImg = [UIImage imageNamed:@"chekboxUnselected"];
+    if ([sender.imageView.image isEqual:checkBoxSelectedImg]) {
+        [sender setImage:checkBoxUnSelectedImg forState:UIControlStateNormal];
+    }
+    else{
+        [sender setImage:checkBoxSelectedImg forState:UIControlStateNormal];
+    }
 }
 
 - (void)continueShoppingButtonAction {
