@@ -63,7 +63,7 @@
 #pragma mark-
 #pragma STDropDownTableViewCellDeleagte
 
-- (void)dropDownItemDidSelect:(NSIndexPath *)indexPath withCell:(UITableViewCell *)cell {
+- (void)dropDownItemDidSelect:(NSIndexPath *)tindexPath withCell:(UITableViewCell *)cell {
 
 }
 - (void)checkBoxStateDidChanged:(UITableViewCell *)cell {
