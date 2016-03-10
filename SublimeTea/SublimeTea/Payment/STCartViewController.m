@@ -9,21 +9,16 @@
 #import "STCartViewController.h"
 #import "STCartTableViewCell.h"
 #import "STCartFooterView.h"
-#import "STCartHeaderView.h"
+#import "STOrderListHeaderView.h"
 #import "STProductCategoriesViewController.h"
 #import "STUtility.h"
 
-#import <SystemConfiguration/SystemConfiguration.h>
-#import <netdb.h>
-#import "MRMSiOS.h"
-#import "PaymentModeViewController.h"
 #import "STCart.h"
 #import "STGlobalCacheManager.h"
+#import "STShippingDetailsViewController.h"
 
 @interface STCartViewController ()<UITableViewDataSource, UITableViewDelegate>
-{
-    NSMutableDictionary *jsondict;
-}
+
 @property (strong, nonatomic)NSArray *cartArr;
 @end
 
@@ -33,7 +28,7 @@
     [super viewDidLoad];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"STCartFooterView" bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:@"STCartFooterView"];
-    [self.tableView registerNib:[UINib nibWithNibName:@"STCartHeaderView" bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:@"STCartHeaderView"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"STOrderListHeaderView" bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:@"STOrderListHeaderView"];
     
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -43,34 +38,12 @@
 
     self.cartArr = [[STCart defaultCart] productsDataArr];
 }
-- (void)viewWillAppear:(BOOL)animated {
-    
-    self.navigationController.navigationBarHidden = YES;
-    
-    jsondict = [[NSMutableDictionary alloc]init];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ResponseNew:) name:@"FAILED_DICT" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"FAILED_DICT_NEW" object:nil userInfo:nil];
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)dealloc {
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
--(void) ResponseNew:(NSNotification *)message
-{
-    if ([message.name isEqualToString:@"FAILED_DICT"])
-    {
-        //You will get the failed transaction details in below log and in jsondict.
-        NSLog(@"Response json data = %@",[message object]);
-        
-        jsondict = [message object];
-    }
-}
 /*
 #pragma mark - Navigation
 
@@ -139,18 +112,11 @@
     [footerView.continueShoppingButton addTarget:self action:@selector(continueShoppingButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [footerView.checkoutButton addTarget:self action:@selector(checkoutButtonAction) forControlEvents:UIControlEventTouchUpInside];
     
-    footerView.continueShoppingButton.layer.borderWidth = 1;
-    footerView.continueShoppingButton.layer.borderColor = [UIColor blackColor].CGColor;
-    footerView.continueShoppingButton.layer.cornerRadius = 7;
-    
-    footerView.checkoutButton.layer.borderWidth = 1;
-    footerView.checkoutButton.layer.borderColor = [UIColor blackColor].CGColor;
-    footerView.checkoutButton.layer.cornerRadius = 7;
-    
     return footerView;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    STCartHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STCartHeaderView"];
+    STOrderListHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderListHeaderView"];
+    headerView._backgroundView.backgroundColor = [UIColor whiteColor];
     headerView.titleLabel.text = @"Our Cart";
     return headerView;
 }
@@ -158,7 +124,7 @@
     return 77;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40;
+    return 62;
 }
 - (void)checkBoxAction:(UIButton *)sender {
     UIImage *checkBoxSelectedImg = [UIImage imageNamed:@"checkboxSelected"];
@@ -184,48 +150,8 @@
 }
 
 - (void)checkoutButtonAction {
-    float MERCHANT_PRICE = 1;
-    NSString *MERCHANT_REFERENCENO = @"";
-    
-    PaymentModeViewController *paymentView=[[PaymentModeViewController alloc]init];
-    paymentView.strSaleAmount=[NSString stringWithFormat:@"%.2f",MERCHANT_PRICE];
-    paymentView.reference_no= MERCHANT_REFERENCENO;
-    //NOTE: MERCHANT_PRICE and MERCHANT_REFERENCENO has to be given by Merchant developer
-    
-    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    [defaults setObject:[NSString stringWithFormat:@"%.2f",MERCHANT_PRICE]     forKey:@"strSaleAmount"];
-    [defaults setObject:MERCHANT_REFERENCENO forKey:@"reference_no"];
-    [defaults synchronize];
-    
-    paymentView.descriptionString = @"Test Description";
-    paymentView.strCurrency =   @"INR";
-    paymentView.strDisplayCurrency =@"USD";
-    paymentView.strDescription = @"Test Description";
-    
-    paymentView.strBillingName = @"Test";
-    paymentView.strBillingAddress = @"Bill address";
-    paymentView.strBillingCity =@"Bill City";
-    paymentView.strBillingState = @"TN";
-    paymentView.strBillingPostal =@"625000";
-    paymentView.strBillingCountry = @"IND";
-    paymentView.strBillingEmail =@"test@testmail.com";
-    paymentView.strBillingTelephone =@"9363469999";
-    
-    paymentView.strDeliveryName = @"";
-    paymentView.strDeliveryAddress = @"";
-    paymentView.strDeliveryCity = @"";
-    paymentView.strDeliveryState = @"";
-    paymentView.strDeliveryPostal =@"";
-    paymentView.strDeliveryCountry = @"";
-    paymentView.strDeliveryTelephone =@"";
-    
-    
-    //If you want to add any extra parameters dynamically you have to add the Key and value as we //mentioned below
-    //        [dynamicKeyValueDictionary setValue:@"savings" forKey:@"account_detail"];
-    //        [dynamicKeyValueDictionary setValue:@"gold" forKey:@"merchant_type"];
-    //      paymentView.dynamicKeyValueDictionary = dynamicKeyValueDictionary;
-    
-    [self.navigationController pushViewController:paymentView animated:NO];
+    if(self.cartArr.count)
+        [self performSegueWithIdentifier:@"shippingSegue" sender:self];
 }
 
 @end

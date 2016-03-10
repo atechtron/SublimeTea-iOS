@@ -20,6 +20,14 @@
     _containerView.layer.borderWidth = 1;
     _containerView.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
     _containerView.layer.cornerRadius = 2;
+    
+    CALayer *rightBorder = [CALayer layer];
+    rightBorder.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    rightBorder.borderWidth = 1;
+    rightBorder.frame = CGRectMake(CGRectGetWidth(_phoneCountryCodeLabel.frame)-1, -1, 1, CGRectGetHeight(_phoneCountryCodeLabel.frame));
+    
+    [_phoneCountryCodeLabel.layer addSublayer:rightBorder];
+    _phoneCountryCodeLabel.clipsToBounds = NO;
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

@@ -10,7 +10,7 @@
 @protocol STDropDownTableViewCellDeleagte <NSObject>
 
 - (void)dropDownItemDidSelect:(NSIndexPath *)indexPath withCell:(UITableViewCell *)cell;
-- (void)checkBoxStateDidChanged:(UITableViewCell *)cell;
+- (void)checkBoxStateDidChanged:(UITableViewCell *)cell senderControl:(id)checkBox;
 - (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture;
 
 @end

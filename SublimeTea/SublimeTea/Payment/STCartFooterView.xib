@@ -15,12 +15,20 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="77"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2AH-lR-cW3">
-                            <rect key="frame" x="8" y="24" width="278" height="30"/>
-                            <state key="normal" title="Continue Shopping"/>
+                            <rect key="frame" x="106" y="7" width="150" height="64"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="150" id="AJR-GF-n1a"/>
+                                <constraint firstAttribute="height" constant="64" id="RMF-J0-eem"/>
+                            </constraints>
+                            <state key="normal" title="Continue Shopping" backgroundImage="image_button">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e8C-C5-Km3">
-                            <rect key="frame" x="314" y="24" width="278" height="30"/>
-                            <state key="normal" title="Checkout"/>
+                            <rect key="frame" x="344" y="6" width="150" height="64"/>
+                            <state key="normal" title="Checkout" backgroundImage="image_button">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1y9-Ru-bn3">
                             <rect key="frame" x="8" y="2" width="584" height="1"/>
@@ -32,19 +40,24 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="e8C-C5-Km3" firstAttribute="top" secondItem="gtB-QI-Und" secondAttribute="top" constant="24" id="2hN-aq-rEK"/>
+                        <constraint firstItem="e8C-C5-Km3" firstAttribute="top" secondItem="gtB-QI-Und" secondAttribute="top" constant="6" id="2hN-aq-rEK"/>
                         <constraint firstItem="2AH-lR-cW3" firstAttribute="width" secondItem="e8C-C5-Km3" secondAttribute="width" id="7z0-MH-cEE"/>
+                        <constraint firstItem="2AH-lR-cW3" firstAttribute="centerX" secondItem="gtB-QI-Und" secondAttribute="centerX" constant="-119" id="FSq-V3-kb4"/>
                         <constraint firstItem="1y9-Ru-bn3" firstAttribute="top" secondItem="gtB-QI-Und" secondAttribute="top" constant="2" id="KHe-4i-RC4"/>
+                        <constraint firstItem="2AH-lR-cW3" firstAttribute="baseline" secondItem="e8C-C5-Km3" secondAttribute="baseline" id="MyQ-7e-H5r"/>
                         <constraint firstItem="2AH-lR-cW3" firstAttribute="height" secondItem="e8C-C5-Km3" secondAttribute="height" id="Y9a-fA-aEy"/>
-                        <constraint firstAttribute="bottom" secondItem="2AH-lR-cW3" secondAttribute="bottom" constant="23" id="aT7-Iq-Nro"/>
-                        <constraint firstAttribute="trailing" secondItem="e8C-C5-Km3" secondAttribute="trailing" constant="8" id="bln-pG-VfJ"/>
-                        <constraint firstAttribute="bottom" secondItem="e8C-C5-Km3" secondAttribute="bottom" constant="23" id="efK-RI-mt8"/>
-                        <constraint firstItem="e8C-C5-Km3" firstAttribute="leading" secondItem="2AH-lR-cW3" secondAttribute="trailing" constant="28" id="iz8-o9-p4b"/>
-                        <constraint firstItem="2AH-lR-cW3" firstAttribute="top" secondItem="gtB-QI-Und" secondAttribute="top" constant="24" id="qcx-9p-4Tl"/>
+                        <constraint firstAttribute="bottom" secondItem="2AH-lR-cW3" secondAttribute="bottom" constant="6" id="aT7-Iq-Nro"/>
+                        <constraint firstAttribute="bottom" secondItem="e8C-C5-Km3" secondAttribute="bottom" constant="7" id="efK-RI-mt8"/>
+                        <constraint firstItem="2AH-lR-cW3" firstAttribute="top" secondItem="gtB-QI-Und" secondAttribute="top" constant="7" id="qcx-9p-4Tl"/>
+                        <constraint firstItem="e8C-C5-Km3" firstAttribute="centerX" secondItem="gtB-QI-Und" secondAttribute="centerX" constant="119" id="rhn-U2-Czv"/>
                         <constraint firstAttribute="trailing" secondItem="1y9-Ru-bn3" secondAttribute="trailing" constant="8" id="tmu-QT-j0K"/>
                         <constraint firstItem="1y9-Ru-bn3" firstAttribute="leading" secondItem="gtB-QI-Und" secondAttribute="leading" constant="8" id="uIZ-Q4-vdh"/>
-                        <constraint firstItem="2AH-lR-cW3" firstAttribute="leading" secondItem="gtB-QI-Und" secondAttribute="leading" constant="8" id="zsL-6q-ZvP"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Y9a-fA-aEy"/>
+                        </mask>
+                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -67,4 +80,7 @@
             <point key="canvasLocation" x="632" y="269.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="image_button" width="150" height="64"/>
+    </resources>
 </document>

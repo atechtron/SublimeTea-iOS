@@ -18,6 +18,10 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:onView:)];
     [self.dropDownTextField.superview addGestureRecognizer:tap];
     
+    UITapGestureRecognizer *CheckboxLabelTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkBoxButtonAction:)];
+    [self.firstradioButtonTitlrLabel.superview addGestureRecognizer:CheckboxLabelTap];
+    [self.secondRadioButtonTtitleLabel.superview addGestureRecognizer:CheckboxLabelTap];
+    
     _textField.borderStyle = UITextBorderStyleNone;
     _textField.layer.borderWidth = 1;
     _textField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
@@ -27,6 +31,13 @@
     _dropDownTextField.layer.borderWidth = 1;
     _dropDownTextField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
     _dropDownTextField.layer.cornerRadius = 2;
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 13, 10, 5)];
+    imgView.image = [UIImage imageNamed:@"down-arrow"];
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 18, CGRectGetHeight(_dropDownTextField.frame))];
+    [paddingView addSubview:imgView];
+    _dropDownTextField.rightView = paddingView;
+    _dropDownTextField.rightViewMode = UITextFieldViewModeAlways;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -39,9 +50,9 @@
         [self.delegate droDownAction:self.dropDownTextField tapGesture:tapGestureRecongnizer];
     }
 }
-- (IBAction)checkBoxButtonAction:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(checkBoxStateDidChanged:)]) {
-        [self.delegate checkBoxStateDidChanged:self];
+- (IBAction)checkBoxButtonAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(checkBoxStateDidChanged:senderControl:)]) {
+        [self.delegate checkBoxStateDidChanged:self senderControl:sender];
     }
 }
 @end

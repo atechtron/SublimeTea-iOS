@@ -7,6 +7,7 @@
 //
 
 #import "STPopoverTableViewController.h"
+#import "STPopoverTableViewCell.h"
 
 @interface STPopoverTableViewController ()
 
@@ -16,15 +17,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
 }
 - (void)viewWillLayoutSubviews {
-    self.preferredContentSize = CGSizeMake(200, 400);
+    self.preferredContentSize = CGSizeMake(150, 300);
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -43,9 +40,9 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"popoverCell" forIndexPath:indexPath];
+    STPopoverTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"popoverCell" forIndexPath:indexPath];
     
-    cell.textLabel.text = @"KA";
+    cell.titleTextLabel.text = @"KA";
     
     return cell;
 }
