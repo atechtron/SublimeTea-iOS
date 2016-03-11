@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		181C13961C8DF60400A0A63A /* STShippingDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C13951C8DF60400A0A63A /* STShippingDetailsViewController.m */; };
+		181C13991C8DFE2600A0A63A /* STDropDownTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C13981C8DFE2600A0A63A /* STDropDownTableViewCell.m */; };
+		181C139C1C8E021B00A0A63A /* STCouponTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C139B1C8E021B00A0A63A /* STCouponTableViewCell.m */; };
+		18AC92501C9095A3002D91F4 /* STCart.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AC924F1C9095A3002D91F4 /* STCart.m */; };
+		18B626CD1C91D9650018D260 /* STPopoverTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B626CC1C91D9650018D260 /* STPopoverTableViewCell.m */; };
 		18F61FB01C88B86B00FEB89C /* STDashboardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F61FAF1C88B86B00FEB89C /* STDashboardCollectionViewCell.m */; };
 		2B2DC0B41C82D76A00A29459 /* STCartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */; };
 		2B2DC0B71C82D7D300A29459 /* STCartHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B61C82D7D300A29459 /* STCartHeaderView.m */; };
@@ -68,6 +73,8 @@
 		2B9882CA1C81E67500BA5234 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B9882C91C81E67500BA5234 /* SystemConfiguration.framework */; };
 		2B9882CD1C81F47200BA5234 /* STCartFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882CC1C81F47200BA5234 /* STCartFooterView.xib */; };
 		2B9882D01C81F49700BA5234 /* STCartFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9882CF1C81F49700BA5234 /* STCartFooterView.m */; };
+		2B9CD2AB1C8FDCD000B63C92 /* STPhoneNumberTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9CD2AA1C8FDCD000B63C92 /* STPhoneNumberTableViewCell.m */; };
+		2B9CD2AF1C8FE0C700B63C92 /* STPopoverTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9CD2AE1C8FE0C700B63C92 /* STPopoverTableViewController.m */; };
 		2BA72EE71C7DC8F0006105B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EE61C7DC8F0006105B6 /* main.m */; };
 		2BA72EEA1C7DC8F0006105B6 /* STAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EE91C7DC8F0006105B6 /* STAppDelegate.m */; };
 		2BA72EED1C7DC8F0006105B6 /* STViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA72EEC1C7DC8F0006105B6 /* STViewController.m */; };
@@ -125,6 +132,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		181C13941C8DF60400A0A63A /* STShippingDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STShippingDetailsViewController.h; path = User/Shipping/STShippingDetailsViewController.h; sourceTree = "<group>"; };
+		181C13951C8DF60400A0A63A /* STShippingDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STShippingDetailsViewController.m; path = User/Shipping/STShippingDetailsViewController.m; sourceTree = "<group>"; };
+		181C13971C8DFE2600A0A63A /* STDropDownTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDropDownTableViewCell.h; path = User/Shipping/STDropDownTableViewCell.h; sourceTree = "<group>"; };
+		181C13981C8DFE2600A0A63A /* STDropDownTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STDropDownTableViewCell.m; path = User/Shipping/STDropDownTableViewCell.m; sourceTree = "<group>"; };
+		181C139A1C8E021B00A0A63A /* STCouponTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STCouponTableViewCell.h; path = User/Shipping/STCouponTableViewCell.h; sourceTree = "<group>"; };
+		181C139B1C8E021B00A0A63A /* STCouponTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STCouponTableViewCell.m; path = User/Shipping/STCouponTableViewCell.m; sourceTree = "<group>"; };
+		18AC924E1C9095A3002D91F4 /* STCart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STCart.h; path = User/STCart.h; sourceTree = "<group>"; };
+		18AC924F1C9095A3002D91F4 /* STCart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STCart.m; path = User/STCart.m; sourceTree = "<group>"; };
+		18B626CB1C91D9650018D260 /* STPopoverTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPopoverTableViewCell.h; path = User/Shipping/STPopoverTableViewCell.h; sourceTree = "<group>"; };
+		18B626CC1C91D9650018D260 /* STPopoverTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STPopoverTableViewCell.m; path = User/Shipping/STPopoverTableViewCell.m; sourceTree = "<group>"; };
 		18F61FAE1C88B86B00FEB89C /* STDashboardCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDashboardCollectionViewCell.h; path = Dashboard/STDashboardCollectionViewCell.h; sourceTree = "<group>"; };
 		18F61FAF1C88B86B00FEB89C /* STDashboardCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STDashboardCollectionViewCell.m; path = Dashboard/STDashboardCollectionViewCell.m; sourceTree = "<group>"; };
 		2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCartHeaderView.xib; sourceTree = "<group>"; };
@@ -223,6 +240,10 @@
 		2B9882CC1C81F47200BA5234 /* STCartFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = STCartFooterView.xib; path = Payment/STCartFooterView.xib; sourceTree = "<group>"; };
 		2B9882CE1C81F49700BA5234 /* STCartFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STCartFooterView.h; path = Payment/STCartFooterView.h; sourceTree = "<group>"; };
 		2B9882CF1C81F49700BA5234 /* STCartFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STCartFooterView.m; path = Payment/STCartFooterView.m; sourceTree = "<group>"; };
+		2B9CD2A91C8FDCD000B63C92 /* STPhoneNumberTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPhoneNumberTableViewCell.h; path = User/Shipping/STPhoneNumberTableViewCell.h; sourceTree = "<group>"; };
+		2B9CD2AA1C8FDCD000B63C92 /* STPhoneNumberTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STPhoneNumberTableViewCell.m; path = User/Shipping/STPhoneNumberTableViewCell.m; sourceTree = "<group>"; };
+		2B9CD2AD1C8FE0C700B63C92 /* STPopoverTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPopoverTableViewController.h; path = User/Shipping/STPopoverTableViewController.h; sourceTree = "<group>"; };
+		2B9CD2AE1C8FE0C700B63C92 /* STPopoverTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STPopoverTableViewController.m; path = User/Shipping/STPopoverTableViewController.m; sourceTree = "<group>"; };
 		2BA72EE21C7DC8F0006105B6 /* SublimeTea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SublimeTea.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA72EE61C7DC8F0006105B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2BA72EE81C7DC8F0006105B6 /* STAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STAppDelegate.h; sourceTree = "<group>"; };
@@ -327,6 +348,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		181C13931C8DF5B500A0A63A /* Shipping */ = {
+			isa = PBXGroup;
+			children = (
+				2B9CD2AC1C8FE06400B63C92 /* DropDown */,
+				181C13941C8DF60400A0A63A /* STShippingDetailsViewController.h */,
+				181C13951C8DF60400A0A63A /* STShippingDetailsViewController.m */,
+				181C13971C8DFE2600A0A63A /* STDropDownTableViewCell.h */,
+				181C13981C8DFE2600A0A63A /* STDropDownTableViewCell.m */,
+				181C139A1C8E021B00A0A63A /* STCouponTableViewCell.h */,
+				181C139B1C8E021B00A0A63A /* STCouponTableViewCell.m */,
+				2B9CD2A91C8FDCD000B63C92 /* STPhoneNumberTableViewCell.h */,
+				2B9CD2AA1C8FDCD000B63C92 /* STPhoneNumberTableViewCell.m */,
+			);
+			name = Shipping;
+			sourceTree = "<group>";
+		};
 		2B2DC0AF1C82D23E00A29459 /* Badge */ = {
 			isa = PBXGroup;
 			children = (
@@ -475,6 +512,17 @@
 				2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */,
 			);
 			name = Cart;
+			sourceTree = "<group>";
+		};
+		2B9CD2AC1C8FE06400B63C92 /* DropDown */ = {
+			isa = PBXGroup;
+			children = (
+				2B9CD2AD1C8FE0C700B63C92 /* STPopoverTableViewController.h */,
+				2B9CD2AE1C8FE0C700B63C92 /* STPopoverTableViewController.m */,
+				18B626CB1C91D9650018D260 /* STPopoverTableViewCell.h */,
+				18B626CC1C91D9650018D260 /* STPopoverTableViewCell.m */,
+			);
+			name = DropDown;
 			sourceTree = "<group>";
 		};
 		2BA72ED91C7DC8F0006105B6 = {
@@ -715,6 +763,9 @@
 		2BFA1BA71C7E060E008C4833 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				18AC924E1C9095A3002D91F4 /* STCart.h */,
+				18AC924F1C9095A3002D91F4 /* STCart.m */,
+				181C13931C8DF5B500A0A63A /* Shipping */,
 				2BB2F42A1C842EA40024BB26 /* Profile */,
 				2BFA1BA31C7E05BB008C4833 /* Orders */,
 				2BFA1B8E1C7E038A008C4833 /* Login/SignUp */,
@@ -926,7 +977,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BE835041C85E278008BA172 /* FileDownloader.m in Sources */,
+				181C13961C8DF60400A0A63A /* STShippingDetailsViewController.m in Sources */,
 				2BB2F42D1C842ED10024BB26 /* STProfileHeaderView.m in Sources */,
+				181C13991C8DFE2600A0A63A /* STDropDownTableViewCell.m in Sources */,
 				2B456FBB1C7F810F00C240A5 /* STProductDescriptionTableViewCell.m in Sources */,
 				2BFA1BB41C7E0966008C4833 /* STSignUpViewController.m in Sources */,
 				2BFA1B9F1C7E0574008C4833 /* STProductViewController.m in Sources */,
@@ -935,8 +988,10 @@
 				2B98821D1C81B58A00BA5234 /* STCartTableViewCell.m in Sources */,
 				2BC0E50D1C823151001085F8 /* STOderListTableViewCell.m in Sources */,
 				2B456F951C7F558900C240A5 /* STRootViewController.m in Sources */,
+				18AC92501C9095A3002D91F4 /* STCart.m in Sources */,
 				2BFA1BD21C7E3118008C4833 /* STProductCategoryCollectionViewCell.m in Sources */,
 				2B456F901C7F550D00C240A5 /* UIImage+REFrostedViewController.m in Sources */,
+				2B9CD2AB1C8FDCD000B63C92 /* STPhoneNumberTableViewCell.m in Sources */,
 				2B2E57AF1C836FB900351F39 /* STOrderConfirmationHeaderView.m in Sources */,
 				2BA72EED1C7DC8F0006105B6 /* STViewController.m in Sources */,
 				2BFA1BBA1C7E09EA008C4833 /* STOrderConfirmationViewController.m in Sources */,
@@ -953,6 +1008,7 @@
 				2BFA1B981C7E0451008C4833 /* STDashboardViewController.m in Sources */,
 				2B456F911C7F550D00C240A5 /* UIView+REFrostedViewController.m in Sources */,
 				2B456F9B1C7F579C00C240A5 /* STNavigationController.m in Sources */,
+				2B9CD2AF1C8FE0C700B63C92 /* STPopoverTableViewController.m in Sources */,
 				2B456F8F1C7F550D00C240A5 /* REFrostedViewController.m in Sources */,
 				2BFA1B8D1C7E0381008C4833 /* STLoginViewController.m in Sources */,
 				2B456FA21C7F5C4400C240A5 /* STMenuTableHeaderView.m in Sources */,
@@ -978,6 +1034,8 @@
 				2BFA1B841C7E00E3008C4833 /* XMLDictionary.m in Sources */,
 				2BFA1B871C7E0121008C4833 /* STConstants.m in Sources */,
 				2B456FA61C7F602100C240A5 /* STMenuUserInfoTableHeaderView.m in Sources */,
+				18B626CD1C91D9650018D260 /* STPopoverTableViewCell.m in Sources */,
+				181C139C1C8E021B00A0A63A /* STCouponTableViewCell.m in Sources */,
 				2B9882D01C81F49700BA5234 /* STCartFooterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

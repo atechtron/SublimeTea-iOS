@@ -59,6 +59,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="_backgroundView" destination="s1h-RL-hsA" id="H5J-dv-0ze"/>
                 <outlet property="titleImageView" destination="sX9-87-fkr" id="yqv-i4-26t"/>
                 <outlet property="titleLabel" destination="JU6-yc-Z8A" id="8Jb-EL-j71"/>
             </connections>
@@ -66,6 +67,6 @@
         </view>
     </objects>
     <resources>
-        <image name="image_logo" width="778" height="202"/>
+        <image name="image_logo" width="259" height="67"/>
     </resources>
 </document>

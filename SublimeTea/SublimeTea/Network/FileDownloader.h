@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef void (^completeBlock_t)(NSData *data,NSString *imgURL, UIView *imgView);
+typedef void (^completeBlock_t)(NSData *data,NSURL *imgURL, UIView *imgView);
 typedef void (^errorBlock_t)(NSError *error);
 
 @interface FileDownloader : NSObject
@@ -17,7 +17,7 @@ typedef void (^errorBlock_t)(NSError *error);
     errorBlock_t errorBlock_;
 }
 -(void)asynchronousFiledownload:(NSURLSessionDataTask *)imageDownloadTask
-         serviceUrlMethodString:(NSString *)_fileURL
+         serviceUrlMethodString:(NSURL *)_fileURL
                      urlSession:(NSURLSession *)session
                       imageView:(UIImageView *)imgView
         displayLoadingIndicator:(BOOL)isLoadingIndicatorRequired

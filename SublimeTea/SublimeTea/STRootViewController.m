@@ -21,7 +21,10 @@
     NSString *identifier = nil;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //    [defaults removeObjectForKey:kUSerSession_Key];
-    if ([defaults objectForKey:kUSerSession_Key]) {
+    NSDictionary *userInfoDict = [defaults objectForKey:kUserInfo_Key];
+    
+    
+    if ([defaults objectForKey:kUSerSession_Key] && userInfoDict) {
         identifier = @"dashBoardNavController";
     }
     else {

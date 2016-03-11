@@ -13,7 +13,7 @@
 @implementation FileDownloader
 
 -(void)asynchronousFiledownload:(NSURLSessionDataTask *)imageDownloadTask
-         serviceUrlMethodString:(NSString *)_fileURL
+         serviceUrlMethodString:(NSURL *)_fileURL
                      urlSession:(NSURLSession *)session
                       imageView:(UIImageView *)imgView
         displayLoadingIndicator:(BOOL)isLoadingIndicatorRequired
@@ -38,9 +38,9 @@
             [activityIndicator startAnimating];
             [imgView bringSubviewToFront:activityIndicator];
         }
-        NSString *image_URL = _fileURL;
+        
 //        [AppDelegate didStartNetworking];
-        NSURL *imageURL = [STUtility smartURLForString:image_URL];
+        NSURL *imageURL = _fileURL;
         if (imageURL) {
             
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: imageURL

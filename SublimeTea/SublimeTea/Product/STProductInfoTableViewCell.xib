@@ -21,13 +21,14 @@
                             <constraint firstAttribute="height" constant="21" id="4wo-Hj-Zmc"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rLh-iU-PpK">
                         <rect key="frame" x="226" y="71" width="147" height="147"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="rLh-iU-PpK" secondAttribute="height" multiplier="1:1" id="DQg-1l-485"/>
+                            <constraint firstAttribute="height" constant="147" id="EsU-Qs-rZI"/>
+                            <constraint firstAttribute="width" constant="147" id="GTS-G1-fw4"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="itq-wK-Afj">
@@ -39,7 +40,7 @@
                                     <constraint firstAttribute="height" constant="21" id="u3K-Ht-zp5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="In stock" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="P0Z-xM-350">
@@ -49,7 +50,7 @@
                                     <constraint firstAttribute="width" constant="74" id="p34-Bn-0wh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="yO7-6H-6O1">
@@ -58,7 +59,7 @@
                                     <constraint firstAttribute="height" constant="21" id="Ser-4d-77Q"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -124,6 +125,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="image_logo" width="778" height="202"/>
+        <image name="image_logo" width="259" height="67"/>
     </resources>
 </document>

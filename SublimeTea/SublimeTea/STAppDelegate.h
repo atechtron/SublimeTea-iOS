@@ -15,5 +15,7 @@
 @property (nonatomic, readwrite) NSInteger networkActivityCounter;
 
 - (void)endUserSession;
+- (void)startSession;
+
 @end
 

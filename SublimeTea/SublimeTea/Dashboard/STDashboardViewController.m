@@ -10,6 +10,7 @@
 #import "STHttpRequest.h"
 #import "STProductCategoriesViewController.h"
 #import "STDashboardCollectionViewCell.h"
+#import "STGlobalCacheManager.h"
 
 @interface STDashboardViewController ()<UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic)NSArray *categories;
@@ -102,8 +103,16 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        [STUtility startActivityIndicatorOnView:nil withText:@"Loading Range of Teas, Please wait.."];
-        [self fetchProductCategories];
+        if ([STUtility isNetworkAvailable]) {
+            [STUtility startActivityIndicatorOnView:nil withText:@"Loading Range of Teas, Please wait.."];
+            NSDictionary *xmlDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductCategory_Key];
+            if (xmlDict) {
+                [self parseResponseWithDict:xmlDict];
+            }
+            else {
+                [self fetchProductCategories];
+            }
+        }
     }
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -142,19 +151,7 @@
 }
 - (void)fetchProductCategories {
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
-    
-    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
-                             "<soapenv:Header/>"
-                             "<soapenv:Body>"
-                             "<urn:catalogCategoryTree soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
-                             "<parentId xsi:type=\"xsd:string\">%@</parentId>"
-                             "<storeView xsi:type=\"xsd:string\">%@</storeView>"
-                             "</urn:catalogCategoryTree>"
-                             "</soapenv:Body>"
-                             "</soapenv:Envelope>",sessionId,@"2",@"default"];
+    NSString *requestBody = [STConstants categoryListRequestBody];
     
     NSString *urlString = [STConstants getAPIURLWithParams:nil];
     NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -166,12 +163,15 @@
                                   {
                                       
                                   }successBlock:^(NSData *responseData){
-                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                      NSLog(@"%@",xmlDic);
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                          [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic
+                                                                                        withKey:kProductCategory_Key];
+                                          NSLog(@"%@",xmlDic);
+
+                                          [self parseResponseWithDict:xmlDic];
+                                      });
                                       
-                                      [STUtility stopActivityIndicatorFromView:nil];
-//                                      self.categories
-                                      [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];
                                   }failureBlock:^(NSError *error) {
                                       [STUtility stopActivityIndicatorFromView:nil];
                                       [[[UIAlertView alloc] initWithTitle:@"Alert"
@@ -183,6 +183,28 @@
                                   }];
     
     [httpRequest start];
+}
+- (void)parseResponseWithDict:(NSDictionary *)responseDict {
+    if (responseDict) {
+        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
+        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
+            NSArray *productCategoriesArr = responseDict[@"SOAP-ENV:Body"][@"ns1:catalogCategoryTreeResponse"][@"tree"][@"children"][@"item"][@"children"][@"item"][@"children"][@"item"];
+            NSLog(@"%@",productCategoriesArr);
+            if (productCategoriesArr.count) {
+                self.categories = [NSArray arrayWithArray:productCategoriesArr];
+                [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];
+            }
+            else{
+                // No categories found.
+            }
+        }
+        else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
+        }
+    }else {
+        //No categories found.
+    }
+    [STUtility stopActivityIndicatorFromView:nil];
 }
 - (void)loadProductCategories {
     [self performSegueWithIdentifier:@"productCategorySegue" sender:self];

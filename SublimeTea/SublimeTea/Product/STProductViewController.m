@@ -9,47 +9,82 @@
 #import "STProductViewController.h"
 #import "STProductListCollectionViewCell.h"
 #import "STHttpRequest.h"
+#import "FileDownloader.h"
+#import "STGlobalCacheManager.h"
+#import "STProductDetailViewController.h"
 
-@interface STProductViewController ()
-
+@interface STProductViewController ()<UIScrollViewDelegate>
+{
+    NSURLSession *downloadSession;
+    NSURLSessionConfiguration *downloadConfig;
+    NSDictionary *prodDetailDict;
+    NSInteger selectedProductIndex;
+}
 @end
 
 @implementation STProductViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.titleLabel.text = @"Pure Green Tea";
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    NSString *name = self.selectedCategoryDict[@"name"][@"__text"];
+    self.titleLabel.text = name;
+    downloadConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    downloadSession = [NSURLSession sessionWithConfiguration:downloadConfig];
 }
 - (void)viewDidAppear:(BOOL)animated {
     
     self.pageControl.currentPage = 0;
-    NSInteger totalItems = [self.collectionView numberOfItemsInSection:0];
-
-//    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width /
-//                                          (totalItems*104));
-//    [self.view bringSubviewToFront:self.pageControl];
+    self.pageControl.numberOfPages = [self numberOfPages];
+    [self.view bringSubviewToFront:self.pageControl];
+    self.pageControl.hidden = YES;
+}
+- (NSInteger)numberOfPages {
+    NSInteger singlePageElementHeightCount = 0;
+    NSInteger singlePageElementWidthCount = 0;
+    if (self.view.bounds.size.width > self.view.bounds.size.height) {
+        // landscape
+        singlePageElementWidthCount = 6;
+        singlePageElementHeightCount = floor(self.collectionView.frame.size.width/117);
+    }else {
+        //potrait
+        singlePageElementWidthCount = 3;
+        singlePageElementHeightCount = floor(self.collectionView.frame.size.height/117);
+    }
     
+    NSInteger totalPages = ceil(21 /(singlePageElementHeightCount*singlePageElementWidthCount));
+    return totalPages+1;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
  #pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
+     if ([segue.identifier isEqualToString:@"productDetailViewSegue"]) {
+         STProductDetailViewController *viewController = segue.destinationViewController;
+         viewController.productInfoDict = prodDetailDict;
+         viewController.selectedProdDict = self.productsInSelectedCat[selectedProductIndex];
+         viewController.selectedCategoryDict = self.selectedCategoryDict;
+     }
  }
- */
+ 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat pageWidth = scrollView.frame.size.width;
+    NSInteger page = (NSInteger)floor((scrollView.contentOffset.x * 2.0f + pageWidth) / (pageWidth * 2.0f));
+    [self.pageControl setCurrentPage:page];
+}
+
 #pragma mark-
 #pragma UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 21;
+    return self.productsInSelectedCat.count;
 }
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -58,9 +93,20 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"productListCell";
     STProductListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.productTitleLabel.text = [NSString stringWithFormat:@"%@\n%@",@"GREEN",@"LONG DING"];
-    cell.productImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
-    cell.productImageView.contentMode = UIViewContentModeScaleToFill;
+    NSDictionary *prodDict = self.productsInSelectedCat[indexPath.row];
+    NSString *prodId = prodDict[@"product_id"][@"__text"];
+    NSString *name = prodDict[@"name"][@"__text"];
+    NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
+    if (prodImgArr.count) {
+        NSDictionary *imgUrlDict = [prodImgArr lastObject];
+        NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
+        NSLog(@"Image URL %@",imgUrl);
+        [self loadProdImageinView:cell.productImageView fromURL:imgUrl];
+    }
+    cell.productTitleLabel.text = [name uppercaseString];
+    
+//    cell.productImageView.contentMode = UIViewContentModeScaleToFill;
+    
     return cell;
 }
 //- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
@@ -77,7 +123,7 @@
 //        //potrait
 //        size = CGSizeMake(collectionView.frame.size.width/3-.5, 117);
 //    }
-//    
+//
 //    return size;
 //}
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
@@ -120,9 +166,18 @@
 //    return size;
 //}
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    [self performSegueWithIdentifier:@"productDetailViewSegue" sender:self];
-    
+    if ([STUtility isNetworkAvailable]) {
+        selectedProductIndex = indexPath.row;
+        NSDictionary *prodDict = self.productsInSelectedCat[selectedProductIndex];
+        NSString *prodId = prodDict[@"product_id"][@"__text"];
+        NSDictionary*xmlDic = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductInfo_Key(prodId)];
+        if (xmlDic) {
+            [self parseResponseWithDict:xmlDic];
+        }
+        else{
+            [self fetchProductDetails];
+        }
+    }
 }
 //- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
 //    return UIEdgeInsetsMake(0, 0, 0, 0);
@@ -146,25 +201,17 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [self.collectionView reloadData];
+    self.pageControl.numberOfPages = [self numberOfPages];
+    [self.view bringSubviewToFront:self.pageControl];
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
-- (void)fetchProducts {
+- (void)fetchProductDetails {
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
+    [STUtility startActivityIndicatorOnView:nil withText:@"Loading product details.."];
     
-//    NSDictionary *selectedProdCatDict = self.prodCategories[selectedCatId];
-//    NSString *selectedCategoryId = selectedProdCatDict[@""];
-    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                             "<soapenv:Header/>"
-                             "<soapenv:Body>"
-                             "<urn:catalogProductList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
-                             "<filters xsi:type=\"urn:filters\">"
-                             "<storeView xsi:type=\"xsd:string]\">%@</storeView>"
-                             "</urn:catalogProductList>"
-                             "</soapenv:Body>"
-                             "</soapenv:Envelope>",sessionId,@"default"];
+    NSDictionary *prodDict = self.productsInSelectedCat[selectedProductIndex];
+    NSString *prodId = prodDict[@"product_id"][@"__text"];
+    NSString *requestBody = [STConstants prodInfoRequestBodyWithID:prodId];
     
     NSString *urlString = [STConstants getAPIURLWithParams:nil];
     NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -176,24 +223,92 @@
                                   {
                                       
                                   }successBlock:^(NSData *responseData){
-                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                      NSLog(@"%@",xmlDic);
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                          [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic
+                                                                                        withKey:kProductInfo_Key(prodId)];
+                                          
+                                          NSLog(@"%@",xmlDic);
+                                          [self parseResponseWithDict:xmlDic];
+                                      });
                                       
-                                      [STUtility stopActivityIndicatorFromView:nil];
                                       
-                                      [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];
-                                  }failureBlock:^(NSError *error) {
-                                      [STUtility stopActivityIndicatorFromView:nil];
-                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
-                                                                  message:@"Unexpected error has occured, Please try after some time."
-                                                                 delegate:nil
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles: nil] show];
-                                      NSLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
-                                  }];
+                                  }
+                                                       failureBlock:^(NSError *error) {
+                                                           [STUtility stopActivityIndicatorFromView:nil];
+                                                           [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                                       message:@"Unexpected error has occured, Please try after some time."
+                                                                                      delegate:nil
+                                                                             cancelButtonTitle:@"OK"
+                                                                             otherButtonTitles: nil] show];
+                                                           NSLog(@"SublimeTea-STProductViewController-fetchProductDetails:- %@",error);
+                                                       }];
     
     [httpRequest start];
 }
+- (void)parseResponseWithDict:(NSDictionary *)responseDict {
+    if (responseDict) {
+        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
+        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
+            NSDictionary *dataDict = parentDataDict[@"ns1:catalogProductInfoResponse"][@"info"];
+            prodDetailDict = dataDict;
+            [self performSegueWithIdentifier:@"productDetailViewSegue" sender:self];
+        }
+        else {
+            [AppDelegate endUserSession];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+        
+    }else {
+        //No products found.
+    }
+    [STUtility stopActivityIndicatorFromView:nil];
+}
+- (void)loadProdImageinView:(UIImageView *)imgView
+                    fromURL:(NSString *)imgURL {
+    
+    if (imgView && imgURL.length) {
+        
+        NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgURL];
+        if (imgData) {
+            UIImage *prodImg = [UIImage imageWithData:imgData];
+            if (prodImg) {
+                [UIView transitionWithView:imgView duration:0.5
+                                   options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                       imgView.image = prodImg;
+                                   } completion:nil];
+        }
+        
+        }
+        else {
+            // Download Image
+            __block UIImageView *prodImgView = imgView;
+            NSURL *url  = [[NSURL alloc] initWithString:[imgURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            NSURLSessionDataTask *imageDownloadTask;
+            FileDownloader *downloader = [[FileDownloader alloc] init];
+            [downloader asynchronousFiledownload:imageDownloadTask
+                          serviceUrlMethodString:url
+                                      urlSession:downloadSession
+                                       imageView:imgView
+                         displayLoadingIndicator:YES
+                                   completeBlock:^(NSData *data, NSURL *imgURL, UIView *imgView) {
+                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                           [[STGlobalCacheManager defaultManager] addItemToCache:data
+                                                                                         withKey:imgURL.absoluteString];
+                                           UIImage *_img = [UIImage imageWithData:data];
+                                           [UIView transitionWithView:imgView duration:0.5
+                                                              options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                                                  prodImgView.image = _img;
+                                                              } completion:nil];
+                                       });
+                                       
+                                   } errorBlock:^(NSError *error) {
+                                       NSLog(@"SublimeTea-STProductViewController-loadProdImageinView:- %@",error);
+                                   }];
+        }
+    }
+}
+
 - (void)loadProductCategories {
     [self performSegueWithIdentifier:@"productListSegue" sender:self];
 }

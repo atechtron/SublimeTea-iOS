@@ -19,6 +19,7 @@ typedef void(^FailureBlock)(NSError *error);
 
 - (id)initWithURL:(NSURL *)requestURL methodType:(NSString *)methodType body:(NSString *)requestBody responseHeaderBlock:(ResponseBlock)responseBlock successBlock:(SuccessBlock)successBlock failureBlock:(FailureBlock)failureBlock;
 - (void)start;
+- (NSData *)synchronousStart;
 //- (void)startWithAuth:(BOOL)isAuthReq;
 //- (void)startSalesxMDS;
 //- (void)startSalesxMDS:(NSString *) withContentType withAcceptHeader:(NSString *) acceptHeader;

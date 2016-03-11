@@ -45,3 +45,8 @@
 
 
 #define kUSerSession_Key @"USER_SESSIONID"
+#define kUserInfo_Key @"USER_INFO"
+#define kProductCategory_Key @"PRODUCT_CATEGORY_DATA"
+#define kProductList_Key @"ALL_PRODUCTS_LIST_DATA"
+#define kProductInfo_Key(prodId) [NSString stringWithFormat:@"PROD_%@",prodId]
+

@@ -10,9 +10,13 @@
 #import "REFrostedViewController.h"
 #import "XMLDictionary.h"
 #import "STConstants.h"
+#import "STAppDelegate.h"
+#import "JSBadgeView.h"
 
 @interface STViewController : UIViewController
-
+{
+    JSBadgeView *cartBadgeView;
+}
 @property (nonatomic)BOOL menuButtonHidden;
 @property (nonatomic)BOOL backButtonHidden;
 @property (nonatomic)BOOL hideLeftBarItems;

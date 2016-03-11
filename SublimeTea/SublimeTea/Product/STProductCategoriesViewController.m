@@ -10,11 +10,13 @@
 #import "STProductCategoryCollectionViewCell.h"
 #import "STHttpRequest.h"
 #import "STProductViewController.h"
+#import "STGlobalCacheManager.h"
 
 @interface STProductCategoriesViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,UIScrollViewDelegate>
 {
     NSInteger selectedCatId;
 }
+@property(strong, nonatomic)NSArray *productList;
 @end
 
 @implementation STProductCategoriesViewController
@@ -22,14 +24,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.titleLabel.text = @"Explore our Range of Teas";
     self.pageControl.currentPage = 0;
-    self.pageControl.numberOfPages = ceil(self.collectionView.contentSize.width /
-                                          self.collectionView.frame.size.width);
+    self.pageControl.numberOfPages = [self numberOfPages];
     [self.view bringSubviewToFront:self.pageControl];
+    self.pageControl.hidden = YES;
 }
-
+- (NSInteger)numberOfPages {
+    NSInteger singlePageElementHeightCount = 0;
+    NSInteger singlePageElementWidthCount = 0;
+    if (self.view.bounds.size.width > self.view.bounds.size.height) {
+        // landscape
+        singlePageElementWidthCount = 3;
+        singlePageElementHeightCount = floor(self.collectionView.frame.size.width/150);
+    }else {
+        //potrait
+        singlePageElementWidthCount = 2;
+        singlePageElementHeightCount = floor(self.collectionView.frame.size.width/150);
+    }
+    
+    NSInteger totalPages = ceil(20 /(singlePageElementHeightCount*singlePageElementWidthCount));
+    return totalPages+1;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -47,14 +65,15 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"productListSegue"]) {
         STProductViewController *vC = segue.destinationViewController;
-        vC.productsInSelectedCat = self.prodCategories[selectedCatId];
+        vC.productsInSelectedCat = self.productList;
+        vC.selectedCategoryDict = self.prodCategories[selectedCatId];
     }
 }
 
 #pragma mark-
 #pragma UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 20;//self.prodCategories.count;
+    return self.prodCategories.count;
 }
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -63,8 +82,11 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"ProductCategoryCell";
     STProductCategoryCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    NSDictionary *prodDict = self.prodCategories[indexPath.row];
+    NSString *name = prodDict[@"name"][@"__text"];
+    
     cell.categoryImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
-    cell.categoryTitlelabel.text = [NSString stringWithFormat:@"%@\n%@",@"FLAVOURED",@"GREEN TEA"];
+    cell.categoryTitlelabel.text = [name uppercaseString];
     cell.categorySubTitleLabel.text = @"RANGE PER 100GM";
     return cell;
 }
@@ -74,10 +96,19 @@
 //    return headerView;
 //}
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [STUtility startActivityIndicatorOnView:nil withText:@"Loading Teas, Please wait.."];
-    selectedCatId = indexPath.row;
-    [self fetchProducts];
-//    [self performSegueWithIdentifier:@"productListSegue" sender:self];
+    if ([STUtility isNetworkAvailable]) {
+        [STUtility startActivityIndicatorOnView:nil withText:@"Loading Teas, Please wait.."];
+        selectedCatId = indexPath.row;
+        NSDictionary *xmlDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductList_Key];
+        if (xmlDict) {
+            [self parseResponseWithDict:xmlDict];
+        }
+        else {
+            [self fetchProducts];
+        }
+    }
+    
+    //    [self performSegueWithIdentifier:@"productListSegue" sender:self];
     
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
@@ -98,10 +129,10 @@
     CGSize size = CGSizeZero;
     if (self.view.bounds.size.width > self.view.bounds.size.height) {
         // landscape
-       size = CGSizeMake(collectionView.frame.size.width/3-.5, 150);
+        size = CGSizeMake(collectionView.frame.size.width/3-.5, 150);
     }else {
         //potrait
-     size = CGSizeMake(collectionView.frame.size.width/2-.5, 150);
+        size = CGSizeMake(collectionView.frame.size.width/2-.5, 150);
     }
     
     return size;
@@ -124,29 +155,20 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [self.collectionView reloadData];
+    
+    self.pageControl.numberOfPages = [self numberOfPages];
+    NSLog(@"%f",self.collectionView.contentOffset.x);
+    [self.view bringSubviewToFront:self.pageControl];
+    
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 - (void)fetchProducts {
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
-    
-    NSDictionary *selectedProdCatDict = self.prodCategories[selectedCatId];
-    NSString *selectedCategoryId = selectedProdCatDict[@""];
-    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                             "<soapenv:Header/>"
-                             "<soapenv:Body>"
-                             "<urn:catalogProductInfo soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
-                             "<productId xsi:type=\"xsd:string\">%@</productId>"
-                             "<storeView xsi:type=\"xsd:string\">%@</storeView>"
-                             "<attributes xsi:type=\"urn:catalogProductRequestAttributes\">"
-                             "</urn:catalogProductInfo>"
-                             "</soapenv:Body>"
-                             "</soapenv:Envelope>",sessionId,selectedCategoryId,@"default"];
+    NSString *requestBody = [STConstants productListRequestBody];
     
     NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    
     NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
@@ -156,12 +178,14 @@
                                   {
                                       
                                   }successBlock:^(NSData *responseData){
-                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                      NSLog(@"%@",xmlDic);
-                                      
-                                      [STUtility stopActivityIndicatorFromView:nil];
-                                      
-                                      [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                          [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic
+                                                                                        withKey:kProductList_Key];
+                                          NSLog(@"%@",xmlDic);
+                                          
+                                          [self parseResponseWithDict:xmlDic];
+                                      });
                                   }failureBlock:^(NSError *error) {
                                       [STUtility stopActivityIndicatorFromView:nil];
                                       [[[UIAlertView alloc] initWithTitle:@"Alert"
@@ -174,7 +198,76 @@
     
     [httpRequest start];
 }
-- (void)loadProductCategories {
+- (void)parseResponseWithDict:(NSDictionary *)responseDict {
+    if (responseDict) {
+        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
+        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
+            NSArray *allProductsArr = parentDataDict[@"ns1:catalogProductListResponse"][@"storeView"][@"item"];
+            
+            NSDictionary *selectedProdCatDict = self.prodCategories[selectedCatId];
+            NSString *selectedCategoryId = selectedProdCatDict[@"category_id"][@"__text"];
+            
+            NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"category_ids.item.__text LIKE %@",selectedCategoryId];
+            NSArray *productsInSelectedCat = [allProductsArr filteredArrayUsingPredicate:filterPredicate];
+            self.productList = [NSArray arrayWithArray:productsInSelectedCat];
+            [STUtility stopActivityIndicatorFromView:nil];
+            [STUtility startActivityIndicatorOnView:nil withText:@"Loading Images, Please wait.."];
+            for (NSDictionary *prodDict in self.productList) {
+                NSString *prodId = prodDict[@"product_id"][@"__text"];
+                NSDictionary *imgXMLDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
+
+                if (!imgXMLDict) {
+                  [self fetchProductImages:prodId];
+                }
+            }
+            [self performSelector:@selector(loadProductList) withObject:nil afterDelay:0.4];
+        }
+        else {
+            [AppDelegate endUserSession];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    }else {
+        //No products found.
+    }
+    [STUtility stopActivityIndicatorFromView:nil];
+}
+- (void)fetchProductImages:(NSString *)prodId {
+    
+    NSString *requestBody = [STConstants productImageListRequestBodyWithId:prodId];
+    
+    NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    
+    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                         methodType:@"POST"
+                                                               body:requestBody
+                                                responseHeaderBlock:nil successBlock:nil failureBlock:nil];
+    
+    NSData *responseData = [httpRequest synchronousStart];
+    NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+//    NSLog(@"Image Data for ID %d %@",prodId, xmlDic);
+    [self parseImgData:xmlDic andProdId:prodId];
+}
+- (void)parseImgData:(NSDictionary *)responseDict andProdId:(NSString *)prodId {
+    if(responseDict){
+        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
+//        NSLog(@"Image Data for ID %d %@",prodId, responseDict);
+        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
+            NSDictionary *imgDataDict = parentDataDict[@"ns1:catalogProductAttributeMediaListResponse"][@"result"];
+            NSArray *imageURLList = imgDataDict[@"item"];
+            if (imageURLList) {
+                [[STGlobalCacheManager defaultManager] addItemToCache:imageURLList withKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
+            }
+        }
+        else {
+            [AppDelegate endUserSession];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    }
+    [STUtility stopActivityIndicatorFromView:nil];
+}
+- (void)loadProductList {
     [self performSegueWithIdentifier:@"productListSegue" sender:self];
 }
 
