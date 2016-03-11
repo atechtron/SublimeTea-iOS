@@ -17,9 +17,9 @@
 #import "STGlobalCacheManager.h"
 #import "STShippingDetailsViewController.h"
 
-@interface STCartViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface STCartViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
-@property (strong, nonatomic)NSArray *cartArr;
+@property (strong, nonatomic)NSMutableArray *cartArr;
 @end
 
 @implementation STCartViewController
@@ -35,8 +35,8 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
-
-    self.cartArr = [[STCart defaultCart] productsDataArr];
+    
+    self.cartArr = [[[STCart defaultCart] productsDataArr] mutableCopy];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,14 +45,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 - (void)viewDidTapped:(id)sender {
     [self.view endEditing:YES];
 }
@@ -94,12 +94,14 @@
         }
     }
     
-    
+    cell.checkboxButton.tag = indexPath.row;
     cell.titleLabel.text = name;
     cell.descriptionLabel.text = shortDesc;
     cell.priceLabel.text = @"Price";
     cell.priceTitleLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[price floatValue]]];
     cell.qtyTextbox.text = prod.prodQty> 0 ?[NSString stringWithFormat:@"%ld",(long)prod.prodQty]:@"";
+    cell.qtyTextbox.tag = indexPath.row;
+    cell.qtyTextbox.delegate = self;
     cell.qtyTextbox.layer.borderColor = [UIColor lightGrayColor].CGColor;
     cell.qtyTextbox.layer.borderWidth = .8;
     [cell.checkboxButton addTarget:self action:@selector(checkBoxAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -110,7 +112,7 @@
     STCartFooterView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STCartFooterView"];
     footerView.topBorderView.backgroundColor = [UIColor blackColor];
     [footerView.continueShoppingButton addTarget:self action:@selector(continueShoppingButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [footerView.checkoutButton addTarget:self action:@selector(checkoutButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [footerView.checkoutButton addTarget:self action:@selector(checkoutButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
     return footerView;
 }
@@ -135,6 +137,9 @@
     else{
         [sender setImage:checkBoxSelectedImg forState:UIControlStateNormal];
     }
+    Product *prod = self.cartArr[sender.tag];
+    prod.buy = YES;
+    [self.cartArr replaceObjectAtIndex:sender.tag withObject:prod];
 }
 
 - (void)continueShoppingButtonAction {
@@ -149,9 +154,53 @@
     }
 }
 
-- (void)checkoutButtonAction {
-    if(self.cartArr.count)
+- (void)checkoutButtonAction:(UIButton *)sender {
+    if ([STUtility isNetworkAvailable] && [self validateInputs]) {
+        [STUtility startActivityIndicatorOnView:nil withText:@"Loading.."];
         [self performSegueWithIdentifier:@"shippingSegue" sender:self];
+    }
+}
+- (BOOL)validateInputs {
+    BOOL status = NO;
+    NSPredicate *filterPred = [NSPredicate predicateWithFormat:@"buy == YES"];
+    NSArray *prodWithOutBuyArr = [self.cartArr filteredArrayUsingPredicate:filterPred];
+    
+    NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"prodQty == %d",0];
+    NSArray *prodWithZeroQty = [self.cartArr filteredArrayUsingPredicate:filterPredicate];
+    if (self.cartArr.count == 0) {
+        [self showAlertWithTitle:@"Messgae" msg:@"Cart is empty"];
+    }
+    else if (prodWithOutBuyArr.count == 0) {
+        [self showAlertWithTitle:@"Messgae" msg:@"Please select item to buy"];
+    }
+    else if (prodWithZeroQty.count > 0) {
+            [self showAlertWithTitle:@"Messgae" msg:@"Product qyuantity should be atleast one."];
+    }
+    else {
+        status = YES;
+    }
+    return status;
+}
+- (void)showAlertWithTitle:(NSString *)title msg:(NSString *)msg {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:msg
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil];
+    [alert show];
 }
 
+#pragma mark-
+#pragma UITextFieldDelegate
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    
+    NSString *qtyStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    Product *prod = self.cartArr[textField.tag];
+    prod.prodQty = [qtyStr integerValue];
+    [self.cartArr replaceObjectAtIndex:textField.tag withObject:prod];
+}
 @end

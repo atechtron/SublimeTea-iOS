@@ -27,5 +27,8 @@
 }
 
 - (IBAction)applyCouponButtonAction:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(applyCouponAction:onCell:)]) {
+        [self.delegate applyCouponAction:sender onCell:self];
+    }
 }
 @end

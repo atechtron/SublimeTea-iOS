@@ -13,6 +13,7 @@
 #import "STPhoneNumberTableViewCell.h"
 #import "STPopoverTableViewController.h"
 #import "STOrderListHeaderView.h"
+#import "STUtility.h"
 
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <netdb.h>
@@ -20,7 +21,7 @@
 #import "PaymentModeViewController.h"
 
 
-@interface STShippingDetailsViewController ()<UITableViewDataSource, UITableViewDelegate, STDropDownTableViewCellDeleagte, STPopoverTableViewControllerDelegate, UIPopoverPresentationControllerDelegate>
+@interface STShippingDetailsViewController ()<UITableViewDataSource, UITableViewDelegate, STDropDownTableViewCellDeleagte, STPopoverTableViewControllerDelegate, UIPopoverPresentationControllerDelegate, STCouponTableViewCellDelegate>
 {
     NSArray *listOfStates;
     NSMutableDictionary *jsondict;
@@ -38,20 +39,22 @@
 @property(weak,nonatomic) UITextField *phoneTextField;
 @property(nonatomic) BOOL isShippingISBillingAddress;
 
+@property (weak, nonatomic) UITextField *couponCodeTextField;
+
 @end
 
 @implementation STShippingDetailsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"STOrderListHeaderView" bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:@"STOrderListHeaderView"];
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-
+    self.isShippingISBillingAddress = YES;
+    [STUtility stopActivityIndicatorFromView:nil];
 }
 - (void)viewWillAppear:(BOOL)animated {
     
@@ -94,6 +97,25 @@
 
 
 - (IBAction)paymentButtonAction:(UIButton *)sender {
+    [self.view endEditing:YES];
+    // Check Internet Connsection
+    if ([STUtility isNetworkAvailable] && [self validateInputs]) {
+        if (self.isShippingISBillingAddress) {
+            [self proceedForPayment];
+        }
+        else if (self.isBillingAddressScreen) {
+            [self proceedForPayment];
+        }
+        else {
+            UINavigationController *navCtrl = self.navigationController;
+            STShippingDetailsViewController *billingController = [self.storyboard instantiateViewControllerWithIdentifier:@"STShippingDetailsViewController"];
+            billingController.isBillingAddressScreen = YES;
+            [navCtrl pushViewController:billingController animated:YES];
+        }
+    }
+}
+- (void)proceedForPayment {
+    
     float MERCHANT_PRICE = 1;
     NSString *MERCHANT_REFERENCENO = @"";
     
@@ -136,8 +158,59 @@
     //      paymentView.dynamicKeyValueDictionary = dynamicKeyValueDictionary;
     
     [self.navigationController pushViewController:paymentView animated:NO];
-
 }
+
+- (BOOL)validateInputs {
+    BOOL status = NO;
+    NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *addressStr = [self.addressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *cityStr = [self.cityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *stateStr = [self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *postalCodeStr = [self.postalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *countryStr = [self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *emailStr = [self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *phoneStr = [self.phoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if (nameStr.length == 0) {
+        [self showAlertWithTitle:@"Message" msg:@"Name is required!"];
+    }
+    else if (addressStr.length == 0)
+    {
+        [self showAlertWithTitle:@"Message" msg:@"Address is required!"];
+    }
+    else if (cityStr.length == 0){
+        [self showAlertWithTitle:@"Message" msg:@"City is required!"];
+    }
+    else if (stateStr.length == 0){
+        [self showAlertWithTitle:@"Message" msg:@"State is required!"];
+    }
+    else if (postalCodeStr.length == 0) {
+        [self showAlertWithTitle:@"Message" msg:@"Postalcode is required!"];
+    }
+    else if (countryStr.length == 0) {
+        [self showAlertWithTitle:@"Message" msg:@"Country is required!"];
+    }
+    else if (emailStr.length == 0) {
+        [self showAlertWithTitle:@"Message" msg:@"Email is required!"];
+    }
+    else if (phoneStr.length == 0) {
+        [self showAlertWithTitle:@"Message" msg:@"Phone is required!"];
+    }
+    else {
+        status = YES;
+    }
+    
+    return status;
+}
+- (void)showAlertWithTitle:(NSString *)title msg:(NSString *)msg {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                   message:msg
+                                                  delegate:nil
+                                         cancelButtonTitle:@"OK"
+                                         otherButtonTitles: nil];
+    [alert show];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 7;
 }
@@ -210,13 +283,24 @@
         }
         case 6:
         {
-            NSString *cellIdentifier = @"checkBoxButtonCell";
-            STDropDownTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            _cell.delegate = self;
-            _cell.firstradioButtonTitlrLabel.text = @"Use my shipping address as my billing address";
-            _cell.secondRadioButtonTtitleLabel.text = @"Ship to different address";
-            [_cell.firstRadioButton setImage:[UIImage imageNamed:@"checkboxSelected"] forState:UIControlStateNormal];
-            cell = _cell;
+            if (!self.isBillingAddressScreen) {
+                NSString *cellIdentifier = @"checkBoxButtonCell";
+                STDropDownTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                _cell.delegate = self;
+                _cell.firstradioButtonTitlrLabel.text = @"Use my shipping address as my billing address";
+                _cell.secondRadioButtonTtitleLabel.text = @"Ship to different address";
+                [_cell.firstRadioButton setImage:[UIImage imageNamed:@"checkboxSelected"] forState:UIControlStateNormal];
+                cell = _cell;
+            }
+            else {
+                NSString *cellIdentifier = @"couponCell";
+                STCouponTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                _cell.delegate = self;
+                _cell.titleLabel.text = @"Discount Coupon";
+                self.couponCodeTextField = _cell.couponTextField;
+                cell = _cell;
+            }
+            
             break;
         }
             
@@ -227,7 +311,11 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     STOrderListHeaderView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderListHeaderView"];
-    footerView.titleLabel.text = @"Shipping Details";
+    NSString *titleStr = @"Shipping Details";
+    if (self.isBillingAddressScreen) {
+        titleStr = @"Billing Address";
+    }
+    footerView.titleLabel.text = titleStr;
     footerView._backgroundView.backgroundColor = [UIColor whiteColor];
     return footerView;
 }
@@ -249,11 +337,13 @@
         [checkBoxCell.secondRadioButton setImage:unselectedCheckBox forState:UIControlStateNormal];
         [checkBoxCell.firstRadioButton setImage:selectedCheckBox forState:UIControlStateNormal];
         self.isShippingISBillingAddress = YES;
+        [self.paymentBtn setTitle:@"Proceed to Payments" forState:UIControlStateNormal];
     }
     else {
         [checkBoxCell.firstRadioButton setImage:unselectedCheckBox forState:UIControlStateNormal];
         [checkBoxCell.secondRadioButton setImage:selectedCheckBox forState:UIControlStateNormal];
         self.isShippingISBillingAddress = NO;
+        [self.paymentBtn setTitle:@"Next" forState:UIControlStateNormal];
     }
 }
 - (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture {
@@ -276,5 +366,11 @@
 
 - (void)itemDidSelect:(NSIndexPath *)indexpath {
     
+}
+
+#pragma mark-
+#pragma STCouponTableViewCellDelegate
+- (void)applyCouponAction:(UIButton *)sender onCell:(UITableViewCell *)cell {
+
 }
 @end

@@ -10,9 +10,9 @@
 
 @interface Product:NSObject
 
-@property(strong,nonatomic)NSDictionary *prodDict;
-@property(nonatomic)NSInteger prodQty;
-
+@property (strong,nonatomic) NSDictionary *prodDict;
+@property (nonatomic) NSInteger prodQty;
+@property (nonatomic) BOOL buy;
 @end
 
 @interface STCart : NSObject
