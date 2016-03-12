@@ -99,25 +99,25 @@
 - (IBAction)paymentButtonAction:(UIButton *)sender {
     [self.view endEditing:YES];
     // Check Internet Connsection
-    if ([STUtility isNetworkAvailable] && [self validateInputs]) {
-        if (self.isShippingISBillingAddress) {
+//    if ([STUtility isNetworkAvailable] && [self validateInputs]) {
+//        if (self.isShippingISBillingAddress) {
             [self proceedForPayment];
-        }
-        else if (self.isBillingAddressScreen) {
-            [self proceedForPayment];
-        }
-        else {
-            UINavigationController *navCtrl = self.navigationController;
-            STShippingDetailsViewController *billingController = [self.storyboard instantiateViewControllerWithIdentifier:@"STShippingDetailsViewController"];
-            billingController.isBillingAddressScreen = YES;
-            [navCtrl pushViewController:billingController animated:YES];
-        }
-    }
+//        }
+//        else if (self.isBillingAddressScreen) {
+//            [self proceedForPayment];
+//        }
+//        else {
+//            UINavigationController *navCtrl = self.navigationController;
+//            STShippingDetailsViewController *billingController = [self.storyboard instantiateViewControllerWithIdentifier:@"STShippingDetailsViewController"];
+//            billingController.isBillingAddressScreen = YES;
+//            [navCtrl pushViewController:billingController animated:YES];
+//        }
+//    }
 }
 - (void)proceedForPayment {
     
     float MERCHANT_PRICE = 1;
-    NSString *MERCHANT_REFERENCENO = @"";
+    NSString *MERCHANT_REFERENCENO = @"14695";
     
     PaymentModeViewController *paymentView=[[PaymentModeViewController alloc]init];
     paymentView.strSaleAmount=[NSString stringWithFormat:@"%.2f",MERCHANT_PRICE];
@@ -131,31 +131,50 @@
     
     paymentView.descriptionString = @"Test Description";
     paymentView.strCurrency =   @"INR";
-    paymentView.strDisplayCurrency =@"USD";
+    paymentView.strDisplayCurrency =@"INR";
+    paymentView.strDescription = @"Test Description";
     paymentView.strDescription = @"Test Description";
     
-    paymentView.strBillingName = self.nameTextField.text;
-    paymentView.strBillingAddress = self.addressTextView.text;
-    paymentView.strBillingCity = self.cityTextField.text;
-    paymentView.strBillingState = self.stateTextField.text;
-    paymentView.strBillingPostal = self.postalCodeTextField.text;
-    paymentView.strBillingCountry = self.countryextField.text;
-    paymentView.strBillingEmail = self.emailTextField.text;
-    paymentView.strBillingTelephone = self.phoneTextField.text;
+    paymentView.strBillingName = @"Test";
+    paymentView.strBillingAddress = @"Bill address";
+    paymentView.strBillingCity =@"Bill City";
+    paymentView.strBillingState = @"TN";
+    paymentView.strBillingPostal =@"625000";
+    paymentView.strBillingCountry = @"IND";
+    paymentView.strBillingEmail =@"test@testmail.com";
+    paymentView.strBillingTelephone =@"9363469999";
     
-    paymentView.strDeliveryName = self.nameTextField.text;
-    paymentView.strDeliveryAddress = self.addressTextView.text;
-    paymentView.strDeliveryCity = self.cityTextField.text;
-    paymentView.strDeliveryState = self.stateTextField.text;
-    paymentView.strDeliveryPostal = self.postalCodeTextField.text;
-    paymentView.strDeliveryCountry = self.countryextField.text;
-    paymentView.strDeliveryTelephone = self.phoneTextField.text;
+    // Non mandatory parameters
+    paymentView.strDeliveryName = @"";
+    paymentView.strDeliveryAddress = @"";
+    paymentView.strDeliveryCity = @"";
+    paymentView.strDeliveryState = @"";
+    paymentView.strDeliveryPostal =@"";
+    paymentView.strDeliveryCountry = @"";
+    paymentView.strDeliveryTelephone =@"";
+//    paymentView.strBillingName = self.nameTextField.text;
+//    paymentView.strBillingAddress = self.addressTextView.text;
+//    paymentView.strBillingCity = self.cityTextField.text;
+//    paymentView.strBillingState = self.stateTextField.text;
+//    paymentView.strBillingPostal = self.postalCodeTextField.text;
+//    paymentView.strBillingCountry = self.countryextField.text;
+//    paymentView.strBillingEmail = self.emailTextField.text;
+//    paymentView.strBillingTelephone = self.phoneTextField.text;
+//    
+//    paymentView.strDeliveryName = self.nameTextField.text;
+//    paymentView.strDeliveryAddress = self.addressTextView.text;
+//    paymentView.strDeliveryCity = self.cityTextField.text;
+//    paymentView.strDeliveryState = self.stateTextField.text;
+//    paymentView.strDeliveryPostal = self.postalCodeTextField.text;
+//    paymentView.strDeliveryCountry = self.countryextField.text;
+//    paymentView.strDeliveryTelephone = self.phoneTextField.text;
     
     
     //If you want to add any extra parameters dynamically you have to add the Key and value as we //mentioned below
     //        [dynamicKeyValueDictionary setValue:@"savings" forKey:@"account_detail"];
     //        [dynamicKeyValueDictionary setValue:@"gold" forKey:@"merchant_type"];
     //      paymentView.dynamicKeyValueDictionary = dynamicKeyValueDictionary;
+
     
     [self.navigationController pushViewController:paymentView animated:NO];
 }

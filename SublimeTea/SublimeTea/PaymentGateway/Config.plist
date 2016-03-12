@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>ACC_ID</key>
-	<string>5134</string>
+	<string>14695</string>
 	<key>SECRET_KEY</key>
-	<string>ebskey</string>
+	<string>b65dd8bce0087d839142d50f2a8f753c</string>
 	<key>ALGORITHM</key>
 	<string>0</string>
 	<key>MODE</key>
-	<string>LIVE</string>
+	<string>TEST</string>
 	<key>NSLog_Enable</key>
 	<string>1</string>
 	<key>CANCEL_VIEWCONTROLLER</key>
@@ -23,22 +23,22 @@
 	<key>BUTTON_BG_COLOR</key>
 	<dict>
 		<key>Red</key>
-		<string>51.0</string>
+		<string>168.0</string>
 		<key>Green</key>
-		<string>82.0</string>
+		<string>123.0</string>
 		<key>Blue</key>
-		<string>136.0</string>
+		<string>69.0</string>
 		<key>alpha</key>
 		<string>1.0</string>
 	</dict>
 	<key>HEADING_BG_COLOR</key>
 	<dict>
 		<key>Red</key>
-		<string>51.0</string>
+		<string>168.0</string>
 		<key>Green</key>
-		<string>82.0</string>
+		<string>123.0</string>
 		<key>Blue</key>
-		<string>136.0</string>
+		<string>69.0</string>
 		<key>alpha</key>
 		<string>1.0</string>
 	</dict>
@@ -47,11 +47,11 @@
 	<key>HEADING_FONT_COLOR</key>
 	<dict>
 		<key>Red</key>
-		<string>210</string>
+		<string>255.0</string>
 		<key>Green</key>
-		<string>0</string>
+		<string>255.0</string>
 		<key>Blue</key>
-		<string>0</string>
+		<string>255.0</string>
 		<key>alpha</key>
 		<string>1.0</string>
 	</dict>

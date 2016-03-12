@@ -21,5 +21,7 @@
 + (NSString *)productListRequestBody;
 + (NSString *)productImageListRequestBodyWithId:(NSString *)prodId;
 + (NSString *)prodInfoRequestBodyWithID:(NSString *)prodId;
++ (NSString *)createCartRequestBody;
++ (NSString *)addProductToCartRequestBodyWithProduct:(NSArray *)productArr;
 
 @end

@@ -27,9 +27,9 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.titleLabel.text = @"Explore our Range of Teas";
-    self.pageControl.currentPage = 0;
-    self.pageControl.numberOfPages = [self numberOfPages];
-    [self.view bringSubviewToFront:self.pageControl];
+//    self.pageControl.currentPage = 0;
+//    self.pageControl.numberOfPages = [self numberOfPages];
+//    [self.view bringSubviewToFront:self.pageControl];
     self.pageControl.hidden = YES;
 }
 - (NSInteger)numberOfPages {
@@ -84,8 +84,28 @@
     STProductCategoryCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     NSDictionary *prodDict = self.prodCategories[indexPath.row];
     NSString *name = prodDict[@"name"][@"__text"];
-    
-    cell.categoryImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
+    switch (indexPath.row) {
+        case 0:
+            cell.categoryImageView.image = [UIImage imageNamed:@"category_tea1"];
+            break;
+        case 1:
+            cell.categoryImageView.image = [UIImage imageNamed:@"category_tea2"];
+            break;
+            
+        case 2:
+            cell.categoryImageView.image = [UIImage imageNamed:@"category_tea3"];
+            break;
+        case 3:
+            cell.categoryImageView.image = [UIImage imageNamed:@"category_tea4"];
+            break;
+        case 4:
+            cell.categoryImageView.image = [UIImage imageNamed:@"category_tea5"];
+            break;
+            
+        default:
+            break;
+    }
+    cell.categoryImageView.contentMode = UIViewContentModeScaleAspectFit;
     cell.categoryTitlelabel.text = [name uppercaseString];
     cell.categorySubTitleLabel.text = @"RANGE PER 100GM";
     return cell;
@@ -217,7 +237,8 @@
                 NSDictionary *imgXMLDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
 
                 if (!imgXMLDict) {
-                  [self fetchProductImages:prodId];
+                    [self performSelector:@selector(fetchProductImages:) withObject:prodId afterDelay:0.5];
+//                  [self fetchProductImages:prodId];
                 }
             }
             [self performSelector:@selector(loadProductList) withObject:nil afterDelay:0.4];

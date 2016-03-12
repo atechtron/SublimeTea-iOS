@@ -141,9 +141,8 @@ static NSInteger prodQtyCount = 0;
     if (prodQtyCount >0) {
         [[STCart defaultCart] addProductsInCart:self.productInfoDict withQty:prodQtyCount];
         cartBadgeView.badgeText = [NSString stringWithFormat:@"%ld",(long)[[STCart defaultCart] numberOfProductsInCart]];
+        [self performSegueWithIdentifier:@"carViewFromProductDetailSegue" sender:self];
     }
-    
-//    [self performSegueWithIdentifier:@"carViewFromProductDetailSegue" sender:self];
 }
 
 - (void)qtyDidIncremented:(id)sender {

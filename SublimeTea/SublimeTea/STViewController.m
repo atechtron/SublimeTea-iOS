@@ -153,13 +153,18 @@
     [self.navigationController.navigationBar addSubview:sBar];
 }
 - (void)accountButtonAction:(id)sender {
-    
-    STUserProfileViewController *accountViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STUserProfileViewController"];
-    [self.navigationController pushViewController:accountViewController animated:YES];
+    UIViewController *currentViewCtrl = self.navigationController.topViewController;
+    if (![currentViewCtrl isKindOfClass:[STUserProfileViewController class]]) {
+        STUserProfileViewController *accountViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STUserProfileViewController"];
+        [self.navigationController pushViewController:accountViewController animated:YES];
+    }
 }
 - (void)cartButtonAction:(id)sender {
-    STCartViewController *cartViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STCartViewController"];
-    [self.navigationController pushViewController:cartViewController animated:YES];
+    UIViewController *currentViewCtrl = self.navigationController.topViewController;
+    if (![currentViewCtrl isKindOfClass:[STCartViewController class]]) {
+        STCartViewController *cartViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STCartViewController"];
+        [self.navigationController pushViewController:cartViewController animated:YES];
+    }
 }
 
 #pragma mark-
