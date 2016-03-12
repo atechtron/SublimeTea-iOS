@@ -110,7 +110,6 @@
 		2BFA1BC81C7E0DCA008C4833 /* STHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA1BC51C7E0DCA008C4833 /* STHttpRequest.m */; };
 		2BFA1BC91C7E0DCA008C4833 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA1BC71C7E0DCA008C4833 /* Reachability.m */; };
 		2BFA1BD21C7E3118008C4833 /* STProductCategoryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA1BD11C7E3118008C4833 /* STProductCategoryCollectionViewCell.m */; };
-		2BFA1BD41C7E3763008C4833 /* teaCup.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 2BFA1BD31C7E3763008C4833 /* teaCup.jpeg */; };
 		2BFA1BD81C7E3A28008C4833 /* STProductListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA1BD71C7E3A28008C4833 /* STProductListCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -314,7 +313,6 @@
 		2BFA1BC71C7E0DCA008C4833 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Network/Reachability.m; sourceTree = "<group>"; };
 		2BFA1BD01C7E3118008C4833 /* STProductCategoryCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STProductCategoryCollectionViewCell.h; path = Product/STProductCategoryCollectionViewCell.h; sourceTree = "<group>"; };
 		2BFA1BD11C7E3118008C4833 /* STProductCategoryCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STProductCategoryCollectionViewCell.m; path = Product/STProductCategoryCollectionViewCell.m; sourceTree = "<group>"; };
-		2BFA1BD31C7E3763008C4833 /* teaCup.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = teaCup.jpeg; sourceTree = "<group>"; };
 		2BFA1BD61C7E3A28008C4833 /* STProductListCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STProductListCollectionViewCell.h; path = Product/STProductListCollectionViewCell.h; sourceTree = "<group>"; };
 		2BFA1BD71C7E3A28008C4833 /* STProductListCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STProductListCollectionViewCell.m; path = Product/STProductListCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -558,7 +556,6 @@
 				2BA72EE81C7DC8F0006105B6 /* STAppDelegate.h */,
 				2BA72EE91C7DC8F0006105B6 /* STAppDelegate.m */,
 				2BA72EF11C7DC8F0006105B6 /* Assets.xcassets */,
-				2BFA1BD31C7E3763008C4833 /* teaCup.jpeg */,
 				2BA72EF61C7DC8F0006105B6 /* Info.plist */,
 				2BA72EE51C7DC8F0006105B6 /* Supporting Files */,
 			);
@@ -920,7 +917,6 @@
 				2B456FA81C7F603800C240A5 /* STMenuUserInfoTableHeaderView.xib in Resources */,
 				2BA72EF51C7DC8F0006105B6 /* LaunchScreen.storyboard in Resources */,
 				2B9882B51C81E4D100BA5234 /* StoredCardCell_iPhone.xib in Resources */,
-				2BFA1BD41C7E3763008C4833 /* teaCup.jpeg in Resources */,
 				2B9882BF1C81E4D100BA5234 /* RadioOff.png in Resources */,
 				2B9882AF1C81E4D100BA5234 /* CreditCardCell.xib in Resources */,
 				2B9882C01C81E4D100BA5234 /* RadioOn.png in Resources */,

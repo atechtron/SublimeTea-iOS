@@ -23,13 +23,28 @@
 #import "STHttpRequest.h"
 #import "STConstants.h"
 #import "STAppDelegate.h"
+#import "STGlobalCacheManager.h"
+#import "STProductViewController.h"
+#import "STRootViewController.h"
 
 @interface STMenuTableViewController ()<STMenuTableHeaderViewDelegate>
-@property (strong, nonatomic)NSMutableArray *dataArr;
+{
+    NSInteger selectedCatId;
+}
+@property (weak, nonatomic)STNavigationController *navController;
+@property (strong, nonatomic)NSArray *dataArr;
 @property (strong, nonatomic)NSArray *sectionTitleDataArr;
 @end
 
 @implementation STMenuTableViewController
+
+-(STNavigationController *)navController {
+    if (!_navController) {
+        STRootViewController *rootViewController = (STRootViewController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+        _navController = (STNavigationController *)rootViewController.contentViewController;
+    }
+    return _navController;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,8 +59,8 @@
                                              selector:@selector(logOut)
                                                  name:@"LOGOUT"
                                                object:nil];
+    
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -69,7 +84,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     STMenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"menuCell" forIndexPath:indexPath];
     
-    cell.titleLabel.text = self.dataArr[indexPath.row];
+    NSDictionary *prodDict = self.dataArr[indexPath.row];
+    NSString *name = prodDict[@"name"][@"__text"];
+    cell.titleLabel.text = name;
     cell.titleLabel.textColor = UIColorFromRGB(90, 37, 26, 1);
     return cell;
 }
@@ -150,13 +167,16 @@
     NSLog(@"SectionClicked %ld",section);
     if (section == 2 && self.dataArr.count == 0) {
         header.bottomImageview.hidden = YES;
-        [self.dataArr addObjectsFromArray:@[@"flavoured green tea",@"pure green tea",@"limited edition tea",@"tisane",@"flavoured white tea",@"flavoured black tea"]];
+        NSDictionary *resultXMLDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductCategory_Key];
+        NSLog(@"%@",resultXMLDict);
+        [self parseResponseWithDict:resultXMLDict];
+        
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
     else{
         if(section == 2){
             header.bottomImageview.hidden = NO;
-            [self.dataArr removeAllObjects];
+            self.dataArr = nil;
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
         else if (section == 4)
@@ -168,14 +188,25 @@
             header.bottomImageview.hidden = YES;
         }
     }
-    STNavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
-    NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:navigationController.viewControllers];
+
     switch (section) {
         case 1: // Home
         {
-            STDashboardViewController *dashBoard = [self.storyboard instantiateViewControllerWithIdentifier:@"STDashboardViewController"];
-            [viewControllers addObject:dashBoard];
-            navigationController.viewControllers = viewControllers;
+            NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:self.navController.viewControllers];
+            [viewControllers enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj isKindOfClass:[STDashboardViewController class]]) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        STDashboardViewController *dashBoard = (STDashboardViewController *)obj;
+                        [self.navController popToViewController:dashBoard animated:YES];
+                    });
+                    *stop = YES;
+                }
+            }];
+//            STDashboardViewController *dashBoard = [self.storyboard instantiateViewControllerWithIdentifier:@"STDashboardViewController"];
+//            [viewControllers addObject:dashBoard];
+            
+//            [self.  pushViewController:dashBoard animated:YES];
+//            self..viewControllers = viewControllers;
             break;
         }
         case 2: // Our Range
@@ -188,15 +219,17 @@
         case 3: // Your Orders
         {
             STOrderListViewController *orderList = [self.storyboard instantiateViewControllerWithIdentifier:@"STOrderListViewController"];
-            [viewControllers addObject:orderList];
-            navigationController.viewControllers = viewControllers;
+//            [viewControllers addObject:orderList];
+            [self.navController  pushViewController:orderList animated:YES];
+//            self..viewControllers = viewControllers;
             break;
         }
         case 4: // Your Account
         {
             STUserProfileViewController *userProfile = [self.storyboard instantiateViewControllerWithIdentifier:@"STUserProfileViewController"];
-            [viewControllers addObject:userProfile];
-            navigationController.viewControllers = viewControllers;
+//            [viewControllers addObject:userProfile];
+            [self.navController  pushViewController:userProfile animated:YES];
+//            self..viewControllers = viewControllers;
             break;
         }
         case 5: // Customer Suppourt
@@ -213,32 +246,55 @@
             break;
     }
     if (section != 2) {
-        self.frostedViewController.contentViewController = navigationController;
+//        self.frostedViewController.contentViewController = self.;
         [self.frostedViewController hideMenuViewController];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    STNavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
+    selectedCatId = indexPath.row;
+//    NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:self..viewControllers];
     
-    //    if (indexPath.section == 0 && indexPath.row == 0) {
-//        DEMOHomeViewController *homeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"homeController"];
-//        navigationController.viewControllers = @[homeViewController];
-//    } else {
-//        DEMOSecondViewController *secondViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"secondController"];
-//        navigationController.viewControllers = @[secondViewController];
-//    }
-//    
-//    self.frostedViewController.contentViewController = navigationController;
-//    [self.frostedViewController hideMenuViewController];
+    STProductViewController *vC = [self.storyboard instantiateViewControllerWithIdentifier:@"STProductViewController"];
+    vC.selectedCategoryDict = self.dataArr[selectedCatId];
+    [self.navController pushViewController:vC animated:YES];
+//    self.navController.viewControllers = viewControllers;
+//
+//    self.frostedViewController.contentViewController = self.navController;
+    [self.frostedViewController hideMenuViewController];
 }
 
 - (void)logOut {
-    STNavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
     [AppDelegate endUserSession];
-    [navigationController popToRootViewControllerAnimated:YES];
-    self.frostedViewController.contentViewController = navigationController;
+    UIViewController *root = [self.navController.viewControllers lastObject];
+    if(![root isKindOfClass:[STDashboardViewController class]])
+        [self.navController popToRootViewControllerAnimated:YES];
+    else {
+        self.frostedViewController.contentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
+    }
+//    self.frostedViewController.contentViewController = self.navController;
     [self.frostedViewController hideMenuViewController];
+}
+- (void)parseResponseWithDict:(NSDictionary *)responseDict {
+    if (responseDict) {
+        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
+        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
+            NSArray *productCategoriesArr = responseDict[@"SOAP-ENV:Body"][@"ns1:catalogCategoryTreeResponse"][@"tree"][@"children"][@"item"][@"children"][@"item"][@"children"][@"item"];
+            NSLog(@"%@",productCategoriesArr);
+            if (productCategoriesArr.count) {
+                self.dataArr = [NSArray arrayWithArray:productCategoriesArr];
+            }
+            else{
+                // No categories found.
+            }
+        }
+        else {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
+        }
+    }else {
+        //No categories found.
+    }
+//    [STUtility stopActivityIndicatorFromView:nil];
 }
 @end
