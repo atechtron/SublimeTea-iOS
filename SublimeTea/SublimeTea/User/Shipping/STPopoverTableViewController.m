@@ -33,14 +33,16 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;//self.itemsArray.count;
+    return self.itemsArray.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     STPopoverTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"popoverCell" forIndexPath:indexPath];
-    
-    cell.titleTextLabel.text = @"KA";
+    id itemObj = self.itemsArray[indexPath.row];
+    if ([itemObj isKindOfClass:[NSNumber class]]) {
+        cell.titleTextLabel.text = [NSString stringWithFormat:@"%@",itemObj];
+    }
     
     return cell;
 }

@@ -10,6 +10,7 @@
 #import "STMacros.h"
 
 #define kStoreID 1
+#define kMaxQTY 10
 
 @interface STConstants : NSObject
 

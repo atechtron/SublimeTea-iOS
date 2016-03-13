@@ -16,10 +16,16 @@
 #import "STCart.h"
 #import "STGlobalCacheManager.h"
 #import "STShippingDetailsViewController.h"
+#import "STPopoverTableViewController.h"
 
-@interface STCartViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
+@interface STCartViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, STCartTableViewCellDelegate, UIPopoverPresentationControllerDelegate,STPopoverTableViewControllerDelegate>
+
+@property(nonatomic,strong)UIPopoverPresentationController *statesPopover;
+@property(weak,nonatomic)STPopoverTableViewController *popoverCtrl;
 @property (strong, nonatomic)NSMutableArray *cartArr;
+
+@property (weak, nonatomic) UITextField *qtyTxtField;
 @end
 
 @implementation STCartViewController
@@ -56,6 +62,16 @@
 - (void)viewDidTapped:(id)sender {
     [self.view endEditing:YES];
 }
+- (NSArray *)getQTYArr {
+    NSMutableArray *tempATYArr = [NSMutableArray new];
+    NSInteger count = 0;
+    do {
+        ++count;
+        [tempATYArr addObject:[NSNumber numberWithInteger:count]];
+        
+    } while (count != kMaxQTY);
+    return tempATYArr;
+}
 
 #pragma mark-
 #pragma UITableViewDelegates
@@ -69,6 +85,7 @@
 - ( UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellidentifier = @"cartCell";
     STCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
+    cell.delegate = self;
     Product *prod = self.cartArr[indexPath.row];
     
     NSString *prodId = prod.prodDict[@"product_id"][@"__text"];
@@ -97,20 +114,22 @@
     cell.checkboxButton.tag = indexPath.row;
     cell.titleLabel.text = name;
     cell.descriptionLabel.text = shortDesc;
-    cell.priceLabel.text = @"Price";
-    cell.priceTitleLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[price floatValue]]];
+    cell.priceTitleLabel.text = @"Price";
+    cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[price floatValue]]];
     cell.qtyTextbox.text = prod.prodQty> 0 ?[NSString stringWithFormat:@"%ld",(long)prod.prodQty]:@"";
     cell.qtyTextbox.tag = indexPath.row;
     cell.qtyTextbox.delegate = self;
-    cell.qtyTextbox.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    cell.qtyTextbox.layer.borderWidth = .8;
+    self.qtyTxtField = cell.qtyTextbox;
+    
+    cell.removeBtn.tag = indexPath.row;
+    
     [cell.checkboxButton addTarget:self action:@selector(checkBoxAction:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     STCartFooterView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STCartFooterView"];
-    footerView.topBorderView.backgroundColor = [UIColor blackColor];
+    footerView.topBorderView.backgroundColor = UIColorFromRGB(168, 123, 69, 1);
     [footerView.continueShoppingButton addTarget:self action:@selector(continueShoppingButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [footerView.checkoutButton addTarget:self action:@selector(checkoutButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -162,19 +181,14 @@
 }
 - (BOOL)validateInputs {
     BOOL status = NO;
-    NSPredicate *filterPred = [NSPredicate predicateWithFormat:@"buy == YES"];
-    NSArray *prodWithOutBuyArr = [self.cartArr filteredArrayUsingPredicate:filterPred];
     
     NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"prodQty == %d",0];
     NSArray *prodWithZeroQty = [self.cartArr filteredArrayUsingPredicate:filterPredicate];
     if (self.cartArr.count == 0) {
         [self showAlertWithTitle:@"Messgae" msg:@"Cart is empty"];
     }
-    else if (prodWithOutBuyArr.count == 0) {
-        [self showAlertWithTitle:@"Messgae" msg:@"Please select item to buy"];
-    }
     else if (prodWithZeroQty.count > 0) {
-            [self showAlertWithTitle:@"Messgae" msg:@"Product qyuantity should be atleast one."];
+        [self showAlertWithTitle:@"Messgae" msg:@"Product qyuantity should be atleast one."];
     }
     else {
         status = YES;
@@ -188,6 +202,50 @@
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles: nil];
     [alert show];
+}
+#pragma mark-
+#pragma STCartTableViewDelegate
+- (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture {
+    self.popoverCtrl = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
+    self.popoverCtrl.modalPresentationStyle = UIModalPresentationPopover;
+    self.popoverCtrl.delegate = self;
+    self.popoverCtrl.itemsArray = [self getQTYArr];
+    _statesPopover = self.popoverCtrl.popoverPresentationController;
+    _statesPopover.delegate = self;
+    _statesPopover.sourceView = sender;
+    _statesPopover.sourceRect = sender.rightView.frame;
+    [self presentViewController:self.popoverCtrl animated:YES completion:nil];
+}
+- (void)itemDidRemoveFromCart:(UIButton *)sender {
+    
+    [[STCart defaultCart] removeProductFromCart:sender.tag];
+    self.cartArr = [[STCart defaultCart] productsDataArr];
+    NSString *cartCount = [NSString stringWithFormat:@"%ld",(long)[[STCart defaultCart] numberOfProductsInCart]];
+    cartBadgeView.badgeText = [cartCount integerValue]>0?cartCount:@"";
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+#pragma mark-
+#pragma STPopoverTableViewControllerDelegate
+
+- (void)itemDidSelect:(NSIndexPath *)indexpath {
+    NSNumber *qty = [self getQTYArr][indexpath.row];
+    
+    [[STCart defaultCart] updateProductToCartAtIndex:_statesPopover.sourceView.tag withQty:[qty integerValue]];
+    self.cartArr = [[STCart defaultCart] productsDataArr];
+    
+//    [self.tableView reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    self.qtyTxtField.text = [NSString stringWithFormat:@"%@",qty];
+    [self.popoverCtrl dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark-
+#pragma UIPopoverPresentationControllerDelegate
+
+- (UIModalPresentationStyle) adaptivePresentationStyleForPresentationController: (UIPresentationController * ) controller {
+    return UIModalPresentationNone;
 }
 
 #pragma mark-

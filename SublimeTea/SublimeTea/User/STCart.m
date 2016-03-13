@@ -79,7 +79,25 @@ static STCart *sharedInstance;
 - (NSInteger)numberOfProductsInCart {
     return self.productsInCart.count;
 }
-
+- (void)removeProductFromCart:(NSInteger)idx {
+    [self.productsDataArr removeObjectAtIndex:idx];
+    [self.tempCartProducts removeObjectAtIndex:idx];
+    [self.productsInCart removeObjectAtIndex:idx];
+}
+- (void)updateProductToCartAtIndex:(NSInteger)idx withQty:(NSInteger)qty {
+    if (qty > 0) {
+        Product *prod = self.productsDataArr[idx];
+        prod.prodQty = qty;
+        [self.productsDataArr replaceObjectAtIndex:idx
+                                        withObject:prod];
+        NSDictionary *prodDict = @{@"qty" :[NSNumber numberWithInteger:qty]};
+        
+        [self.tempCartProducts replaceObjectAtIndex:idx
+                                         withObject:prodDict];
+        [self.productsInCart replaceObjectAtIndex:idx
+                                       withObject:prodDict];
+    }
+}
 - (void)addProductToCart:(NSArray *)prodArr {
     if (prodArr.count) {
         NSString *requestBody = [STConstants addProductToCartRequestBodyWithProduct:prodArr];

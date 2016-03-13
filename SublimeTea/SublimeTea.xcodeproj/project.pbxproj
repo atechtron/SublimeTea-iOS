@@ -13,6 +13,7 @@
 		18AC92501C9095A3002D91F4 /* STCart.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AC924F1C9095A3002D91F4 /* STCart.m */; };
 		18B626CD1C91D9650018D260 /* STPopoverTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B626CC1C91D9650018D260 /* STPopoverTableViewCell.m */; };
 		18F61FB01C88B86B00FEB89C /* STDashboardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F61FAF1C88B86B00FEB89C /* STDashboardCollectionViewCell.m */; };
+		18F818991C95E4A40002F5AE /* country_states_city.json in Resources */ = {isa = PBXBuildFile; fileRef = 18F818981C95E4A40002F5AE /* country_states_city.json */; };
 		2B2DC0B41C82D76A00A29459 /* STCartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */; };
 		2B2DC0B71C82D7D300A29459 /* STCartHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B61C82D7D300A29459 /* STCartHeaderView.m */; };
 		2B2E57AF1C836FB900351F39 /* STOrderConfirmationHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2E57AE1C836FB900351F39 /* STOrderConfirmationHeaderView.m */; };
@@ -143,6 +144,7 @@
 		18B626CC1C91D9650018D260 /* STPopoverTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STPopoverTableViewCell.m; path = User/Shipping/STPopoverTableViewCell.m; sourceTree = "<group>"; };
 		18F61FAE1C88B86B00FEB89C /* STDashboardCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDashboardCollectionViewCell.h; path = Dashboard/STDashboardCollectionViewCell.h; sourceTree = "<group>"; };
 		18F61FAF1C88B86B00FEB89C /* STDashboardCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STDashboardCollectionViewCell.m; path = Dashboard/STDashboardCollectionViewCell.m; sourceTree = "<group>"; };
+		18F818981C95E4A40002F5AE /* country_states_city.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = country_states_city.json; path = Utilities/country_states_city.json; sourceTree = "<group>"; };
 		2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCartHeaderView.xib; sourceTree = "<group>"; };
 		2B2DC0B51C82D7D300A29459 /* STCartHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STCartHeaderView.h; path = Payment/STCartHeaderView.h; sourceTree = "<group>"; };
 		2B2DC0B61C82D7D300A29459 /* STCartHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STCartHeaderView.m; path = Payment/STCartHeaderView.m; sourceTree = "<group>"; };
@@ -623,6 +625,7 @@
 				2BFA1BBE1C7E0C1B008C4833 /* STMacros.h */,
 				2B456FA91C7F77C600C240A5 /* STUtility.h */,
 				2B456FAA1C7F77C600C240A5 /* STUtility.m */,
+				18F818981C95E4A40002F5AE /* country_states_city.json */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -930,6 +933,7 @@
 				2B9882B01C81E4D100BA5234 /* CreditCardCell_iPad.xib in Resources */,
 				2B9882B41C81E4D100BA5234 /* StoredCardCell_iPad.xib in Resources */,
 				2B2E57B21C836FE200351F39 /* STOrderConfirmationHeaderView.xib in Resources */,
+				18F818991C95E4A40002F5AE /* country_states_city.json in Resources */,
 				2B9882CD1C81F47200BA5234 /* STCartFooterView.xib in Resources */,
 				2B2E57B41C836FFC00351F39 /* STOrderConfirmationFooterView.xib in Resources */,
 				2BC0E5101C8231A1001085F8 /* STOrderListHeaderView.xib in Resources */,
