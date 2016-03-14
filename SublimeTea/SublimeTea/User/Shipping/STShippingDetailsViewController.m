@@ -19,7 +19,7 @@
 #import <netdb.h>
 #import "MRMSiOS.h"
 #import "PaymentModeViewController.h"
-
+#import "STGlobalCacheManager.h"
 
 @interface STShippingDetailsViewController ()<UITableViewDataSource, UITableViewDelegate, STDropDownTableViewCellDeleagte, STPopoverTableViewControllerDelegate, UIPopoverPresentationControllerDelegate, STCouponTableViewCellDelegate>
 {
@@ -55,6 +55,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.isShippingISBillingAddress = YES;
     [STUtility stopActivityIndicatorFromView:nil];
+    [self prepareCountryData];
 }
 - (void)viewWillAppear:(BOOL)animated {
     
@@ -74,7 +75,17 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
+- (void)prepareCountryData {
+    NSDictionary *dataDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kCountries_key];
+    if (!dataDict) {
+        NSError *err;
+        NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"country_states_city" ofType:@"json"]];
+        NSJSONSerialization *jsonDict = [NSJSONSerialization JSONObjectWithData:data
+                                                                        options:kNilOptions
+                                                                          error:&err];
+        [[STGlobalCacheManager defaultManager] addItemToCache:jsonDict withKey:kCountries_key];
+    }
+}
 -(void) ResponseNew:(NSNotification *)message
 {
     if ([message.name isEqualToString:@"FAILED_DICT"])
@@ -262,6 +273,7 @@
             NSString *cellIdentifier = @"dropDownCell";
             STDropDownTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.delegate = self;
+            _cell.dropDownTextField.tag = indexPath.row;
             _cell.dropDownTitleLabel.text = @"Shipping State";
             _cell.textFieldTitleLabel.text = @"Shipping City";
             self.cityTextField = _cell.textField;
@@ -274,6 +286,7 @@
             NSString *cellIdentifier = @"dropDownCell";
             STDropDownTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.delegate = self;
+            _cell.dropDownTextField.tag = indexPath.row;
             _cell.dropDownTitleLabel.text = @"Shipping Country";
             _cell.textFieldTitleLabel.text = @"Shipping Postal Code";
             self.postalCodeTextField = _cell.textField;
@@ -369,6 +382,16 @@
     
     STPopoverTableViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
     viewController.modalPresentationStyle = UIModalPresentationPopover;
+    if (sender.tag == 2) {// states
+        NSDictionary *countriesDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kCountries_key];
+    }
+    else if (sender.tag ==3)// countries
+    {
+        NSDictionary *countriesDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kCountries_key];
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES];
+        NSArray *countries = [[countriesDict allKeys] sortedArrayUsingDescriptors:@[sort]];
+        viewController.itemsArray = countries;
+    }
     _statesPopover = viewController.popoverPresentationController;
     _statesPopover.delegate = self;
     _statesPopover.sourceView = sender;

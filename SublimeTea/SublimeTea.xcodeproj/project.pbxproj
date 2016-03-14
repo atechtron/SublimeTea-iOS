@@ -14,6 +14,26 @@
 		18B626CD1C91D9650018D260 /* STPopoverTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B626CC1C91D9650018D260 /* STPopoverTableViewCell.m */; };
 		18F61FB01C88B86B00FEB89C /* STDashboardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F61FAF1C88B86B00FEB89C /* STDashboardCollectionViewCell.m */; };
 		18F818991C95E4A40002F5AE /* country_states_city.json in Resources */ = {isa = PBXBuildFile; fileRef = 18F818981C95E4A40002F5AE /* country_states_city.json */; };
+		18F8DE371C972EEC008BFC55 /* Caviar_Dreams_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE331C972EEC008BFC55 /* Caviar_Dreams_Bold.ttf */; };
+		18F8DE381C972EEC008BFC55 /* CaviarDreams_BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE341C972EEC008BFC55 /* CaviarDreams_BoldItalic.ttf */; };
+		18F8DE391C972EEC008BFC55 /* CaviarDreams_Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE351C972EEC008BFC55 /* CaviarDreams_Italic.ttf */; };
+		18F8DE3A1C972EEC008BFC55 /* CaviarDreams.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE361C972EEC008BFC55 /* CaviarDreams.ttf */; };
+		18F8DE3C1C972EF5008BFC55 /* LFAX_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE3B1C972EF5008BFC55 /* LFAX_0.TTF */; };
+		18F8DE401C972F01008BFC55 /* LFAXD_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE3D1C972F01008BFC55 /* LFAXD_0.TTF */; };
+		18F8DE411C972F01008BFC55 /* LFAXDI_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE3E1C972F01008BFC55 /* LFAXDI_0.TTF */; };
+		18F8DE421C972F01008BFC55 /* LFAXI_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE3F1C972F01008BFC55 /* LFAXI_0.TTF */; };
+		18F8DE4F1C972F0D008BFC55 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE431C972F0D008BFC55 /* OpenSans-Bold.ttf */; };
+		18F8DE501C972F0D008BFC55 /* OpenSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE441C972F0D008BFC55 /* OpenSans-BoldItalic.ttf */; };
+		18F8DE511C972F0D008BFC55 /* OpenSans-CondensedLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE451C972F0D008BFC55 /* OpenSans-CondensedLight.ttf */; };
+		18F8DE521C972F0D008BFC55 /* OpenSans-CondensedLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE461C972F0D008BFC55 /* OpenSans-CondensedLightItalic.ttf */; };
+		18F8DE531C972F0D008BFC55 /* OpenSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE471C972F0D008BFC55 /* OpenSans-ExtraBold.ttf */; };
+		18F8DE541C972F0D008BFC55 /* OpenSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE481C972F0D008BFC55 /* OpenSans-ExtraBoldItalic.ttf */; };
+		18F8DE551C972F0D008BFC55 /* OpenSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE491C972F0D008BFC55 /* OpenSans-Italic.ttf */; };
+		18F8DE561C972F0D008BFC55 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE4A1C972F0D008BFC55 /* OpenSans-Light.ttf */; };
+		18F8DE571C972F0D008BFC55 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE4B1C972F0D008BFC55 /* OpenSans-Semibold.ttf */; };
+		18F8DE581C972F0D008BFC55 /* OpenSans-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE4C1C972F0D008BFC55 /* OpenSans-SemiboldItalic.ttf */; };
+		18F8DE591C972F0D008BFC55 /* OpenSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE4D1C972F0D008BFC55 /* OpenSans.ttf */; };
+		18F8DE5A1C972F0D008BFC55 /* OpenSansLight-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE4E1C972F0D008BFC55 /* OpenSansLight-Italic.ttf */; };
 		2B2DC0B41C82D76A00A29459 /* STCartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */; };
 		2B2DC0B71C82D7D300A29459 /* STCartHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2DC0B61C82D7D300A29459 /* STCartHeaderView.m */; };
 		2B2E57AF1C836FB900351F39 /* STOrderConfirmationHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2E57AE1C836FB900351F39 /* STOrderConfirmationHeaderView.m */; };
@@ -145,6 +165,26 @@
 		18F61FAE1C88B86B00FEB89C /* STDashboardCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDashboardCollectionViewCell.h; path = Dashboard/STDashboardCollectionViewCell.h; sourceTree = "<group>"; };
 		18F61FAF1C88B86B00FEB89C /* STDashboardCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STDashboardCollectionViewCell.m; path = Dashboard/STDashboardCollectionViewCell.m; sourceTree = "<group>"; };
 		18F818981C95E4A40002F5AE /* country_states_city.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = country_states_city.json; path = Utilities/country_states_city.json; sourceTree = "<group>"; };
+		18F8DE331C972EEC008BFC55 /* Caviar_Dreams_Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Caviar_Dreams_Bold.ttf; path = "fonts/Caviar Dreams/Caviar_Dreams_Bold.ttf"; sourceTree = "<group>"; };
+		18F8DE341C972EEC008BFC55 /* CaviarDreams_BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = CaviarDreams_BoldItalic.ttf; path = "fonts/Caviar Dreams/CaviarDreams_BoldItalic.ttf"; sourceTree = "<group>"; };
+		18F8DE351C972EEC008BFC55 /* CaviarDreams_Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = CaviarDreams_Italic.ttf; path = "fonts/Caviar Dreams/CaviarDreams_Italic.ttf"; sourceTree = "<group>"; };
+		18F8DE361C972EEC008BFC55 /* CaviarDreams.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = CaviarDreams.ttf; path = "fonts/Caviar Dreams/CaviarDreams.ttf"; sourceTree = "<group>"; };
+		18F8DE3B1C972EF5008BFC55 /* LFAX_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = LFAX_0.TTF; path = "fonts/Lucida Fax/LFAX_0.TTF"; sourceTree = "<group>"; };
+		18F8DE3D1C972F01008BFC55 /* LFAXD_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = LFAXD_0.TTF; path = "fonts/Lucida Fax/LFAXD_0.TTF"; sourceTree = "<group>"; };
+		18F8DE3E1C972F01008BFC55 /* LFAXDI_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = LFAXDI_0.TTF; path = "fonts/Lucida Fax/LFAXDI_0.TTF"; sourceTree = "<group>"; };
+		18F8DE3F1C972F01008BFC55 /* LFAXI_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = LFAXI_0.TTF; path = "fonts/Lucida Fax/LFAXI_0.TTF"; sourceTree = "<group>"; };
+		18F8DE431C972F0D008BFC55 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Bold.ttf"; path = "fonts/OpenSans/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
+		18F8DE441C972F0D008BFC55 /* OpenSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-BoldItalic.ttf"; path = "fonts/OpenSans/OpenSans-BoldItalic.ttf"; sourceTree = "<group>"; };
+		18F8DE451C972F0D008BFC55 /* OpenSans-CondensedLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-CondensedLight.ttf"; path = "fonts/OpenSans/OpenSans-CondensedLight.ttf"; sourceTree = "<group>"; };
+		18F8DE461C972F0D008BFC55 /* OpenSans-CondensedLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-CondensedLightItalic.ttf"; path = "fonts/OpenSans/OpenSans-CondensedLightItalic.ttf"; sourceTree = "<group>"; };
+		18F8DE471C972F0D008BFC55 /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-ExtraBold.ttf"; path = "fonts/OpenSans/OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
+		18F8DE481C972F0D008BFC55 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-ExtraBoldItalic.ttf"; path = "fonts/OpenSans/OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		18F8DE491C972F0D008BFC55 /* OpenSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Italic.ttf"; path = "fonts/OpenSans/OpenSans-Italic.ttf"; sourceTree = "<group>"; };
+		18F8DE4A1C972F0D008BFC55 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Light.ttf"; path = "fonts/OpenSans/OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		18F8DE4B1C972F0D008BFC55 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Semibold.ttf"; path = "fonts/OpenSans/OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
+		18F8DE4C1C972F0D008BFC55 /* OpenSans-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-SemiboldItalic.ttf"; path = "fonts/OpenSans/OpenSans-SemiboldItalic.ttf"; sourceTree = "<group>"; };
+		18F8DE4D1C972F0D008BFC55 /* OpenSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = OpenSans.ttf; path = fonts/OpenSans/OpenSans.ttf; sourceTree = "<group>"; };
+		18F8DE4E1C972F0D008BFC55 /* OpenSansLight-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSansLight-Italic.ttf"; path = "fonts/OpenSans/OpenSansLight-Italic.ttf"; sourceTree = "<group>"; };
 		2B2DC0B31C82D76A00A29459 /* STCartHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STCartHeaderView.xib; sourceTree = "<group>"; };
 		2B2DC0B51C82D7D300A29459 /* STCartHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STCartHeaderView.h; path = Payment/STCartHeaderView.h; sourceTree = "<group>"; };
 		2B2DC0B61C82D7D300A29459 /* STCartHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STCartHeaderView.m; path = Payment/STCartHeaderView.m; sourceTree = "<group>"; };
@@ -364,6 +404,33 @@
 			name = Shipping;
 			sourceTree = "<group>";
 		};
+		18F8DE321C97221B008BFC55 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				18F8DE431C972F0D008BFC55 /* OpenSans-Bold.ttf */,
+				18F8DE441C972F0D008BFC55 /* OpenSans-BoldItalic.ttf */,
+				18F8DE451C972F0D008BFC55 /* OpenSans-CondensedLight.ttf */,
+				18F8DE461C972F0D008BFC55 /* OpenSans-CondensedLightItalic.ttf */,
+				18F8DE471C972F0D008BFC55 /* OpenSans-ExtraBold.ttf */,
+				18F8DE481C972F0D008BFC55 /* OpenSans-ExtraBoldItalic.ttf */,
+				18F8DE491C972F0D008BFC55 /* OpenSans-Italic.ttf */,
+				18F8DE4A1C972F0D008BFC55 /* OpenSans-Light.ttf */,
+				18F8DE4B1C972F0D008BFC55 /* OpenSans-Semibold.ttf */,
+				18F8DE4C1C972F0D008BFC55 /* OpenSans-SemiboldItalic.ttf */,
+				18F8DE4D1C972F0D008BFC55 /* OpenSans.ttf */,
+				18F8DE4E1C972F0D008BFC55 /* OpenSansLight-Italic.ttf */,
+				18F8DE3D1C972F01008BFC55 /* LFAXD_0.TTF */,
+				18F8DE3E1C972F01008BFC55 /* LFAXDI_0.TTF */,
+				18F8DE3F1C972F01008BFC55 /* LFAXI_0.TTF */,
+				18F8DE3B1C972EF5008BFC55 /* LFAX_0.TTF */,
+				18F8DE331C972EEC008BFC55 /* Caviar_Dreams_Bold.ttf */,
+				18F8DE341C972EEC008BFC55 /* CaviarDreams_BoldItalic.ttf */,
+				18F8DE351C972EEC008BFC55 /* CaviarDreams_Italic.ttf */,
+				18F8DE361C972EEC008BFC55 /* CaviarDreams.ttf */,
+			);
+			name = fonts;
+			sourceTree = "<group>";
+		};
 		2B2DC0AF1C82D23E00A29459 /* Badge */ = {
 			isa = PBXGroup;
 			children = (
@@ -567,6 +634,7 @@
 		2BA72EE51C7DC8F0006105B6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				18F8DE321C97221B008BFC55 /* fonts */,
 				2BA72EE61C7DC8F0006105B6 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -916,39 +984,59 @@
 			files = (
 				2B9882BC1C81E4D100BA5234 /* close@2x.png in Resources */,
 				2B9882B21C81E4D100BA5234 /* PaymentModeViewController.xib in Resources */,
+				18F8DE551C972F0D008BFC55 /* OpenSans-Italic.ttf in Resources */,
 				2B9882B81C81E4D100BA5234 /* arrow.png in Resources */,
+				18F8DE371C972EEC008BFC55 /* Caviar_Dreams_Bold.ttf in Resources */,
 				2B456FA81C7F603800C240A5 /* STMenuUserInfoTableHeaderView.xib in Resources */,
 				2BA72EF51C7DC8F0006105B6 /* LaunchScreen.storyboard in Resources */,
 				2B9882B51C81E4D100BA5234 /* StoredCardCell_iPhone.xib in Resources */,
+				18F8DE391C972EEC008BFC55 /* CaviarDreams_Italic.ttf in Resources */,
+				18F8DE421C972F01008BFC55 /* LFAXI_0.TTF in Resources */,
 				2B9882BF1C81E4D100BA5234 /* RadioOff.png in Resources */,
 				2B9882AF1C81E4D100BA5234 /* CreditCardCell.xib in Resources */,
+				18F8DE5A1C972F0D008BFC55 /* OpenSansLight-Italic.ttf in Resources */,
 				2B9882C01C81E4D100BA5234 /* RadioOn.png in Resources */,
+				18F8DE521C972F0D008BFC55 /* OpenSans-CondensedLightItalic.ttf in Resources */,
 				2B9882C21C81E4D100BA5234 /* uncheck.png in Resources */,
 				2B9882AA1C81E4D100BA5234 /* Config.plist in Resources */,
+				18F8DE511C972F0D008BFC55 /* OpenSans-CondensedLight.ttf in Resources */,
 				2BA72EF21C7DC8F0006105B6 /* Assets.xcassets in Resources */,
 				2B456FA11C7F5C4400C240A5 /* STMenuTableHeaderView.xib in Resources */,
 				2B9882BD1C81E4D100BA5234 /* cvv_no.jpg in Resources */,
+				18F8DE4F1C972F0D008BFC55 /* OpenSans-Bold.ttf in Resources */,
 				2B456FB11C7F80B100C240A5 /* STProductInfoTableViewCell.xib in Resources */,
 				2BA72EF01C7DC8F0006105B6 /* Main.storyboard in Resources */,
 				2B9882B01C81E4D100BA5234 /* CreditCardCell_iPad.xib in Resources */,
+				18F8DE581C972F0D008BFC55 /* OpenSans-SemiboldItalic.ttf in Resources */,
 				2B9882B41C81E4D100BA5234 /* StoredCardCell_iPad.xib in Resources */,
 				2B2E57B21C836FE200351F39 /* STOrderConfirmationHeaderView.xib in Resources */,
 				18F818991C95E4A40002F5AE /* country_states_city.json in Resources */,
 				2B9882CD1C81F47200BA5234 /* STCartFooterView.xib in Resources */,
+				18F8DE591C972F0D008BFC55 /* OpenSans.ttf in Resources */,
 				2B2E57B41C836FFC00351F39 /* STOrderConfirmationFooterView.xib in Resources */,
+				18F8DE381C972EEC008BFC55 /* CaviarDreams_BoldItalic.ttf in Resources */,
 				2BC0E5101C8231A1001085F8 /* STOrderListHeaderView.xib in Resources */,
 				2B9882B31C81E4D100BA5234 /* PaymentModeViewController_iPad.xib in Resources */,
 				2B9882C11C81E4D100BA5234 /* sachin_book1.png in Resources */,
+				18F8DE531C972F0D008BFC55 /* OpenSans-ExtraBold.ttf in Resources */,
+				18F8DE571C972F0D008BFC55 /* OpenSans-Semibold.ttf in Resources */,
+				18F8DE501C972F0D008BFC55 /* OpenSans-BoldItalic.ttf in Resources */,
 				2B2DC0B41C82D76A00A29459 /* STCartHeaderView.xib in Resources */,
+				18F8DE541C972F0D008BFC55 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
 				2B9882AC1C81E4D100BA5234 /* CashAndNetBankingCell.xib in Resources */,
 				2B9882BE1C81E4D100BA5234 /* inputBgDrop.png in Resources */,
+				18F8DE411C972F01008BFC55 /* LFAXDI_0.TTF in Resources */,
 				2B9882B11C81E4D100BA5234 /* DebitCardCell_iPad.xib in Resources */,
 				2B9882B91C81E4D100BA5234 /* check.png in Resources */,
+				18F8DE561C972F0D008BFC55 /* OpenSans-Light.ttf in Resources */,
+				18F8DE3C1C972EF5008BFC55 /* LFAX_0.TTF in Resources */,
 				2B9882AD1C81E4D100BA5234 /* CashAndNetBankingCell_iPad.xib in Resources */,
 				2B9882BB1C81E4D100BA5234 /* close.png in Resources */,
 				2B9882C31C81E4D100BA5234 /* uncheck@2x.png in Resources */,
+				18F8DE401C972F01008BFC55 /* LFAXD_0.TTF in Resources */,
 				2B9882BA1C81E4D100BA5234 /* check@2x.png in Resources */,
 				2B9882AE1C81E4D100BA5234 /* CreditAndDebitCardCell.xib in Resources */,
+				18F8DE3A1C972EEC008BFC55 /* CaviarDreams.ttf in Resources */,
 				2B9882B71C81E4D100BA5234 /* WebViewController.xib in Resources */,
 				2B456FB61C7F80E600C240A5 /* STProductInfo2TableViewCell.xib in Resources */,
 				2B456FBC1C7F810F00C240A5 /* STProductDescriptionTableViewCell.xib in Resources */,

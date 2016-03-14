@@ -8,6 +8,8 @@
 
 #import "STPopoverTableViewController.h"
 #import "STPopoverTableViewCell.h"
+#import "STMacros.h"
+#import "STGlobalCacheManager.h"
 
 @interface STPopoverTableViewController ()
 
@@ -42,6 +44,12 @@
     id itemObj = self.itemsArray[indexPath.row];
     if ([itemObj isKindOfClass:[NSNumber class]]) {
         cell.titleTextLabel.text = [NSString stringWithFormat:@"%@",itemObj];
+    }
+    else {
+        NSDictionary *countriesDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kCountries_key];
+        NSDictionary *datadict = countriesDict[[self.itemsArray objectAtIndex:indexPath.row]];
+        NSLog(@"%@",datadict);
+        cell.titleTextLabel.text = datadict[@"name"];
     }
     
     return cell;
