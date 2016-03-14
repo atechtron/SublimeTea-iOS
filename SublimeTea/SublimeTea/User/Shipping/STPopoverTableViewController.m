@@ -12,13 +12,16 @@
 #import "STGlobalCacheManager.h"
 
 @interface STPopoverTableViewController ()
-
+{
+    NSArray *sortedItems;
+}
 @end
 
 @implementation STPopoverTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    sortedItems = [self prepareData];
 }
 - (void)viewWillLayoutSubviews {
     self.preferredContentSize = CGSizeMake(150, 300);
@@ -27,7 +30,14 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (NSArray *)prepareData {
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES];
+    NSMutableArray *tempDataArr = [NSMutableArray new];
+    for (NSDictionary *itemDict in self.itemsArray) {
+        [tempDataArr addObject:itemDict[@"name"]];
+    }
+    return [tempDataArr sortedArrayUsingDescriptors:@[sort]];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -46,18 +56,22 @@
         cell.titleTextLabel.text = [NSString stringWithFormat:@"%@",itemObj];
     }
     else {
-        NSDictionary *countriesDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kCountries_key];
-        NSDictionary *datadict = countriesDict[[self.itemsArray objectAtIndex:indexPath.row]];
-        NSLog(@"%@",datadict);
-        cell.titleTextLabel.text = datadict[@"name"];
+        cell.titleTextLabel.text = sortedItems[indexPath.row];
     }
-    
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.delegate respondsToSelector:@selector(itemDidSelect:)]) {
-        [self.delegate itemDidSelect:indexPath];
+    id itemObj = self.itemsArray[indexPath.row];
+    NSString *itemStr;
+    if ([itemObj isKindOfClass:[NSNumber class]]) {
+        itemStr = [NSString stringWithFormat:@"%@",itemObj];
+    }
+    else {
+        itemStr = sortedItems[indexPath.row];
+    }
+    if ([self.delegate respondsToSelector:@selector(itemDidSelect:selectedItemString:)]) {
+        [self.delegate itemDidSelect:indexPath selectedItemString:itemStr];
     }
 }
 
@@ -70,13 +84,13 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

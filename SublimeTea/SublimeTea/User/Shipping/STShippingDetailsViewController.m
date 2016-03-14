@@ -25,6 +25,8 @@
 {
     NSArray *listOfStates;
     NSMutableDictionary *jsondict;
+    NSDictionary *selectedCountryDict;
+    STPopoverTableViewController *popoverViewController;
 }
 
 @property(nonatomic,retain)UIPopoverPresentationController *statesPopover;
@@ -240,7 +242,11 @@
                                          otherButtonTitles: nil];
     [alert show];
 }
-
+- (NSArray *)getCountriesCode {
+    NSDictionary *countriesDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kCountries_key];
+    NSArray *countries = [countriesDict allValues];
+    return countries;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 7;
 }
@@ -380,25 +386,25 @@
 }
 - (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture {
     
-    STPopoverTableViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
-    viewController.modalPresentationStyle = UIModalPresentationPopover;
+    popoverViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
+    popoverViewController.modalPresentationStyle = UIModalPresentationPopover;
+    popoverViewController.delegate = self;
     if (sender.tag == 2) {// states
-        NSDictionary *countriesDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kCountries_key];
+        if (selectedCountryDict) {
+            popoverViewController.itemsArray = [selectedCountryDict [@"states"] allValues];
+            NSLog(@"%@",popoverViewController.itemsArray);
+        }
     }
     else if (sender.tag ==3)// countries
     {
-        NSDictionary *countriesDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kCountries_key];
-        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES];
-        NSArray *countries = [[countriesDict allKeys] sortedArrayUsingDescriptors:@[sort]];
-        viewController.itemsArray = countries;
+        popoverViewController.itemsArray = [self getCountriesCode];
     }
-    _statesPopover = viewController.popoverPresentationController;
+    _statesPopover = popoverViewController.popoverPresentationController;
     _statesPopover.delegate = self;
     _statesPopover.sourceView = sender;
     _statesPopover.sourceRect = sender.rightView.frame;
-    [self presentViewController:viewController animated:YES completion:nil];
+    [self presentViewController:popoverViewController animated:YES completion:nil];
 }
-
 - (UIModalPresentationStyle) adaptivePresentationStyleForPresentationController: (UIPresentationController * ) controller {
     return UIModalPresentationNone;
 }
@@ -406,8 +412,20 @@
 #pragma mark-
 #pragma STPopoverTableViewControllerDelegate
 
-- (void)itemDidSelect:(NSIndexPath *)indexpath {
-    
+- (void)itemDidSelect:(NSIndexPath *)indexpath selectedItemString:(NSString *)selectedItemStr {
+    if (selectedItemStr.length) {
+
+        id view =  _statesPopover.sourceView;
+        if ([view isEqual:self.countryextField]) {
+            self.countryextField.text = selectedItemStr;
+            NSDictionary *datadict = [self getCountriesCode][indexpath.row];
+            selectedCountryDict = datadict;
+        }
+        else if ([view isEqual:self.stateTextField]) {
+            self.stateTextField.text = selectedItemStr;
+        }
+    }
+    [popoverViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark-
