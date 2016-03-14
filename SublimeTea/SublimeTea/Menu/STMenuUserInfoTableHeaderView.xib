@@ -4,6 +4,14 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="OpenSans-Bold.ttf">
+            <string>OpenSans-Bold</string>
+        </mutableArray>
+        <mutableArray key="OpenSans.ttf">
+            <string>OpenSans</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -12,24 +20,24 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header_seperator" translatesAutoresizingMaskIntoConstraints="NO" id="JoV-SW-ELn">
-                    <rect key="frame" x="0.0" y="117" width="600" height="3"/>
+                    <rect key="frame" x="0.0" y="115" width="600" height="5"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="3" id="hRk-zd-PGi"/>
+                        <constraint firstAttribute="height" constant="5" id="hRk-zd-PGi"/>
                     </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gvi-Rc-e14">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="117"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="115"/>
                     <color key="backgroundColor" red="0.3529411764705882" green="0.14509803921568626" blue="0.10196078431372549" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1lq-1h-GRr">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1lq-1h-GRr">
                     <rect key="frame" x="8" y="37" width="584" height="21"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IGy-d6-Uqw">
-                    <rect key="frame" x="8" y="62" width="584" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IGy-d6-Uqw">
+                    <rect key="frame" x="8" y="59" width="584" height="21"/>
+                    <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="13"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -42,13 +50,13 @@
                 <constraint firstItem="JoV-SW-ELn" firstAttribute="leading" secondItem="Hhz-ah-npq" secondAttribute="leading" id="Ht4-Y3-DjL"/>
                 <constraint firstItem="JoV-SW-ELn" firstAttribute="top" secondItem="Gvi-Rc-e14" secondAttribute="bottom" id="Mjk-C7-emi"/>
                 <constraint firstItem="Gvi-Rc-e14" firstAttribute="leading" secondItem="Hhz-ah-npq" secondAttribute="leading" id="Nmt-e2-JUK"/>
-                <constraint firstItem="IGy-d6-Uqw" firstAttribute="top" secondItem="1lq-1h-GRr" secondAttribute="bottom" constant="4" id="d1T-rQ-Q4w"/>
+                <constraint firstItem="IGy-d6-Uqw" firstAttribute="top" secondItem="1lq-1h-GRr" secondAttribute="bottom" constant="1" id="d1T-rQ-Q4w"/>
                 <constraint firstItem="Gvi-Rc-e14" firstAttribute="top" secondItem="Hhz-ah-npq" secondAttribute="top" id="hi3-8X-kmS"/>
                 <constraint firstAttribute="trailing" secondItem="IGy-d6-Uqw" secondAttribute="trailing" constant="8" id="jKf-At-qF2"/>
                 <constraint firstAttribute="trailing" secondItem="Gvi-Rc-e14" secondAttribute="trailing" id="jeP-rC-VNe"/>
                 <constraint firstItem="1lq-1h-GRr" firstAttribute="top" secondItem="Hhz-ah-npq" secondAttribute="top" constant="37" id="mAS-Mc-p4o"/>
                 <constraint firstAttribute="trailing" secondItem="1lq-1h-GRr" secondAttribute="trailing" constant="8" id="sNa-BX-dPL"/>
-                <constraint firstAttribute="bottom" secondItem="IGy-d6-Uqw" secondAttribute="bottom" constant="37" id="zue-Ug-YyG"/>
+                <constraint firstAttribute="bottom" secondItem="IGy-d6-Uqw" secondAttribute="bottom" constant="40" id="zue-Ug-YyG"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -60,6 +68,6 @@
         </view>
     </objects>
     <resources>
-        <image name="header_seperator" width="2048" height="16"/>
+        <image name="header_seperator" width="683" height="5"/>
     </resources>
 </document>

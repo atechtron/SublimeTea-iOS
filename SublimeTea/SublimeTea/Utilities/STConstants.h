@@ -10,6 +10,7 @@
 #import "STMacros.h"
 
 #define kStoreID 1
+#define kMaxQTY 10
 
 @interface STConstants : NSObject
 
@@ -21,5 +22,7 @@
 + (NSString *)productListRequestBody;
 + (NSString *)productImageListRequestBodyWithId:(NSString *)prodId;
 + (NSString *)prodInfoRequestBodyWithID:(NSString *)prodId;
++ (NSString *)createCartRequestBody;
++ (NSString *)addProductToCartRequestBodyWithProduct:(NSArray *)productArr;
 
 @end

@@ -19,12 +19,14 @@
 #import <netdb.h>
 #import "MRMSiOS.h"
 #import "PaymentModeViewController.h"
-
+#import "STGlobalCacheManager.h"
 
 @interface STShippingDetailsViewController ()<UITableViewDataSource, UITableViewDelegate, STDropDownTableViewCellDeleagte, STPopoverTableViewControllerDelegate, UIPopoverPresentationControllerDelegate, STCouponTableViewCellDelegate>
 {
     NSArray *listOfStates;
     NSMutableDictionary *jsondict;
+    NSDictionary *selectedCountryDict;
+    STPopoverTableViewController *popoverViewController;
 }
 
 @property(nonatomic,retain)UIPopoverPresentationController *statesPopover;
@@ -55,6 +57,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.isShippingISBillingAddress = YES;
     [STUtility stopActivityIndicatorFromView:nil];
+    [self prepareCountryData];
 }
 - (void)viewWillAppear:(BOOL)animated {
     
@@ -74,7 +77,17 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
+- (void)prepareCountryData {
+    NSDictionary *dataDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kCountries_key];
+    if (!dataDict) {
+        NSError *err;
+        NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"country_states_city" ofType:@"json"]];
+        NSJSONSerialization *jsonDict = [NSJSONSerialization JSONObjectWithData:data
+                                                                        options:kNilOptions
+                                                                          error:&err];
+        [[STGlobalCacheManager defaultManager] addItemToCache:jsonDict withKey:kCountries_key];
+    }
+}
 -(void) ResponseNew:(NSNotification *)message
 {
     if ([message.name isEqualToString:@"FAILED_DICT"])
@@ -99,25 +112,25 @@
 - (IBAction)paymentButtonAction:(UIButton *)sender {
     [self.view endEditing:YES];
     // Check Internet Connsection
-    if ([STUtility isNetworkAvailable] && [self validateInputs]) {
-        if (self.isShippingISBillingAddress) {
+//    if ([STUtility isNetworkAvailable] && [self validateInputs]) {
+//        if (self.isShippingISBillingAddress) {
             [self proceedForPayment];
-        }
-        else if (self.isBillingAddressScreen) {
-            [self proceedForPayment];
-        }
-        else {
-            UINavigationController *navCtrl = self.navigationController;
-            STShippingDetailsViewController *billingController = [self.storyboard instantiateViewControllerWithIdentifier:@"STShippingDetailsViewController"];
-            billingController.isBillingAddressScreen = YES;
-            [navCtrl pushViewController:billingController animated:YES];
-        }
-    }
+//        }
+//        else if (self.isBillingAddressScreen) {
+//            [self proceedForPayment];
+//        }
+//        else {
+//            UINavigationController *navCtrl = self.navigationController;
+//            STShippingDetailsViewController *billingController = [self.storyboard instantiateViewControllerWithIdentifier:@"STShippingDetailsViewController"];
+//            billingController.isBillingAddressScreen = YES;
+//            [navCtrl pushViewController:billingController animated:YES];
+//        }
+//    }
 }
 - (void)proceedForPayment {
     
     float MERCHANT_PRICE = 1;
-    NSString *MERCHANT_REFERENCENO = @"";
+    NSString *MERCHANT_REFERENCENO = @"14695";
     
     PaymentModeViewController *paymentView=[[PaymentModeViewController alloc]init];
     paymentView.strSaleAmount=[NSString stringWithFormat:@"%.2f",MERCHANT_PRICE];
@@ -131,31 +144,50 @@
     
     paymentView.descriptionString = @"Test Description";
     paymentView.strCurrency =   @"INR";
-    paymentView.strDisplayCurrency =@"USD";
+    paymentView.strDisplayCurrency =@"INR";
+    paymentView.strDescription = @"Test Description";
     paymentView.strDescription = @"Test Description";
     
-    paymentView.strBillingName = self.nameTextField.text;
-    paymentView.strBillingAddress = self.addressTextView.text;
-    paymentView.strBillingCity = self.cityTextField.text;
-    paymentView.strBillingState = self.stateTextField.text;
-    paymentView.strBillingPostal = self.postalCodeTextField.text;
-    paymentView.strBillingCountry = self.countryextField.text;
-    paymentView.strBillingEmail = self.emailTextField.text;
-    paymentView.strBillingTelephone = self.phoneTextField.text;
+    paymentView.strBillingName = @"Test";
+    paymentView.strBillingAddress = @"Bill address";
+    paymentView.strBillingCity =@"Bill City";
+    paymentView.strBillingState = @"TN";
+    paymentView.strBillingPostal =@"625000";
+    paymentView.strBillingCountry = @"IND";
+    paymentView.strBillingEmail =@"test@testmail.com";
+    paymentView.strBillingTelephone =@"9363469999";
     
-    paymentView.strDeliveryName = self.nameTextField.text;
-    paymentView.strDeliveryAddress = self.addressTextView.text;
-    paymentView.strDeliveryCity = self.cityTextField.text;
-    paymentView.strDeliveryState = self.stateTextField.text;
-    paymentView.strDeliveryPostal = self.postalCodeTextField.text;
-    paymentView.strDeliveryCountry = self.countryextField.text;
-    paymentView.strDeliveryTelephone = self.phoneTextField.text;
+    // Non mandatory parameters
+    paymentView.strDeliveryName = @"";
+    paymentView.strDeliveryAddress = @"";
+    paymentView.strDeliveryCity = @"";
+    paymentView.strDeliveryState = @"";
+    paymentView.strDeliveryPostal =@"";
+    paymentView.strDeliveryCountry = @"";
+    paymentView.strDeliveryTelephone =@"";
+//    paymentView.strBillingName = self.nameTextField.text;
+//    paymentView.strBillingAddress = self.addressTextView.text;
+//    paymentView.strBillingCity = self.cityTextField.text;
+//    paymentView.strBillingState = self.stateTextField.text;
+//    paymentView.strBillingPostal = self.postalCodeTextField.text;
+//    paymentView.strBillingCountry = self.countryextField.text;
+//    paymentView.strBillingEmail = self.emailTextField.text;
+//    paymentView.strBillingTelephone = self.phoneTextField.text;
+//    
+//    paymentView.strDeliveryName = self.nameTextField.text;
+//    paymentView.strDeliveryAddress = self.addressTextView.text;
+//    paymentView.strDeliveryCity = self.cityTextField.text;
+//    paymentView.strDeliveryState = self.stateTextField.text;
+//    paymentView.strDeliveryPostal = self.postalCodeTextField.text;
+//    paymentView.strDeliveryCountry = self.countryextField.text;
+//    paymentView.strDeliveryTelephone = self.phoneTextField.text;
     
     
     //If you want to add any extra parameters dynamically you have to add the Key and value as we //mentioned below
     //        [dynamicKeyValueDictionary setValue:@"savings" forKey:@"account_detail"];
     //        [dynamicKeyValueDictionary setValue:@"gold" forKey:@"merchant_type"];
     //      paymentView.dynamicKeyValueDictionary = dynamicKeyValueDictionary;
+
     
     [self.navigationController pushViewController:paymentView animated:NO];
 }
@@ -210,7 +242,11 @@
                                          otherButtonTitles: nil];
     [alert show];
 }
-
+- (NSArray *)getCountriesCode {
+    NSDictionary *countriesDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kCountries_key];
+    NSArray *countries = [countriesDict allValues];
+    return countries;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 7;
 }
@@ -243,6 +279,7 @@
             NSString *cellIdentifier = @"dropDownCell";
             STDropDownTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.delegate = self;
+            _cell.dropDownTextField.tag = indexPath.row;
             _cell.dropDownTitleLabel.text = @"Shipping State";
             _cell.textFieldTitleLabel.text = @"Shipping City";
             self.cityTextField = _cell.textField;
@@ -255,6 +292,7 @@
             NSString *cellIdentifier = @"dropDownCell";
             STDropDownTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.delegate = self;
+            _cell.dropDownTextField.tag = indexPath.row;
             _cell.dropDownTitleLabel.text = @"Shipping Country";
             _cell.textFieldTitleLabel.text = @"Shipping Postal Code";
             self.postalCodeTextField = _cell.textField;
@@ -348,15 +386,25 @@
 }
 - (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture {
     
-    STPopoverTableViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
-    viewController.modalPresentationStyle = UIModalPresentationPopover;
-    _statesPopover = viewController.popoverPresentationController;
+    popoverViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
+    popoverViewController.modalPresentationStyle = UIModalPresentationPopover;
+    popoverViewController.delegate = self;
+    if (sender.tag == 2) {// states
+        if (selectedCountryDict) {
+            popoverViewController.itemsArray = [selectedCountryDict [@"states"] allValues];
+            NSLog(@"%@",popoverViewController.itemsArray);
+        }
+    }
+    else if (sender.tag ==3)// countries
+    {
+        popoverViewController.itemsArray = [self getCountriesCode];
+    }
+    _statesPopover = popoverViewController.popoverPresentationController;
     _statesPopover.delegate = self;
     _statesPopover.sourceView = sender;
     _statesPopover.sourceRect = sender.rightView.frame;
-    [self presentViewController:viewController animated:YES completion:nil];
+    [self presentViewController:popoverViewController animated:YES completion:nil];
 }
-
 - (UIModalPresentationStyle) adaptivePresentationStyleForPresentationController: (UIPresentationController * ) controller {
     return UIModalPresentationNone;
 }
@@ -364,8 +412,20 @@
 #pragma mark-
 #pragma STPopoverTableViewControllerDelegate
 
-- (void)itemDidSelect:(NSIndexPath *)indexpath {
-    
+- (void)itemDidSelect:(NSIndexPath *)indexpath selectedItemString:(NSString *)selectedItemStr {
+    if (selectedItemStr.length) {
+
+        id view =  _statesPopover.sourceView;
+        if ([view isEqual:self.countryextField]) {
+            self.countryextField.text = selectedItemStr;
+            NSDictionary *datadict = [self getCountriesCode][indexpath.row];
+            selectedCountryDict = datadict;
+        }
+        else if ([view isEqual:self.stateTextField]) {
+            self.stateTextField.text = selectedItemStr;
+        }
+    }
+    [popoverViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark-

@@ -13,6 +13,7 @@
 #import "STConstants.h"
 #import "STHttpRequest.h"
 #import "XMLDictionary.h"
+#import "STRootViewController.h"
 
 @interface STAppDelegate ()<UITextFieldDelegate>
 
@@ -70,7 +71,9 @@
     
     controller.transaction_id=[parameterArray objectAtIndex:1];
     
-    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    STRootViewController *rootViewController = (STRootViewController *)self.window.rootViewController;
+    UINavigationController *navigationController = (UINavigationController*)rootViewController.contentViewController;
+    NSLog(@"%@",navigationController);
     [navigationController pushViewController:controller animated:YES];
     
     return YES;
@@ -90,9 +93,9 @@
     ResponseViewController *controller = (ResponseViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"ResponseViewController"];
     
     controller.transaction_id = [parameterArray objectAtIndex:1];
-    
-    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    
+    STRootViewController *rootViewController = (STRootViewController *)self.window.rootViewController;
+    UINavigationController *navigationController = (UINavigationController*)rootViewController.contentViewController;
+    NSLog(@"%@",navigationController);
     [navigationController pushViewController:controller animated:YES];
     
     return YES;
@@ -128,20 +131,9 @@
                                   {
                                       
                                   }successBlock:^(NSData *responseData){
-                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                      NSLog(@"%@",xmlDic);
-                                      NSDictionary *resutDict = xmlDic[@"SOAP-ENV:Body"][@"ns1:loginResponse"][@"loginReturn"];
-                                      NSString *sessionKey = resutDict[@"__text"];
-                                      if (sessionKey.length) {
-                                          NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                          [defaults setObject:sessionKey forKey:kUSerSession_Key];
-                                          [defaults synchronize];
-                                      }
-//                                      [STUtility stopActivityIndicatorFromView:nil];
-                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"APPVALIDATION" object:nil];
-//                                      [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
+                                      
                                   }failureBlock:^(NSError *error) {
-                                      [STUtility stopActivityIndicatorFromView:nil];
+                                      
                                       [[[UIAlertView alloc] initWithTitle:@"Alert"
                                                                   message:@"Unexpected error has occured, Please try after some time."
                                                                  delegate:nil
@@ -150,7 +142,20 @@
                                       NSLog(@"SublimeTea-STSignUpViewController-startSession:- %@",error);
                                   }];
     
-    [httpRequest start];
+    NSData *responseData = [httpRequest synchronousStart];
+    NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+    NSLog(@"%@",xmlDic);
+    NSDictionary *resutDict = xmlDic[@"SOAP-ENV:Body"][@"ns1:loginResponse"][@"loginReturn"];
+    NSString *sessionKey = resutDict[@"__text"];
+    if (sessionKey.length) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:sessionKey forKey:kUSerSession_Key];
+        [defaults synchronize];
+    }
+    //                                      [STUtility stopActivityIndicatorFromView:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"APPVALIDATION" object:nil];
+    [STUtility stopActivityIndicatorFromView:nil];
+    //                                      [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
 }
 - (void)endUserSession {
     

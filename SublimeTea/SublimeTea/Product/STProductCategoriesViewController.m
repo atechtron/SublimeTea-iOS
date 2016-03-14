@@ -16,7 +16,6 @@
 {
     NSInteger selectedCatId;
 }
-@property(strong, nonatomic)NSArray *productList;
 @end
 
 @implementation STProductCategoriesViewController
@@ -24,12 +23,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+//    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"iphone-category-line seperator"]];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.titleLabel.text = @"Explore our Range of Teas";
-    self.pageControl.currentPage = 0;
-    self.pageControl.numberOfPages = [self numberOfPages];
-    [self.view bringSubviewToFront:self.pageControl];
+//    self.pageControl.currentPage = 0;
+//    self.pageControl.numberOfPages = [self numberOfPages];
+//    [self.view bringSubviewToFront:self.pageControl];
     self.pageControl.hidden = YES;
 }
 - (NSInteger)numberOfPages {
@@ -65,7 +64,6 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"productListSegue"]) {
         STProductViewController *vC = segue.destinationViewController;
-        vC.productsInSelectedCat = self.productList;
         vC.selectedCategoryDict = self.prodCategories[selectedCatId];
     }
 }
@@ -84,8 +82,28 @@
     STProductCategoryCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     NSDictionary *prodDict = self.prodCategories[indexPath.row];
     NSString *name = prodDict[@"name"][@"__text"];
-    
-    cell.categoryImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
+    switch (indexPath.row) {
+        case 0:
+            cell.categoryImageView.image = [UIImage imageNamed:@"category_tea1"];
+            break;
+        case 1:
+            cell.categoryImageView.image = [UIImage imageNamed:@"category_tea2"];
+            break;
+            
+        case 2:
+            cell.categoryImageView.image = [UIImage imageNamed:@"category_tea3"];
+            break;
+        case 3:
+            cell.categoryImageView.image = [UIImage imageNamed:@"category_tea4"];
+            break;
+        case 4:
+            cell.categoryImageView.image = [UIImage imageNamed:@"category_tea5"];
+            break;
+            
+        default:
+            break;
+    }
+    cell.categoryImageView.contentMode = UIViewContentModeScaleAspectFit;
     cell.categoryTitlelabel.text = [name uppercaseString];
     cell.categorySubTitleLabel.text = @"RANGE PER 100GM";
     return cell;
@@ -97,17 +115,9 @@
 //}
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([STUtility isNetworkAvailable]) {
-        [STUtility startActivityIndicatorOnView:nil withText:@"Loading Teas, Please wait.."];
         selectedCatId = indexPath.row;
-        NSDictionary *xmlDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductList_Key];
-        if (xmlDict) {
-            [self parseResponseWithDict:xmlDict];
-        }
-        else {
-            [self fetchProducts];
-        }
+        [self performSegueWithIdentifier:@"productListSegue" sender:self];
     }
-    
     //    [self performSegueWithIdentifier:@"productListSegue" sender:self];
     
 }
@@ -163,112 +173,6 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
-- (void)fetchProducts {
-    
-    NSString *requestBody = [STConstants productListRequestBody];
-    
-    NSString *urlString = [STConstants getAPIURLWithParams:nil];
-    
-    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
-    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
-                                                         methodType:@"POST"
-                                                               body:requestBody
-                                                responseHeaderBlock:^(NSURLResponse *response)
-                                  {
-                                      
-                                  }successBlock:^(NSData *responseData){
-                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                          NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                          [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic
-                                                                                        withKey:kProductList_Key];
-                                          NSLog(@"%@",xmlDic);
-                                          
-                                          [self parseResponseWithDict:xmlDic];
-                                      });
-                                  }failureBlock:^(NSError *error) {
-                                      [STUtility stopActivityIndicatorFromView:nil];
-                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
-                                                                  message:@"Unexpected error has occured, Please try after some time."
-                                                                 delegate:nil
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles: nil] show];
-                                      NSLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
-                                  }];
-    
-    [httpRequest start];
-}
-- (void)parseResponseWithDict:(NSDictionary *)responseDict {
-    if (responseDict) {
-        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
-        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
-            NSArray *allProductsArr = parentDataDict[@"ns1:catalogProductListResponse"][@"storeView"][@"item"];
-            
-            NSDictionary *selectedProdCatDict = self.prodCategories[selectedCatId];
-            NSString *selectedCategoryId = selectedProdCatDict[@"category_id"][@"__text"];
-            
-            NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"category_ids.item.__text LIKE %@",selectedCategoryId];
-            NSArray *productsInSelectedCat = [allProductsArr filteredArrayUsingPredicate:filterPredicate];
-            self.productList = [NSArray arrayWithArray:productsInSelectedCat];
-            [STUtility stopActivityIndicatorFromView:nil];
-            [STUtility startActivityIndicatorOnView:nil withText:@"Loading Images, Please wait.."];
-            for (NSDictionary *prodDict in self.productList) {
-                NSString *prodId = prodDict[@"product_id"][@"__text"];
-                NSDictionary *imgXMLDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
 
-                if (!imgXMLDict) {
-                  [self fetchProductImages:prodId];
-                }
-            }
-            [self performSelector:@selector(loadProductList) withObject:nil afterDelay:0.4];
-        }
-        else {
-            [AppDelegate endUserSession];
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        }
-    }else {
-        //No products found.
-    }
-    [STUtility stopActivityIndicatorFromView:nil];
-}
-- (void)fetchProductImages:(NSString *)prodId {
-    
-    NSString *requestBody = [STConstants productImageListRequestBodyWithId:prodId];
-    
-    NSString *urlString = [STConstants getAPIURLWithParams:nil];
-    
-    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
-    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
-                                                         methodType:@"POST"
-                                                               body:requestBody
-                                                responseHeaderBlock:nil successBlock:nil failureBlock:nil];
-    
-    NSData *responseData = [httpRequest synchronousStart];
-    NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-//    NSLog(@"Image Data for ID %d %@",prodId, xmlDic);
-    [self parseImgData:xmlDic andProdId:prodId];
-}
-- (void)parseImgData:(NSDictionary *)responseDict andProdId:(NSString *)prodId {
-    if(responseDict){
-        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
-//        NSLog(@"Image Data for ID %d %@",prodId, responseDict);
-        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
-            NSDictionary *imgDataDict = parentDataDict[@"ns1:catalogProductAttributeMediaListResponse"][@"result"];
-            NSArray *imageURLList = imgDataDict[@"item"];
-            if (imageURLList) {
-                [[STGlobalCacheManager defaultManager] addItemToCache:imageURLList withKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
-            }
-        }
-        else {
-            [AppDelegate endUserSession];
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        }
-    }
-    [STUtility stopActivityIndicatorFromView:nil];
-}
-- (void)loadProductList {
-    [self performSegueWithIdentifier:@"productListSegue" sender:self];
-}
 
 @end

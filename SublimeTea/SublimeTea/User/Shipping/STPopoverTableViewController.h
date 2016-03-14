@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol STPopoverTableViewControllerDelegate<NSObject>
-- (void)itemDidSelect:(NSIndexPath *)indexpath;
+- (void)itemDidSelect:(NSIndexPath *)indexpath selectedItemString:(NSString *)selectedItemStr;
 @end
 
 @interface STPopoverTableViewController : UITableViewController

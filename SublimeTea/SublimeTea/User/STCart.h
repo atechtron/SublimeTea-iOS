@@ -28,5 +28,8 @@
 +(instancetype) new   __attribute__((unavailable("new not available, call defaultManager instead")));
 
 - (void)addProductsInCart:(NSDictionary *)prodDict withQty:(NSInteger)qty;
+- (void)removeProductFromCart:(NSInteger)idx;
+- (void)updateProductToCartAtIndex:(NSInteger)idx withQty:(NSInteger)qty;
+
 - (NSInteger)numberOfProductsInCart;
 @end
