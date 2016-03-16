@@ -70,7 +70,7 @@ static STCart *sharedInstance;
                                    @"qty": [NSNumber numberWithInteger:qty]};
         [self.productsInCart addObject:dataDict];
         [self.tempCartProducts addObject:dataDict];
-        
+        NSLog(@"%@",self.tempCartProducts);
         if ([STUtility isNetworkAvailable]) {
             [self addProductToCart:self.tempCartProducts];
         }
