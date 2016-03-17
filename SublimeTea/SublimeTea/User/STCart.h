@@ -21,6 +21,11 @@
 }
 @property (strong, nonatomic)NSMutableArray *productsDataArr;
 
+@property (strong, nonatomic)NSMutableArray *productsInCart;
+@property (strong, nonatomic)NSString *cartId;
+
+@property (strong, nonatomic)NSMutableArray *tempCartProducts;
+
 + (STCart *)defaultCart;
 
 +(instancetype) alloc __attribute__((unavailable("alloc not available, call defaultManager instead")));

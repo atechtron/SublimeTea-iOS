@@ -33,8 +33,14 @@
 - (NSArray *)prepareData {
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES];
     NSMutableArray *tempDataArr = [NSMutableArray new];
-    for (NSDictionary *itemDict in self.itemsArray) {
-        [tempDataArr addObject:itemDict[@"name"]];
+    for (id item in self.itemsArray) {
+        if ([item isKindOfClass:[NSDictionary class]]) {
+            [tempDataArr addObject:item[@"name"]];
+        }
+        else {
+            [tempDataArr addObject:item];
+        }
+        
     }
     return [tempDataArr sortedArrayUsingDescriptors:@[sort]];
 }
@@ -70,8 +76,8 @@
     else {
         itemStr = sortedItems[indexPath.row];
     }
-    if ([self.delegate respondsToSelector:@selector(itemDidSelect:selectedItemString:)]) {
-        [self.delegate itemDidSelect:indexPath selectedItemString:itemStr];
+    if ([self.delegate respondsToSelector:@selector(itemDidSelect:selectedItemString:parentIndexPath:)]) {
+        [self.delegate itemDidSelect:indexPath selectedItemString:itemStr parentIndexPath:self.parentIndexPath];
     }
 }
 

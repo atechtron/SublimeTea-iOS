@@ -22,4 +22,6 @@
 
 + (void)startActivityIndicatorOnView:(UIView*)inView withText:(NSString*)inStr;
 + (void)stopActivityIndicatorFromView:(UIView*)inView;
+
++ (NSString *)prepareMethodSoapBody:(NSString *)actionMethodNameKey params:(NSDictionary *)paramDict;
 @end

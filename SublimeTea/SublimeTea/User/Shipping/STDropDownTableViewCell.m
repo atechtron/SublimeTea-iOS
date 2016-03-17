@@ -46,8 +46,8 @@
     // Configure the view for the selected state
 }
 - (void)dropDownAction:(UITapGestureRecognizer *)tapGestureRecongnizer onView:(UITextField *)textField {
-    if ([self.delegate respondsToSelector:@selector(droDownAction:tapGesture:)]) {
-        [self.delegate droDownAction:self.dropDownTextField tapGesture:tapGestureRecongnizer];
+    if ([self.delegate respondsToSelector:@selector(droDownAction:tapGesture:indexPath:)]) {
+        [self.delegate droDownAction:self.dropDownTextField tapGesture:tapGestureRecongnizer indexPath:self.indexPath];
     }
 }
 - (IBAction)checkBoxButtonAction:(id)sender {

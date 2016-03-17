@@ -12,6 +12,6 @@
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *phoneCountryCodeLabel;
+@property (weak, nonatomic) IBOutlet UITextField *phoneCountryCodeTextBox;
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
 @end

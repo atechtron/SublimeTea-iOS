@@ -230,7 +230,7 @@
 #pragma mark-
 #pragma STPopoverTableViewControllerDelegate
 
-- (void)itemDidSelect:(NSIndexPath *)indexpath selectedItemString:(NSString *)selectedItemStr {
+- (void)itemDidSelect:(NSIndexPath *)indexpath selectedItemString:(NSString *)selectedItemStr parentIndexPath:(NSIndexPath *)pIndexPath{
     NSNumber *qty = [self getQTYArr][indexpath.row];
     
     [[STCart defaultCart] updateProductToCartAtIndex:_statesPopover.sourceView.tag withQty:[qty integerValue]];

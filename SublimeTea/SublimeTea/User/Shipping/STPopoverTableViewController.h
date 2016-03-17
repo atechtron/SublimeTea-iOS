@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @protocol STPopoverTableViewControllerDelegate<NSObject>
-- (void)itemDidSelect:(NSIndexPath *)indexpath selectedItemString:(NSString *)selectedItemStr;
+- (void)itemDidSelect:(NSIndexPath *)indexpath selectedItemString:(NSString *)selectedItemStr parentIndexPath:(NSIndexPath *)pIndexPath;
 @end
 
 @interface STPopoverTableViewController : UITableViewController
 
+@property (strong, nonatomic)NSIndexPath *parentIndexPath;
 @property (strong, nonatomic)NSArray *itemsArray;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic)id <STPopoverTableViewControllerDelegate> delegate;
