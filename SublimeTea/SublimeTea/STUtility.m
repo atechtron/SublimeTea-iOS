@@ -11,6 +11,7 @@
 #import "STMacros.h"
 #import "Reachability.h"
 #import "MBProgressHUD.h"
+#import "STConstants.h"
 
 @interface STUtility()
 {
@@ -178,7 +179,150 @@
         }
     });
 }
-
++ (NSString *)getNodeNameFromStr:(NSString *)name{
+//([functionalityName isEqualToString:kProductNodeName])? @"shoppingCartProductEntity" :nil
+    NSString *str;
+    if ([name isEqualToString:kProductNodeName]) {
+        str = @"shoppingCartProductEntity";
+    }
+    else if ([name isEqualToString:kAddressNodeName]) {
+        str = @"shoppingCartCustomerAddressEntity";
+    }
+    
+    return str;
+}
++ (NSString *)prepareMethodSoapBody:(NSString *)actionMethodNameKey params:(NSDictionary *)paramDict  {
+    NSMutableString *soapBody = [NSMutableString new];
+    
+    NSString *part1 = @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+    
+    "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n""<soap:Body>\n";
+    
+    NSString *part2 = [NSString stringWithFormat:@"<%@ xmlns=\"%@\">",actionMethodNameKey, [STConstants getAPIURLWithParams:nil]];
+    NSString *part3 = [NSString stringWithFormat:@"</%@>",actionMethodNameKey];
+    
+    [soapBody appendString:part1];
+    [soapBody appendString:part2];
+    
+    NSArray *arr = [paramDict allKeys];
+    
+    //[soapBody appendString:[NSString stringWithFormat:@"<shoppingCartProductAdd>"]];
+    
+    for(int i=0;i<[arr count];i++)
+        
+    {
+        NSString *keyVal = [arr objectAtIndex:i];
+        id nodeValue = [paramDict objectForKey:keyVal];
+        NSString *entittyName = [STUtility getNodeNameFromStr:keyVal];
+        if
+            ([nodeValue isKindOfClass:[NSArray class]] )
+            
+        {
+            
+            if([nodeValue count]>0)
+                
+            {
+                [soapBody appendString:[NSString stringWithFormat:@"<%@>",keyVal]];
+                
+                for(int j=0;j<[nodeValue count];j++)
+                    
+                {
+                    id value = [nodeValue objectAtIndex:j];
+                    
+                    if([value isKindOfClass:[NSDictionary class]])
+                        
+                    {
+                        NSArray *Keys=[value allKeys];
+                        [soapBody appendString:[NSString stringWithFormat:@"<%@>",entittyName]];                          
+                        for (int k=0; k<[Keys count]; k++)
+                            
+                        {
+                            [soapBody appendString:[NSString stringWithFormat:@"<%@>",[Keys objectAtIndex:k]]];
+                            [soapBody appendString:[NSString stringWithFormat:@"%@",[value objectForKey:[Keys objectAtIndex:k]]]];
+                            [soapBody appendString:[NSString stringWithFormat:@"</%@>",[Keys objectAtIndex:k]]];
+                            
+                        }
+                        [soapBody appendString:[NSString stringWithFormat:@"</%@>\n",entittyName]];
+                    }
+                }
+                [soapBody appendString:[NSString stringWithFormat:@"</%@>\n",keyVal]];
+            }
+        }
+        else if([nodeValue isKindOfClass:[NSDictionary class]])
+            
+        {
+            [soapBody appendString:[NSString stringWithFormat:@"<%@>",[arr objectAtIndex:i]]];
+            if([[nodeValue objectForKey:@"Id"] isKindOfClass:[NSString class]])
+                [soapBody appendString:[NSString stringWithFormat:@"%@",[nodeValue objectForKey:@"Id"]]];
+            
+            else
+                
+                [soapBody appendString:[NSString stringWithFormat:@"%@",[[nodeValue objectForKey:@"Id"] objectForKey:@"text"]]];
+            
+            [soapBody appendString:[NSString stringWithFormat:@"</%@>",[arr objectAtIndex:i]]];
+            
+        }
+        
+        else
+            
+        {
+            [soapBody appendString:[NSString stringWithFormat:@"<%@>",[arr objectAtIndex:i]]];
+            
+            [soapBody appendString:[NSString stringWithFormat:@"%@",[NSString  stringWithFormat:@"%@",[paramDict objectForKey:[arr objectAtIndex:i]] ]]];
+            
+            [soapBody appendString:[NSString stringWithFormat:@"</%@>",[arr objectAtIndex:i]]];
+            
+            
+            
+        }
+        
+    }
+    
+    //  [soapBody appendString:[NSString stringWithFormat:@"</shoppingCartProductAdd>\n"]];
+    
+    //  NSString *finalxml=[soapBody stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
+    
+    
+    
+    
+    
+    //        else
+    //
+    //
+    //
+    //        {
+    //
+    //            for(NSString *strkey in dictionary.allKeys)
+    //
+    //
+    //
+    //            {
+    //
+    //
+    //
+    //                NSString *part4 = [NSString stringWithFormat:@"<%@>%@</%@>",strkey,[dictionary valueForKey:strkey], strkey];
+    //                [soapBody appendString:part4];
+    //
+    //            }
+    //
+    //        }
+    
+    
+    
+    
+    
+    [soapBody appendString:part3];
+    
+    
+    
+    NSString *part5 = @"</soap:Body>\n" "</soap:Envelope>";
+    [soapBody appendString:part5];
+    NSLog(@"Request Body.....%@",soapBody);
+    return soapBody;
+    
+    
+    return soapBody;
+}
 //+(UIImage *)getImageWithColor:(UIColor *)color
 //{
 //    UIImage *img = [UIImage imageNamed:@"gray-border.png"];

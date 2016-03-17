@@ -89,7 +89,9 @@
         NSError *error = nil;
         NSURLResponse *response = nil;
         data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
-        NSLog(@"Error in processing suncronous request:- %@",error);
+        if (self.failureBlock && error) {
+         self.failureBlock(error);
+        }
     }
     return data;
 }

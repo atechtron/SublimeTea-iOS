@@ -20,35 +20,56 @@
 #import "MRMSiOS.h"
 #import "PaymentModeViewController.h"
 #import "STGlobalCacheManager.h"
+#import "STAddress.h"
+#import "STPlaceOrder.h"
 
-@interface STShippingDetailsViewController ()<UITableViewDataSource, UITableViewDelegate, STDropDownTableViewCellDeleagte, STPopoverTableViewControllerDelegate, UIPopoverPresentationControllerDelegate, STCouponTableViewCellDelegate>
+@interface STShippingDetailsViewController ()<UITableViewDataSource, UITableViewDelegate, STDropDownTableViewCellDeleagte, STPopoverTableViewControllerDelegate, UIPopoverPresentationControllerDelegate, STCouponTableViewCellDelegate,UITextFieldDelegate, UITextViewDelegate>
 {
     NSArray *listOfStates;
     NSMutableDictionary *jsondict;
     NSDictionary *selectedCountryDict;
+    NSDictionary *billingSelectedCountryDict;
     STPopoverTableViewController *popoverViewController;
+    STAddress *address;
 }
 
 @property(nonatomic,retain)UIPopoverPresentationController *statesPopover;
 
 @property(weak,nonatomic) UITextField *nameTextField;
-@property(weak,nonatomic) UITextView *addressTextView;
+@property(weak,nonatomic) UITextView  *addressTextView;
 @property(weak,nonatomic) UITextField *cityTextField;
 @property(weak,nonatomic) UITextField *stateTextField;
 @property(weak,nonatomic) UITextField *postalCodeTextField;
 @property(weak,nonatomic) UITextField *countryextField;
 @property(weak,nonatomic) UITextField *emailTextField;
 @property(weak,nonatomic) UITextField *phoneTextField;
+
+@property(weak,nonatomic) UITextField *billingNameTextField;
+@property(weak,nonatomic) UITextView  *billingAddressTextView;
+@property(weak,nonatomic) UITextField *billingCityTextField;
+@property(weak,nonatomic) UITextField *billingStateTextField;
+@property(weak,nonatomic) UITextField *billingPostalCodeTextField;
+@property(weak,nonatomic) UITextField *billingCountryextField;
+@property(weak,nonatomic) UITextField *billingEmailTextField;
+@property(weak,nonatomic) UITextField *billingPhoneTextField;
+
+@property(weak,nonatomic) UITextField *couponCodeTextField;
+
 @property(nonatomic) BOOL isShippingISBillingAddress;
-
-@property (weak, nonatomic) UITextField *couponCodeTextField;
-
 @end
 
 @implementation STShippingDetailsViewController
 
+- (void)setIsShippingISBillingAddress:(BOOL)isShippingISBillingAddress {
+    _isShippingISBillingAddress = isShippingISBillingAddress;
+    address.isBillingIsShipping = isShippingISBillingAddress;
+}
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    
+    address = [STAddress new];
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
     
@@ -56,12 +77,14 @@
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.isShippingISBillingAddress = YES;
+    
     [STUtility stopActivityIndicatorFromView:nil];
+    
     [self prepareCountryData];
 }
 - (void)viewWillAppear:(BOOL)animated {
     
-//    self.navigationController.navigationBarHidden = YES;
+    //    self.navigationController.navigationBarHidden = YES;
     
     jsondict = [[NSMutableDictionary alloc]init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ResponseNew:) name:@"FAILED_DICT" object:nil];
@@ -112,20 +135,27 @@
 - (IBAction)paymentButtonAction:(UIButton *)sender {
     [self.view endEditing:YES];
     // Check Internet Connsection
-//    if ([STUtility isNetworkAvailable] && [self validateInputs]) {
-//        if (self.isShippingISBillingAddress) {
-            [self proceedForPayment];
-//        }
-//        else if (self.isBillingAddressScreen) {
+    if ([STUtility isNetworkAvailable] && [self validateInputs]) {
+        if (self.isShippingISBillingAddress) {
+            [self setAddress];
+            [STUtility startActivityIndicatorOnView:nil withText:@"Loading..."];
+            STPlaceOrder *ordercreation = [[STPlaceOrder alloc] init];
+            ordercreation.address = address;
+            [ordercreation placeOrder];
+            [STUtility stopActivityIndicatorFromView:nil];
 //            [self proceedForPayment];
-//        }
-//        else {
-//            UINavigationController *navCtrl = self.navigationController;
-//            STShippingDetailsViewController *billingController = [self.storyboard instantiateViewControllerWithIdentifier:@"STShippingDetailsViewController"];
-//            billingController.isBillingAddressScreen = YES;
-//            [navCtrl pushViewController:billingController animated:YES];
-//        }
-//    }
+        }
+    }
+    //        else if (self.isBillingAddressScreen) {
+    //            [self proceedForPayment];
+    //        }
+    //        else {
+    //            UINavigationController *navCtrl = self.navigationController;
+    //            STShippingDetailsViewController *billingController = [self.storyboard instantiateViewControllerWithIdentifier:@"STShippingDetailsViewController"];
+    //            billingController.isBillingAddressScreen = YES;
+    //            [navCtrl pushViewController:billingController animated:YES];
+    //        }
+    //    }
 }
 - (void)proceedForPayment {
     
@@ -165,29 +195,29 @@
     paymentView.strDeliveryPostal =@"";
     paymentView.strDeliveryCountry = @"";
     paymentView.strDeliveryTelephone =@"";
-//    paymentView.strBillingName = self.nameTextField.text;
-//    paymentView.strBillingAddress = self.addressTextView.text;
-//    paymentView.strBillingCity = self.cityTextField.text;
-//    paymentView.strBillingState = self.stateTextField.text;
-//    paymentView.strBillingPostal = self.postalCodeTextField.text;
-//    paymentView.strBillingCountry = self.countryextField.text;
-//    paymentView.strBillingEmail = self.emailTextField.text;
-//    paymentView.strBillingTelephone = self.phoneTextField.text;
-//    
-//    paymentView.strDeliveryName = self.nameTextField.text;
-//    paymentView.strDeliveryAddress = self.addressTextView.text;
-//    paymentView.strDeliveryCity = self.cityTextField.text;
-//    paymentView.strDeliveryState = self.stateTextField.text;
-//    paymentView.strDeliveryPostal = self.postalCodeTextField.text;
-//    paymentView.strDeliveryCountry = self.countryextField.text;
-//    paymentView.strDeliveryTelephone = self.phoneTextField.text;
+    //    paymentView.strBillingName = self.nameTextField.text;
+    //    paymentView.strBillingAddress = self.addressTextView.text;
+    //    paymentView.strBillingCity = self.cityTextField.text;
+    //    paymentView.strBillingState = self.stateTextField.text;
+    //    paymentView.strBillingPostal = self.postalCodeTextField.text;
+    //    paymentView.strBillingCountry = self.countryextField.text;
+    //    paymentView.strBillingEmail = self.emailTextField.text;
+    //    paymentView.strBillingTelephone = self.phoneTextField.text;
+    //
+    //    paymentView.strDeliveryName = self.nameTextField.text;
+    //    paymentView.strDeliveryAddress = self.addressTextView.text;
+    //    paymentView.strDeliveryCity = self.cityTextField.text;
+    //    paymentView.strDeliveryState = self.stateTextField.text;
+    //    paymentView.strDeliveryPostal = self.postalCodeTextField.text;
+    //    paymentView.strDeliveryCountry = self.countryextField.text;
+    //    paymentView.strDeliveryTelephone = self.phoneTextField.text;
     
     
     //If you want to add any extra parameters dynamically you have to add the Key and value as we //mentioned below
     //        [dynamicKeyValueDictionary setValue:@"savings" forKey:@"account_detail"];
     //        [dynamicKeyValueDictionary setValue:@"gold" forKey:@"merchant_type"];
     //      paymentView.dynamicKeyValueDictionary = dynamicKeyValueDictionary;
-
+    
     
     [self.navigationController pushViewController:paymentView animated:NO];
 }
@@ -203,8 +233,54 @@
     NSString *emailStr = [self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString *phoneStr = [self.phoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
+    status = [self validateName:nameStr
+                        address:addressStr
+                           city:cityStr
+                          state:stateStr
+                     postalCode:postalCodeStr
+                        country:countryStr
+                        emailID:emailStr
+                          phone:phoneStr];
+    if (!self.isShippingISBillingAddress) {
+        
+        NSString *nameStr = [self.billingNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *addressStr = [self.billingAddressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *cityStr = [self.billingCityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *stateStr = [self.billingStateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *postalCodeStr = [self.billingPostalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *countryStr = [self.billingCountryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *emailStr = [self.billingEmailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *phoneStr = [self.billingPhoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
+        
+        status = [self validateName:nameStr
+                            address:addressStr
+                               city:cityStr
+                              state:stateStr
+                         postalCode:postalCodeStr
+                            country:countryStr
+                            emailID:emailStr
+                              phone:phoneStr];
+    }
+    
+    return status;
+}
+- (BOOL)validateName:(NSString *)nameStr
+             address:(NSString *)addressStr
+                city:(NSString *)cityStr
+               state:(NSString *)stateStr
+          postalCode:(NSString *)postalCodeStr
+             country:(NSString *)countryStr
+             emailID:(NSString *)emailStr
+               phone:(NSString *)phoneStr {
+    
+    BOOL status = NO;
+    NSArray *nameCompnents = [nameStr componentsSeparatedByString:@" "];
     if (nameStr.length == 0) {
         [self showAlertWithTitle:@"Message" msg:@"Name is required!"];
+    }
+    else if (nameCompnents.count < 1){
+        [self showAlertWithTitle:@"Message" msg:@"Last Name is required!"];
     }
     else if (addressStr.length == 0)
     {
@@ -231,15 +307,14 @@
     else {
         status = YES;
     }
-    
     return status;
 }
 - (void)showAlertWithTitle:(NSString *)title msg:(NSString *)msg {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                   message:msg
-                                                  delegate:nil
-                                         cancelButtonTitle:@"OK"
-                                         otherButtonTitles: nil];
+                                                    message:msg
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil];
     [alert show];
 }
 - (NSArray *)getCountriesCode {
@@ -251,7 +326,11 @@
     return 7;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    NSInteger count = 1;
+    if (!self.isShippingISBillingAddress) {
+        count = 2;
+    }
+    return count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell;
@@ -261,7 +340,12 @@
             NSString *cellIdentifier = @"textFieldCell";
             STPrfileTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.profileTextFieldTitleLabel.text = @"Name";
-            self.nameTextField = _cell.profileTextField;;
+            if (indexPath.section == 0) {
+                self.nameTextField = _cell.profileTextField;
+            }
+            else {
+                self.billingNameTextField = _cell.profileTextField;
+            }
             cell = _cell;
             break;
         }
@@ -270,7 +354,12 @@
             NSString *cellIdentifier = @"textViewCell";
             STPrfileTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.profileTextViewTitleLabel.text = @"Shipping Address";
-            self.addressTextView = _cell.profileTextView;
+            if (indexPath.section == 0) {
+                self.addressTextView = _cell.profileTextView;
+            }
+            else {
+                self.billingAddressTextView = _cell.profileTextView;
+            }
             cell = _cell;
             break;
         }
@@ -279,11 +368,18 @@
             NSString *cellIdentifier = @"dropDownCell";
             STDropDownTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.delegate = self;
+            _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
             _cell.dropDownTitleLabel.text = @"Shipping State";
             _cell.textFieldTitleLabel.text = @"Shipping City";
-            self.cityTextField = _cell.textField;
-            self.stateTextField = _cell.dropDownTextField;
+            if (indexPath.section == 0) {
+                self.cityTextField = _cell.textField;
+                self.stateTextField = _cell.dropDownTextField;
+            }
+            else {
+                self.billingCityTextField = _cell.textField;
+                self.billingStateTextField = _cell.dropDownTextField;
+            }
             cell = _cell;
             break;
         }
@@ -292,11 +388,18 @@
             NSString *cellIdentifier = @"dropDownCell";
             STDropDownTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.delegate = self;
+            _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
             _cell.dropDownTitleLabel.text = @"Shipping Country";
             _cell.textFieldTitleLabel.text = @"Shipping Postal Code";
-            self.postalCodeTextField = _cell.textField;
-            self.countryextField = _cell.dropDownTextField;
+            if (indexPath.section == 0) {
+                self.postalCodeTextField = _cell.textField;
+                self.countryextField = _cell.dropDownTextField;
+            }
+            else {
+                self.billingPostalCodeTextField = _cell.textField;
+                self.billingCountryextField = _cell.dropDownTextField;
+            }
             cell = _cell;
             break;
         }
@@ -305,7 +408,11 @@
             NSString *cellIdentifier = @"textFieldCell";
             STPrfileTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.profileTextFieldTitleLabel.text = @"Shipping Email";
-            self.emailTextField = _cell.profileTextField;
+            if (indexPath.section == 0) {
+                self.emailTextField = _cell.profileTextField;
+            }else {
+                self.billingEmailTextField = _cell.profileTextField;
+            }
             cell = _cell;
             break;
         }
@@ -314,8 +421,13 @@
             NSString *cellIdentifier = @"phoneNumberCell";
             STPhoneNumberTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.titleLabel.text = @"Shipping Phone";
-            _cell.phoneCountryCodeLabel.text = @"+91";
-            self.phoneTextField = _cell.phoneTextField;
+            _cell.phoneCountryCodeTextBox.text = @"+91";
+            if (indexPath.section == 0) {
+                self.phoneTextField = _cell.phoneTextField;
+            }
+            else {
+                self.billingPhoneTextField = _cell.phoneTextField;
+            }
             cell = _cell;
             break;
         }
@@ -325,9 +437,21 @@
                 NSString *cellIdentifier = @"checkBoxButtonCell";
                 STDropDownTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
                 _cell.delegate = self;
+                _cell.indexPath = indexPath;
                 _cell.firstradioButtonTitlrLabel.text = @"Use my shipping address as my billing address";
                 _cell.secondRadioButtonTtitleLabel.text = @"Ship to different address";
-                [_cell.firstRadioButton setImage:[UIImage imageNamed:@"checkboxSelected"] forState:UIControlStateNormal];
+                UIImage *unselectedCheckBox = [UIImage imageNamed:@"chekboxUnselected"];
+                UIImage *selectedCheckBox = [UIImage imageNamed:@"checkboxSelected"];
+                if(self.isShippingISBillingAddress)
+                {
+                    [_cell.firstRadioButton setImage:selectedCheckBox forState:UIControlStateNormal];
+                    [_cell.secondRadioButton setImage:unselectedCheckBox forState:UIControlStateNormal];
+                }
+                else
+                {
+                    [_cell.firstRadioButton setImage:unselectedCheckBox forState:UIControlStateNormal];
+                    [_cell.secondRadioButton setImage:selectedCheckBox forState:UIControlStateNormal];
+                }
                 cell = _cell;
             }
             else {
@@ -364,7 +488,7 @@
 #pragma STDropDownTableViewCellDeleagte
 
 - (void)dropDownItemDidSelect:(NSIndexPath *)tindexPath withCell:(UITableViewCell *)cell {
-
+    
 }
 - (void)checkBoxStateDidChanged:(UITableViewCell *)cell senderControl:(id)checkBox {
     
@@ -375,30 +499,48 @@
         [checkBoxCell.secondRadioButton setImage:unselectedCheckBox forState:UIControlStateNormal];
         [checkBoxCell.firstRadioButton setImage:selectedCheckBox forState:UIControlStateNormal];
         self.isShippingISBillingAddress = YES;
-        [self.paymentBtn setTitle:@"Proceed to Payments" forState:UIControlStateNormal];
+        //        [self.paymentBtn setTitle:@"Proceed to Payments" forState:UIControlStateNormal];
     }
     else {
         [checkBoxCell.firstRadioButton setImage:unselectedCheckBox forState:UIControlStateNormal];
         [checkBoxCell.secondRadioButton setImage:selectedCheckBox forState:UIControlStateNormal];
         self.isShippingISBillingAddress = NO;
-        [self.paymentBtn setTitle:@"Next" forState:UIControlStateNormal];
+        [self.tableView reloadData];
+        //        [self.paymentBtn setTitle:@"Next" forState:UIControlStateNormal];
     }
+    address.isBillingIsShipping = self.isShippingISBillingAddress;
 }
-- (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture {
+- (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture indexPath:(NSIndexPath *)indexPath {
     
     popoverViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
     popoverViewController.modalPresentationStyle = UIModalPresentationPopover;
     popoverViewController.delegate = self;
-    if (sender.tag == 2) {// states
-        if (selectedCountryDict) {
-            popoverViewController.itemsArray = [selectedCountryDict [@"states"] allValues];
-            NSLog(@"%@",popoverViewController.itemsArray);
+    popoverViewController.parentIndexPath = indexPath;
+    if (indexPath.section == 0) {
+        if (sender.tag == 2) {// states
+            if (selectedCountryDict) {
+                popoverViewController.itemsArray = [selectedCountryDict [@"states"] allValues];
+                NSLog(@"%@",popoverViewController.itemsArray);
+            }
+        }
+        else if (sender.tag ==3)// countries
+        {
+            popoverViewController.itemsArray = [self getCountriesCode];
         }
     }
-    else if (sender.tag ==3)// countries
-    {
-        popoverViewController.itemsArray = [self getCountriesCode];
+    else { // billing address
+        if (sender.tag == 2) {// states
+            if (billingSelectedCountryDict) {
+                popoverViewController.itemsArray = [billingSelectedCountryDict [@"states"] allValues];
+                NSLog(@"%@",popoverViewController.itemsArray);
+            }
+        }
+        else if (sender.tag ==3)// countries
+        {
+            popoverViewController.itemsArray = [self getCountriesCode];
+        }
     }
+    
     _statesPopover = popoverViewController.popoverPresentationController;
     _statesPopover.delegate = self;
     _statesPopover.sourceView = sender;
@@ -412,17 +554,32 @@
 #pragma mark-
 #pragma STPopoverTableViewControllerDelegate
 
-- (void)itemDidSelect:(NSIndexPath *)indexpath selectedItemString:(NSString *)selectedItemStr {
+- (void)itemDidSelect:(NSIndexPath *)indexpath selectedItemString:(NSString *)selectedItemStr parentIndexPath:(NSIndexPath *)pIndexPath{
     if (selectedItemStr.length) {
-
+        
         id view =  _statesPopover.sourceView;
         if ([view isEqual:self.countryextField]) {
-            self.countryextField.text = selectedItemStr;
+            if (indexpath.section == 0) {
+             self.countryextField.text = selectedItemStr;
+            }
+            else {
+                self.billingCountryextField.text = selectedItemStr;
+            }
             NSDictionary *datadict = [self getCountriesCode][indexpath.row];
-            selectedCountryDict = datadict;
+            if (pIndexPath.section == 0) {
+                selectedCountryDict = datadict;
+            }
+            else {
+                billingSelectedCountryDict = datadict;
+            }
         }
         else if ([view isEqual:self.stateTextField]) {
-            self.stateTextField.text = selectedItemStr;
+            if (indexpath.section == 0) {
+                self.stateTextField.text = selectedItemStr;
+            }
+            else {
+                self.billingStateTextField.text = selectedItemStr;
+            }
         }
     }
     [popoverViewController dismissViewControllerAnimated:YES completion:nil];
@@ -431,6 +588,87 @@
 #pragma mark-
 #pragma STCouponTableViewCellDelegate
 - (void)applyCouponAction:(UIButton *)sender onCell:(UITableViewCell *)cell {
+    
+}
 
+#pragma mark -
+#pragma UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+}
+- (void)setAddress {
+    
+    if (self.isShippingISBillingAddress) {
+        
+        NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *addressStr = [self.addressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *cityStr = [self.cityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *stateStr = [self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *postalCodeStr = [self.postalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *countryStr = [self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *emailStr = [self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *phoneStr = [self.phoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
+        NSArray *nameComponents = [nameStr componentsSeparatedByString: @" "];
+        
+        address.shipAddress.firstname = nameComponents.count ? nameComponents[0] :@"";
+        NSMutableString *lastNameStr = [NSMutableString new];
+        if(nameComponents.count > 1){
+        for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
+            [lastNameStr appendString:nameComponents[idx]];
+        }
+        }
+        address.shipAddress.lastname = lastNameStr;
+        address.shipAddress.city = cityStr;
+        address.shipAddress.state = stateStr;
+        address.shipAddress.postcode = postalCodeStr;
+        address.shipAddress.country_id = countryStr;
+        address.shipAddress.email = emailStr;
+        address.shipAddress.telephone = phoneStr;
+        address.shipAddress.street = addressStr;
+        
+    }
+    else {
+        NSString *nameStr = [self.billingNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *addressStr = [self.billingAddressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *cityStr = [self.billingCityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *stateStr = [self.billingStateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *postalCodeStr = [self.billingPostalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *countryStr = [self.billingCountryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *emailStr = [self.billingEmailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *phoneStr = [self.billingPhoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *couponCodeStr = [self.couponCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
+        NSArray *nameComponents = [nameStr componentsSeparatedByString: @" "];
+        
+        address.shipAddress.firstname = nameComponents.count ? nameComponents[0] :@"";
+        NSMutableString *lastNameStr = [NSMutableString new];
+        for (NSInteger idx = 1; idx <= nameComponents.count; idx ++) {
+            [lastNameStr appendString:nameComponents[idx]];
+        }
+        address.billedAddress.lastname = lastNameStr;
+        address.billedAddress.city = cityStr;
+        address.billedAddress.state = stateStr;
+        address.billedAddress.postcode = postalCodeStr;
+        address.billedAddress.country_id = countryStr;
+        address.billedAddress.email = emailStr;
+        address.billedAddress.telephone = phoneStr;
+        address.billedAddress.street = addressStr;
+        address.billedAddress.couponCode = couponCodeStr;
+    }
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    
+}
+
+#pragma mark -
+#pragma UITextViewDelegate
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+
+}
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    if ([textView isEqual:self.addressTextView]) {
+        
+    }
 }
 @end

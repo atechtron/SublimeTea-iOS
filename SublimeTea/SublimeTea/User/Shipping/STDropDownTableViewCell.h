@@ -11,11 +11,13 @@
 
 - (void)dropDownItemDidSelect:(NSIndexPath *)indexPath withCell:(UITableViewCell *)cell;
 - (void)checkBoxStateDidChanged:(UITableViewCell *)cell senderControl:(id)checkBox;
-- (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture;
+- (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture indexPath:(NSIndexPath *)indexPath;
 
 @end
 
 @interface STDropDownTableViewCell : UITableViewCell
+
+@property (strong, nonatomic)NSIndexPath *indexPath;
 @property (weak, nonatomic) IBOutlet UILabel *textFieldTitleLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *dropDownTitleLabel;

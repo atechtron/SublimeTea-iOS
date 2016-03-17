@@ -17,11 +17,6 @@
 @end
 
 @interface STCart()
-
-@property (strong, nonatomic)NSMutableArray *productsInCart;
-@property (strong, nonatomic)NSString *cartId;
-
-@property (strong, nonatomic)NSMutableArray *tempCartProducts;
 @end
 
 @implementation STCart
@@ -44,12 +39,12 @@ static STCart *sharedInstance;
     _tempCartProducts = [NSMutableArray new];
     
     // Create cart on server
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *userInfo = [defaults objectForKey:kUserInfo_Key];
-    //        createCart
-    if (!userInfo[kUserCart_Key] && [STUtility isNetworkAvailable]) {
-        [self createCart];
-    }
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    NSDictionary *userInfo = [defaults objectForKey:kUserInfo_Key];
+//    //        createCart
+//    if (!userInfo[kUserCart_Key] && [STUtility isNetworkAvailable]) {
+//        [self createCart];
+//    }
     
     return [super init];
 }
@@ -58,7 +53,8 @@ static STCart *sharedInstance;
 }
 
 -(void)addProductsInCart:(NSDictionary *)prodDict withQty:(NSInteger)qty {
-    [STUtility startActivityIndicatorOnView:nil withText:@"Please Wait.."];
+    
+//    [STUtility startActivityIndicatorOnView:nil withText:@"Please Wait.."];
     if (prodDict && qty >0) {
         Product *prod = [Product new];
         prod.prodDict = prodDict;
@@ -70,10 +66,6 @@ static STCart *sharedInstance;
                                    @"qty": [NSNumber numberWithInteger:qty]};
         [self.productsInCart addObject:dataDict];
         [self.tempCartProducts addObject:dataDict];
-        NSLog(@"%@",self.tempCartProducts);
-        if ([STUtility isNetworkAvailable]) {
-            [self addProductToCart:self.tempCartProducts];
-        }
     }
 }
 - (NSInteger)numberOfProductsInCart {
@@ -98,9 +90,10 @@ static STCart *sharedInstance;
                                        withObject:prodDict];
     }
 }
-- (void)addProductToCart:(NSArray *)prodArr {
-    if (prodArr.count) {
-        NSString *requestBody = [STConstants addProductToCartRequestBodyWithProduct:prodArr];
+- (void)addProductToCart:(NSDictionary *)prodDataDict {
+    if (prodDataDict) {
+        NSString *requestBody = [STUtility prepareMethodSoapBody:@"shoppingCartProductAdd"
+                                                          params:prodDataDict];
         NSLog(@"Cart Request Body: %@",requestBody);
         
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
@@ -117,18 +110,6 @@ static STCart *sharedInstance;
                                               NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
                                               NSLog(@"Cart %@",xmlDic);
                                               [self parseProductResponseWithDict:xmlDic];
-                                              NSError *error;
-                                              NSData *jsonData = [NSJSONSerialization dataWithJSONObject:xmlDic
-                                                                                                 options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
-                                                                                                   error:&error];
-                                              
-                                              if (! jsonData) {
-                                                  NSLog(@"Got an error: %@", error);
-                                              } else {
-                                                  NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                                                  
-                                                  NSLog(@"%@",jsonString);
-                                              }
                                           });
                                           
                                       }failureBlock:^(NSError *error) {
@@ -202,16 +183,14 @@ static STCart *sharedInstance;
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
             [self.tempCartProducts removeAllObjects];
-            NSDictionary *dataDict = parentDataDict[@"ns1:shoppingCartCreateResponse"][@"quoteId"];
-            self.cartId = dataDict[@"__text"];
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            NSMutableDictionary *userInfoDict = [defaults objectForKey:kUserInfo_Key];
-            [userInfoDict setObject:self.cartId forKey:kUserCart_Key];
-            [defaults setValue:userInfoDict forKey:kUserInfo_Key];
-            [defaults synchronize];
+            NSDictionary *dataDict = parentDataDict[@"ns1:shoppingCartProductAddResponse"][@"result"];
+            BOOL requestStatus = [dataDict[@"__text"] boolValue];
+            if (requestStatus) {
+                
+            }
         }
         else {
-            NSLog(@"Error creating cart.");
+            NSLog(@"Error adding product to cart...");
 //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
@@ -219,5 +198,23 @@ static STCart *sharedInstance;
     }
     [STUtility stopActivityIndicatorFromView:nil];
 }
-
+/*
+ {
+ "SOAP-ENV:Body" =     {
+ "ns1:shoppingCartProductAddResponse" =         {
+ result =             {
+ "__text" = true;
+ "_xsi:type" = "xsd:boolean";
+ };
+ };
+ };
+ "_SOAP-ENV:encodingStyle" = "http://schemas.xmlsoap.org/soap/encoding/";
+ "__name" = "SOAP-ENV:Envelope";
+ "_xmlns:SOAP-ENC" = "http://schemas.xmlsoap.org/soap/encoding/";
+ "_xmlns:SOAP-ENV" = "http://schemas.xmlsoap.org/soap/envelope/";
+ "_xmlns:ns1" = "urn:Magento";
+ "_xmlns:xsd" = "http://www.w3.org/2001/XMLSchema";
+ "_xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance";
+ }
+ */
 @end

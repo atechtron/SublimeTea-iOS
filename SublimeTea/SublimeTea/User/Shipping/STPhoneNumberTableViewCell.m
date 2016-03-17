@@ -24,10 +24,10 @@
     CALayer *rightBorder = [CALayer layer];
     rightBorder.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
     rightBorder.borderWidth = 1;
-    rightBorder.frame = CGRectMake(CGRectGetWidth(_phoneCountryCodeLabel.frame)-1, -1, 1, CGRectGetHeight(_phoneCountryCodeLabel.frame));
+    rightBorder.frame = CGRectMake(CGRectGetWidth(_phoneCountryCodeTextBox.frame)-1, -1, 1, CGRectGetHeight(_phoneCountryCodeTextBox.frame));
     
-    [_phoneCountryCodeLabel.layer addSublayer:rightBorder];
-    _phoneCountryCodeLabel.clipsToBounds = NO;
+    [_phoneCountryCodeTextBox.layer addSublayer:rightBorder];
+    _phoneCountryCodeTextBox.clipsToBounds = NO;
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

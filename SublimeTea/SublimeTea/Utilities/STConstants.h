@@ -24,5 +24,11 @@
 + (NSString *)prodInfoRequestBodyWithID:(NSString *)prodId;
 + (NSString *)createCartRequestBody;
 + (NSString *)addProductToCartRequestBodyWithProduct:(NSArray *)productArr;
-
++ (NSString *)getCartCustomerRequestBodyWithCustomerId:(NSString *)cust_Id mode:(NSString *)mode;
++ (NSString *)getShippingMathodListBodyResponse;
++ (NSString *)shippingMethodRequestBodyForMethodCode:(NSString *)shippingMethodCode;
++ (NSString *)cartTotalRequestBody;
++ (NSString *)paymentMethodListRequestBody;
++ (NSString *)paymentMethodReuestBody:(NSString *)method;
++ (NSString *)orderRequestBody;
 @end
