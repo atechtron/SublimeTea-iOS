@@ -553,8 +553,8 @@ Create a cart */
  set payment mode to cart */
 - (void)setPaymentMode {
     if ([STUtility isNetworkAvailable]) {
-        NSString *requestBody = [STConstants paymentMethodReuestBody:@"cashondelivery"];
-        
+        NSString *requestBody = [STConstants paymentMethodReuestBody:@"checkmo"];
+        NSLog(@"Payment mode: %@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
@@ -619,9 +619,9 @@ Create a cart */
 - (void)createOrder {
 
     if ([STUtility isNetworkAvailable]) {
-        NSString *requestBody = [STConstants paymentMethodReuestBody:@"cashondelivery"];
-        
-        NSString *urlString = [STConstants orderRequestBody];
+        NSString *requestBody = [STConstants orderRequestBody];
+        NSLog(@"Order Creation: %@",requestBody);
+        NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
         STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
