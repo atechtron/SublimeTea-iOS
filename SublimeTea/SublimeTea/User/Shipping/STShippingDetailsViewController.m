@@ -80,8 +80,13 @@
     
     [STUtility stopActivityIndicatorFromView:nil];
     
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     [self prepareCountryData];
 }
+
 - (void)viewWillAppear:(BOOL)animated {
     
     //    self.navigationController.navigationBarHidden = YES;
@@ -433,7 +438,7 @@
         }
         case 6:
         {
-            if (!self.isBillingAddressScreen) {
+            if (indexPath.section == 0) {
                 NSString *cellIdentifier = @"checkBoxButtonCell";
                 STDropDownTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
                 _cell.delegate = self;
@@ -474,7 +479,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     STOrderListHeaderView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderListHeaderView"];
     NSString *titleStr = @"Shipping Details";
-    if (self.isBillingAddressScreen) {
+    if (section == 1) {
         titleStr = @"Billing Address";
     }
     footerView.titleLabel.text = titleStr;
@@ -491,7 +496,7 @@
     
 }
 - (void)checkBoxStateDidChanged:(UITableViewCell *)cell senderControl:(id)checkBox {
-    
+    [self.tableView beginUpdates];
     UIImage *unselectedCheckBox = [UIImage imageNamed:@"chekboxUnselected"];
     UIImage *selectedCheckBox = [UIImage imageNamed:@"checkboxSelected"];
     STDropDownTableViewCell *checkBoxCell = (STDropDownTableViewCell *)cell;
@@ -499,6 +504,7 @@
         [checkBoxCell.secondRadioButton setImage:unselectedCheckBox forState:UIControlStateNormal];
         [checkBoxCell.firstRadioButton setImage:selectedCheckBox forState:UIControlStateNormal];
         self.isShippingISBillingAddress = YES;
+        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
         //        [self.paymentBtn setTitle:@"Proceed to Payments" forState:UIControlStateNormal];
     }
     else {
@@ -506,9 +512,11 @@
         [checkBoxCell.secondRadioButton setImage:selectedCheckBox forState:UIControlStateNormal];
         self.isShippingISBillingAddress = NO;
         [self.tableView reloadData];
+        [self.tableView insertSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
         //        [self.paymentBtn setTitle:@"Next" forState:UIControlStateNormal];
     }
     address.isBillingIsShipping = self.isShippingISBillingAddress;
+    [self.tableView endUpdates];
 }
 - (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture indexPath:(NSIndexPath *)indexPath {
     
@@ -516,30 +524,84 @@
     popoverViewController.modalPresentationStyle = UIModalPresentationPopover;
     popoverViewController.delegate = self;
     popoverViewController.parentIndexPath = indexPath;
-    if (indexPath.section == 0) {
-        if (sender.tag == 2) {// states
-            if (selectedCountryDict) {
-                popoverViewController.itemsArray = [selectedCountryDict [@"states"] allValues];
-                NSLog(@"%@",popoverViewController.itemsArray);
-            }
-        }
-        else if (sender.tag ==3)// countries
+    NSLog(@"%d",sender.tag);
+    NSLog(@"%d",indexPath.section);
+    
+    switch (indexPath.section) {
+        case 0:
         {
-            popoverViewController.itemsArray = [self getCountriesCode];
-        }
-    }
-    else { // billing address
-        if (sender.tag == 2) {// states
-            if (billingSelectedCountryDict) {
-                popoverViewController.itemsArray = [billingSelectedCountryDict [@"states"] allValues];
-                NSLog(@"%@",popoverViewController.itemsArray);
+            switch (sender.tag) {
+                case 2:
+                {
+                    if (selectedCountryDict) {
+                        popoverViewController.itemsArray = [selectedCountryDict [@"states"] allValues];
+                        NSLog(@"%@",popoverViewController.itemsArray);
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    popoverViewController.itemsArray = [self getCountriesCode];
+                    break;
+                }
+                default:
+                    break;
             }
+            break;
         }
-        else if (sender.tag ==3)// countries
+        case 1:
         {
-            popoverViewController.itemsArray = [self getCountriesCode];
+            NSLog(@"%d",indexPath.section);
+            switch (sender.tag) {
+                case 2:
+                {
+                    if (billingSelectedCountryDict) {
+                        popoverViewController.itemsArray = [billingSelectedCountryDict [@"states"] allValues];
+                        NSLog(@"%@",popoverViewController.itemsArray);
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    popoverViewController.itemsArray = [self getCountriesCode];
+                    break;
+                }
+                default:
+                    break;
+            }
+            break;
         }
+        default:
+            break;
     }
+    
+    
+    
+    
+//    if (indexPath.section == 0) {
+//        if (sender.tag == 2) {// states
+//            if (selectedCountryDict) {
+//                popoverViewController.itemsArray = [selectedCountryDict [@"states"] allValues];
+//                NSLog(@"%@",popoverViewController.itemsArray);
+//            }
+//        }
+//        else if (sender.tag ==3)// countries
+//        {
+//            popoverViewController.itemsArray = [self getCountriesCode];
+//        }
+//    }
+//    else { // billing address
+//        if (sender.tag == 2) {// states
+//            if (billingSelectedCountryDict) {
+//                popoverViewController.itemsArray = [billingSelectedCountryDict [@"states"] allValues];
+//                NSLog(@"%@",popoverViewController.itemsArray);
+//            }
+//        }
+//        else if (sender.tag ==3)// countries
+//        {
+//            popoverViewController.itemsArray = [self getCountriesCode];
+//        }
+//    }
     
     _statesPopover = popoverViewController.popoverPresentationController;
     _statesPopover.delegate = self;
