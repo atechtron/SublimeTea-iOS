@@ -31,6 +31,7 @@
     NSDictionary *billingSelectedCountryDict;
     STPopoverTableViewController *popoverViewController;
     STAddress *address;
+    float keyPadHeight;
 }
 
 @property(nonatomic,retain)UIPopoverPresentationController *statesPopover;
@@ -309,6 +310,17 @@
     else if (phoneStr.length == 0) {
         [self showAlertWithTitle:@"Message" msg:@"Phone is required!"];
     }
+    else if (phoneStr.length < 10){
+        [self showAlertWithTitle:@"Message" msg:@"Valid Phone number required!"];
+    }
+    else if (emailStr.length){
+        NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,10}";
+        NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
+        if ([emailTest evaluateWithObject:emailStr] == NO) {
+            [self showAlertWithTitle:@"Message" msg:@"Valid Email required!"];
+        }
+    }
+    
     else {
         status = YES;
     }
@@ -377,6 +389,7 @@
             _cell.dropDownTextField.tag = indexPath.row;
             _cell.dropDownTitleLabel.text = @"Shipping State";
             _cell.textFieldTitleLabel.text = @"Shipping City";
+            _cell.textField.keyboardType = UIKeyboardTypeDefault;
             if (indexPath.section == 0) {
                 self.cityTextField = _cell.textField;
                 self.stateTextField = _cell.dropDownTextField;
@@ -397,6 +410,7 @@
             _cell.dropDownTextField.tag = indexPath.row;
             _cell.dropDownTitleLabel.text = @"Shipping Country";
             _cell.textFieldTitleLabel.text = @"Shipping Postal Code";
+            _cell.textField.keyboardType = UIKeyboardTypeNumberPad;
             if (indexPath.section == 0) {
                 self.postalCodeTextField = _cell.textField;
                 self.countryextField = _cell.dropDownTextField;
@@ -656,7 +670,11 @@
 #pragma mark -
 #pragma UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    
+//    CGPoint pointAfterConvertion = [textField convertPoint:textField.frame.origin toView:_tableView];
+//    NSLog(@"%f, %f",pointAfterConvertion.x,pointAfterConvertion.y);
+//    if (pointAfterConvertion.y > (self.view.frame.size.height - keyPadHeight)) {
+//        _tableView.contentOffset = CGPointMake(0, (_tableView.frame.size.height - keyPadHeight));
+//    }
 }
 - (void)setAddress {
     
@@ -720,8 +738,22 @@
     }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    
+
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == _phoneTextField || textField == _billingPhoneTextField || textField == _postalCodeTextField || textField == _billingPostalCodeTextField) {
+        if(range.length + range.location > textField.text.length)
+        {
+            return NO;
+        }
+        
+        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+        return newLength <= 10;
+    }
+    return YES;
+}
+
 
 #pragma mark -
 #pragma UITextViewDelegate
