@@ -17,8 +17,9 @@
 @implementation STSignUpViewController
 
 - (void)viewDidLoad {
-    self.menuButtonHidden = YES;
-    self.hideRightBarItems = YES;
+//    self.menuButtonHidden = YES;
+//    self.hideRightBarItems = YES;
+    self.hideLeftBarItems = NO;
     
     [super viewDidLoad];
     self.mobileNumberTextField.enablesReturnKeyAutomatically = YES;
@@ -73,7 +74,7 @@
 }
 */
 - (void)viewDidTapped:(id)sender {
-    self.contentScrollView.contentOffset = CGPointMake(0, self.errorLabel.frame.origin.y);
+    self.contentScrollView.contentOffset = CGPointMake(0, 0);
     [self.view endEditing:YES];
 }
 - (BOOL)validateInputs {
