@@ -17,7 +17,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *forgotPassword;
 @property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
+@property (weak, nonatomic) IBOutlet UILabel *checkBoxTextLabel;
+@property (weak, nonatomic) IBOutlet UIButton *checkBoxButton;
+
 
 - (IBAction)forgorPasswordButtonAction:(UIButton *)sender;
 - (IBAction)submitButtonAction:(UIButton *)sender;
+- (IBAction)checkBoxStateDidChanged:(UIButton *)checkBox;
 @end

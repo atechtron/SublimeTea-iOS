@@ -31,6 +31,30 @@
    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
+    
+    [self updateUI];
+}
+- (void)updateUI {
+    
+    self.emailAddressTextField.borderStyle = UITextBorderStyleNone;
+    self.emailAddressTextField.layer.borderWidth = 1;
+    self.emailAddressTextField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    self.emailAddressTextField.layer.cornerRadius = 2;
+    
+    self.passwordTextField.borderStyle = UITextBorderStyleNone;
+    self.passwordTextField.layer.borderWidth = 1;
+    self.passwordTextField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    self.passwordTextField.layer.cornerRadius = 2;
+    
+    self.confirmPasswordTextField.borderStyle = UITextBorderStyleNone;
+    self.confirmPasswordTextField.layer.borderWidth = 1;
+    self.confirmPasswordTextField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    self.confirmPasswordTextField.layer.cornerRadius = 2;
+    
+    self.mobileNumberTextField.borderStyle = UITextBorderStyleNone;
+    self.mobileNumberTextField.layer.borderWidth = 1;
+    self.mobileNumberTextField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    self.mobileNumberTextField.layer.cornerRadius = 2;
 }
 - (void)viewWillAppear:(BOOL)animated
 {

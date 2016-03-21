@@ -31,8 +31,27 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
     
+    UITapGestureRecognizer *checkBoxTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkBoxStateDidChanged:)];
+    [self.checkBoxTextLabel addGestureRecognizer:checkBoxTap];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLogInWIthSessionId:) name:@"APPVALIDATION" object:nil];
+    
+    [self updateUI];
 }
+
+- (void)updateUI {
+    self.useraNameTextField.borderStyle = UITextBorderStyleNone;
+    self.useraNameTextField.layer.borderWidth = 1;
+    self.useraNameTextField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    self.useraNameTextField.layer.cornerRadius = 2;
+    
+    self.passwordTextfield.borderStyle = UITextBorderStyleNone;
+    self.passwordTextfield.layer.borderWidth = 1;
+    self.passwordTextfield.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    self.passwordTextfield.layer.cornerRadius = 2;
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     self.errorLabel.hidden = YES;
 }
@@ -56,6 +75,21 @@
 //- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
 //    return [self validateInputs];
 //}
+
+- (IBAction)checkBoxStateDidChanged:(UIButton *)checkBox {
+    
+    UIImage *unselectedCheckBox = [UIImage imageNamed:@"chekboxUnselected"];
+    UIImage *selectedCheckBox = [UIImage imageNamed:@"checkboxSelected"];
+
+    if ([self.checkBoxButton.imageView.image isEqual:unselectedCheckBox]) {
+        [self.checkBoxButton setImage:selectedCheckBox forState:UIControlStateNormal];
+        self.passwordTextfield.secureTextEntry = NO;
+    }
+    else {
+        [self.checkBoxButton setImage:unselectedCheckBox forState:UIControlStateNormal];
+        self.passwordTextfield.secureTextEntry = YES;
+    }
+}
 
 - (void)viewDidTapped:(id)sender {
     [self.view endEditing:YES];
