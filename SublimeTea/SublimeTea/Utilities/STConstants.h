@@ -31,4 +31,5 @@
 + (NSString *)paymentMethodListRequestBody;
 + (NSString *)paymentMethodReuestBody:(NSString *)method;
 + (NSString *)orderRequestBody;
++ (NSString *)orderListRequestBody;
 @end

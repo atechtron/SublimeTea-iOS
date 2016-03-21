@@ -14,6 +14,7 @@
 #import "STHttpRequest.h"
 #import "XMLDictionary.h"
 #import "STRootViewController.h"
+#import "STPlaceOrder.h"
 
 @interface STAppDelegate ()<UITextFieldDelegate>
 
@@ -24,11 +25,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    // remove user session info
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:kUSerSession_Key];
-    [defaults synchronize];
-    [self startSession];
     return YES;
 }
 
@@ -47,7 +43,13 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    // remove user session info
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:kUSerSession_Key];
+    [defaults synchronize];
+    [self startSession];
+    STPlaceOrder *order = [[STPlaceOrder alloc] init];
+//    [order placeOrder];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

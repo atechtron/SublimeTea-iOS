@@ -11,9 +11,11 @@
 #import "STOrderListHeaderView.h"
 #import "STDashboardViewController.h"
 #import "STUtility.h"
+#import "STHttpRequest.h"
 
 @interface STOrderListViewController ()<UITabBarDelegate, UITableViewDataSource>
 
+@property (strong, nonatomic)NSArray *orderListArr;
 @end
 
 @implementation STOrderListViewController
@@ -25,7 +27,9 @@
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
-
+- (void)viewWillDisappear:(BOOL)animated {
+    [self orderList];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -84,4 +88,56 @@
         [self.navigationController pushViewController:dashBoard animated:YES];
     }
 }
+- (void)orderList {
+    if ([STUtility isNetworkAvailable]) {
+        [STUtility startActivityIndicatorOnView:nil withText:@"Loading..."];
+        NSString *requestBody = [STConstants orderListRequestBody];
+        NSLog(@"Order List: %@",requestBody);
+        
+        NSString *urlString = [STConstants getAPIURLWithParams:nil];
+        NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        
+        STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                             methodType:@"POST"
+                                                                   body:requestBody
+                                                    responseHeaderBlock:^(NSURLResponse *response){}
+                                                           successBlock:^(NSData *responseData){
+                                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                                   NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                                                   NSLog(@"Order Lists %@",xmlDic);
+                                                                        [self parseOrderListResponseWithDict:xmlDic];
+                                                               });
+                                                           }
+                                                           failureBlock:^(NSError *error)
+                                      {
+                                          [STUtility stopActivityIndicatorFromView:nil];
+                                          [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                      message:@"Unexpected error has occured, Please try after some time."
+                                                                     delegate:nil
+                                                            cancelButtonTitle:@"OK"
+                                                            otherButtonTitles: nil] show];
+                                          NSLog(@"SublimeTea-STPlaceOrder-orderList:- %@",error);
+                                      }];
+        
+        
+        
+    [httpRequest start];
+        
+    }
+}
+- (void)parseOrderListResponseWithDict:(NSDictionary *)responseDict {
+    if(responseDict){
+        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
+        //        NSLog(@"Image Data for ID %d %@",prodId, responseDict);
+        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
+
+        }
+        else {
+            [STUtility stopActivityIndicatorFromView:nil];
+            NSLog(@"Error fetching order list...");
+        }
+    }
+    [STUtility stopActivityIndicatorFromView:nil];
+}
+
 @end
