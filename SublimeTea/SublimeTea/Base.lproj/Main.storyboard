@@ -24,7 +24,6 @@
             <string>OpenSans-Bold</string>
             <string>OpenSans-Bold</string>
             <string>OpenSans-Bold</string>
-            <string>OpenSans-Bold</string>
         </mutableArray>
         <mutableArray key="OpenSans-Semibold.ttf">
             <string>OpenSans-Semibold</string>
@@ -1166,14 +1165,13 @@
                                                         <constraint firstAttribute="width" constant="80" id="p3f-KG-dET"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZP-9E-sU4">
-                                                    <rect key="frame" x="513" y="67" width="79" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZP-9E-sU4">
+                                                    <rect key="frame" x="567" y="0.0" width="25" height="25"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="79" id="31H-Tq-S3q"/>
-                                                        <constraint firstAttribute="height" constant="30" id="ZdA-wO-J6D"/>
+                                                        <constraint firstAttribute="width" constant="25" id="GQl-7z-58J"/>
+                                                        <constraint firstAttribute="height" constant="25" id="kjj-YZ-rWi"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="15"/>
-                                                    <state key="normal" title="Remove">
+                                                    <state key="normal" image="cancel_image">
                                                         <color key="titleColor" red="0.35294117650000001" green="0.14117647059999999" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                     <connections>
@@ -1181,7 +1179,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRi-m8-I5V">
-                                                    <rect key="frame" x="96" y="15" width="496" height="21"/>
+                                                    <rect key="frame" x="96" y="15" width="463" height="21"/>
                                                     <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1192,7 +1190,7 @@
                                                     <color key="textColor" red="0.35294117650000001" green="0.14117647059999999" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Usw-D7-F8f">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Usw-D7-F8f" customClass="STTextField">
                                                     <rect key="frame" x="183" y="67" width="61" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="61" id="ATZ-8N-VkZ"/>
@@ -1200,6 +1198,11 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="12"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="padding">
+                                                            <real key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STATUS: In Stock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D6V-so-w1C">
                                                     <rect key="frame" x="96" y="99" width="496" height="21"/>
@@ -1222,7 +1225,6 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="D6V-so-w1C" firstAttribute="top" secondItem="fZP-9E-sU4" secondAttribute="bottom" constant="2" id="3iL-xo-0lY"/>
                                                 <constraint firstItem="Usw-D7-F8f" firstAttribute="leading" secondItem="Ew4-bR-URG" secondAttribute="trailing" constant="14" id="5ys-Vg-aFk"/>
                                                 <constraint firstItem="Y9i-gf-BsZ" firstAttribute="top" secondItem="uMy-d4-Mis" secondAttribute="top" constant="15" id="8HV-dU-PTq"/>
                                                 <constraint firstAttribute="trailing" secondItem="CcD-fj-stT" secondAttribute="trailing" constant="8" id="9YI-16-rFo"/>
@@ -1232,14 +1234,14 @@
                                                 <constraint firstItem="Ew4-bR-URG" firstAttribute="top" secondItem="CcD-fj-stT" secondAttribute="bottom" constant="12" id="Jay-jc-ifr"/>
                                                 <constraint firstItem="CcD-fj-stT" firstAttribute="leading" secondItem="Y9i-gf-BsZ" secondAttribute="trailing" constant="8" id="L8i-gk-cwJ"/>
                                                 <constraint firstAttribute="bottom" secondItem="D6V-so-w1C" secondAttribute="bottom" constant="8" id="LV5-Uz-Vf5"/>
+                                                <constraint firstItem="fZP-9E-sU4" firstAttribute="trailing" secondItem="uMy-d4-Mis" secondAttribute="trailingMargin" id="RL1-uR-Qkl"/>
+                                                <constraint firstItem="fZP-9E-sU4" firstAttribute="top" secondItem="uMy-d4-Mis" secondAttribute="topMargin" constant="-8" id="U5K-ex-zsH"/>
                                                 <constraint firstItem="Usw-D7-F8f" firstAttribute="top" secondItem="CcD-fj-stT" secondAttribute="bottom" constant="8" id="Yvi-Ew-ERR"/>
-                                                <constraint firstAttribute="trailing" secondItem="fRi-m8-I5V" secondAttribute="trailing" constant="8" id="aw2-6R-ciZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="fRi-m8-I5V" secondAttribute="trailing" constant="41" id="aw2-6R-ciZ"/>
                                                 <constraint firstItem="fRi-m8-I5V" firstAttribute="leading" secondItem="Y9i-gf-BsZ" secondAttribute="trailing" constant="8" id="cI6-1x-aje"/>
-                                                <constraint firstAttribute="trailing" secondItem="fZP-9E-sU4" secondAttribute="trailing" constant="8" id="erl-Af-Zt7"/>
                                                 <constraint firstItem="CcD-fj-stT" firstAttribute="top" secondItem="fRi-m8-I5V" secondAttribute="bottom" constant="2" id="fhV-5T-izy"/>
                                                 <constraint firstItem="Ew4-bR-URG" firstAttribute="leading" secondItem="Y9i-gf-BsZ" secondAttribute="trailing" constant="8" id="iFv-Ko-d09"/>
                                                 <constraint firstItem="fRi-m8-I5V" firstAttribute="top" secondItem="uMy-d4-Mis" secondAttribute="top" constant="15" id="qn7-pG-3Zg"/>
-                                                <constraint firstItem="fZP-9E-sU4" firstAttribute="top" secondItem="CcD-fj-stT" secondAttribute="bottom" constant="8" id="sKa-An-Fs6"/>
                                                 <constraint firstAttribute="trailing" secondItem="D6V-so-w1C" secondAttribute="trailing" constant="8" id="tuD-em-Mct"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -1832,7 +1834,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SEA-Fm-fsq">
                                                     <rect key="frame" x="8" y="26" width="584" height="30"/>
                                                     <subviews>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="+91" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Opr-dr-7Hu" customClass="STTextField">
+                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="+91" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Opr-dr-7Hu">
                                                             <rect key="frame" x="8" y="0.0" width="42" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="1Wd-u9-g91"/>
@@ -2377,6 +2379,7 @@
         <image name="Explore-our-Range-of-Teas_seperator" width="195" height="17"/>
         <image name="Explore-our-Range-of-Teas_seperator_2" width="123" height="11"/>
         <image name="Forgot Password_Logo" width="625" height="204"/>
+        <image name="cancel_image" width="39" height="39"/>
         <image name="continue-shopping_button" width="150" height="64"/>
         <image name="create account_button" width="1435" height="116"/>
         <image name="image_button" width="150" height="64"/>

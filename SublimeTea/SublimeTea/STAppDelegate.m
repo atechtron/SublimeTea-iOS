@@ -48,8 +48,6 @@
     [defaults removeObjectForKey:kUSerSession_Key];
     [defaults synchronize];
     [self startSession];
-    STPlaceOrder *order = [[STPlaceOrder alloc] init];
-//    [order placeOrder];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
