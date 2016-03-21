@@ -32,4 +32,7 @@
 + (NSString *)paymentMethodReuestBody:(NSString *)method;
 + (NSString *)orderRequestBody;
 + (NSString *)orderListRequestBody;
++ (NSString *)countryListRequestBody;
++ (NSString *)regionListequestBodyForCountry:(NSString *)countryCode;
+
 @end

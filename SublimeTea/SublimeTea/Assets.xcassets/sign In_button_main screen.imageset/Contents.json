@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "check-box_2.png",
+      "filename" : "sign In_button_main screen.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "check-box_2-1.png",
+      "filename" : "sign In_button_main screen-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "check-box_2-2.png",
+      "filename" : "sign In_button_main screen-2.png",
       "scale" : "3x"
     }
   ],
