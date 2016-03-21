@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="LFAXD_0.TTF">
@@ -14,21 +13,25 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="mQr-e1-0mw" customClass="STOrderListHeaderView">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="62"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="46"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s1h-RL-hsA">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="62"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="46"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_logo" translatesAutoresizingMaskIntoConstraints="NO" id="sX9-87-fkr">
-                            <rect key="frame" x="180" y="8" width="240" height="46"/>
+                            <rect key="frame" x="180" y="0.0" width="240" height="46"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="240" id="3dS-CF-zbD"/>
                                 <constraint firstAttribute="height" constant="46" id="PG1-Jz-76Q"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Orders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JU6-yc-Z8A">
-                            <rect key="frame" x="8" y="21" width="584" height="21"/>
+                            <rect key="frame" x="180" y="12" width="240" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="240" id="OX1-Ev-0rG"/>
+                                <constraint firstAttribute="height" constant="21" id="bRs-4L-sKv"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="LucidaFax-Demi" family="Lucida Fax" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
@@ -36,15 +39,12 @@
                     </subviews>
                     <color key="backgroundColor" red="0.90588235289999997" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="JU6-yc-Z8A" secondAttribute="trailing" constant="8" id="14i-sh-6It"/>
                         <constraint firstAttribute="trailing" secondItem="sX9-87-fkr" secondAttribute="trailing" constant="180" id="2xb-og-XHe"/>
-                        <constraint firstItem="JU6-yc-Z8A" firstAttribute="top" secondItem="s1h-RL-hsA" secondAttribute="top" constant="21" id="AvL-5o-PH8"/>
-                        <constraint firstAttribute="bottom" secondItem="JU6-yc-Z8A" secondAttribute="bottom" constant="20" id="YMv-CU-csf"/>
+                        <constraint firstItem="sX9-87-fkr" firstAttribute="centerY" secondItem="s1h-RL-hsA" secondAttribute="centerY" id="JRv-Di-kfZ"/>
+                        <constraint firstItem="JU6-yc-Z8A" firstAttribute="centerY" secondItem="s1h-RL-hsA" secondAttribute="centerY" id="KrO-fK-icq"/>
+                        <constraint firstItem="JU6-yc-Z8A" firstAttribute="centerX" secondItem="s1h-RL-hsA" secondAttribute="centerX" id="N2b-q7-sRQ"/>
                         <constraint firstItem="sX9-87-fkr" firstAttribute="centerX" secondItem="s1h-RL-hsA" secondAttribute="centerX" id="YzL-mq-5lk"/>
-                        <constraint firstItem="sX9-87-fkr" firstAttribute="top" secondItem="s1h-RL-hsA" secondAttribute="topMargin" id="c8w-jC-AuX"/>
                         <constraint firstItem="sX9-87-fkr" firstAttribute="leading" secondItem="s1h-RL-hsA" secondAttribute="leading" constant="180" id="nwk-wk-fEu"/>
-                        <constraint firstItem="sX9-87-fkr" firstAttribute="bottom" secondItem="s1h-RL-hsA" secondAttribute="bottomMargin" id="wat-so-pJ5"/>
-                        <constraint firstItem="JU6-yc-Z8A" firstAttribute="leading" secondItem="s1h-RL-hsA" secondAttribute="leading" constant="8" id="z50-HV-v8F"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
