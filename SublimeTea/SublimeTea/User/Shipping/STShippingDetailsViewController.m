@@ -79,16 +79,16 @@
     self.isShippingISBillingAddress = YES;
     
     [STUtility stopActivityIndicatorFromView:nil];
-    
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self prepareCountryData];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self prepareCountryData];
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
+    [STUtility startActivityIndicatorOnView:nil withText:@"Loading, Please wait..."];
     //    self.navigationController.navigationBarHidden = YES;
     
     jsondict = [[NSMutableDictionary alloc]init];
@@ -113,7 +113,10 @@
         NSJSONSerialization *jsonDict = [NSJSONSerialization JSONObjectWithData:data
                                                                         options:kNilOptions
                                                                           error:&err];
-        [[STGlobalCacheManager defaultManager] addItemToCache:jsonDict withKey:kCountries_key];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[STGlobalCacheManager defaultManager] addItemToCache:jsonDict withKey:kCountries_key];
+            [STUtility stopActivityIndicatorFromView:nil];
+        });
     }
 }
 -(void) ResponseNew:(NSNotification *)message
@@ -147,7 +150,7 @@
             STPlaceOrder *ordercreation = [[STPlaceOrder alloc] init];
             ordercreation.address = address;
             [ordercreation placeOrder];
-            [STUtility stopActivityIndicatorFromView:nil];
+//            [STUtility stopActivityIndicatorFromView:nil];
 //            [self proceedForPayment];
         }
     }
