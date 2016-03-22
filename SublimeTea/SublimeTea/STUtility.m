@@ -329,6 +329,11 @@
     
     return soapBody;
 }
+
++ (UIColor *)getSublimeHeadingBGColor {
+    return UIColorFromRGB(106.0, 49.0, 32.0, 1.0);
+}
+
 //+(UIImage *)getImageWithColor:(UIColor *)color
 //{
 //    UIImage *img = [UIImage imageNamed:@"gray-border.png"];

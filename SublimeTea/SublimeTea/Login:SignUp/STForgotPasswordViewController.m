@@ -33,7 +33,7 @@
 - (void)updateUI {
     self.emailTextField.borderStyle = UITextBorderStyleNone;
     self.emailTextField.layer.borderWidth = 1;
-    self.emailTextField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    self.emailTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     self.emailTextField.layer.cornerRadius = 2;
 }
 - (void)didReceiveMemoryWarning {

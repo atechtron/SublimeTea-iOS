@@ -42,12 +42,12 @@
 - (void)updateUI {
     self.useraNameTextField.borderStyle = UITextBorderStyleNone;
     self.useraNameTextField.layer.borderWidth = 1;
-    self.useraNameTextField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    self.useraNameTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     self.useraNameTextField.layer.cornerRadius = 2;
     
     self.passwordTextfield.borderStyle = UITextBorderStyleNone;
     self.passwordTextfield.layer.borderWidth = 1;
-    self.passwordTextfield.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    self.passwordTextfield.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     self.passwordTextfield.layer.cornerRadius = 2;
     
     UIImage *unselectedCheckBox = [UIImage imageNamed:@"chekboxUnselected"];

@@ -8,6 +8,7 @@
 
 #import "STDropDownTableViewCell.h"
 #import "STMacros.h"
+#import "STUtility.h"
 
 @implementation STDropDownTableViewCell
 
@@ -24,12 +25,12 @@
     
     _textField.borderStyle = UITextBorderStyleNone;
     _textField.layer.borderWidth = 1;
-    _textField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    _textField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     _textField.layer.cornerRadius = 2;
     
     _dropDownTextField.borderStyle = UITextBorderStyleNone;
     _dropDownTextField.layer.borderWidth = 1;
-    _dropDownTextField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    _dropDownTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     _dropDownTextField.layer.cornerRadius = 2;
     
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 13, 10, 5)];

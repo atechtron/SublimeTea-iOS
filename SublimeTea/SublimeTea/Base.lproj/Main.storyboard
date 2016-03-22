@@ -2396,5 +2396,5 @@
         <segue reference="Cqv-Oa-wKY"/>
         <segue reference="CXD-3r-nry"/>
     </inferredMetricsTieBreakers>
-    <color key="tintColor" red="0.6588235294117647" green="0.50196078431372548" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
+    <color key="tintColor" red="0.41568627450980389" green="0.19215686274509802" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
 </document>

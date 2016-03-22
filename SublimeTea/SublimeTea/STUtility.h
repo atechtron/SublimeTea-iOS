@@ -24,4 +24,5 @@
 + (void)stopActivityIndicatorFromView:(UIView*)inView;
 
 + (NSString *)prepareMethodSoapBody:(NSString *)actionMethodNameKey params:(NSDictionary *)paramDict;
++ (UIColor *)getSublimeHeadingBGColor;
 @end

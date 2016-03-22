@@ -150,7 +150,7 @@
             STPlaceOrder *ordercreation = [[STPlaceOrder alloc] init];
             ordercreation.address = address;
             [ordercreation placeOrder];
-//            [STUtility stopActivityIndicatorFromView:nil];
+            [STUtility stopActivityIndicatorFromView:nil];
 //            [self proceedForPayment];
         }
     }
@@ -188,11 +188,11 @@
     
     paymentView.strBillingName = @"Test";
     paymentView.strBillingAddress = @"Bill address";
-    paymentView.strBillingCity =@"Bill City";
-    paymentView.strBillingState = @"TN";
+    paymentView.strBillingCity =@"Kanpur";
+    paymentView.strBillingState = @"UP";
     paymentView.strBillingPostal =@"625000";
     paymentView.strBillingCountry = @"IND";
-    paymentView.strBillingEmail =@"test@testmail.com";
+    paymentView.strBillingEmail =@"btecharpit@gmail.com";
     paymentView.strBillingTelephone =@"9363469999";
     
     // Non mandatory parameters
@@ -203,22 +203,27 @@
     paymentView.strDeliveryPostal =@"";
     paymentView.strDeliveryCountry = @"";
     paymentView.strDeliveryTelephone =@"";
-    //    paymentView.strBillingName = self.nameTextField.text;
-    //    paymentView.strBillingAddress = self.addressTextView.text;
-    //    paymentView.strBillingCity = self.cityTextField.text;
-    //    paymentView.strBillingState = self.stateTextField.text;
-    //    paymentView.strBillingPostal = self.postalCodeTextField.text;
-    //    paymentView.strBillingCountry = self.countryextField.text;
-    //    paymentView.strBillingEmail = self.emailTextField.text;
-    //    paymentView.strBillingTelephone = self.phoneTextField.text;
-    //
-    //    paymentView.strDeliveryName = self.nameTextField.text;
-    //    paymentView.strDeliveryAddress = self.addressTextView.text;
-    //    paymentView.strDeliveryCity = self.cityTextField.text;
-    //    paymentView.strDeliveryState = self.stateTextField.text;
-    //    paymentView.strDeliveryPostal = self.postalCodeTextField.text;
-    //    paymentView.strDeliveryCountry = self.countryextField.text;
-    //    paymentView.strDeliveryTelephone = self.phoneTextField.text;
+    
+//    paymentView.descriptionString = self.nameTextField.text;
+//    paymentView.strCurrency =   @"INR";
+//    paymentView.strDisplayCurrency = @"INR";
+//    paymentView.strDescription = self.nameTextField.text;
+//        paymentView.strBillingName = self.nameTextField.text;
+//        paymentView.strBillingAddress = self.addressTextView.text;
+//        paymentView.strBillingCity = self.cityTextField.text;
+//        paymentView.strBillingState = self.stateTextField.text;
+//        paymentView.strBillingPostal = self.postalCodeTextField.text;
+//        paymentView.strBillingCountry = self.countryextField.text;
+//        paymentView.strBillingEmail = self.emailTextField.text;
+//        paymentView.strBillingTelephone = self.phoneTextField.text;
+//    
+//        paymentView.strDeliveryName = self.nameTextField.text;
+//        paymentView.strDeliveryAddress = self.addressTextView.text;
+//        paymentView.strDeliveryCity = self.cityTextField.text;
+//        paymentView.strDeliveryState = self.stateTextField.text;
+//        paymentView.strDeliveryPostal = self.postalCodeTextField.text;
+//        paymentView.strDeliveryCountry = self.countryextField.text;
+//        paymentView.strDeliveryTelephone = self.phoneTextField.text;
     
     
     //If you want to add any extra parameters dynamically you have to add the Key and value as we //mentioned below
