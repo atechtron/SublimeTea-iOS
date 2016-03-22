@@ -104,7 +104,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         if ([STUtility isNetworkAvailable]) {
-            [STUtility startActivityIndicatorOnView:nil withText:@"Loading Range of Teas, Please wait.."];
+            [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
             NSDictionary *xmlDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductCategory_Key];
             if (xmlDict) {
                 [self parseResponseWithDict:xmlDict];

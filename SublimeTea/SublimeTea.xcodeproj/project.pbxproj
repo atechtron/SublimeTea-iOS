@@ -16,6 +16,8 @@
 		18B626CD1C91D9650018D260 /* STPopoverTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B626CC1C91D9650018D260 /* STPopoverTableViewCell.m */; };
 		18C84AF81C9FE0A100709974 /* STInitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C84AF71C9FE0A000709974 /* STInitialViewController.m */; };
 		18C84AFB1CA04F3300709974 /* STTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C84AFA1CA04F3300709974 /* STTextField.m */; };
+		18C84B021CA1084500709974 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C84B011CA1084500709974 /* UIImage+animatedGIF.m */; };
+		18C84B041CA10A1F00709974 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 18C84B031CA10A1F00709974 /* loading.gif */; };
 		18F61FB01C88B86B00FEB89C /* STDashboardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F61FAF1C88B86B00FEB89C /* STDashboardCollectionViewCell.m */; };
 		18F818991C95E4A40002F5AE /* country_states_city.json in Resources */ = {isa = PBXBuildFile; fileRef = 18F818981C95E4A40002F5AE /* country_states_city.json */; };
 		18F8DE371C972EEC008BFC55 /* Caviar_Dreams_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE331C972EEC008BFC55 /* Caviar_Dreams_Bold.ttf */; };
@@ -174,6 +176,9 @@
 		18C84AF71C9FE0A000709974 /* STInitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STInitialViewController.m; sourceTree = "<group>"; };
 		18C84AF91CA04F3300709974 /* STTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STTextField.h; path = Utilities/STTextField.h; sourceTree = "<group>"; };
 		18C84AFA1CA04F3300709974 /* STTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STTextField.m; path = Utilities/STTextField.m; sourceTree = "<group>"; };
+		18C84B001CA1084500709974 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+animatedGIF.h"; path = "Utilities/UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		18C84B011CA1084500709974 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+animatedGIF.m"; path = "Utilities/UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		18C84B031CA10A1F00709974 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		18F61FAE1C88B86B00FEB89C /* STDashboardCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDashboardCollectionViewCell.h; path = Dashboard/STDashboardCollectionViewCell.h; sourceTree = "<group>"; };
 		18F61FAF1C88B86B00FEB89C /* STDashboardCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STDashboardCollectionViewCell.m; path = Dashboard/STDashboardCollectionViewCell.m; sourceTree = "<group>"; };
 		18F818981C95E4A40002F5AE /* country_states_city.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = country_states_city.json; path = Utilities/country_states_city.json; sourceTree = "<group>"; };
@@ -425,6 +430,24 @@
 				18072F1E1C9AC48F000E5AEE /* STPlaceOrder.m */,
 			);
 			name = Shipping;
+			sourceTree = "<group>";
+		};
+		18C84AFE1CA1079700709974 /* customTextField */ = {
+			isa = PBXGroup;
+			children = (
+				18C84AFA1CA04F3300709974 /* STTextField.m */,
+				18C84AF91CA04F3300709974 /* STTextField.h */,
+			);
+			name = customTextField;
+			sourceTree = "<group>";
+		};
+		18C84AFF1CA107E900709974 /* GIF_indicator */ = {
+			isa = PBXGroup;
+			children = (
+				18C84B001CA1084500709974 /* UIImage+animatedGIF.h */,
+				18C84B011CA1084500709974 /* UIImage+animatedGIF.m */,
+			);
+			name = GIF_indicator;
 			sourceTree = "<group>";
 		};
 		18F8DE321C97221B008BFC55 /* fonts */ = {
@@ -707,18 +730,19 @@
 		2BFA1B6C1C7DFD69008C4833 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				18C84B031CA10A1F00709974 /* loading.gif */,
+				18C84AFF1CA107E900709974 /* GIF_indicator */,
+				2BFA1B7C1C7DFFA5008C4833 /* CacheManager */,
+				18C84AFE1CA1079700709974 /* customTextField */,
 				2B2DC0AF1C82D23E00A29459 /* Badge */,
 				2BFA1B7E1C7DFFD1008C4833 /* XMLParser */,
 				2BFA1B7D1C7DFFBC008C4833 /* LoadingIndicator */,
-				2BFA1B7C1C7DFFA5008C4833 /* CacheManager */,
 				2BFA1B851C7E0121008C4833 /* STConstants.h */,
 				2BFA1B861C7E0121008C4833 /* STConstants.m */,
 				2BFA1BBE1C7E0C1B008C4833 /* STMacros.h */,
 				2B456FA91C7F77C600C240A5 /* STUtility.h */,
 				2B456FAA1C7F77C600C240A5 /* STUtility.m */,
 				18F818981C95E4A40002F5AE /* country_states_city.json */,
-				18C84AF91CA04F3300709974 /* STTextField.h */,
-				18C84AFA1CA04F3300709974 /* STTextField.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1029,6 +1053,7 @@
 				2B9882AA1C81E4D100BA5234 /* Config.plist in Resources */,
 				18F8DE511C972F0D008BFC55 /* OpenSans-CondensedLight.ttf in Resources */,
 				2BA72EF21C7DC8F0006105B6 /* Assets.xcassets in Resources */,
+				18C84B041CA10A1F00709974 /* loading.gif in Resources */,
 				2B456FA11C7F5C4400C240A5 /* STMenuTableHeaderView.xib in Resources */,
 				2B9882BD1C81E4D100BA5234 /* cvv_no.jpg in Resources */,
 				18F8DE4F1C972F0D008BFC55 /* OpenSans-Bold.ttf in Resources */,
@@ -1111,6 +1136,7 @@
 				2B456F901C7F550D00C240A5 /* UIImage+REFrostedViewController.m in Sources */,
 				2B9CD2AB1C8FDCD000B63C92 /* STPhoneNumberTableViewCell.m in Sources */,
 				2B2E57AF1C836FB900351F39 /* STOrderConfirmationHeaderView.m in Sources */,
+				18C84B021CA1084500709974 /* UIImage+animatedGIF.m in Sources */,
 				18C84AFB1CA04F3300709974 /* STTextField.m in Sources */,
 				2BA72EED1C7DC8F0006105B6 /* STViewController.m in Sources */,
 				2BFA1BBA1C7E09EA008C4833 /* STOrderConfirmationViewController.m in Sources */,

@@ -34,7 +34,7 @@
     downloadSession = [NSURLSession sessionWithConfiguration:downloadConfig];
 }
 -(void)viewWillAppear:(BOOL)animated {
-    [STUtility startActivityIndicatorOnView:nil withText:@"Loading Data, Please wait.."];
+    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
 }
 - (void)viewDidAppear:(BOOL)animated {
     
@@ -246,7 +246,7 @@
 }
 - (void)fetchProductDetails {
     
-    [STUtility startActivityIndicatorOnView:nil withText:@"Loading product details.."];
+    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
     
     NSDictionary *prodDict = self.productsInSelectedCat[selectedProductIndex];
     NSString *prodId = prodDict[@"product_id"][@"__text"];

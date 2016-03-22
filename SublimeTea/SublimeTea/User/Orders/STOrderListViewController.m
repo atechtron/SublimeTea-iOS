@@ -90,7 +90,7 @@
 }
 - (void)orderList {
     if ([STUtility isNetworkAvailable]) {
-        [STUtility startActivityIndicatorOnView:nil withText:@"Loading..."];
+        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
         NSString *requestBody = [STConstants orderListRequestBody];
         NSLog(@"Order List: %@",requestBody);
         
