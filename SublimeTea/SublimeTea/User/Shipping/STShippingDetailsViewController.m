@@ -88,7 +88,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [STUtility startActivityIndicatorOnView:nil withText:@"Loading, Please wait..."];
+    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
     //    self.navigationController.navigationBarHidden = YES;
     
     jsondict = [[NSMutableDictionary alloc]init];
@@ -146,7 +146,7 @@
     if ([STUtility isNetworkAvailable] && [self validateInputs]) {
         if (self.isShippingISBillingAddress) {
             [self setAddress];
-            [STUtility startActivityIndicatorOnView:nil withText:@"Loading..."];
+            [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
             STPlaceOrder *ordercreation = [[STPlaceOrder alloc] init];
             ordercreation.address = address;
             [ordercreation placeOrder];

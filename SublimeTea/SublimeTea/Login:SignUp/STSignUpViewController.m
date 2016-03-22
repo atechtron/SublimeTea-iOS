@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
 //    self.menuButtonHidden = YES;
 //    self.hideRightBarItems = YES;
-    self.hideLeftBarItems = NO;
+//    self.hideLeftBarItems = NO;
     
     [super viewDidLoad];
     self.mobileNumberTextField.enablesReturnKeyAutomatically = YES;
@@ -128,7 +128,7 @@
     
     // Check Internet Connsection
     if ([STUtility isNetworkAvailable] && [self validateInputs]) {
-        [STUtility startActivityIndicatorOnView:nil withText:@"SigningIn, Please wait.."];
+        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
          [self userRegistration];
         
     }

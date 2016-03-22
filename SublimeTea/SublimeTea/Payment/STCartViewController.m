@@ -175,7 +175,7 @@
 
 - (void)checkoutButtonAction:(UIButton *)sender {
     if ([STUtility isNetworkAvailable] && [self validateInputs]) {
-        [STUtility startActivityIndicatorOnView:nil withText:@"Loading.."];
+        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
         [self performSegueWithIdentifier:@"shippingSegue" sender:self];
     }
 }

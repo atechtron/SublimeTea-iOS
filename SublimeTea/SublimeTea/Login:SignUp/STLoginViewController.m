@@ -50,6 +50,8 @@
     self.passwordTextfield.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
     self.passwordTextfield.layer.cornerRadius = 2;
     
+    UIImage *unselectedCheckBox = [UIImage imageNamed:@"chekboxUnselected"];
+    [self.checkBoxButton setImage:unselectedCheckBox forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -106,7 +108,7 @@
 
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
-        [STUtility startActivityIndicatorOnView:nil withText:@"LoggingIn Please wait.."];
+        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
         if (sessionId.length) {
             [self userLogInWIthSessionId:sessionId];
         }

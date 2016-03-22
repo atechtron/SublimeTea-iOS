@@ -12,6 +12,7 @@
 #import "Reachability.h"
 #import "MBProgressHUD.h"
 #import "STConstants.h"
+#import "UIImage+animatedGIF.h"
 
 @interface STUtility()
 {
@@ -125,7 +126,12 @@
         MBProgressHUD *mLoadingScreen =(MBProgressHUD*)[inView viewWithTag:123123123];
         if(mLoadingScreen == nil)
         {
+            NSURL *url = [[NSBundle mainBundle] URLForResource:@"loading" withExtension:@"gif"];
+        
+            UIImageView *img = [[UIImageView alloc] initWithImage:[UIImage animatedImageWithAnimatedGIFURL:url]];
             mLoadingScreen = [MBProgressHUD showHUDAddedTo:inView animated:YES];
+            mLoadingScreen.customView = img;
+            mLoadingScreen.mode = MBProgressHUDModeCustomView;
             mLoadingScreen.label.text = inStr;
             mLoadingScreen.tag = 123123123;
             mLoadingScreen.alpha = 1;

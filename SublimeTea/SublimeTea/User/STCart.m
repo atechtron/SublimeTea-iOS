@@ -126,7 +126,7 @@ static STCart *sharedInstance;
     }
 }
 - (void)createCart {
-    [STUtility startActivityIndicatorOnView:nil withText:@"Please Wait.."];
+    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
     NSString *requestBody = [STConstants createCartRequestBody];
     
     NSString *urlString = [STConstants getAPIURLWithParams:nil];
