@@ -16,8 +16,9 @@
 @implementation STForgotPasswordViewController
 
 - (void)viewDidLoad {
-    self.menuButtonHidden = YES;
-    self.hideRightBarItems = YES;
+//    self.menuButtonHidden = YES;
+//    self.hideRightBarItems = YES;
+    
     [super viewDidLoad];
     
     self.emailTextField.returnKeyType = UIReturnKeyDone;
@@ -26,8 +27,15 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
+    
+    [self updateUI];
 }
-
+- (void)updateUI {
+    self.emailTextField.borderStyle = UITextBorderStyleNone;
+    self.emailTextField.layer.borderWidth = 1;
+    self.emailTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
+    self.emailTextField.layer.cornerRadius = 2;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

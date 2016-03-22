@@ -17,8 +17,9 @@
 @implementation STSignUpViewController
 
 - (void)viewDidLoad {
-    self.menuButtonHidden = YES;
-    self.hideRightBarItems = YES;
+//    self.menuButtonHidden = YES;
+//    self.hideRightBarItems = YES;
+//    self.hideLeftBarItems = NO;
     
     [super viewDidLoad];
     self.mobileNumberTextField.enablesReturnKeyAutomatically = YES;
@@ -30,6 +31,30 @@
    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
+    
+    [self updateUI];
+}
+- (void)updateUI {
+    
+    self.emailAddressTextField.borderStyle = UITextBorderStyleNone;
+    self.emailAddressTextField.layer.borderWidth = 1;
+    self.emailAddressTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
+    self.emailAddressTextField.layer.cornerRadius = 2;
+    
+    self.passwordTextField.borderStyle = UITextBorderStyleNone;
+    self.passwordTextField.layer.borderWidth = 1;
+    self.passwordTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
+    self.passwordTextField.layer.cornerRadius = 2;
+    
+    self.confirmPasswordTextField.borderStyle = UITextBorderStyleNone;
+    self.confirmPasswordTextField.layer.borderWidth = 1;
+    self.confirmPasswordTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
+    self.confirmPasswordTextField.layer.cornerRadius = 2;
+    
+    self.mobileNumberTextField.borderStyle = UITextBorderStyleNone;
+    self.mobileNumberTextField.layer.borderWidth = 1;
+    self.mobileNumberTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
+    self.mobileNumberTextField.layer.cornerRadius = 2;
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -73,7 +98,7 @@
 }
 */
 - (void)viewDidTapped:(id)sender {
-    self.contentScrollView.contentOffset = CGPointMake(0, self.errorLabel.frame.origin.y);
+    self.contentScrollView.contentOffset = CGPointMake(0, 0);
     [self.view endEditing:YES];
 }
 - (BOOL)validateInputs {
@@ -103,7 +128,7 @@
     
     // Check Internet Connsection
     if ([STUtility isNetworkAvailable] && [self validateInputs]) {
-        [STUtility startActivityIndicatorOnView:nil withText:@"SigningIn, Please wait.."];
+        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
          [self userRegistration];
         
     }

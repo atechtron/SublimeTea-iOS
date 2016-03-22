@@ -320,4 +320,54 @@
     return tempStr;
 }
 
++ (NSString *)orderListRequestBody {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+    
+    NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                         "<soapenv:Header/>"
+                         "<soapenv:Body>"
+                         "<urn:salesOrderList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                         "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                         "<filters xsi:type=\"urn:filters\">"
+                         "</filters>"
+                         "</urn:salesOrderList>"
+                         "</soapenv:Body>"
+                         "</soapenv:Envelope>",sessionId];
+    return tempStr;
+}
++ (NSString *)countryListRequestBody {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+    
+    NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                         "<soapenv:Header/>"
+                         "<soapenv:Body>"
+                         "<urn:directoryCountryList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                         "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                         "</urn:directoryCountryList>"
+                         "</soapenv:Body>"
+                         "</soapenv:Envelope>",sessionId];
+    return tempStr;
+}
+
++ (NSString *)regionListequestBodyForCountry:(NSString *)countryCode {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+    
+    NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                         "<soapenv:Header/>"
+                         "<soapenv:Body>"
+                         "<urn:directoryRegionList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                         "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                         "<country xsi:type=\"xsd:string\">%@</country>"
+                         "</urn:directoryRegionList>"
+                         "</soapenv:Body>"
+                         "</soapenv:Envelope>",sessionId, countryCode];
+    return tempStr;
+}
+
 @end

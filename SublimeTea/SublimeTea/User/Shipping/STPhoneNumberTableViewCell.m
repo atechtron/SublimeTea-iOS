@@ -8,6 +8,7 @@
 
 #import "STPhoneNumberTableViewCell.h"
 #import "STMacros.h"
+#import "STUtility.h"
 
 @implementation STPhoneNumberTableViewCell
 
@@ -18,11 +19,11 @@
     _phoneTextField.borderStyle = UITextBorderStyleNone;
     
     _containerView.layer.borderWidth = 1;
-    _containerView.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    _containerView.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     _containerView.layer.cornerRadius = 2;
     
     CALayer *rightBorder = [CALayer layer];
-    rightBorder.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    rightBorder.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     rightBorder.borderWidth = 1;
     rightBorder.frame = CGRectMake(CGRectGetWidth(_phoneCountryCodeTextBox.frame)-1, -1, 1, CGRectGetHeight(_phoneCountryCodeTextBox.frame));
     

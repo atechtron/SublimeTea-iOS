@@ -18,7 +18,9 @@
 
 - (void)placeOrder
 {
-    [self createCart];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+       [self createCart];
+    });
 }
 
 /* Step1:- 
@@ -77,11 +79,13 @@ Create a cart */
             [self addProductToCart];
         }
         else {
+            [STUtility stopActivityIndicatorFromView:nil];
             NSLog(@"Error while adding product to cart.");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
         //No categories found.
+        [STUtility stopActivityIndicatorFromView:nil];
     }
 //    [STUtility stopActivityIndicatorFromView:nil];
 }
@@ -102,6 +106,12 @@ Create a cart */
                                     @"quoteId":[NSNumber numberWithInteger:usr_cartId]};
         NSMutableDictionary *soapBodyDict = [NSMutableDictionary new];
         [soapBodyDict addEntriesFromDictionary:paramDict];
+        
+        NSDictionary *dataDict = @{@"product_id" : @"26",
+                                   @"qty": [NSNumber numberWithInteger:1]};
+        
+        NSArray *tempArr = @[dataDict];
+        
         [soapBodyDict setObject:[STCart defaultCart].tempCartProducts forKey:kProductNodeName];
         [soapBodyDict setValue:[STConstants storeId] forKey:@"storeId"];
         
@@ -138,7 +148,9 @@ Create a cart */
             });
         }
     }
-    
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
 }
 - (void)parseProductResponseWithDict:(NSDictionary *)responseDict {
     if (responseDict) {
@@ -153,10 +165,12 @@ Create a cart */
             }
         }
         else {
+            [STUtility stopActivityIndicatorFromView:nil];
             NSLog(@"Error adding product to cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
+        [STUtility stopActivityIndicatorFromView:nil];
     }
 //    [STUtility stopActivityIndicatorFromView:nil];
 }
@@ -199,6 +213,9 @@ Create a cart */
                 [self parseCartCustomerSetResponseWithDict:xmlDic];
             });
     }
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
 }
 
 - (void)parseCartCustomerSetResponseWithDict:(NSDictionary *)responseDict {
@@ -213,14 +230,30 @@ Create a cart */
             }
         }
         else {
+            [STUtility stopActivityIndicatorFromView:nil];
             NSLog(@"Error setting user information to cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
+        [STUtility stopActivityIndicatorFromView:nil];
     }
     //    [STUtility stopActivityIndicatorFromView:nil];
 }
-
+//- (STAddress *)getAddress {
+//    STAddress *add = [[STAddress alloc] init];
+//    add.shipAddress.mode = @"shipping";
+//    add.shipAddress.firstname = @"";
+//    @property (strong, nonatomic)NSString *lastname;
+//    @property (strong, nonatomic)NSString *street;
+//    @property (strong, nonatomic)NSString *city;
+//    @property (strong, nonatomic)NSString *state;
+//    @property (strong, nonatomic)NSString *postcode;
+//    @property (strong, nonatomic)NSString *country_id;
+//    @property (strong, nonatomic)NSString *telephone;
+//    @property (strong, nonatomic)NSString *email;
+//    @property (nonatomic) NSInteger is_default_shipping;
+//    @property (nonatomic) NSInteger is_default_billing;
+//}
 
 /* Step4:-
  Set Address */
@@ -282,6 +315,9 @@ Create a cart */
             });
         }
     }
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
 }
 
 - (void)parseAddressResponseWithDict:(NSDictionary *)responseDict {
@@ -296,10 +332,12 @@ Create a cart */
             }
         }
         else {
+            [STUtility stopActivityIndicatorFromView:nil];
             NSLog(@"Error adding address information to cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
+        [STUtility stopActivityIndicatorFromView:nil];
     }
     //    [STUtility stopActivityIndicatorFromView:nil];
 }
@@ -341,6 +379,9 @@ Create a cart */
             [self parseShippingMethodListResponseWithDict:xmlDic];
         });
     }
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
 }
 - (void)parseShippingMethodListResponseWithDict:(NSDictionary *)responseDict {
     if (responseDict) {
@@ -355,10 +396,12 @@ Create a cart */
             }
         }
         else {
+            [STUtility stopActivityIndicatorFromView:nil];
             NSLog(@"Error in fetching shipping mode list ...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
+        [STUtility stopActivityIndicatorFromView:nil];
     }
     //    [STUtility stopActivityIndicatorFromView:nil];
 }
@@ -400,6 +443,9 @@ Create a cart */
             [self parseShippingMethodResponseWithDict:xmlDic];
         });
     }
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
 }
 
 - (void)parseShippingMethodResponseWithDict:(NSDictionary *)responseDict {
@@ -415,10 +461,12 @@ Create a cart */
             }
         }
         else {
+            [STUtility stopActivityIndicatorFromView:nil];
             NSLog(@"Error setting shipping method cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
+        [STUtility stopActivityIndicatorFromView:nil];
     }
     //    [STUtility stopActivityIndicatorFromView:nil];
 }
@@ -427,8 +475,6 @@ Create a cart */
 /* Step7:-
  Get cart payment amount */
 - (void)getCartAmount{
-
-    
     if ([STUtility isNetworkAvailable]) {
         NSString *requestBody = [STConstants cartTotalRequestBody];
         
@@ -460,7 +506,9 @@ Create a cart */
             [self parseCartTotalResponseWithDict:xmlDic];
         });
     }
-    
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
 }
 
 - (void)parseCartTotalResponseWithDict:(NSDictionary *)responseDict {
@@ -476,10 +524,12 @@ Create a cart */
 //            }
         }
         else {
+            [STUtility stopActivityIndicatorFromView:nil];
             NSLog(@"Error in fetching shipping mode list ...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
+        [STUtility stopActivityIndicatorFromView:nil];
     }
     //    [STUtility stopActivityIndicatorFromView:nil];
 }
@@ -526,6 +576,9 @@ Create a cart */
             [self parsePaymentMethodListResponseWithDict:xmlDic];
         });
     }
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
 }
 
 - (void)parsePaymentMethodListResponseWithDict:(NSDictionary *)responseDict {
@@ -541,19 +594,21 @@ Create a cart */
 //            }
         }
         else {
+            [STUtility stopActivityIndicatorFromView:nil];
             NSLog(@"Error in fetching shipping mode list ...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
+        [STUtility stopActivityIndicatorFromView:nil];
     }
 }
 
-
+    
 /* Step9:-
  set payment mode to cart */
 - (void)setPaymentMode {
     if ([STUtility isNetworkAvailable]) {
-        NSString *requestBody = [STConstants paymentMethodReuestBody:@"checkmo"];
+        NSString *requestBody = [STConstants paymentMethodReuestBody:@"ccsave"];
         NSLog(@"Payment mode: %@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -583,7 +638,9 @@ Create a cart */
             [self parsePayementMethodResponseWithDict:xmlDic];
         });
     }
-
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
 }
 
 - (void)parsePayementMethodResponseWithDict:(NSDictionary *)responseDict {
@@ -599,10 +656,12 @@ Create a cart */
             }
         }
         else {
+            [STUtility stopActivityIndicatorFromView:nil];
             NSLog(@"Error setting payment method cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
+        [STUtility stopActivityIndicatorFromView:nil];
     }
     //    [STUtility stopActivityIndicatorFromView:nil];
 }
@@ -649,6 +708,9 @@ Create a cart */
             [self parsePayementMethodResponseWithDict:xmlDic];
         });
     }
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
 }
 - (void)parseOrderCreationMethodResponseWithDict:(NSDictionary *)responseDict {
     if (responseDict) {
@@ -668,6 +730,6 @@ Create a cart */
         }
     }else {
     }
-    //    [STUtility stopActivityIndicatorFromView:nil];
+        [STUtility stopActivityIndicatorFromView:nil];
 }
 @end

@@ -11,9 +11,11 @@
 @interface STProductViewController : STViewController<UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
+
 @property (strong, nonatomic) NSArray *productsInSelectedCat;
 @property (strong, nonatomic)NSDictionary *selectedCategoryDict;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic)NSString *stringToSearch;
 
-@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @end

@@ -29,9 +29,12 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     NSString *name = self.selectedCategoryDict[@"name"][@"__text"];
-    self.titleLabel.text = name;
+    self.titleLabel.text = name.length ?name :self.stringToSearch.length ? @"Search Results":@"";
     downloadConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
     downloadSession = [NSURLSession sessionWithConfiguration:downloadConfig];
+}
+-(void)viewWillAppear:(BOOL)animated {
+    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
 }
 - (void)viewDidAppear:(BOOL)animated {
     
@@ -41,12 +44,40 @@
     self.pageControl.hidden = YES;
     
     NSDictionary *xmlDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductList_Key];
-    if (xmlDict) {
-        [self parseProductResponseWithDict:xmlDict];
+    if (self.stringToSearch.length) {
+        NSLog(@"%@",self.stringToSearch);
+        
+        if (xmlDict) {
+            self.productsInSelectedCat = [self searchProducts:xmlDict];
+            [self.collectionView reloadData];
+            [STUtility stopActivityIndicatorFromView:nil];
+        }
+        else {
+            [self fetchProducts];
+        }
     }
     else {
-        [self fetchProducts];
+        if (xmlDict) {
+            [self parseProductResponseWithDict:xmlDict];
+        }
+        else {
+            [self fetchProducts];
+        }
     }
+}
+- (NSArray *)searchProducts:(NSDictionary *)productDict {
+    NSArray *filteredProducts;
+    if (!productDict) {
+        productDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductList_Key];
+    }
+    NSDictionary *parentDataDict = productDict[@"SOAP-ENV:Body"];
+    NSArray *allProductsArr = parentDataDict[@"ns1:catalogProductListResponse"][@"storeView"][@"item"];
+        //                prodDict[@"name"][@"__text"];
+    NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"name.__text CONTAINS[c] %@",self.stringToSearch];
+    filteredProducts = [allProductsArr filteredArrayUsingPredicate:filterPredicate];
+    NSLog(@"%@",filteredProducts);
+    
+    return filteredProducts;
 }
 - (NSInteger)numberOfPages {
     NSInteger singlePageElementHeightCount = 0;
@@ -215,7 +246,7 @@
 }
 - (void)fetchProductDetails {
     
-    [STUtility startActivityIndicatorOnView:nil withText:@"Loading product details.."];
+    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
     
     NSDictionary *prodDict = self.productsInSelectedCat[selectedProductIndex];
     NSString *prodId = prodDict[@"product_id"][@"__text"];
@@ -232,6 +263,7 @@
                                       
                                   }successBlock:^(NSData *responseData){
                                       dispatch_async(dispatch_get_main_queue(), ^{
+
                                           NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
                                           [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic
                                                                                         withKey:kProductInfo_Key(prodId)];
@@ -320,7 +352,6 @@
 
 
 - (void)fetchProducts {
-    [STUtility startActivityIndicatorOnView:nil withText:@"Loading Data, Please wait.."];
     NSString *requestBody = [STConstants productListRequestBody];
     
     NSString *urlString = [STConstants getAPIURLWithParams:nil];
@@ -335,10 +366,11 @@
                                       
                                   }successBlock:^(NSData *responseData){
                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                          
                                           NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
                                           [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic
                                                                                         withKey:kProductList_Key];
-                                          NSLog(@"%@",xmlDic);
+                                          NSLog(@"Product list for category :%@ ---- %@",self.selectedCategoryDict,xmlDic);
                                           
                                           [self parseProductResponseWithDict:xmlDic];
                                       });
@@ -360,13 +392,20 @@
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
             NSArray *allProductsArr = parentDataDict[@"ns1:catalogProductListResponse"][@"storeView"][@"item"];
+            if (self.stringToSearch.length) {
+                
+                self.productsInSelectedCat = [self searchProducts:nil];
+                NSLog(@"%@",self.productsInSelectedCat);
+            }
+            else {
+                NSDictionary *selectedProdCatDict = self.selectedCategoryDict;
+                NSString *selectedCategoryId = selectedProdCatDict[@"category_id"][@"__text"];
+                
+                NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"category_ids.item.__text LIKE %@",selectedCategoryId];
+                NSArray *productsInSelectedCat = [allProductsArr filteredArrayUsingPredicate:filterPredicate];
+                self.productsInSelectedCat = [NSArray arrayWithArray:productsInSelectedCat];
+            }
             
-            NSDictionary *selectedProdCatDict = self.selectedCategoryDict;
-            NSString *selectedCategoryId = selectedProdCatDict[@"category_id"][@"__text"];
-            
-            NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"category_ids.item.__text LIKE %@",selectedCategoryId];
-            NSArray *productsInSelectedCat = [allProductsArr filteredArrayUsingPredicate:filterPredicate];
-            self.productsInSelectedCat = [NSArray arrayWithArray:productsInSelectedCat];
             for (NSDictionary *prodDict in self.productsInSelectedCat) {
                 NSString *prodId = prodDict[@"product_id"][@"__text"];
                 NSDictionary *imgXMLDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];

@@ -12,9 +12,11 @@
 #import "STCart.h"
 #import "STLoginViewController.h"
 #import "STSignUpViewController.h"
+#import "STProductViewController.h"
 
 @interface STViewController ()<UISearchBarDelegate>
 
+@property (strong,nonatomic)NSString *searchString;
 @end
 
 @implementation STViewController
@@ -52,13 +54,13 @@
 - (void)addNavBarButtons {
     CGRect btnFrame = CGRectMake(0, 5, 50, 30);
     
-    NSInteger count = self.navigationController.viewControllers.count;
-    if (count > 0) {
-        id topViewController = [self.navigationController viewControllers][count-1];
-        if ([topViewController isKindOfClass:[STLoginViewController class]] || [topViewController isKindOfClass:[STSignUpViewController class]]) {
-            self.backButtonHidden = YES;
-        }
-    }
+//    NSInteger count = self.navigationController.viewControllers.count;
+//    if (count > 0) {
+//        id topViewController = [self.navigationController viewControllers][count-1];
+//        if ([topViewController isKindOfClass:[STLoginViewController class]] || [topViewController isKindOfClass:[STSignUpViewController class]]) {
+//            self.backButtonHidden = YES;
+//        }
+//    }
     
     
     if (!self.hideLeftBarItems) {
@@ -149,6 +151,7 @@
 - (void)searchButtonAction:(UIButton *)sender {
     UIView *containerView = sender.superview;
     UISearchBar  *sBar = [[UISearchBar alloc]initWithFrame:CGRectMake(containerView.frame.origin.x-150,10,175,self.navigationController.navigationBar.bounds.size.height/2)];
+    [sBar becomeFirstResponder];
     sBar.delegate = self;
     [self.navigationController.navigationBar addSubview:sBar];
 }
@@ -183,4 +186,38 @@
     //
     [self.frostedViewController presentMenuViewController];
 }
+
+#pragma mark-
+#pragma UISearchBarDelegate
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    NSString *searchBarStr = [searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    self.searchString = searchBarStr;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self.view endEditing:YES];
+    
+    NSString *searchBarStr = [searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    self.searchString = searchBarStr;
+    [searchBar resignFirstResponder];
+//    NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+    
+//    [viewControllers enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        if ([obj isKindOfClass:[STProductViewController class]]) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                STProductViewController *productList = (STProductViewController *)obj;
+//                productList.stringToSearch = self.searchString;
+//                [self.navigationController popToViewController:productList animated:YES];
+//            });
+//            *stop = YES;
+//        }
+//        if(*stop == YES) {
+            STProductViewController *prod = [self.storyboard instantiateViewControllerWithIdentifier:@"STProductViewController"];
+            prod.stringToSearch = self.searchString;
+            [self.navigationController pushViewController:prod animated:YES];
+//        }
+//    }];
+}
+
 @end

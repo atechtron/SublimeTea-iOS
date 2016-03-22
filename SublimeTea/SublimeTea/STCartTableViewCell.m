@@ -8,6 +8,7 @@
 
 #import "STCartTableViewCell.h"
 #import "STMacros.h"
+#import "STUtility.h"
 
 @implementation STCartTableViewCell
 
@@ -20,7 +21,7 @@
     
     _qtyTextbox.borderStyle = UITextBorderStyleNone;
     _qtyTextbox.layer.borderWidth = 0.5f;
-    _qtyTextbox.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    _qtyTextbox.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     _qtyTextbox.layer.cornerRadius = 2;
     
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 13, 10, 5)];

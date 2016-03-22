@@ -17,8 +17,9 @@
 @implementation STLoginViewController
 
 - (void)viewDidLoad {
-    self.menuButtonHidden = YES;
-    self.hideRightBarItems = YES;
+//    self.menuButtonHidden = YES;
+//    self.hideRightBarItems = YES;
+    self.hideLeftBarItems = NO;
     [super viewDidLoad];
     
     self.useraNameTextField.delegate = self;
@@ -30,8 +31,29 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
     
+    UITapGestureRecognizer *checkBoxTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkBoxStateDidChanged:)];
+    [self.checkBoxTextLabel addGestureRecognizer:checkBoxTap];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLogInWIthSessionId:) name:@"APPVALIDATION" object:nil];
+    
+    [self updateUI];
 }
+
+- (void)updateUI {
+    self.useraNameTextField.borderStyle = UITextBorderStyleNone;
+    self.useraNameTextField.layer.borderWidth = 1;
+    self.useraNameTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
+    self.useraNameTextField.layer.cornerRadius = 2;
+    
+    self.passwordTextfield.borderStyle = UITextBorderStyleNone;
+    self.passwordTextfield.layer.borderWidth = 1;
+    self.passwordTextfield.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
+    self.passwordTextfield.layer.cornerRadius = 2;
+    
+    UIImage *unselectedCheckBox = [UIImage imageNamed:@"chekboxUnselected"];
+    [self.checkBoxButton setImage:unselectedCheckBox forState:UIControlStateNormal];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     self.errorLabel.hidden = YES;
 }
@@ -56,6 +78,21 @@
 //    return [self validateInputs];
 //}
 
+- (IBAction)checkBoxStateDidChanged:(UIButton *)checkBox {
+    
+    UIImage *unselectedCheckBox = [UIImage imageNamed:@"chekboxUnselected"];
+    UIImage *selectedCheckBox = [UIImage imageNamed:@"checkboxSelected"];
+
+    if ([self.checkBoxButton.imageView.image isEqual:unselectedCheckBox]) {
+        [self.checkBoxButton setImage:selectedCheckBox forState:UIControlStateNormal];
+        self.passwordTextfield.secureTextEntry = NO;
+    }
+    else {
+        [self.checkBoxButton setImage:unselectedCheckBox forState:UIControlStateNormal];
+        self.passwordTextfield.secureTextEntry = YES;
+    }
+}
+
 - (void)viewDidTapped:(id)sender {
     [self.view endEditing:YES];
 }
@@ -71,7 +108,7 @@
 
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
-        [STUtility startActivityIndicatorOnView:nil withText:@"LoggingIn Please wait.."];
+        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
         if (sessionId.length) {
             [self userLogInWIthSessionId:sessionId];
         }
