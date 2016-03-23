@@ -37,5 +37,7 @@
 + (NSString *)orderListRequestBody;
 + (NSString *)countryListRequestBody;
 + (NSString *)regionListequestBodyForCountry:(NSString *)countryCode;
++ (NSString *)cartInfoRequestBody;
++ (NSString *)cartLicenseRequestBody;
 
 @end

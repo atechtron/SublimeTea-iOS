@@ -28,7 +28,8 @@
 
 @interface Billing : Shipping
 
-@property (strong, nonatomic)NSString *couponCode;
+//@property (strong, nonatomic)NSString *couponCode;
+- (NSDictionary *)dictionary;
 @end
 
 @interface STAddress : NSObject

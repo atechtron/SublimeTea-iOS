@@ -14,7 +14,6 @@
 #import "STHttpRequest.h"
 #import "XMLDictionary.h"
 #import "STRootViewController.h"
-#import "STPlaceOrder.h"
 
 @interface STAppDelegate ()<UITextFieldDelegate>
 

@@ -16,9 +16,9 @@
 #import "STUtility.h"
 
 #import <SystemConfiguration/SystemConfiguration.h>
-#import <netdb.h>
-#import "MRMSiOS.h"
-#import "PaymentModeViewController.h"
+//#import <netdb.h>
+//#import "MRMSiOS.h"
+//#import "PaymentModeViewController.h"
 #import "STGlobalCacheManager.h"
 #import "STAddress.h"
 #import "STPlaceOrder.h"
@@ -87,15 +87,15 @@
     });
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
-    //    self.navigationController.navigationBarHidden = YES;
-    
-    jsondict = [[NSMutableDictionary alloc]init];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ResponseNew:) name:@"FAILED_DICT" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"FAILED_DICT_NEW" object:nil userInfo:nil];
-}
+//- (void)viewWillAppear:(BOOL)animated {
+////    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+//    //    self.navigationController.navigationBarHidden = YES;
+//    
+//    jsondict = [[NSMutableDictionary alloc]init];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ResponseNew:) name:@"FAILED_DICT" object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"FAILED_DICT_NEW" object:nil userInfo:nil];
+//}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -150,7 +150,7 @@
             STPlaceOrder *ordercreation = [[STPlaceOrder alloc] init];
             ordercreation.address = address;
             [ordercreation placeOrder];
-            [STUtility stopActivityIndicatorFromView:nil];
+//            [STUtility stopActivityIndicatorFromView:nil];
 //            [self proceedForPayment];
         }
     }
@@ -165,75 +165,75 @@
     //        }
     //    }
 }
-- (void)proceedForPayment {
-    
-    float MERCHANT_PRICE = 1;
-    NSString *MERCHANT_REFERENCENO = @"14695";
-    
-    PaymentModeViewController *paymentView=[[PaymentModeViewController alloc]init];
-    paymentView.strSaleAmount=[NSString stringWithFormat:@"%.2f",MERCHANT_PRICE];
-    paymentView.reference_no= MERCHANT_REFERENCENO;
-    //NOTE: MERCHANT_PRICE and MERCHANT_REFERENCENO has to be given by Merchant developer
-    
-    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    [defaults setObject:[NSString stringWithFormat:@"%.2f",MERCHANT_PRICE]     forKey:@"strSaleAmount"];
-    [defaults setObject:MERCHANT_REFERENCENO forKey:@"reference_no"];
-    [defaults synchronize];
-    
-    paymentView.descriptionString = @"Test Description";
-    paymentView.strCurrency =   @"INR";
-    paymentView.strDisplayCurrency =@"INR";
-    paymentView.strDescription = @"Test Description";
-    paymentView.strDescription = @"Test Description";
-    
-    paymentView.strBillingName = @"Test";
-    paymentView.strBillingAddress = @"Bill address";
-    paymentView.strBillingCity =@"Kanpur";
-    paymentView.strBillingState = @"UP";
-    paymentView.strBillingPostal =@"625000";
-    paymentView.strBillingCountry = @"IND";
-    paymentView.strBillingEmail =@"btecharpit@gmail.com";
-    paymentView.strBillingTelephone =@"9363469999";
-    
-    // Non mandatory parameters
-    paymentView.strDeliveryName = @"";
-    paymentView.strDeliveryAddress = @"";
-    paymentView.strDeliveryCity = @"";
-    paymentView.strDeliveryState = @"";
-    paymentView.strDeliveryPostal =@"";
-    paymentView.strDeliveryCountry = @"";
-    paymentView.strDeliveryTelephone =@"";
-    
-//    paymentView.descriptionString = self.nameTextField.text;
-//    paymentView.strCurrency =   @"INR";
-//    paymentView.strDisplayCurrency = @"INR";
-//    paymentView.strDescription = self.nameTextField.text;
-//        paymentView.strBillingName = self.nameTextField.text;
-//        paymentView.strBillingAddress = self.addressTextView.text;
-//        paymentView.strBillingCity = self.cityTextField.text;
-//        paymentView.strBillingState = self.stateTextField.text;
-//        paymentView.strBillingPostal = self.postalCodeTextField.text;
-//        paymentView.strBillingCountry = self.countryextField.text;
-//        paymentView.strBillingEmail = self.emailTextField.text;
-//        paymentView.strBillingTelephone = self.phoneTextField.text;
+//- (void)proceedForPayment {
 //    
-//        paymentView.strDeliveryName = self.nameTextField.text;
-//        paymentView.strDeliveryAddress = self.addressTextView.text;
-//        paymentView.strDeliveryCity = self.cityTextField.text;
-//        paymentView.strDeliveryState = self.stateTextField.text;
-//        paymentView.strDeliveryPostal = self.postalCodeTextField.text;
-//        paymentView.strDeliveryCountry = self.countryextField.text;
-//        paymentView.strDeliveryTelephone = self.phoneTextField.text;
-    
-    
-    //If you want to add any extra parameters dynamically you have to add the Key and value as we //mentioned below
-    //        [dynamicKeyValueDictionary setValue:@"savings" forKey:@"account_detail"];
-    //        [dynamicKeyValueDictionary setValue:@"gold" forKey:@"merchant_type"];
-    //      paymentView.dynamicKeyValueDictionary = dynamicKeyValueDictionary;
-    
-    
-    [self.navigationController pushViewController:paymentView animated:NO];
-}
+//    float MERCHANT_PRICE = 1;
+//    NSString *MERCHANT_REFERENCENO = @"14695";
+//    
+//    PaymentModeViewController *paymentView=[[PaymentModeViewController alloc]init];
+//    paymentView.strSaleAmount=[NSString stringWithFormat:@"%.2f",MERCHANT_PRICE];
+//    paymentView.reference_no= MERCHANT_REFERENCENO;
+//    //NOTE: MERCHANT_PRICE and MERCHANT_REFERENCENO has to be given by Merchant developer
+//    
+//    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+//    [defaults setObject:[NSString stringWithFormat:@"%.2f",MERCHANT_PRICE]     forKey:@"strSaleAmount"];
+//    [defaults setObject:MERCHANT_REFERENCENO forKey:@"reference_no"];
+//    [defaults synchronize];
+//    
+//    paymentView.descriptionString = @"Test Description";
+//    paymentView.strCurrency =   @"INR";
+//    paymentView.strDisplayCurrency =@"INR";
+//    paymentView.strDescription = @"Test Description";
+//    paymentView.strDescription = @"Test Description";
+//    
+//    paymentView.strBillingName = @"Test";
+//    paymentView.strBillingAddress = @"Bill address";
+//    paymentView.strBillingCity =@"Kanpur";
+//    paymentView.strBillingState = @"UP";
+//    paymentView.strBillingPostal =@"625000";
+//    paymentView.strBillingCountry = @"IND";
+//    paymentView.strBillingEmail =@"btecharpit@gmail.com";
+//    paymentView.strBillingTelephone =@"9363469999";
+//    
+//    // Non mandatory parameters
+//    paymentView.strDeliveryName = @"";
+//    paymentView.strDeliveryAddress = @"";
+//    paymentView.strDeliveryCity = @"";
+//    paymentView.strDeliveryState = @"";
+//    paymentView.strDeliveryPostal =@"";
+//    paymentView.strDeliveryCountry = @"";
+//    paymentView.strDeliveryTelephone =@"";
+//    
+////    paymentView.descriptionString = self.nameTextField.text;
+////    paymentView.strCurrency =   @"INR";
+////    paymentView.strDisplayCurrency = @"INR";
+////    paymentView.strDescription = self.nameTextField.text;
+////        paymentView.strBillingName = self.nameTextField.text;
+////        paymentView.strBillingAddress = self.addressTextView.text;
+////        paymentView.strBillingCity = self.cityTextField.text;
+////        paymentView.strBillingState = self.stateTextField.text;
+////        paymentView.strBillingPostal = self.postalCodeTextField.text;
+////        paymentView.strBillingCountry = self.countryextField.text;
+////        paymentView.strBillingEmail = self.emailTextField.text;
+////        paymentView.strBillingTelephone = self.phoneTextField.text;
+////    
+////        paymentView.strDeliveryName = self.nameTextField.text;
+////        paymentView.strDeliveryAddress = self.addressTextView.text;
+////        paymentView.strDeliveryCity = self.cityTextField.text;
+////        paymentView.strDeliveryState = self.stateTextField.text;
+////        paymentView.strDeliveryPostal = self.postalCodeTextField.text;
+////        paymentView.strDeliveryCountry = self.countryextField.text;
+////        paymentView.strDeliveryTelephone = self.phoneTextField.text;
+//    
+//    
+//    //If you want to add any extra parameters dynamically you have to add the Key and value as we //mentioned below
+//    //        [dynamicKeyValueDictionary setValue:@"savings" forKey:@"account_detail"];
+//    //        [dynamicKeyValueDictionary setValue:@"gold" forKey:@"merchant_type"];
+//    //      paymentView.dynamicKeyValueDictionary = dynamicKeyValueDictionary;
+//    
+//    
+//    [self.navigationController pushViewController:paymentView animated:NO];
+//}
 
 - (BOOL)validateInputs {
     BOOL status = NO;
@@ -383,6 +383,8 @@
             _cell.delegate = self;
             _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
+            _cell.dropDownTextField.text = @"TV";
+            _cell.textField.text = @"Treviso";
             _cell.dropDownTitleLabel.text = @"Shipping State";
             _cell.textFieldTitleLabel.text = @"Shipping City";
             if (indexPath.section == 0) {
@@ -403,6 +405,8 @@
             _cell.delegate = self;
             _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
+            _cell.dropDownTextField.text = @"IT";
+            _cell.textField.text = @"31056";
             _cell.dropDownTitleLabel.text = @"Shipping Country";
             _cell.textFieldTitleLabel.text = @"Shipping Postal Code";
             if (indexPath.section == 0) {
@@ -724,7 +728,7 @@
         address.billedAddress.email = emailStr;
         address.billedAddress.telephone = phoneStr;
         address.billedAddress.street = addressStr;
-        address.billedAddress.couponCode = couponCodeStr;
+//        address.billedAddress.couponCode = couponCodeStr;
     }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {

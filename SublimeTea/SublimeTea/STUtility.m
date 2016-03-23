@@ -13,6 +13,7 @@
 #import "MBProgressHUD.h"
 #import "STConstants.h"
 #import "UIImage+animatedGIF.h"
+#import <objc/runtime.h>
 
 @interface STUtility()
 {
@@ -132,14 +133,14 @@
             mLoadingScreen = [MBProgressHUD showHUDAddedTo:inView animated:YES];
             mLoadingScreen.customView = img;
             mLoadingScreen.mode = MBProgressHUDModeCustomView;
-            mLoadingScreen.label.text = inStr;
+//            mLoadingScreen.label.text = inStr;
             mLoadingScreen.tag = 123123123;
             mLoadingScreen.alpha = 1;
             [inView addSubview:mLoadingScreen];
         }
         else {
             [inView bringSubviewToFront:mLoadingScreen];
-            mLoadingScreen.label.text = inStr;
+//            mLoadingScreen.label.text = inStr;
         }
         
         [UIView animateWithDuration:0.25
@@ -333,6 +334,7 @@
 + (UIColor *)getSublimeHeadingBGColor {
     return UIColorFromRGB(106.0, 49.0, 32.0, 1.0);
 }
+
 
 //+(UIImage *)getImageWithColor:(UIColor *)color
 //{
