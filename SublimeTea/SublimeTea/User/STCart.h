@@ -28,9 +28,9 @@
 
 + (STCart *)defaultCart;
 
-+(instancetype) alloc __attribute__((unavailable("alloc not available, call defaultManager instead")));
--(instancetype) init  __attribute__((unavailable("init not available, call defaultManager instead")));
-+(instancetype) new   __attribute__((unavailable("new not available, call defaultManager instead")));
++ (instancetype) alloc __attribute__((unavailable("alloc not available, call defaultManager instead")));
+- (instancetype) init  __attribute__((unavailable("init not available, call defaultManager instead")));
++ (instancetype) new   __attribute__((unavailable("new not available, call defaultManager instead")));
 
 - (void)addProductsInCart:(NSDictionary *)prodDict withQty:(NSInteger)qty;
 - (void)removeProductFromCart:(NSInteger)idx;

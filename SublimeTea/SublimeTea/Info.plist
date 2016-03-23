@@ -41,7 +41,7 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>shot.beta.webenza.in</key>
+			<key>dev.sublime-house-of-tea.com</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
 				<true/>

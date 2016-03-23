@@ -62,8 +62,10 @@ static STCart *sharedInstance;
         [self.productsDataArr addObject:prod];
         
         NSString *prodId = prodDict[@"product_id"][@"__text"];
+        NSString *sku = prodDict[@"sku"][@"__text"];
         NSDictionary *dataDict = @{@"product_id" : prodId,
-                                   @"qty": [NSNumber numberWithInteger:qty]};
+                                   @"qty": [NSNumber numberWithInteger:qty],
+                                   @"sku": sku};
         [self.productsInCart addObject:dataDict];
         [self.tempCartProducts addObject:dataDict];
     }
