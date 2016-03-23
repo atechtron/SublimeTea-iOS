@@ -60,7 +60,7 @@ Create a cart */
         });
     }
     else {
-        [self addProductToCart];
+        [self setCartUser];
     }
 }
 - (void)parseCartResponseWithDict:(NSDictionary *)responseDict {
@@ -76,7 +76,7 @@ Create a cart */
             [defaults setValue:userInfoDict forKey:kUserInfo_Key];
             [defaults synchronize];
             
-            [self addProductToCart];
+            [self setCartUser];
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];
@@ -161,7 +161,7 @@ Create a cart */
             BOOL requestStatus = [dataDict[@"__text"] boolValue];
             if (requestStatus) {
                 // Sucess
-                [self setCartUser];
+                [self ShipmentAddress];
             }
         }
         else {
@@ -225,8 +225,9 @@ Create a cart */
             NSDictionary *dataDict = parentDataDict[@"ns1:shoppingCartCustomerSetResponse"][@"result"];
             BOOL requestStatus = [dataDict[@"__text"] boolValue];
             if (requestStatus) {
+                [self addProductToCart];
                 // Sucess
-                [self ShipmentAddress];
+                
             }
         }
         else {
@@ -456,8 +457,7 @@ Create a cart */
             BOOL requestStatus = [dataDict[@"__text"] boolValue];
             if (requestStatus) {
                 // Sucess
-//                [self getCartAmount];
-                [self getPaymentModes];
+                [self getCartAmount];
             }
         }
         else {
@@ -503,6 +503,7 @@ Create a cart */
         dispatch_async(dispatch_get_main_queue(), ^{
             NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
             NSLog(@"Cart total %@",xmlDic);
+            [self getPaymentModes];
             [self parseCartTotalResponseWithDict:xmlDic];
         });
     }
@@ -547,7 +548,7 @@ Create a cart */
 
     if ([STUtility isNetworkAvailable]) {
         NSString *requestBody = [STConstants paymentMethodListRequestBody];
-        
+        NSLog(@"%@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         

@@ -32,7 +32,7 @@
     [self.view addGestureRecognizer:tap];
     
     UITapGestureRecognizer *checkBoxTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkBoxStateDidChanged:)];
-    [self.checkBoxTextLabel addGestureRecognizer:checkBoxTap];
+    [self.checkBoxTextLabel.superview addGestureRecognizer:checkBoxTap];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLogInWIthSessionId:) name:@"APPVALIDATION" object:nil];
     
