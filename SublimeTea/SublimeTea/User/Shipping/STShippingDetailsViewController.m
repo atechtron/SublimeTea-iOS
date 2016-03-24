@@ -180,51 +180,51 @@
     [defaults setObject:[NSString stringWithFormat:@"%.2f",MERCHANT_PRICE]     forKey:@"strSaleAmount"];
     [defaults setObject:MERCHANT_REFERENCENO forKey:@"reference_no"];
     [defaults synchronize];
-    
-    paymentView.descriptionString = @"Test Description";
-    paymentView.strCurrency =   @"INR";
-    paymentView.strDisplayCurrency =@"INR";
-    paymentView.strDescription = @"Test Description";
-    paymentView.strDescription = @"Test Description";
-    
-    paymentView.strBillingName = @"Test";
-    paymentView.strBillingAddress = @"Bill address";
-    paymentView.strBillingCity =@"Kanpur";
-    paymentView.strBillingState = @"UP";
-    paymentView.strBillingPostal =@"625000";
-    paymentView.strBillingCountry = @"IND";
-    paymentView.strBillingEmail =@"btecharpit@gmail.com";
-    paymentView.strBillingTelephone =@"9363469999";
-    
-    // Non mandatory parameters
-    paymentView.strDeliveryName = @"";
-    paymentView.strDeliveryAddress = @"";
-    paymentView.strDeliveryCity = @"";
-    paymentView.strDeliveryState = @"";
-    paymentView.strDeliveryPostal =@"";
-    paymentView.strDeliveryCountry = @"";
-    paymentView.strDeliveryTelephone =@"";
-    
-//    paymentView.descriptionString = self.nameTextField.text;
-//    paymentView.strCurrency =   @"INR";
-//    paymentView.strDisplayCurrency = @"INR";
-//    paymentView.strDescription = self.nameTextField.text;
-//        paymentView.strBillingName = self.nameTextField.text;
-//        paymentView.strBillingAddress = self.addressTextView.text;
-//        paymentView.strBillingCity = self.cityTextField.text;
-//        paymentView.strBillingState = self.stateTextField.text;
-//        paymentView.strBillingPostal = self.postalCodeTextField.text;
-//        paymentView.strBillingCountry = self.countryextField.text;
-//        paymentView.strBillingEmail = self.emailTextField.text;
-//        paymentView.strBillingTelephone = self.phoneTextField.text;
 //    
-//        paymentView.strDeliveryName = self.nameTextField.text;
-//        paymentView.strDeliveryAddress = self.addressTextView.text;
-//        paymentView.strDeliveryCity = self.cityTextField.text;
-//        paymentView.strDeliveryState = self.stateTextField.text;
-//        paymentView.strDeliveryPostal = self.postalCodeTextField.text;
-//        paymentView.strDeliveryCountry = self.countryextField.text;
-//        paymentView.strDeliveryTelephone = self.phoneTextField.text;
+//    paymentView.descriptionString = @"Test Description";
+//    paymentView.strCurrency =   @"INR";
+//    paymentView.strDisplayCurrency =@"INR";
+//    paymentView.strDescription = @"Test Description";
+//    paymentView.strDescription = @"Test Description";
+//    
+//    paymentView.strBillingName = @"Test";
+//    paymentView.strBillingAddress = @"Bill address";
+//    paymentView.strBillingCity =@"Kanpur";
+//    paymentView.strBillingState = @"UP";
+//    paymentView.strBillingPostal =@"625000";
+//    paymentView.strBillingCountry = @"IND";
+//    paymentView.strBillingEmail =@"btecharpit@gmail.com";
+//    paymentView.strBillingTelephone =@"9363469999";
+//    
+//    // Non mandatory parameters
+//    paymentView.strDeliveryName = @"";
+//    paymentView.strDeliveryAddress = @"";
+//    paymentView.strDeliveryCity = @"";
+//    paymentView.strDeliveryState = @"";
+//    paymentView.strDeliveryPostal =@"";
+//    paymentView.strDeliveryCountry = @"";
+//    paymentView.strDeliveryTelephone =@"";
+    
+    paymentView.descriptionString = self.nameTextField.text;
+    paymentView.strCurrency =   @"INR";
+    paymentView.strDisplayCurrency = @"INR";
+    paymentView.strDescription = self.nameTextField.text;
+        paymentView.strBillingName = self.nameTextField.text;
+        paymentView.strBillingAddress = self.addressTextView.text;
+        paymentView.strBillingCity = self.cityTextField.text;
+        paymentView.strBillingState = self.stateTextField.text;
+        paymentView.strBillingPostal = self.postalCodeTextField.text;
+        paymentView.strBillingCountry = self.countryextField.text;
+        paymentView.strBillingEmail = self.emailTextField.text;
+        paymentView.strBillingTelephone = self.phoneTextField.text;
+    
+    paymentView.strDeliveryName = self.billingNameTextField.text.length?self.billingNameTextField.text:self.nameTextField.text;
+    paymentView.strDeliveryAddress = self.billingAddressTextView.text.length ?self.billingAddressTextView.text:self.addressTextView.text;
+    paymentView.strDeliveryCity = self.billingCityTextField.text.length ?self.billingCityTextField.text:self.cityTextField.text;
+    paymentView.strDeliveryState = self.billingStateTextField.text.length?self.billingStateTextField.text:self.stateTextField.text;
+    paymentView.strDeliveryPostal = self.billingPostalCodeTextField.text.length?self.billingPostalCodeTextField.text:self.postalCodeTextField.text;
+    paymentView.strDeliveryCountry = self.billingCountryextField.text.length?self.billingCountryextField.text:self.countryextField.text;
+    paymentView.strDeliveryTelephone = self.billingPhoneTextField.text.length?self.billingPhoneTextField.text:self.phoneTextField.text;
     
     
     //If you want to add any extra parameters dynamically you have to add the Key and value as we //mentioned below
