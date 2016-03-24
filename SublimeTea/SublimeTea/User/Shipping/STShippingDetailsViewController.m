@@ -31,7 +31,6 @@
     NSDictionary *billingSelectedCountryDict;
     STPopoverTableViewController *popoverViewController;
     STAddress *address;
-    float keyPadHeight;
 }
 
 @property(nonatomic,retain)UIPopoverPresentationController *statesPopover;
@@ -79,7 +78,10 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.isShippingISBillingAddress = YES;
     
-    [STUtility stopActivityIndicatorFromView:nil];
+    [STUtility stopActivityIndicatorFromView:nil];    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -133,6 +135,31 @@
 -(void)viewDidTapped:(id)sender {
     [self.view endEditing:YES];
 }
+
+#pragma mark - keypad related methods
+
+- (void)keyboardWillShow:(NSNotification *)notification{
+    NSDictionary *userInfo = [notification userInfo];
+    CGFloat duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    NSInteger animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    UIEdgeInsets insets = [_tableView contentInset];
+    [UIView animateWithDuration:duration delay:0 options:animationCurve animations:^{
+        [_tableView setContentInset:UIEdgeInsetsMake(insets.top, insets.left, 300, insets.right)];
+        [[self view] layoutIfNeeded];
+    } completion:nil];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification{
+    NSDictionary *userInfo = [notification userInfo];
+    CGFloat duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    NSInteger animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    UIEdgeInsets insets = [_tableView contentInset];
+    [UIView animateWithDuration:duration delay:0. options:animationCurve animations:^{
+        [_tableView setContentInset:UIEdgeInsetsMake(insets.top, insets.left, 0, insets.right)];
+        [[self view] layoutIfNeeded];
+    } completion:nil];
+}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -526,7 +553,9 @@
         [checkBoxCell.secondRadioButton setImage:unselectedCheckBox forState:UIControlStateNormal];
         [checkBoxCell.firstRadioButton setImage:selectedCheckBox forState:UIControlStateNormal];
         self.isShippingISBillingAddress = YES;
-        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+        if (self.tableView.numberOfSections == 2) {
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
         //        [self.paymentBtn setTitle:@"Proceed to Payments" forState:UIControlStateNormal];
     }
     else {
@@ -534,7 +563,9 @@
         [checkBoxCell.secondRadioButton setImage:selectedCheckBox forState:UIControlStateNormal];
         self.isShippingISBillingAddress = NO;
         [self.tableView reloadData];
-        [self.tableView insertSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+        if (self.tableView.numberOfSections == 1) {
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
         //        [self.paymentBtn setTitle:@"Next" forState:UIControlStateNormal];
     }
     address.isBillingIsShipping = self.isShippingISBillingAddress;
@@ -678,11 +709,6 @@
 #pragma mark -
 #pragma UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-//    CGPoint pointAfterConvertion = [textField convertPoint:textField.frame.origin toView:_tableView];
-//    NSLog(@"%f, %f",pointAfterConvertion.x,pointAfterConvertion.y);
-//    if (pointAfterConvertion.y > (self.view.frame.size.height - keyPadHeight)) {
-//        _tableView.contentOffset = CGPointMake(0, (_tableView.frame.size.height - keyPadHeight));
-//    }
 }
 - (void)setAddress {
     
