@@ -16,7 +16,7 @@
     // Initialization code
 }
 - (void)drawRect:(CGRect)rect {
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:onView:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:)];
     [_qtyTextbox.superview addGestureRecognizer:tap];
     
     _qtyTextbox.borderStyle = UITextBorderStyleNone;

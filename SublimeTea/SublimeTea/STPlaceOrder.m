@@ -374,6 +374,9 @@ Create a cart */
         
         NSData *responseData = [httpRequest synchronousStart];
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
+            NSLog(@"Shipping Methods List xml: %@",xmlString);
+            
             NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
             NSLog(@"Shipping Methods List %@",xmlDic);
             [self parseShippingMethodListResponseWithDict:xmlDic];
@@ -398,19 +401,19 @@ Create a cart */
                 dataArr = (NSArray *)itemObj;
             }
             if (dataArr.count) {
-                NSPredicate *filterPred = [NSPredicate predicateWithFormat:@"code.__text ==flatrate_flatrate"];
+                NSPredicate *filterPred = [NSPredicate predicateWithFormat:@"code.__text LIKE %@",@"flatrate_flatrate"];
                 NSArray *tempAr = [dataArr filteredArrayUsingPredicate:filterPred];
                 dataDict = tempAr.count ? tempAr[0]: nil;
             }
 
-//            if (dataDict) {
+            if (dataDict) {
                 NSDictionary *shippingCodeDict = dataDict[@"code"];
                 NSString *shippingMethodCode = shippingCodeDict[@"__text"];
-//                if (shippingMethodCode.length) {
+                if (shippingMethodCode.length) {
                     // Sucess
                     [self setShippingMode:@"flatrate_flatrate"];
-//                }
-//            }
+                }
+            }
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];

@@ -6,28 +6,13 @@
 //  Copyright © 2016 Arpit Mishra. All rights reserved.
 //
 
-//#import <UIKit/UIKit.h>
-//#import "STAppDelegate.h"
-//#import "TIMERUIApplication.h"
-//
-//int main(int argc, char * argv[]) {
-//    @autoreleasepool {
-//        return UIApplicationMain(argc, argv, NSStringFromClass([TIMERUIApplication class]), NSStringFromClass([STAppDelegate class]));
-//    }
-//}
-//
-//  main.m
-//  SublimeTea
-//
-//  Created by Arpit Mishra on 24/02/16.
-//  Copyright © 2016 Arpit Mishra. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 #import "STAppDelegate.h"
+#import "TIMERUIApplication.h"
 
 int main(int argc, char * argv[]) {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([STAppDelegate class]));
+        return UIApplicationMain(argc, argv, NSStringFromClass([TIMERUIApplication class]), NSStringFromClass([STAppDelegate class]));
     }
 }
+
