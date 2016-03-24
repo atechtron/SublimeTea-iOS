@@ -12,16 +12,15 @@
 #import "STGlobalCacheManager.h"
 
 @interface STPopoverTableViewController ()
-{
-    NSArray *sortedItems;
-}
+
 @end
 
 @implementation STPopoverTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    sortedItems = [self prepareData];
+    self.tableView.estimatedRowHeight = 44.0;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 - (void)viewWillLayoutSubviews {
     self.preferredContentSize = CGSizeMake(150, 300);
@@ -29,20 +28,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-- (NSArray *)prepareData {
-    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES];
-    NSMutableArray *tempDataArr = [NSMutableArray new];
-    for (id item in self.itemsArray) {
-        if ([item isKindOfClass:[NSDictionary class]]) {
-            [tempDataArr addObject:item[@"name"]];
-        }
-        else {
-            [tempDataArr addObject:item];
-        }
-        
-    }
-    return [tempDataArr sortedArrayUsingDescriptors:@[sort]];
 }
 #pragma mark - Table view data source
 
@@ -57,24 +42,31 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     STPopoverTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"popoverCell" forIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
     id itemObj = self.itemsArray[indexPath.row];
     if ([itemObj isKindOfClass:[NSNumber class]]) {
         cell.titleTextLabel.text = [NSString stringWithFormat:@"%@",itemObj];
     }
     else {
-        cell.titleTextLabel.text = sortedItems[indexPath.row];
+        NSDictionary *tempDict = (NSDictionary *)itemObj;
+        NSString *titleStr= tempDict[@"name"][@"__text"];
+        cell.titleTextLabel.text = titleStr;//sortedItems[indexPath.row];
     }
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    STPopoverTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
     id itemObj = self.itemsArray[indexPath.row];
     NSString *itemStr;
     if ([itemObj isKindOfClass:[NSNumber class]]) {
         itemStr = [NSString stringWithFormat:@"%@",itemObj];
     }
     else {
-        itemStr = sortedItems[indexPath.row];
+        NSDictionary *tempDict = (NSDictionary *)itemObj;
+        NSString *titleStr= tempDict[@"name"][@"__text"];
+        itemStr = titleStr;
     }
     if ([self.delegate respondsToSelector:@selector(itemDidSelect:selectedItemString:parentIndexPath:)]) {
         [self.delegate itemDidSelect:indexPath selectedItemString:itemStr parentIndexPath:self.parentIndexPath];

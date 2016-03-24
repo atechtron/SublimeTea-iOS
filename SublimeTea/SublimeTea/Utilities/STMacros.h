@@ -19,14 +19,14 @@
 #   define DB_FLOW_LOG
 #endif
 
-//#undef DB_LOG /*uncomment to disable only custom nslogs*/
+//#undef DB_LOG /*uncomment to disable only custom NSLogs*/
 
 #ifdef DB_LOG
 #   define dbLine() NSLog(@"-------------------------------------------------------------");
-#   define dbLog NSLog
+#   define NSLog NSLog
 #else
 #   define dbLine()
-#   define dbLog(x,...)
+#   define NSLog(x,...)
 #endif
 
 //#undef DB_FLOW_LOG /*uncomment to disable only flow logs*/
@@ -51,7 +51,8 @@
 #define kProductList_Key @"ALL_PRODUCTS_LIST_DATA"
 #define kProductInfo_Key(prodId) [NSString stringWithFormat:@"PROD_%@",prodId]
 #define kCountries_key @"COUNTRY_STATE_CITY"
-
+#define kCountyList_key @"LIST_OF_COUNTRIES"
+#define kRegionList_key(countryCode) [NSString stringWithFormat:@"REGION_COUNTRY_CODE-%@",countryCode]
 
 
 

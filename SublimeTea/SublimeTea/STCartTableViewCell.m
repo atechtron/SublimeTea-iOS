@@ -42,7 +42,7 @@
         [self.delegate itemDidRemoveFromCart:sender];
     }
 }
-- (void)dropDownAction:(UITapGestureRecognizer *)tapGestureRecongnizer onView:(UITextField *)textField {
+- (void)dropDownAction:(UITapGestureRecognizer *)tapGestureRecongnizer {
     if ([self.delegate respondsToSelector:@selector(droDownAction:tapGesture:)]) {
         [self.delegate droDownAction:self.qtyTextbox tapGesture:tapGestureRecongnizer];
     }

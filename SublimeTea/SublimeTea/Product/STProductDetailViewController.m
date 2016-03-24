@@ -49,6 +49,15 @@ static NSInteger prodQtyCount = 0;
     // Pass the selected object to the new view controller.
 }
 */
+- (NSString *)productStatus:(NSInteger )status onLabel:(UILabel *)lbl {
+    NSString *tempString = @"out of stock";
+    lbl.backgroundColor = [UIColor lightGrayColor];
+    if (status > 0) {
+        lbl.backgroundColor = [UIColor greenColor];
+        tempString = @"in stock";
+    }
+    return tempString;
+}
 #pragma mark-
 #pragma UITableViewDelegates
 
@@ -68,9 +77,15 @@ static NSInteger prodQtyCount = 0;
             static NSString *cellidentifier = @"productInfoCell";
             STProductInfoTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
             
+            NSInteger prodStatus = [self.selectedProdDict[@"status"][@"__text"] integerValue];
+            
             _cell.titleLabel.text = self.selectedProdDict[@"name"][@"__text"];
             _cell.numLabel.text = @"";
             _cell.statusLabel.text = @"in stock";
+            _cell.statusLabel.layer.borderWidth = 1;
+            _cell.statusLabel.layer.borderColor = [UIColor clearColor].CGColor;
+            _cell.statusLabel.layer.cornerRadius = 2;
+            
             _cell.extraLabel.text = @"";
             NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
             if (prodImgArr.count) {
