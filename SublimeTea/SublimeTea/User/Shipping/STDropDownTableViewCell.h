@@ -15,7 +15,7 @@
 
 @end
 
-@interface STDropDownTableViewCell : UITableViewCell
+@interface STDropDownTableViewCell : UITableViewCell<UITextFieldDelegate>
 
 @property (strong, nonatomic)NSIndexPath *indexPath;
 @property (weak, nonatomic) IBOutlet UILabel *textFieldTitleLabel;

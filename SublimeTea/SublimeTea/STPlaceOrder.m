@@ -80,6 +80,7 @@ Create a cart */
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];
+            [self showAlert];
             NSLog(@"Error while adding product to cart.");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
@@ -106,11 +107,6 @@ Create a cart */
                                     @"quoteId":[NSNumber numberWithInteger:usr_cartId]};
         NSMutableDictionary *soapBodyDict = [NSMutableDictionary new];
         [soapBodyDict addEntriesFromDictionary:paramDict];
-        
-        NSDictionary *dataDict = @{@"product_id" : @"26",
-                                   @"qty": [NSNumber numberWithInteger:1]};
-        
-        NSArray *tempArr = @[dataDict];
         
         [soapBodyDict setObject:[STCart defaultCart].tempCartProducts forKey:kProductNodeName];
         [soapBodyDict setValue:[STConstants storeId] forKey:@"storeId"];
@@ -167,6 +163,7 @@ Create a cart */
         else {
             [STUtility stopActivityIndicatorFromView:nil];
             NSLog(@"Error adding product to cart...");
+            [self showAlert];
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
@@ -232,6 +229,7 @@ Create a cart */
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];
+            [self showAlert];
             NSLog(@"Error setting user information to cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
@@ -272,7 +270,7 @@ Create a cart */
         
         NSDictionary *shippingAdd = [self.address.shipAddress dictionary];
         NSMutableDictionary *billingAdd = [shippingAdd mutableCopy];
-        [billingAdd setObject:@"Billing" forKey:@"mode"];
+        [billingAdd setObject:@"billing" forKey:@"mode"];
         if (!self.address.isBillingIsShipping) {
          billingAdd = [[self.address.billedAddress dictionary] mutableCopy];
         }
@@ -287,7 +285,7 @@ Create a cart */
         if (soapBodyDict) {
             NSString *requestBody = [STUtility prepareMethodSoapBody:@"shoppingCartCustomerAddresses"
                                                               params:soapBodyDict];
-            NSLog(@"Cart Request Body: %@",requestBody);
+            NSLog(@"Shippment Address Request Body: %@",requestBody);
             
             NSString *urlString = [STConstants getAPIURLWithParams:nil];
             NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -334,6 +332,7 @@ Create a cart */
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];
+            [self showAlert];
             NSLog(@"Error adding address information to cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
@@ -375,6 +374,9 @@ Create a cart */
         
         NSData *responseData = [httpRequest synchronousStart];
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
+            NSLog(@"Shipping Methods List xml: %@",xmlString);
+            
             NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
             NSLog(@"Shipping Methods List %@",xmlDic);
             [self parseShippingMethodListResponseWithDict:xmlDic];
@@ -386,18 +388,36 @@ Create a cart */
 }
 - (void)parseShippingMethodListResponseWithDict:(NSDictionary *)responseDict {
     if (responseDict) {
+        NSLog(@"%@",responseDict);
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
-        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
-            NSDictionary *dataDict = parentDataDict[@"ns1:shoppingCartShippingListResponse"][@"result"][@"item"];
-            NSDictionary *shippingCodeDict = dataDict[@"code"];
-            NSString *shippingMethodCode = shippingCodeDict[@"__text"];
-            if (shippingMethodCode.length) {
-                // Sucess
-                [self setShippingMode:shippingMethodCode];
+        if (parentDataDict[@"SOAP-ENV:Fault"] == nil) {
+            NSDictionary *dataDict;
+            NSArray *dataArr;
+            id itemObj = parentDataDict[@"ns1:shoppingCartShippingListResponse"][@"result"][@"item"];
+            if ([itemObj isKindOfClass:[NSDictionary class]]) {
+                dataDict = (NSDictionary *)itemObj;
+            }
+            else if ([itemObj isKindOfClass:[NSArray class]]) {
+                dataArr = (NSArray *)itemObj;
+            }
+            if (dataArr.count) {
+                NSPredicate *filterPred = [NSPredicate predicateWithFormat:@"code.__text LIKE %@",@"flatrate_flatrate"];
+                NSArray *tempAr = [dataArr filteredArrayUsingPredicate:filterPred];
+                dataDict = tempAr.count ? tempAr[0]: nil;
+            }
+
+            if (dataDict) {
+                NSDictionary *shippingCodeDict = dataDict[@"code"];
+                NSString *shippingMethodCode = shippingCodeDict[@"__text"];
+                if (shippingMethodCode.length) {
+                    // Sucess
+                    [self setShippingMode:@"flatrate_flatrate"];
+                }
             }
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];
+            [self showAlert];
             NSLog(@"Error in fetching shipping mode list ...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
@@ -462,6 +482,7 @@ Create a cart */
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];
+            [self showAlert];
             NSLog(@"Error setting shipping method cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
@@ -526,6 +547,7 @@ Create a cart */
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];
+            [self showAlert];
             NSLog(@"Error in fetching shipping mode list ...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
@@ -596,6 +618,7 @@ Create a cart */
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];
+            [self showAlert];
             NSLog(@"Error in fetching shipping mode list ...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
@@ -609,7 +632,7 @@ Create a cart */
  set payment mode to cart */
 - (void)setPaymentMode {
     if ([STUtility isNetworkAvailable]) {
-        NSString *requestBody = [STConstants paymentMethodReuestBody:@"ccsave"];
+        NSString *requestBody = [STConstants paymentMethodReuestBody:@"checkmo"];
         NSLog(@"Payment mode: %@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -653,11 +676,12 @@ Create a cart */
             if (requestStatus) {
                 // Sucess
                 //                [self getCartAmount];
-                [self createOrder];
+                [self cartDetails];
             }
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];
+            [self showAlert];
             NSLog(@"Error setting payment method cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
@@ -672,9 +696,82 @@ Create a cart */
  Get cart information */
 - (void)cartDetails {
 
+    if ([STUtility isNetworkAvailable]) {
+        NSString *requestBody = [STConstants cartInfoRequestBody];
+        NSLog(@"Cart Info: %@",requestBody);
+        NSString *urlString = [STConstants getAPIURLWithParams:nil];
+        NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        
+        STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                             methodType:@"POST"
+                                                                   body:requestBody
+                                                    responseHeaderBlock:^(NSURLResponse *response){}
+                                                           successBlock:^(NSData *responseData){}
+                                                           failureBlock:^(NSError *error)
+                                      {
+                                          [STUtility stopActivityIndicatorFromView:nil];
+                                          [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                      message:@"Unexpected error has occured, Please try after some time."
+                                                                     delegate:nil
+                                                            cancelButtonTitle:@"OK"
+                                                            otherButtonTitles: nil] show];
+                                          NSLog(@"SublimeTea-STPlaceOrder-cartDetails:- %@",error);
+                                      }];
+        
+        
+        
+        NSData *responseData = [httpRequest synchronousStart];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+            NSLog(@"Cart Info %@",xmlDic);
+            [self createOrder];
+        });
+    }
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
 }
 
 /* Step11:-
+ Cart License */
+- (void)shoppingCartLicense {
+    
+    if ([STUtility isNetworkAvailable]) {
+        NSString *requestBody = [STConstants cartLicenseRequestBody];
+        NSLog(@"Cart License: %@",requestBody);
+        NSString *urlString = [STConstants getAPIURLWithParams:nil];
+        NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        
+        STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                             methodType:@"POST"
+                                                                   body:requestBody
+                                                    responseHeaderBlock:^(NSURLResponse *response){}
+                                                           successBlock:^(NSData *responseData){}
+                                                           failureBlock:^(NSError *error)
+                                      {
+                                          [STUtility stopActivityIndicatorFromView:nil];
+                                          [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                      message:@"Unexpected error has occured, Please try after some time."
+                                                                     delegate:nil
+                                                            cancelButtonTitle:@"OK"
+                                                            otherButtonTitles: nil] show];
+                                          NSLog(@"SublimeTea-STPlaceOrder-shoppingCartLicense:- %@",error);
+                                      }];
+        
+        
+        
+        NSData *responseData = [httpRequest synchronousStart];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+            NSLog(@"Cart License %@",xmlDic);
+        });
+    }
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
+}
+
+/* Step12:-
  Create Order */
 - (void)createOrder {
 
@@ -704,33 +801,56 @@ Create a cart */
         
         NSData *responseData = [httpRequest synchronousStart];
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+            NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
+            NSLog(@"Order Creation xml: %@",xmlString);
+            NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
             NSLog(@"Order Creation %@",xmlDic);
-            [self parsePayementMethodResponseWithDict:xmlDic];
+            if (!xmlDic) {
+                NSArray *tempComponentsArr = [xmlString componentsSeparatedByString:@"<result xsi:type=\"xsd:string\">"];
+                if(tempComponentsArr.count == 2)
+                {
+                    NSArray *comp = [tempComponentsArr[1] componentsSeparatedByString:@"</result>"];
+                    if (comp.count > 1) {
+                        if ([self.delegate respondsToSelector:@selector(orderResultWithId:)]) {
+                            [self.delegate orderResultWithId:comp[1]];
+                        }
+                    }
+                }
+            }
+//            [self parseOrderCreationMethodResponseWithDict:xmlDic];
         });
     }
     else {
         [STUtility stopActivityIndicatorFromView:nil];
     }
+    [STUtility stopActivityIndicatorFromView:nil];
 }
 - (void)parseOrderCreationMethodResponseWithDict:(NSDictionary *)responseDict {
+//    xmlDic[@"SOAP-ENV:Body"][@"ns1:shoppingCartOrderResponse"][@"result"][@"__text"]
     if (responseDict) {
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
             NSDictionary *dataDict = parentDataDict[@"ns1:shoppingCartOrderResponse"][@"result"];
-            BOOL requestStatus = [dataDict[@"__text"] boolValue];
-            if (requestStatus) {
-                // Sucess
-                //                [self getCartAmount];
-
+            NSString *oderNumber = dataDict[@"__text"];
+            if ([self.delegate respondsToSelector:@selector(orderResultWithId:)]) {
+                [self.delegate orderResultWithId:oderNumber];
             }
         }
         else {
-            NSLog(@"Error setting payment method cart...");
+            NSLog(@"Error placing order...");
+            [self showAlert];
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
     }
         [STUtility stopActivityIndicatorFromView:nil];
+}
+- (void)showAlert{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR!"
+                                                    message:@"Order creation failed."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil];
+    [alert show];
 }
 @end

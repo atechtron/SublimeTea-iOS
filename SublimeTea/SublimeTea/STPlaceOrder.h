@@ -9,8 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "STAddress.h"
 
+@protocol STPlaceOrderDelegate <NSObject>
+- (void)orderResultWithId:(NSString *)orderId;
+@end
+
+
 @interface STPlaceOrder : NSObject
 @property (strong, nonatomic)STAddress *address;
+@property (weak, nonatomic)id <STPlaceOrderDelegate> delegate;
 
 - (void)placeOrder;
 @end

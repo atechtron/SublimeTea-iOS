@@ -16,7 +16,7 @@
     // Initialization code
 }
 - (void)drawRect:(CGRect)rect {
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:onView:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:)];
     [_qtyTextbox.superview addGestureRecognizer:tap];
     
     _qtyTextbox.borderStyle = UITextBorderStyleNone;
@@ -42,7 +42,7 @@
         [self.delegate itemDidRemoveFromCart:sender];
     }
 }
-- (void)dropDownAction:(UITapGestureRecognizer *)tapGestureRecongnizer onView:(UITextField *)textField {
+- (void)dropDownAction:(UITapGestureRecognizer *)tapGestureRecongnizer {
     if ([self.delegate respondsToSelector:@selector(droDownAction:tapGesture:)]) {
         [self.delegate droDownAction:self.qtyTextbox tapGesture:tapGestureRecongnizer];
     }

@@ -13,16 +13,22 @@
 #import "STUtility.h"
 #import "STProductCategoriesViewController.h"
 #import "STOrderListViewController.h"
+#import "STCart.h"
+#import "STGlobalCacheManager.h"
 
 @interface STOrderConfirmationViewController ()<UITableViewDataSource, UITableViewDelegate, STOrderConfirmationFooterViewDelegat>
 
+@property (strong,nonatomic)NSArray *itemArray;
 @property(strong, nonatomic)NSMutableDictionary *jsondict;
 @end
 
 @implementation STOrderConfirmationViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    self.itemArray = [[STCart defaultCart] productsInCart];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ResponseNew:) name:@"JSON_NEW" object:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"JSON_DICT" object:nil userInfo:nil];
@@ -61,7 +67,7 @@
 #pragma UITableViewDelegates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.itemArray.count;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -69,12 +75,40 @@
 - ( UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellidentifier = @"orderConfirmationCell";
     STOderListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
-    cell.titleLabel.text = @"GREEN LONG DING";
-    cell.descriptionLabel.text = @"This is a pure Green Tea. Fresh tender tea leaves are carefully processed to minimize oxidation and rolled using a very special process.";
-    cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%d",200]];
-    cell.prodImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
-    cell.statusLabel.text = @"Status: Delivered";
-    cell.qtyLabel.text = @"QUANTITY: 2 (ITEMS)";
+    Product *prod = self.itemArray[indexPath.row];
+    
+    NSString *prodId = prod.prodDict[@"product_id"][@"__text"];
+    NSString *name = prod.prodDict[@"name"][@"__text"];
+    NSString *shortDesc = prod.prodDict[@"short_description"][@"__text"];
+    double price = [prod.prodDict[@"special_price"][@"__text"]doubleValue];
+
+    NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
+    if (prodImgArr.count) {
+        NSDictionary *imgUrlDict = [prodImgArr lastObject];
+        NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
+        NSLog(@"Image URL %@",imgUrl);
+        NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgUrl];
+        if (imgData) {
+            UIImage *prodImg = [UIImage imageWithData:imgData];
+            if (prodImg) {
+                [UIView transitionWithView:cell.prodImageView duration:0.5
+                                   options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                       cell.prodImageView.image = prodImg;
+                                       cell.prodImageView.contentMode = UIViewContentModeScaleAspectFit;
+                                   } completion:nil];
+            }
+        }
+    }
+    
+    
+    
+    
+    cell.titleLabel.text = [name uppercaseString];
+    cell.descriptionLabel.text = shortDesc;
+    cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%.2f",price]];
+    cell.statusLabel.text = @"Status: Order Placed";
+    NSString *itemStr = prod.prodQty > 0 ? @"ITEMS" :@"ITEM";
+    cell.qtyLabel.text = [NSString stringWithFormat:@"QUANTITY: %ld (%@)",(long)prod.prodQty,itemStr];
     
     return cell;
 }

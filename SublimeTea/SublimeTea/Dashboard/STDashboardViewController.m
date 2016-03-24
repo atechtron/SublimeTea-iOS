@@ -11,6 +11,7 @@
 #import "STProductCategoriesViewController.h"
 #import "STDashboardCollectionViewCell.h"
 #import "STGlobalCacheManager.h"
+//#import "STPlaceOrder.h"
 
 @interface STDashboardViewController ()<UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic)NSArray *categories;
@@ -24,7 +25,10 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.collectionView.scrollEnabled = NO;
-    // Do any additional setup after loading the view.
+
+//    STPlaceOrder *order = [[STPlaceOrder alloc] init];
+//    [order placeOrder];
+
 }
 
 - (void)didReceiveMemoryWarning {
