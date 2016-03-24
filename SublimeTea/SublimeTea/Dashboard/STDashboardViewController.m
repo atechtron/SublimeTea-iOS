@@ -11,6 +11,7 @@
 #import "STProductCategoriesViewController.h"
 #import "STDashboardCollectionViewCell.h"
 #import "STGlobalCacheManager.h"
+//#import "STPlaceOrder.h"
 
 @interface STDashboardViewController ()<UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic)NSArray *categories;
@@ -24,7 +25,10 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.collectionView.scrollEnabled = NO;
-    // Do any additional setup after loading the view.
+
+//    STPlaceOrder *order = [[STPlaceOrder alloc] init];
+//    [order placeOrder];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -104,7 +108,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         if ([STUtility isNetworkAvailable]) {
-            [STUtility startActivityIndicatorOnView:nil withText:@"Loading Range of Teas, Please wait.."];
+            [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
             NSDictionary *xmlDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductCategory_Key];
             if (xmlDict) {
                 [self parseResponseWithDict:xmlDict];

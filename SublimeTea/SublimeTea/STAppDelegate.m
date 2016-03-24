@@ -14,7 +14,6 @@
 #import "STHttpRequest.h"
 #import "XMLDictionary.h"
 #import "STRootViewController.h"
-#import "STPlaceOrder.h"
 
 @interface STAppDelegate ()<UITextFieldDelegate>
 
@@ -24,7 +23,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+
     return YES;
 }
 
@@ -48,8 +47,6 @@
     [defaults removeObjectForKey:kUSerSession_Key];
     [defaults synchronize];
     [self startSession];
-    STPlaceOrder *order = [[STPlaceOrder alloc] init];
-//    [order placeOrder];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

@@ -54,13 +54,13 @@
 - (void)addNavBarButtons {
     CGRect btnFrame = CGRectMake(0, 5, 50, 30);
     
-    NSInteger count = self.navigationController.viewControllers.count;
-    if (count > 0) {
-        id topViewController = [self.navigationController viewControllers][count-1];
-        if ([topViewController isKindOfClass:[STLoginViewController class]] || [topViewController isKindOfClass:[STSignUpViewController class]]) {
-            self.backButtonHidden = YES;
-        }
-    }
+//    NSInteger count = self.navigationController.viewControllers.count;
+//    if (count > 0) {
+//        id topViewController = [self.navigationController viewControllers][count-1];
+//        if ([topViewController isKindOfClass:[STLoginViewController class]] || [topViewController isKindOfClass:[STSignUpViewController class]]) {
+//            self.backButtonHidden = YES;
+//        }
+//    }
     
     
     if (!self.hideLeftBarItems) {

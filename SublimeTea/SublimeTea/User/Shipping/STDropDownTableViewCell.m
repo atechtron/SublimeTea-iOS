@@ -8,6 +8,7 @@
 
 #import "STDropDownTableViewCell.h"
 #import "STMacros.h"
+#import "STUtility.h"
 
 @implementation STDropDownTableViewCell
 
@@ -15,7 +16,8 @@
     // Initialization code
 }
 - (void)drawRect:(CGRect)rect {
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:onView:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:)];
+    tap.numberOfTapsRequired = 1;
     [self.dropDownTextField.superview addGestureRecognizer:tap];
     
     UITapGestureRecognizer *CheckboxLabelTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkBoxButtonAction:)];
@@ -24,12 +26,13 @@
     
     _textField.borderStyle = UITextBorderStyleNone;
     _textField.layer.borderWidth = 1;
-    _textField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    _textField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     _textField.layer.cornerRadius = 2;
     
+    [_dropDownTextField setUserInteractionEnabled:YES];
     _dropDownTextField.borderStyle = UITextBorderStyleNone;
     _dropDownTextField.layer.borderWidth = 1;
-    _dropDownTextField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    _dropDownTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     _dropDownTextField.layer.cornerRadius = 2;
     
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 13, 10, 5)];
@@ -45,7 +48,7 @@
 
     // Configure the view for the selected state
 }
-- (void)dropDownAction:(UITapGestureRecognizer *)tapGestureRecongnizer onView:(UITextField *)textField {
+- (void)dropDownAction:(UITapGestureRecognizer *)tapGestureRecongnizer {
     if ([self.delegate respondsToSelector:@selector(droDownAction:tapGesture:indexPath:)]) {
         [self.delegate droDownAction:self.dropDownTextField tapGesture:tapGestureRecongnizer indexPath:self.indexPath];
     }

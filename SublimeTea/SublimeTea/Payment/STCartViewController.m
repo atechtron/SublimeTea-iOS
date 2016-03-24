@@ -129,7 +129,7 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     STCartFooterView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STCartFooterView"];
-    footerView.topBorderView.backgroundColor = UIColorFromRGB(168, 123, 69, 1);
+    footerView.topBorderView.backgroundColor = [STUtility getSublimeHeadingBGColor];
     [footerView.continueShoppingButton addTarget:self action:@selector(continueShoppingButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [footerView.checkoutButton addTarget:self action:@selector(checkoutButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -175,7 +175,7 @@
 
 - (void)checkoutButtonAction:(UIButton *)sender {
     if ([STUtility isNetworkAvailable] && [self validateInputs]) {
-        [STUtility startActivityIndicatorOnView:nil withText:@"Loading.."];
+        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
         [self performSegueWithIdentifier:@"shippingSegue" sender:self];
     }
 }

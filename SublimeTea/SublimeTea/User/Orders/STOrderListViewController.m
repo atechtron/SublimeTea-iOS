@@ -27,7 +27,7 @@
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [self orderList];
 }
 - (void)didReceiveMemoryWarning {
@@ -48,7 +48,7 @@
 #pragma UITableViewDelegates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.orderListArr.count;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -56,12 +56,21 @@
 - ( UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellidentifier = @"orderListCell";
     STOderListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
+    NSDictionary *orderDetails = self.orderListArr[indexPath.row];
+//    NSString *titleStr = orderDetails[];
+    NSString *status = orderDetails[@"status"][@"__text"];
+    NSString *qty = orderDetails[@"total_qty_ordered"][@"__text"];
+    double totalPaid = [orderDetails[@"total_paid"][@"__text"]doubleValue];
+    
+    
     cell.titleLabel.text = @"GREEN LONG DING";
     cell.descriptionLabel.text = @"This is a pure Green Tea. Fresh tender tea leaves are carefully processed to minimize oxidation and rolled using a very special process.";
-    cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%d",200]];
+    cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%.2f",totalPaid]];
     cell.prodImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
-    cell.statusLabel.text = @"Status: Delivered";
-    cell.qtyLabel.text = @"QUANTITY: 2 (ITEMS)";
+    cell.statusLabel.text = [NSString stringWithFormat:@"Status: %@",status];
+    
+    NSString *itemStr = [qty integerValue] > 0 ? @"ITEMS" :@"ITEM";
+    cell.qtyLabel.text = [NSString stringWithFormat:@"QUANTITY: %@ (%@)",qty,itemStr];
 
     return cell;
 }
@@ -90,8 +99,8 @@
 }
 - (void)orderList {
     if ([STUtility isNetworkAvailable]) {
-        [STUtility startActivityIndicatorOnView:nil withText:@"Loading..."];
-        NSString *requestBody = [STConstants orderListRequestBody];
+        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+        NSString *requestBody = [STConstants salesOrderListRequstBody];
         NSLog(@"Order List: %@",requestBody);
         
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
@@ -130,7 +139,10 @@
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
         //        NSLog(@"Image Data for ID %d %@",prodId, responseDict);
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
-
+            NSDictionary *dataDict = parentDataDict[@"ns1:salesOrderListResponse"][@"result"];
+            NSArray *orders = dataDict[@"item"];
+            NSSortDescriptor *sortDisc = [NSSortDescriptor sortDescriptorWithKey:@"created_at.__text" ascending:YES];
+            self.orderListArr = [orders sortedArrayUsingDescriptors:@[sortDisc]];
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];

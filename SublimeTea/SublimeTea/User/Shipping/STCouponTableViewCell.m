@@ -8,6 +8,7 @@
 
 #import "STCouponTableViewCell.h"
 #import "STMacros.h"
+#import "STUtility.h"
 
 @implementation STCouponTableViewCell
 
@@ -17,7 +18,7 @@
 - (void)drawRect:(CGRect)rect {
     _couponTextField.borderStyle = UITextBorderStyleNone;
     _couponTextField.layer.borderWidth = 1;
-    _couponTextField.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    _couponTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     _couponTextField.layer.cornerRadius = 2;
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

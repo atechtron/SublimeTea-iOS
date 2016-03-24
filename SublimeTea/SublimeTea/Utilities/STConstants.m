@@ -8,10 +8,10 @@
 
 #import "STConstants.h"
 
-#define kAPI_ENDPOINT @"http://shot.beta.webenza.in/api/v2_soap"//@"http://dev.sublime-house-of-tea.com/index.php/api/v2_soap/index/"
+#define kAPI_ENDPOINT [NSString stringWithFormat:@"http://%@%@",kAPIdomainName,kUrlString]//@"http://shot.beta.webenza.in/api/v2_soap"//@"http://dev.sublime-house-of-tea.com/index.php/api/v2_soap/index/"
 
 
-#define kUSERNAME @"superuser"
+#define kUSERNAME @"shot_admin"
 #define kPWD @"123456"
 
 #define kParentId @"1"
@@ -29,6 +29,7 @@
     {
         str = [NSString stringWithFormat:@"%@%@",kAPI_ENDPOINT,param];
     }
+    NSLog(@"%@",str);
     return str;
 }
 + (NSString *)storeId {
@@ -319,24 +320,6 @@
                          "</soapenv:Envelope>",sessionId,(long)cartId, [STConstants storeId]];
     return tempStr;
 }
-
-+ (NSString *)orderListRequestBody {
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
-    
-    NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                         "<soapenv:Header/>"
-                         "<soapenv:Body>"
-                         "<urn:salesOrderList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                         "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
-                         "<filters xsi:type=\"urn:filters\">"
-                         "</filters>"
-                         "</urn:salesOrderList>"
-                         "</soapenv:Body>"
-                         "</soapenv:Envelope>",sessionId];
-    return tempStr;
-}
 + (NSString *)countryListRequestBody {
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -369,5 +352,62 @@
                          "</soapenv:Envelope>",sessionId, countryCode];
     return tempStr;
 }
+
++ (NSString *)cartInfoRequestBody {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+    NSMutableDictionary *userInfoDict = [defaults objectForKey:kUserInfo_Key];
+    NSInteger cartId = [userInfoDict[kUserCart_Key] integerValue];
+    
+    NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                         "<soapenv:Header/>"
+                         "<soapenv:Body>"
+                         "<urn:shoppingCartInfo soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                         "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                         "<quoteId xsi:type=\"xsd:int\">%ld</quoteId>"
+                         "<storeId xsi:type=\"xsd:string\">%@</storeId>"
+                         "</urn:shoppingCartInfo>"
+                         "</soapenv:Body>"
+                         "</soapenv:Envelope>",sessionId, (long)cartId, [STConstants storeId]];
+    return tempStr;
+}
+
++ (NSString *)cartLicenseRequestBody {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+    NSMutableDictionary *userInfoDict = [defaults objectForKey:kUserInfo_Key];
+    NSInteger cartId = [userInfoDict[kUserCart_Key] integerValue];
+    
+    NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                         "<soapenv:Header/>"
+                         "<soapenv:Body>"
+                         "<urn:shoppingCartLicense soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                         "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                         "<quoteId xsi:type=\"xsd:int\">%ld</quoteId>"
+                         "<storeId xsi:type=\"xsd:string\">%@</storeId>"
+                         "</urn:shoppingCartLicense>"
+                         "</soapenv:Body>"
+                         "</soapenv:Envelope>",sessionId, (long)cartId, [STConstants storeId]];
+    return tempStr;
+}
+
++ (NSString *)salesOrderListRequstBody {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+    
+    NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                         "<soapenv:Header/>"
+                         "<soapenv:Body>"
+                         "<urn:salesOrderList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                         "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                         "</urn:salesOrderList>"
+                         "</soapenv:Body>"
+                         "</soapenv:Envelope>",sessionId];
+    return tempStr;
+}
+
 
 @end

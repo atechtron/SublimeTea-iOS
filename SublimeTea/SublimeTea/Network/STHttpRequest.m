@@ -7,6 +7,7 @@
 
 #import "STHttpRequest.h"
 #import "Reachability.h"
+#import "STConstants.h"
 
 @interface STHttpRequest()
 
@@ -53,7 +54,7 @@
         
         [urlRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
         [urlRequest addValue: @"urn:Action" forHTTPHeaderField:@"SOAPAction"];
-        [urlRequest addValue:@"dev.sublime-house-of-tea.com" forHTTPHeaderField:@"Host"];
+        [urlRequest addValue:kAPIdomainName forHTTPHeaderField:@"Host"];
         [urlRequest addValue: sMessageLength forHTTPHeaderField:@"Content-Length"];
         if(self.requestBody.length) {
             [urlRequest setHTTPBody:[self.requestBody dataUsingEncoding:NSUTF8StringEncoding]];
@@ -78,7 +79,7 @@
         
         [urlRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
         [urlRequest addValue: @"urn:Action" forHTTPHeaderField:@"SOAPAction"];
-        [urlRequest addValue:@"dev.sublime-house-of-tea.com" forHTTPHeaderField:@"Host"];
+        [urlRequest addValue:kAPIdomainName forHTTPHeaderField:@"Host"];
         [urlRequest addValue: sMessageLength forHTTPHeaderField:@"Content-Length"];
         if(self.requestBody.length) {
             [urlRequest setHTTPBody:[self.requestBody dataUsingEncoding:NSUTF8StringEncoding]];

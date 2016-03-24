@@ -11,6 +11,9 @@
 
 #define kStoreID 1
 #define kMaxQTY 10
+    
+#define kAPIdomainName @"shot.beta.webenza.in" //dev.sublime-house-of-tea.com
+#define kUrlString @"/api/v2_soap" //  /index.php/api/v2_soap/index/
 
 @interface STConstants : NSObject
 
@@ -31,8 +34,10 @@
 + (NSString *)paymentMethodListRequestBody;
 + (NSString *)paymentMethodReuestBody:(NSString *)method;
 + (NSString *)orderRequestBody;
-+ (NSString *)orderListRequestBody;
 + (NSString *)countryListRequestBody;
 + (NSString *)regionListequestBodyForCountry:(NSString *)countryCode;
++ (NSString *)cartInfoRequestBody;
++ (NSString *)cartLicenseRequestBody;
++ (NSString *)salesOrderListRequstBody;
 
 @end

@@ -12,7 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *paymentBtn;
-@property (nonatomic)BOOL isBillingAddressScreen;
 
 - (IBAction)paymentButtonAction:(UIButton *)sender;
 

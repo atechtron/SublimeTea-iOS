@@ -8,6 +8,7 @@
 
 #import "STCartTableViewCell.h"
 #import "STMacros.h"
+#import "STUtility.h"
 
 @implementation STCartTableViewCell
 
@@ -15,12 +16,12 @@
     // Initialization code
 }
 - (void)drawRect:(CGRect)rect {
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:onView:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:)];
     [_qtyTextbox.superview addGestureRecognizer:tap];
     
     _qtyTextbox.borderStyle = UITextBorderStyleNone;
     _qtyTextbox.layer.borderWidth = 0.5f;
-    _qtyTextbox.layer.borderColor = UIColorFromRGB(168, 123, 69, 1).CGColor;
+    _qtyTextbox.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     _qtyTextbox.layer.cornerRadius = 2;
     
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 13, 10, 5)];
@@ -41,7 +42,7 @@
         [self.delegate itemDidRemoveFromCart:sender];
     }
 }
-- (void)dropDownAction:(UITapGestureRecognizer *)tapGestureRecongnizer onView:(UITextField *)textField {
+- (void)dropDownAction:(UITapGestureRecognizer *)tapGestureRecongnizer {
     if ([self.delegate respondsToSelector:@selector(droDownAction:tapGesture:)]) {
         [self.delegate droDownAction:self.qtyTextbox tapGesture:tapGestureRecongnizer];
     }
