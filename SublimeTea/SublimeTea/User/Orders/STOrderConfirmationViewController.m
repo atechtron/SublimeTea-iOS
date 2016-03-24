@@ -107,7 +107,8 @@
     cell.descriptionLabel.text = shortDesc;
     cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%.2f",price]];
     cell.statusLabel.text = @"Status: Order Placed";
-    cell.qtyLabel.text = [NSString stringWithFormat:@"QUANTITY: %ld (ITEMS)",(long)prod.prodQty];
+    NSString *itemStr = prod.prodQty > 0 ? @"ITEMS" :@"ITEM";
+    cell.qtyLabel.text = [NSString stringWithFormat:@"QUANTITY: %ld (%@)",(long)prod.prodQty,itemStr];
     
     return cell;
 }
