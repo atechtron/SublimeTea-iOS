@@ -15,7 +15,7 @@ IB_DESIGNABLE
 @synthesize padding;
 
 -(CGRect)textRectForBounds:(CGRect)bounds{
-    return CGRectInset(bounds, padding, padding);
+    return CGRectInset(bounds, padding, 0);
 }
 
 -(CGRect)editingRectForBounds:(CGRect)bounds{

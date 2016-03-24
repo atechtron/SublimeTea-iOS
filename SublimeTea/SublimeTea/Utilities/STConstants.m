@@ -8,10 +8,10 @@
 
 #import "STConstants.h"
 
-#define kAPI_ENDPOINT @"http://shot.beta.webenza.in/api/v2_soap"//@"http://dev.sublime-house-of-tea.com/index.php/api/v2_soap/index/"
+#define kAPI_ENDPOINT [NSString stringWithFormat:@"http://%@%@",kAPIdomainName,kUrlString]//@"http://shot.beta.webenza.in/api/v2_soap"//@"http://dev.sublime-house-of-tea.com/index.php/api/v2_soap/index/"
 
 
-#define kUSERNAME @"superuser"
+#define kUSERNAME @"shot_admin"
 #define kPWD @"123456"
 
 #define kParentId @"1"
@@ -29,6 +29,7 @@
     {
         str = [NSString stringWithFormat:@"%@%@",kAPI_ENDPOINT,param];
     }
+    NSLog(@"%@",str);
     return str;
 }
 + (NSString *)storeId {
