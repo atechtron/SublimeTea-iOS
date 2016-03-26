@@ -101,7 +101,7 @@
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSDictionary *userInfoDict = [defaults objectForKey:kUserInfo_Key];
-        NSLog(@"User Details: %@",userInfoDict);
+        dbLog(@"User Details: %@",userInfoDict);
         
         NSString *userEmail = userInfoDict[@"email"][@"__text"];
         NSString *userFirstName = userInfoDict[@"firstname"][@"__text"] ? userInfoDict[@"firstname"][@"__text"] :@"";
@@ -164,11 +164,11 @@
     return 0.01f;
 }
 - (void)didSelectHeader:(STMenuTableHeaderView *)header AtSectionIndex:(NSInteger )section {
-    NSLog(@"SectionClicked %ld",section);
+    dbLog(@"SectionClicked %ld",section);
     if (section == 2 && self.dataArr.count == 0) {
         header.bottomImageview.hidden = YES;
         NSDictionary *resultXMLDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductCategory_Key];
-        NSLog(@"%@",resultXMLDict);
+        dbLog(@"%@",resultXMLDict);
         [self parseResponseWithDict:resultXMLDict];
         
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -281,7 +281,7 @@
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
             NSArray *productCategoriesArr = responseDict[@"SOAP-ENV:Body"][@"ns1:catalogCategoryTreeResponse"][@"tree"][@"children"][@"item"][@"children"][@"item"][@"children"][@"item"];
-            NSLog(@"%@",productCategoriesArr);
+            dbLog(@"%@",productCategoriesArr);
             if (productCategoriesArr.count) {
                 self.dataArr = [NSArray arrayWithArray:productCategoriesArr];
             }

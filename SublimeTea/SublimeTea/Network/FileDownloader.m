@@ -69,7 +69,7 @@
                                           });
                                           
                                           if (error) {
-                                              NSLog(@"File Download ERROR: %@", error);
+                                              dbLog(@"File Download ERROR: %@", error);
                                               errorBlock_(error);
                                               errorBlock_ = nil;
                                           } else {
@@ -79,8 +79,8 @@
                                                   completeBlock_(data,_fileURL,imgView);
                                                   completeBlock_ = nil;
                                               } else {
-                                                  NSLog(@"Couldn't Download Files at URL: %@", _fileURL);
-                                                  NSLog(@"HTTP %ld", (long)httpResponse.statusCode);
+                                                  dbLog(@"Couldn't Download Files at URL: %@", _fileURL);
+                                                  dbLog(@"HTTP %ld", (long)httpResponse.statusCode);
                                                   errorBlock_(error);
                                                   errorBlock_ = nil;
                                               }
@@ -90,7 +90,7 @@
         }
     }
     @catch (NSException *exception) {
-        NSLog(@"SublimeTea-FileDownloader-asynchronousFiledownload:- %@",exception);
+        dbLog(@"SublimeTea-FileDownloader-asynchronousFiledownload:- %@",exception);
 //        [AppDelegate didStopNetworking];
     }
 }

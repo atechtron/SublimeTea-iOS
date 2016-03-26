@@ -92,12 +92,12 @@
     NSString *name = prod.prodDict[@"name"][@"__text"];
     NSString *shortDesc = prod.prodDict[@"short_description"][@"__text"];
     NSString *price = prod.prodDict[@"special_price"][@"__text"];
-    NSLog(@"%@",prod.prodDict);
+    dbLog(@"%@",prod.prodDict);
     NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
     if (prodImgArr.count) {
         NSDictionary *imgUrlDict = [prodImgArr lastObject];
         NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
-        NSLog(@"Image URL %@",imgUrl);
+        dbLog(@"Image URL %@",imgUrl);
         NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgUrl];
         if (imgData) {
             UIImage *prodImg = [UIImage imageWithData:imgData];

@@ -45,7 +45,7 @@
     
     NSDictionary *xmlDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductList_Key];
     if (self.stringToSearch.length) {
-        NSLog(@"%@",self.stringToSearch);
+        dbLog(@"%@",self.stringToSearch);
         
         if (xmlDict) {
             self.productsInSelectedCat = [self searchProducts:xmlDict];
@@ -75,7 +75,7 @@
         //                prodDict[@"name"][@"__text"];
     NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"name.__text CONTAINS[c] %@",self.stringToSearch];
     filteredProducts = [allProductsArr filteredArrayUsingPredicate:filterPredicate];
-    NSLog(@"%@",filteredProducts);
+    dbLog(@"%@",filteredProducts);
     
     return filteredProducts;
 }
@@ -139,7 +139,7 @@
     if (prodImgArr.count) {
         NSDictionary *imgUrlDict = [prodImgArr lastObject];
         NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
-        NSLog(@"Image URL %@",imgUrl);
+        dbLog(@"Image URL %@",imgUrl);
         [self loadProdImageinView:cell.productImageView fromURL:imgUrl];
     }
     cell.productTitleLabel.text = [name uppercaseString];
@@ -268,7 +268,7 @@
                                           [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic
                                                                                         withKey:kProductInfo_Key(prodId)];
                                           
-                                          NSLog(@"%@",xmlDic);
+                                          dbLog(@"%@",xmlDic);
                                           [self parseResponseWithDict:xmlDic];
                                       });
                                       
@@ -281,7 +281,7 @@
                                                                                       delegate:nil
                                                                              cancelButtonTitle:@"OK"
                                                                              otherButtonTitles: nil] show];
-                                                           NSLog(@"SublimeTea-STProductViewController-fetchProductDetails:- %@",error);
+                                                           dbLog(@"SublimeTea-STProductViewController-fetchProductDetails:- %@",error);
                                                        }];
     
     [httpRequest start];
@@ -343,7 +343,7 @@
                                        });
                                        
                                    } errorBlock:^(NSError *error) {
-                                       NSLog(@"SublimeTea-STProductViewController-loadProdImageinView:- %@",error);
+                                       dbLog(@"SublimeTea-STProductViewController-loadProdImageinView:- %@",error);
                                    }];
         }
     }
@@ -370,7 +370,7 @@
                                           NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
                                           [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic
                                                                                         withKey:kProductList_Key];
-                                          NSLog(@"Product list for category :%@ ---- %@",self.selectedCategoryDict,xmlDic);
+                                          dbLog(@"Product list for category :%@ ---- %@",self.selectedCategoryDict,xmlDic);
                                           
                                           [self parseProductResponseWithDict:xmlDic];
                                       });
@@ -381,7 +381,7 @@
                                                                  delegate:nil
                                                         cancelButtonTitle:@"OK"
                                                         otherButtonTitles: nil] show];
-                                      NSLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
+                                      dbLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
                                   }];
     
     [httpRequest start];
@@ -395,7 +395,7 @@
             if (self.stringToSearch.length) {
                 
                 self.productsInSelectedCat = [self searchProducts:nil];
-                NSLog(@"%@",self.productsInSelectedCat);
+                dbLog(@"%@",self.productsInSelectedCat);
             }
             else {
                 NSDictionary *selectedProdCatDict = self.selectedCategoryDict;
@@ -441,13 +441,13 @@
     
     NSData *responseData = [httpRequest synchronousStart];
     NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-    //    NSLog(@"Image Data for ID %d %@",prodId, xmlDic);
+    //    dbLog(@"Image Data for ID %d %@",prodId, xmlDic);
     [self parseImgData:xmlDic andProdId:prodId];
 }
 - (void)parseImgData:(NSDictionary *)responseDict andProdId:(NSString *)prodId {
     if(responseDict){
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
-        //        NSLog(@"Image Data for ID %d %@",prodId, responseDict);
+        //        dbLog(@"Image Data for ID %d %@",prodId, responseDict);
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
             NSDictionary *imgDataDict = parentDataDict[@"ns1:catalogProductAttributeMediaListResponse"][@"result"];
             NSArray *imageURLList = imgDataDict[@"item"];

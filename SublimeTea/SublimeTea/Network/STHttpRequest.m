@@ -59,8 +59,8 @@
         if(self.requestBody.length) {
             [urlRequest setHTTPBody:[self.requestBody dataUsingEncoding:NSUTF8StringEncoding]];
         }
-        NSLog(@"%@",urlRequest);
-        NSLog(@"%@",urlRequest.allHTTPHeaderFields);
+        dbLog(@"%@",urlRequest);
+        dbLog(@"%@",urlRequest.allHTTPHeaderFields);
         self.responseData = [[NSMutableData alloc] init];
         self.urlConnection = [[NSURLConnection alloc]initWithRequest:urlRequest
                                                             delegate:self];
@@ -84,8 +84,8 @@
         if(self.requestBody.length) {
             [urlRequest setHTTPBody:[self.requestBody dataUsingEncoding:NSUTF8StringEncoding]];
         }
-        NSLog(@"%@",urlRequest);
-        NSLog(@"%@",urlRequest.allHTTPHeaderFields);
+        dbLog(@"%@",urlRequest);
+        dbLog(@"%@",urlRequest.allHTTPHeaderFields);
         
         NSError *error = nil;
         NSURLResponse *response = nil;

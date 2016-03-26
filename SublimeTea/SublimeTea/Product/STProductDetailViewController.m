@@ -91,7 +91,7 @@ static NSInteger prodQtyCount = 0;
             if (prodImgArr.count) {
                 NSDictionary *imgUrlDict = [prodImgArr lastObject];
                 NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
-                NSLog(@"Image URL %@",imgUrl);
+                dbLog(@"Image URL %@",imgUrl);
                 NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgUrl];
                 if (imgData) {
                     UIImage *prodImg = [UIImage imageWithData:imgData];
@@ -204,7 +204,7 @@ static NSInteger prodQtyCount = 0;
 //                                      
 //                                  }successBlock:^(NSData *responseData){
 //                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-//                                      NSLog(@"%@",xmlDic);
+//                                      dbLog(@"%@",xmlDic);
 //                                      
 //                                      [STUtility stopActivityIndicatorFromView:nil];
 //                                      
@@ -216,7 +216,7 @@ static NSInteger prodQtyCount = 0;
 //                                                                 delegate:nil
 //                                                        cancelButtonTitle:@"OK"
 //                                                        otherButtonTitles: nil] show];
-//                                      NSLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
+//                                      dbLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
 //                                  }];
 //    
 //    [httpRequest start];

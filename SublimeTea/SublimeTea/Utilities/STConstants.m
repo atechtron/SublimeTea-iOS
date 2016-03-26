@@ -29,7 +29,7 @@
     {
         str = [NSString stringWithFormat:@"%@%@",kAPI_ENDPOINT,param];
     }
-    NSLog(@"%@",str);
+    dbLog(@"%@",str);
     return str;
 }
 + (NSString *)storeId {
@@ -38,6 +38,59 @@
     NSString *storeIDStr = userInfoDict ? userInfoDict[@"store_id"][@"__text"] : @1;
     return storeIDStr;
 }
+
++ (NSString *)signUpRequestBodyWIthEmail:(NSString *)emailStr andPassword:(NSString *)passwordStr {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+    
+    NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                         "<soapenv:Header/>"
+                         "<soapenv:Body>"
+                         "<urn:customerCustomerCreate soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                         "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                         "<customerData xsi:type=\"urn:customerCustomerEntityToCreate\">"
+                         "<email xsi:type=\"xsd:string\">%@</email>"
+                         "<password xsi:type=\"xsd:string\">%@</password>"
+                         "</customerData>"
+                         "</urn:customerCustomerCreate>"
+                         "</soapenv:Body>"
+                         "</soapenv:Envelope>",sessionId,emailStr,passwordStr];
+    return tempStr;
+}
+
++ (NSString *)customerListReuestBody {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+    
+    NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                         "<soapenv:Header/>"
+                         "<soapenv:Body>"
+                         "<urn:customerCustomerList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                         "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                         "</urn:customerCustomerList>"
+                         "</soapenv:Body>"
+                         "</soapenv:Envelope>",sessionId];
+    return tempStr;
+}
+
++ (NSString *)endSessionRequestBody {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+    
+    NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                         "<soapenv:Header/>"
+                         "<soapenv:Body>"
+                         "<urn:endSession soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                         "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                         "</urn:endSession>"
+                         "</soapenv:Body>"
+                         "</soapenv:Envelope>",sessionId];
+    return tempStr;
+}
+
 + (NSString *)startSessionRequestBody {
     NSString *temp;
     
@@ -192,6 +245,7 @@
                "</urn:shoppingCartCustomerSet>"
                "</soapenv:Body>"
                "</soapenv:Envelope>",sessionId, (long)cartId,mode,(long)[cust_Id integerValue],[STConstants storeId],[STConstants storeId]];
+    
     return tempStr;
 }
 + (NSString *)getShippingMathodListBodyResponse {

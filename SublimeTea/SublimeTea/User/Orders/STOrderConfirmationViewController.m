@@ -48,7 +48,7 @@
 {
     if ([message.name isEqualToString:@"JSON_NEW"])
     {
-        NSLog(@"Response = %@",[message object]);
+        dbLog(@"Response = %@",[message object]);
         _jsondict = [message object];
     }
 }
@@ -86,7 +86,7 @@
     if (prodImgArr.count) {
         NSDictionary *imgUrlDict = [prodImgArr lastObject];
         NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
-        NSLog(@"Image URL %@",imgUrl);
+        dbLog(@"Image URL %@",imgUrl);
         NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgUrl];
         if (imgData) {
             UIImage *prodImg = [UIImage imageWithData:imgData];

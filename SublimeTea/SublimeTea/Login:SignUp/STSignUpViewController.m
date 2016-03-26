@@ -140,21 +140,8 @@
     //        NSString *confirmPasswordStr = [self.confirmPasswordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     //        NSString *mobNumStr = [self.mobileNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
-    
-    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
-                             "<soapenv:Header/>"
-                             "<soapenv:Body>"
-                             "<urn:customerCustomerCreate soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
-                             "<customerData xsi:type=\"urn:customerCustomerEntityToCreate\">"
-                             "<email xsi:type=\"xsd:string\">%@</email>"
-                             "<password xsi:type=\"xsd:string\">%@</password>"
-                             "</customerData>"
-                             "</urn:customerCustomerCreate>"
-                             "</soapenv:Body>"
-                             "</soapenv:Envelope>",sessionId,emailStr,passwordStr];
+    NSString *requestBody = [STConstants signUpRequestBodyWIthEmail:emailStr
+                                                        andPassword:passwordStr];
     
     NSString *urlString = [STConstants getAPIURLWithParams:nil];
     NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -164,10 +151,10 @@
                                                                            body:requestBody
                                                             responseHeaderBlock:^(NSURLResponse *response)
                                               {
-                                                  NSLog(@"%@",response);
+                                                  dbLog(@"%@",response);
                                               }successBlock:^(NSData *responseData){
                                                   NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                                  NSLog(@"%@",xmlDic);
+                                                  dbLog(@"%@",xmlDic);
                                                   if(!xmlDic[@"SOAP-ENV:Body"][@"SOAP-ENV:Fault"])
                                                   {
                                                       [STUtility stopActivityIndicatorFromView:nil];
@@ -189,7 +176,7 @@
                                                                              delegate:nil
                                                                     cancelButtonTitle:@"OK"
                                                                     otherButtonTitles: nil] show];
-                                                  NSLog(@"SublimeTea-STSignUpViewController-submitButtonAction:- %@",error);
+                                                  dbLog(@"SublimeTea-STSignUpViewController-submitButtonAction:- %@",error);
                                               }];
     
     [httpRequest start];

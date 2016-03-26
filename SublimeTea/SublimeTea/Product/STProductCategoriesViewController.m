@@ -167,7 +167,7 @@
     [self.collectionView reloadData];
     
     self.pageControl.numberOfPages = [self numberOfPages];
-    NSLog(@"%f",self.collectionView.contentOffset.x);
+    dbLog(@"%f",self.collectionView.contentOffset.x);
     [self.view bringSubviewToFront:self.pageControl];
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
