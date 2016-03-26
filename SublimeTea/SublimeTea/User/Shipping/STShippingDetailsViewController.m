@@ -138,7 +138,7 @@
     if ([message.name isEqualToString:@"FAILED_DICT"])
     {
         //You will get the failed transaction details in below log and in jsondict.
-        NSLog(@"Response json data = %@",[message object]);
+        dbLog(@"Response json data = %@",[message object]);
         
         jsondict = [message object];
     }
@@ -422,8 +422,8 @@
             _cell.delegate = self;
             _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
-            _cell.dropDownTextField.text = @"TV";
-            _cell.textField.text = @"Treviso";
+//            _cell.dropDownTextField.text = @"TV";
+//            _cell.textField.text = @"Treviso";
             _cell.dropDownTitleLabel.text = @"Shipping State";
             _cell.textFieldTitleLabel.text = @"Shipping City";
             _cell.textField.keyboardType = UIKeyboardTypeDefault;
@@ -445,8 +445,8 @@
             _cell.delegate = self;
             _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
-            _cell.dropDownTextField.text = @"IT";
-            _cell.textField.text = @"31056";
+//            _cell.dropDownTextField.text = @"IT";
+//            _cell.textField.text = @"31056";
             _cell.dropDownTitleLabel.text = @"Shipping Country";
             _cell.textFieldTitleLabel.text = @"Shipping Postal Code";
             _cell.textField.keyboardType = UIKeyboardTypeNumberPad;
@@ -722,6 +722,16 @@
 #pragma UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
 }
+- (NSString *)trimmedStateCode:(NSString *)rawStateCode {
+    NSString *stateCodestr;
+    if (rawStateCode.length) {
+        NSArray *stateCodeComponenets = [rawStateCode componentsSeparatedByString:@"-"];
+        if (stateCodeComponenets.count > 1) {
+            stateCodestr = stateCodeComponenets[1];
+        }
+    }
+    return stateCodestr;
+}
 - (void)setAddress {
     
     if (self.isShippingISBillingAddress) {
@@ -729,7 +739,8 @@
         NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *addressStr = [self.addressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *cityStr = [self.cityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *stateStr =  self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"];
+        NSString *stateStr =  [self trimmedStateCode:self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"]];//self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"];
+        NSLog(@"Selected State Code :-  %@",stateStr);
         stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *postalCodeStr = [self.postalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *countryStr = selectedCountryDict[@"country_id"][@"__text"];
@@ -828,7 +839,7 @@
     if ([STUtility isNetworkAvailable]) {
         [STUtility startActivityIndicatorOnView:self.view withText:@"Fetching Countries."];
         NSString *requestBody = [STConstants countryListRequestBody];
-        NSLog(@"Countries list: %@",requestBody);
+        dbLog(@"Countries list: %@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
@@ -839,9 +850,9 @@
                                                            successBlock:^(NSData *responseData){
                                                                dispatch_async(dispatch_get_main_queue(), ^{
                                                                    NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
-                                                                   NSLog(@"Countries list xml: %@",xmlString);
+                                                                   dbLog(@"Countries list xml: %@",xmlString);
                                                                    NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
-                                                                   NSLog(@"Countries list %@",xmlDic);
+                                                                   dbLog(@"Countries list %@",xmlDic);
                                                                    [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic withKey:kCountyList_key];
                                                                    [self parseCountriesMethodResponseWithDict:xmlDic];
                                                                });
@@ -854,7 +865,7 @@
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-fetchCountryList:- %@",error);
+                                          dbLog(@"SublimeTea-STPlaceOrder-fetchCountryList:- %@",error);
                                       }];
         
         
@@ -877,7 +888,7 @@
             [popoverViewController.tableView reloadData];
         }
         else {
-            NSLog(@"Error placing order...");
+            dbLog(@"Error placing order...");
         }
     }else {
     }
@@ -888,7 +899,7 @@
     if ([STUtility isNetworkAvailable]) {
         [STUtility startActivityIndicatorOnView:self.view withText:@"Fetching states."];
         NSString *requestBody = [STConstants regionListequestBodyForCountry:countryCode];
-        NSLog(@"States list: %@ for country %@",requestBody, countryCode);
+        dbLog(@"States list: %@ for country %@",requestBody, countryCode);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
@@ -899,9 +910,9 @@
                                                            successBlock:^(NSData *responseData){
                                                                dispatch_async(dispatch_get_main_queue(), ^{
                                                                    NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
-                                                                   NSLog(@"States list xml: %@ for country %@",xmlString,countryCode);
+                                                                   dbLog(@"States list xml: %@ for country %@",xmlString,countryCode);
                                                                    NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
-                                                                   NSLog(@"States list %@ for country %@",xmlDic, countryCode);
+                                                                   dbLog(@"States list %@ for country %@",xmlDic, countryCode);
                                                                    [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic withKey:kRegionList_key(countryCode)];
                                                                    [self parseRegionListMethodResponseWithDict:xmlDic];
                                                                });
@@ -914,7 +925,7 @@
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-fetchCountryList:- %@",error);
+                                          dbLog(@"SublimeTea-STPlaceOrder-fetchCountryList:- %@",error);
                                       }];
         
         
@@ -942,7 +953,7 @@
             [popoverViewController.tableView reloadData];
         }
         else {
-            NSLog(@"Error placing order...");
+            dbLog(@"Error placing order...");
         }
     }else {
     }

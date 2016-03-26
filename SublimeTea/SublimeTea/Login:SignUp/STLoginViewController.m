@@ -156,14 +156,7 @@
             sessionId = _sessionId;
         }
         
-        NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                                 "<soapenv:Header/>"
-                                 "<soapenv:Body>"
-                                 "<urn:customerCustomerList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                                 "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
-                                 "</urn:customerCustomerList>"
-                                 "</soapenv:Body>"
-                                 "</soapenv:Envelope>",sessionId];
+        NSString *requestBody = [STConstants customerListReuestBody];
         
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -176,7 +169,7 @@
                                           
                                       }successBlock:^(NSData *responseData){
                                           NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                          NSLog(@"%@",xmlDic);
+                                          dbLog(@"%@",xmlDic);
                                           [self parseResponseWithDict:xmlDic];
                                           
                                       }failureBlock:^(NSError *error) {
@@ -186,7 +179,7 @@
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STSignUpViewController-userLogIn:- %@",error);
+                                          dbLog(@"SublimeTea-STSignUpViewController-userLogIn:- %@",error);
                                       }];
         
         [httpRequest start];
@@ -203,7 +196,7 @@
                 
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 [defaults setObject:filteredUsersArr[0] forKey:kUserInfo_Key];
-                NSLog(@"User Details: %@",[defaults objectForKey:kUserInfo_Key]);
+                dbLog(@"User Details: %@",[defaults objectForKey:kUserInfo_Key]);
                 [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
             }
             else { // Login Failed

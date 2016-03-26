@@ -23,7 +23,7 @@
 
 #ifdef DB_LOG
 #   define dbLine() NSLog(@"-------------------------------------------------------------");
-#   define NSLog NSLog
+#   define dbLog NSLog
 #else
 #   define dbLine()
 #   define NSLog(x,...)

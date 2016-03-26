@@ -72,7 +72,7 @@
     
     STRootViewController *rootViewController = (STRootViewController *)self.window.rootViewController;
     UINavigationController *navigationController = (UINavigationController*)rootViewController.contentViewController;
-    NSLog(@"%@",navigationController);
+    dbLog(@"%@",navigationController);
     [navigationController pushViewController:controller animated:YES];
     
     return YES;
@@ -94,7 +94,7 @@
     controller.transaction_id = [parameterArray objectAtIndex:1];
     STRootViewController *rootViewController = (STRootViewController *)self.window.rootViewController;
     UINavigationController *navigationController = (UINavigationController*)rootViewController.contentViewController;
-    NSLog(@"%@",navigationController);
+    dbLog(@"%@",navigationController);
     [navigationController pushViewController:controller animated:YES];
     
     return YES;
@@ -114,6 +114,7 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = (self.networkActivityCounter != 0);
     }
 }
+
 - (void)startSession {
     
 //    [STUtility startActivityIndicatorOnView:nil withText:@"Initializing..."];
@@ -138,12 +139,12 @@
                                                                  delegate:nil
                                                         cancelButtonTitle:@"OK"
                                                         otherButtonTitles: nil] show];
-                                      NSLog(@"SublimeTea-STSignUpViewController-startSession:- %@",error);
+                                      dbLog(@"SublimeTea-STSignUpViewController-startSession:- %@",error);
                                   }];
     
     NSData *responseData = [httpRequest synchronousStart];
     NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-    NSLog(@"%@",xmlDic);
+    dbLog(@"%@",xmlDic);
     NSDictionary *resutDict = xmlDic[@"SOAP-ENV:Body"][@"ns1:loginResponse"][@"loginReturn"];
     NSString *sessionKey = resutDict[@"__text"];
     if (sessionKey.length) {
@@ -156,21 +157,14 @@
     [STUtility stopActivityIndicatorFromView:nil];
     //                                      [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
 }
+
 - (void)endUserSession {
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *userSessionId = [defaults objectForKey:kUSerSession_Key];
     
     NSString *urlString = [STConstants getAPIURLWithParams:nil];
     NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSString *requestBody = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
-                             "<soapenv:Header/>"
-                             "<soapenv:Body>"
-                             "<urn:endSession soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
-                             "</urn:endSession>"
-                             "</soapenv:Body>"
-                             "</soapenv:Envelope>",userSessionId];
+    NSString *requestBody = [STConstants endSessionRequestBody];
     
     
     STHttpRequest *featureNSpecHttpRequest = [[STHttpRequest alloc] initWithURL:url
@@ -181,7 +175,7 @@
                                                   
                                               }successBlock:^(NSData *responseData){
                                                   NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                                  NSLog(@"%@",xmlDic);
+                                                  dbLog(@"%@",xmlDic);
                                                   NSDictionary *resultDict = xmlDic[@"SOAP-ENV:Body"][@"ns1:endSessionResponse"][@"endSessionReturn"];
                                                   if ([resultDict[@"__text"] boolValue]) {
                                                       [defaults removeObjectForKey:kUSerSession_Key];
@@ -189,10 +183,11 @@
                                                   }
                                                   [STUtility stopActivityIndicatorFromView:nil];
                                               }failureBlock:^(NSError *error) {
-                                                  NSLog(@"SublimeTea-STAppDelegate-endUserSession:- %@",error);
+                                                  dbLog(@"SublimeTea-STAppDelegate-endUserSession:- %@",error);
                                                   [STUtility stopActivityIndicatorFromView:nil];
                                               }];
     
     [featureNSpecHttpRequest start];
 }
+
 @end

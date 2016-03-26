@@ -171,7 +171,7 @@
                                           NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
                                           [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic
                                                                                         withKey:kProductCategory_Key];
-                                          NSLog(@"%@",xmlDic);
+                                          dbLog(@"%@",xmlDic);
 
                                           [self parseResponseWithDict:xmlDic];
                                       });
@@ -183,7 +183,7 @@
                                                                  delegate:nil
                                                         cancelButtonTitle:@"OK"
                                                         otherButtonTitles: nil] show];
-                                      NSLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
+                                      dbLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
                                   }];
     
     [httpRequest start];
@@ -193,7 +193,7 @@
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
             NSArray *productCategoriesArr = responseDict[@"SOAP-ENV:Body"][@"ns1:catalogCategoryTreeResponse"][@"tree"][@"children"][@"item"][@"children"][@"item"][@"children"][@"item"];
-            NSLog(@"%@",productCategoriesArr);
+            dbLog(@"%@",productCategoriesArr);
             if (productCategoriesArr.count) {
                 self.categories = [NSArray arrayWithArray:productCategoriesArr];
                 [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];

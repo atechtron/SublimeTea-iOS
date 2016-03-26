@@ -20,6 +20,9 @@
 + (NSString *)getAPIURLWithParams:(NSString *)param;
 + (NSString *)storeId;
 
++ (NSString *)endSessionRequestBody;
++ (NSString *)customerListReuestBody;
++ (NSString *)signUpRequestBodyWIthEmail:(NSString *)emailStr andPassword:(NSString *)passwordStr;
 + (NSString *)startSessionRequestBody;
 + (NSString *)categoryListRequestBody;
 + (NSString *)productListRequestBody;

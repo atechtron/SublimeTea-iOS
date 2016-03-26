@@ -101,7 +101,7 @@
     if ([STUtility isNetworkAvailable]) {
         [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
         NSString *requestBody = [STConstants salesOrderListRequstBody];
-        NSLog(@"Order List: %@",requestBody);
+        dbLog(@"Order List: %@",requestBody);
         
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -113,7 +113,7 @@
                                                            successBlock:^(NSData *responseData){
                                                                dispatch_async(dispatch_get_main_queue(), ^{
                                                                    NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                                                   NSLog(@"Order Lists %@",xmlDic);
+                                                                   dbLog(@"Order Lists %@",xmlDic);
                                                                         [self parseOrderListResponseWithDict:xmlDic];
                                                                });
                                                            }
@@ -125,7 +125,7 @@
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-orderList:- %@",error);
+                                          dbLog(@"SublimeTea-STPlaceOrder-orderList:- %@",error);
                                       }];
         
         
@@ -137,7 +137,7 @@
 - (void)parseOrderListResponseWithDict:(NSDictionary *)responseDict {
     if(responseDict){
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
-        //        NSLog(@"Image Data for ID %d %@",prodId, responseDict);
+        //        dbLog(@"Image Data for ID %d %@",prodId, responseDict);
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
             NSDictionary *dataDict = parentDataDict[@"ns1:salesOrderListResponse"][@"result"];
             NSArray *orders = dataDict[@"item"];
@@ -146,7 +146,7 @@
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];
-            NSLog(@"Error fetching order list...");
+            dbLog(@"Error fetching order list...");
         }
     }
     [STUtility stopActivityIndicatorFromView:nil];

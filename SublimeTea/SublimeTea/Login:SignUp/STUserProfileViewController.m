@@ -203,14 +203,14 @@
     }
 }
 - (void)editPasswordAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"IndexPath: %ld",indexPath.row);
+    dbLog(@"IndexPath: %ld",indexPath.row);
     [self.dataArr replaceObjectAtIndex:indexPath.row withObject:@"changePwdTxtField"];
 //    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 //    [self.dataArr addObject:@"changePwdTxtField"];
     
     NSIndexPath *addressBtnIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1
                                                           inSection:indexPath.section];
-    NSLog(@"IndexPath: %ld",addressBtnIndexPath.row);
+    dbLog(@"IndexPath: %ld",addressBtnIndexPath.row);
     [self.tableView reloadRowsAtIndexPaths:@[addressBtnIndexPath,indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 

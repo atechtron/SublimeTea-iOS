@@ -47,7 +47,7 @@ Create a cart */
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-createCart:- %@",error);
+                                          dbLog(@"SublimeTea-STPlaceOrder-createCart:- %@",error);
                                       }];
         
         
@@ -55,7 +55,7 @@ Create a cart */
         NSData *responseData = [httpRequest synchronousStart];
         dispatch_async(dispatch_get_main_queue(), ^{
             NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-            NSLog(@"Cart %@",xmlDic);
+            dbLog(@"Cart %@",xmlDic);
             [self parseCartResponseWithDict:xmlDic];
         });
     }
@@ -81,7 +81,7 @@ Create a cart */
         else {
             [STUtility stopActivityIndicatorFromView:nil];
             [self showAlert];
-            NSLog(@"Error while adding product to cart.");
+            dbLog(@"Error while adding product to cart.");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
@@ -115,7 +115,7 @@ Create a cart */
         if (soapBodyDict) {
             NSString *requestBody = [STUtility prepareMethodSoapBody:@"shoppingCartProductAdd"
                                                               params:soapBodyDict];
-            NSLog(@"add product to Cart Request Body: %@",requestBody);
+            dbLog(@"add product to Cart Request Body: %@",requestBody);
             
             NSString *urlString = [STConstants getAPIURLWithParams:nil];
             NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -133,13 +133,13 @@ Create a cart */
                                                                          delegate:nil
                                                                 cancelButtonTitle:@"OK"
                                                                 otherButtonTitles: nil] show];
-                                              NSLog(@"SublimeTea-STPlaceOrder-addProductToCart:- %@",error);
+                                              dbLog(@"SublimeTea-STPlaceOrder-addProductToCart:- %@",error);
                                           }];
             
           NSData *responseData = [httpRequest synchronousStart];
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                NSLog(@"Product Add-- %@",xmlDic);
+                dbLog(@"Product Add-- %@",xmlDic);
                 [self parseProductResponseWithDict:xmlDic];
             });
         }
@@ -162,7 +162,7 @@ Create a cart */
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];
-            NSLog(@"Error adding product to cart...");
+            dbLog(@"Error adding product to cart...");
             [self showAlert];
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
@@ -182,7 +182,7 @@ Create a cart */
     if (customerId.length && [STUtility isNetworkAvailable]) {
         
             NSString *requestBody = [STConstants getCartCustomerRequestBodyWithCustomerId:customerId mode:@"customer"];
-            NSLog(@"Cart User set Body: %@",requestBody);
+            dbLog(@"Cart User set Body: %@",requestBody);
             
             NSString *urlString = [STConstants getAPIURLWithParams:nil];
             NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -200,13 +200,13 @@ Create a cart */
                                                                                               delegate:nil
                                                                                      cancelButtonTitle:@"OK"
                                                                                      otherButtonTitles: nil] show];
-                                                                   NSLog(@"SublimeTea-STPlaceOrder-setCartUser:- %@",error);
+                                                                   dbLog(@"SublimeTea-STPlaceOrder-setCartUser:- %@",error);
                                                                }];
             
             NSData *responseData = [httpRequest synchronousStart];
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                NSLog(@"Cart customer info set-- %@",xmlDic);
+                dbLog(@"Cart customer info set-- %@",xmlDic);
                 [self parseCartCustomerSetResponseWithDict:xmlDic];
             });
     }
@@ -230,7 +230,7 @@ Create a cart */
         else {
             [STUtility stopActivityIndicatorFromView:nil];
             [self showAlert];
-            NSLog(@"Error setting user information to cart...");
+            dbLog(@"Error setting user information to cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
@@ -285,7 +285,7 @@ Create a cart */
         if (soapBodyDict) {
             NSString *requestBody = [STUtility prepareMethodSoapBody:@"shoppingCartCustomerAddresses"
                                                               params:soapBodyDict];
-            NSLog(@"Shippment Address Request Body: %@",requestBody);
+            dbLog(@"Shippment Address Request Body: %@",requestBody);
             
             NSString *urlString = [STConstants getAPIURLWithParams:nil];
             NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -303,13 +303,13 @@ Create a cart */
                                                                                               delegate:nil
                                                                                      cancelButtonTitle:@"OK"
                                                                                      otherButtonTitles: nil] show];
-                                                                   NSLog(@"SublimeTea-STPlaceOrder-ShipmentAddress:- %@",error);
+                                                                   dbLog(@"SublimeTea-STPlaceOrder-ShipmentAddress:- %@",error);
                                                                }];
             
             NSData *responseData = [httpRequest synchronousStart];
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                NSLog(@"Address Add-- %@",xmlDic);
+                dbLog(@"Address Add-- %@",xmlDic);
                 [self parseAddressResponseWithDict:xmlDic];
             });
         }
@@ -333,7 +333,7 @@ Create a cart */
         else {
             [STUtility stopActivityIndicatorFromView:nil];
             [self showAlert];
-            NSLog(@"Error adding address information to cart...");
+            dbLog(@"Error adding address information to cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
@@ -367,7 +367,7 @@ Create a cart */
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-createCart:- %@",error);
+                                          dbLog(@"SublimeTea-STPlaceOrder-createCart:- %@",error);
                                       }];
         
         
@@ -375,10 +375,10 @@ Create a cart */
         NSData *responseData = [httpRequest synchronousStart];
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
-            NSLog(@"Shipping Methods List xml: %@",xmlString);
+            dbLog(@"Shipping Methods List xml: %@",xmlString);
             
             NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-            NSLog(@"Shipping Methods List %@",xmlDic);
+            dbLog(@"Shipping Methods List %@",xmlDic);
             [self parseShippingMethodListResponseWithDict:xmlDic];
         });
     }
@@ -388,7 +388,7 @@ Create a cart */
 }
 - (void)parseShippingMethodListResponseWithDict:(NSDictionary *)responseDict {
     if (responseDict) {
-        NSLog(@"%@",responseDict);
+        dbLog(@"%@",responseDict);
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
         if (parentDataDict[@"SOAP-ENV:Fault"] == nil) {
             NSDictionary *dataDict;
@@ -418,7 +418,7 @@ Create a cart */
         else {
             [STUtility stopActivityIndicatorFromView:nil];
             [self showAlert];
-            NSLog(@"Error in fetching shipping mode list ...");
+            dbLog(@"Error in fetching shipping mode list ...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
@@ -452,7 +452,7 @@ Create a cart */
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-setShippingMode:- %@",error);
+                                          dbLog(@"SublimeTea-STPlaceOrder-setShippingMode:- %@",error);
                                       }];
         
         
@@ -460,7 +460,7 @@ Create a cart */
         NSData *responseData = [httpRequest synchronousStart];
         dispatch_async(dispatch_get_main_queue(), ^{
             NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-            NSLog(@"Set shipping method to cart %@",xmlDic);
+            dbLog(@"Set shipping method to cart %@",xmlDic);
             [self parseShippingMethodResponseWithDict:xmlDic];
         });
     }
@@ -483,7 +483,7 @@ Create a cart */
         else {
             [STUtility stopActivityIndicatorFromView:nil];
             [self showAlert];
-            NSLog(@"Error setting shipping method cart...");
+            dbLog(@"Error setting shipping method cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
@@ -515,7 +515,7 @@ Create a cart */
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-getCartAmount:- %@",error);
+                                          dbLog(@"SublimeTea-STPlaceOrder-getCartAmount:- %@",error);
                                       }];
         
         
@@ -523,7 +523,7 @@ Create a cart */
         NSData *responseData = [httpRequest synchronousStart];
         dispatch_async(dispatch_get_main_queue(), ^{
             NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-            NSLog(@"Cart total %@",xmlDic);
+            dbLog(@"Cart total %@",xmlDic);
             [self getPaymentModes];
             [self parseCartTotalResponseWithDict:xmlDic];
         });
@@ -548,7 +548,7 @@ Create a cart */
         else {
             [STUtility stopActivityIndicatorFromView:nil];
             [self showAlert];
-            NSLog(@"Error in fetching shipping mode list ...");
+            dbLog(@"Error in fetching shipping mode list ...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
@@ -570,7 +570,7 @@ Create a cart */
 
     if ([STUtility isNetworkAvailable]) {
         NSString *requestBody = [STConstants paymentMethodListRequestBody];
-        NSLog(@"%@",requestBody);
+        dbLog(@"%@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
@@ -587,7 +587,7 @@ Create a cart */
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-getPaymentModes:- %@",error);
+                                          dbLog(@"SublimeTea-STPlaceOrder-getPaymentModes:- %@",error);
                                       }];
         
         
@@ -595,7 +595,7 @@ Create a cart */
         NSData *responseData = [httpRequest synchronousStart];
         dispatch_async(dispatch_get_main_queue(), ^{
             NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-            NSLog(@"Payment Methods List %@",xmlDic);
+            dbLog(@"Payment Methods List %@",xmlDic);
             [self parsePaymentMethodListResponseWithDict:xmlDic];
         });
     }
@@ -619,7 +619,7 @@ Create a cart */
         else {
             [STUtility stopActivityIndicatorFromView:nil];
             [self showAlert];
-            NSLog(@"Error in fetching shipping mode list ...");
+            dbLog(@"Error in fetching shipping mode list ...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
@@ -633,7 +633,7 @@ Create a cart */
 - (void)setPaymentMode {
     if ([STUtility isNetworkAvailable]) {
         NSString *requestBody = [STConstants paymentMethodReuestBody:@"checkmo"];
-        NSLog(@"Payment mode: %@",requestBody);
+        dbLog(@"Payment mode: %@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
@@ -650,7 +650,7 @@ Create a cart */
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-setPaymentMode:- %@",error);
+                                          dbLog(@"SublimeTea-STPlaceOrder-setPaymentMode:- %@",error);
                                       }];
         
         
@@ -658,7 +658,7 @@ Create a cart */
         NSData *responseData = [httpRequest synchronousStart];
         dispatch_async(dispatch_get_main_queue(), ^{
             NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-            NSLog(@"Payment method set to cart %@",xmlDic);
+            dbLog(@"Payment method set to cart %@",xmlDic);
             [self parsePayementMethodResponseWithDict:xmlDic];
         });
     }
@@ -682,7 +682,7 @@ Create a cart */
         else {
             [STUtility stopActivityIndicatorFromView:nil];
             [self showAlert];
-            NSLog(@"Error setting payment method cart...");
+            dbLog(@"Error setting payment method cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
     }else {
@@ -698,7 +698,7 @@ Create a cart */
 
     if ([STUtility isNetworkAvailable]) {
         NSString *requestBody = [STConstants cartInfoRequestBody];
-        NSLog(@"Cart Info: %@",requestBody);
+        dbLog(@"Cart Info: %@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
@@ -715,7 +715,7 @@ Create a cart */
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-cartDetails:- %@",error);
+                                          dbLog(@"SublimeTea-STPlaceOrder-cartDetails:- %@",error);
                                       }];
         
         
@@ -723,7 +723,7 @@ Create a cart */
         NSData *responseData = [httpRequest synchronousStart];
         dispatch_async(dispatch_get_main_queue(), ^{
             NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-            NSLog(@"Cart Info %@",xmlDic);
+            dbLog(@"Cart Info %@",xmlDic);
             [self createOrder];
         });
     }
@@ -738,7 +738,7 @@ Create a cart */
     
     if ([STUtility isNetworkAvailable]) {
         NSString *requestBody = [STConstants cartLicenseRequestBody];
-        NSLog(@"Cart License: %@",requestBody);
+        dbLog(@"Cart License: %@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
@@ -755,7 +755,7 @@ Create a cart */
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-shoppingCartLicense:- %@",error);
+                                          dbLog(@"SublimeTea-STPlaceOrder-shoppingCartLicense:- %@",error);
                                       }];
         
         
@@ -763,7 +763,7 @@ Create a cart */
         NSData *responseData = [httpRequest synchronousStart];
         dispatch_async(dispatch_get_main_queue(), ^{
             NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-            NSLog(@"Cart License %@",xmlDic);
+            dbLog(@"Cart License %@",xmlDic);
         });
     }
     else {
@@ -777,7 +777,7 @@ Create a cart */
 
     if ([STUtility isNetworkAvailable]) {
         NSString *requestBody = [STConstants orderRequestBody];
-        NSLog(@"Order Creation: %@",requestBody);
+        dbLog(@"Order Creation: %@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
@@ -794,7 +794,7 @@ Create a cart */
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-createOrder:- %@",error);
+                                          dbLog(@"SublimeTea-STPlaceOrder-createOrder:- %@",error);
                                       }];
         
         
@@ -802,9 +802,9 @@ Create a cart */
         NSData *responseData = [httpRequest synchronousStart];
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
-            NSLog(@"Order Creation xml: %@",xmlString);
+            dbLog(@"Order Creation xml: %@",xmlString);
             NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
-            NSLog(@"Order Creation %@",xmlDic);
+            dbLog(@"Order Creation %@",xmlDic);
             if (!xmlDic) {
                 NSArray *tempComponentsArr = [xmlString componentsSeparatedByString:@"<result xsi:type=\"xsd:string\">"];
                 if(tempComponentsArr.count == 2)
@@ -837,7 +837,7 @@ Create a cart */
             }
         }
         else {
-            NSLog(@"Error placing order...");
+            dbLog(@"Error placing order...");
             [self showAlert];
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }

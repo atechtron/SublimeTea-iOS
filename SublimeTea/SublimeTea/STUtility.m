@@ -59,7 +59,7 @@
         [formatterCurrency setMaximumFractionDigits:2];
         [formatterCurrency setCurrencySymbol:@"₹"];
         [formatterCurrency setGroupingSeparator:@","];
-        // NSLog(@"%@", @([budgetTxt doubleValue]));
+        // dbLog(@"%@", @([budgetTxt doubleValue]));
         formattedCurrencyTxt = [formatterCurrency stringFromNumber: @([priceStr doubleValue])];
     }
     return formattedCurrencyTxt;
@@ -324,7 +324,7 @@
     
     NSString *part5 = @"</soap:Body>\n" "</soap:Envelope>";
     [soapBody appendString:part5];
-    NSLog(@"Request Body.....%@",soapBody);
+    dbLog(@"Request Body.....%@",soapBody);
     return soapBody;
     
     
