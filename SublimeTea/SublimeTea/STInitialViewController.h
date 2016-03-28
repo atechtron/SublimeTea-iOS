@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "STViewController.h"
+//#import "STViewController.h"
 
-@interface STInitialViewController : STViewController
+@interface STInitialViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
 @property (weak, nonatomic) IBOutlet UIButton *signInButton;

@@ -16,8 +16,8 @@
 @implementation STForgotPasswordViewController
 
 - (void)viewDidLoad {
-//    self.menuButtonHidden = YES;
-//    self.hideRightBarItems = YES;
+    self.menuButtonHidden = YES;
+    self.hideRightBarItems = YES;
     
     [super viewDidLoad];
     

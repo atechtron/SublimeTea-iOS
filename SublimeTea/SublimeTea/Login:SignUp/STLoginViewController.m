@@ -17,9 +17,9 @@
 @implementation STLoginViewController
 
 - (void)viewDidLoad {
-//    self.menuButtonHidden = YES;
-//    self.hideRightBarItems = YES;
-    self.hideLeftBarItems = NO;
+    self.menuButtonHidden = YES;
+    self.hideRightBarItems = YES;
+//    self.hideLeftBarItems = NO;
     [super viewDidLoad];
     
     self.useraNameTextField.delegate = self;

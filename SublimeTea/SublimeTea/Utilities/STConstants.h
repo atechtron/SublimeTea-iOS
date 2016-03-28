@@ -42,5 +42,7 @@
 + (NSString *)cartInfoRequestBody;
 + (NSString *)cartLicenseRequestBody;
 + (NSString *)salesOrderListRequstBody;
++ (NSString *)customerInfoUpdateRequestBodyWithEmail:(NSString *)email password:(NSString *)password;
++ (NSString *)customerAddressListRequestBody;
 
 @end

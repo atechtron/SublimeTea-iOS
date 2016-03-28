@@ -532,9 +532,12 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     STOrderListHeaderView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderListHeaderView"];
-    NSString *titleStr = @"Shipping Details";
+    NSString *titleStr = @"";
+    footerView.titleImageView.contentMode = UIViewContentModeScaleAspectFit;
+    footerView.titleImageView.image = [UIImage imageNamed:@"Shipping details_Logo"];
     if (section == 1) {
-        titleStr = @"Billing Address";
+        titleStr = @"";
+        footerView.titleImageView.image = [UIImage imageNamed:@"billing address_title"];
     }
     footerView.titleLabel.text = titleStr;
     footerView._backgroundView.backgroundColor = [UIColor whiteColor];

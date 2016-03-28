@@ -106,6 +106,56 @@
     return temp;
 }
 
++ (NSString *)customerInfoUpdateRequestBodyWithEmail:(NSString *)email
+                                            password:(NSString *)password {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+    NSMutableDictionary *userInfoDict = [defaults objectForKey:kUserInfo_Key];
+    NSString *custId = userInfoDict[@"customer_id"][@"__text"];
+    
+    NSMutableString *bodyStr = [[NSMutableString alloc] initWithString:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                                "<soapenv:Header/>"
+                                "<soapenv:Body>"
+                                "<urn:customerCustomerUpdate soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                                "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                                "<customerId xsi:type=\"xsd:int\">%ld</customerId>"
+                                "<customerData xsi:type=\"urn:customerCustomerEntityToCreate\">"
+                                "<customer_id xsi:type=\"xsd:int\">%ld</customer_id>"
+                                "<email xsi:type=\"xsd:string\">%@</email>"];
+    if (password.length) {
+        [bodyStr appendString:@"<password xsi:type=\"xsd:string\">%@</password>"];
+    }
+    [bodyStr appendString:@"<store_id xsi:type=\"xsd:int\">%ld</store_id>"
+     "</customerData>"
+     "</urn:customerCustomerUpdate>"
+     "</soapenv:Body>"
+     "</soapenv:Envelope>"];
+    
+    
+    NSString *tempStr = password.length ?[NSString stringWithFormat:bodyStr,sessionId,(long)custId,(long)custId,email,password,(long)[STConstants storeId]]:[NSString stringWithFormat:bodyStr,sessionId,(long)custId,(long)custId,email,(long)[STConstants storeId]];
+    return tempStr;
+}
+
++ (NSString *)customerAddressListRequestBody {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+    NSMutableDictionary *userInfoDict = [defaults objectForKey:kUserInfo_Key];
+    NSString *custId = userInfoDict[@"customer_id"][@"__text"];
+    
+    NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                        "<soapenv:Header/>"
+                        "<soapenv:Body>"
+                        "<urn:customerAddressList soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                        "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                        "<customerId xsi:type=\"xsd:int\">%ld</customerId>"
+                        "</urn:customerAddressList>"
+                        "</soapenv:Body>"
+                        "</soapenv:Envelope>",sessionId,(long)custId];
+    return tempStr;
+}
+
 + (NSString *)categoryListRequestBody {
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
