@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    self.itemArray = [[STCart defaultCart] productsInCart];
+    self.itemArray = [[STCart defaultCart] productsDataArr];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ResponseNew:) name:@"JSON_NEW" object:nil];
     
@@ -123,6 +123,7 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     STOrderConfirmationFooterView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderConfirmationFooterView"];
+    footerView.delegate = self;
     return footerView;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {

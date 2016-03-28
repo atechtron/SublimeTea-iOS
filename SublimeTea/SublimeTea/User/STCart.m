@@ -61,7 +61,7 @@ static STCart *sharedInstance;
     }
 }
 - (NSInteger)numberOfProductsInCart {
-    return self.productsInCart.count;
+    return self.tempCartProducts.count;
 }
 - (void)removeProductFromCart:(NSInteger)idx {
     [self.productsDataArr removeObjectAtIndex:idx];

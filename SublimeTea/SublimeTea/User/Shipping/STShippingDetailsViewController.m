@@ -182,7 +182,7 @@
 - (IBAction)paymentButtonAction:(UIButton *)sender {
     [self.view endEditing:YES];
     // Check Internet Connsection
-    if ([STUtility isNetworkAvailable] && [self validateInputs]) {
+    if ([STUtility isNetworkAvailable]) {
         if (self.isShippingISBillingAddress) {
             [self setAddress];
             [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
@@ -422,8 +422,8 @@
             _cell.delegate = self;
             _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
-//            _cell.dropDownTextField.text = @"TV";
-//            _cell.textField.text = @"Treviso";
+            _cell.dropDownTextField.text = @"TV";
+            _cell.textField.text = @"Treviso";
             _cell.dropDownTitleLabel.text = @"Shipping State";
             _cell.textFieldTitleLabel.text = @"Shipping City";
             _cell.textField.keyboardType = UIKeyboardTypeDefault;
@@ -445,8 +445,8 @@
             _cell.delegate = self;
             _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
-//            _cell.dropDownTextField.text = @"IT";
-//            _cell.textField.text = @"31056";
+            _cell.dropDownTextField.text = @"IT";
+            _cell.textField.text = @"31056";
             _cell.dropDownTitleLabel.text = @"Shipping Country";
             _cell.textFieldTitleLabel.text = @"Shipping Postal Code";
             _cell.textField.keyboardType = UIKeyboardTypeNumberPad;
