@@ -9,6 +9,7 @@
 #import "STLoginViewController.h"
 #import "STUtility.h"
 #import "STHttpRequest.h"
+#import "NSString+NSHash.h"
 
 @interface STLoginViewController ()<UITextFieldDelegate>
 
@@ -149,7 +150,6 @@
     if ([self validateInputs]){
         
         NSString *sessionId = Obj;
-        //    NSString *PasswordStr = [self.passwordTextfield.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if (![Obj isKindOfClass:[NSString class]]) {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSString *_sessionId = [defaults objectForKey:kUSerSession_Key];
@@ -193,11 +193,33 @@
             NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"email.__text LIKE %@",userNameStr];
             NSArray *filteredUsersArr = [userList filteredArrayUsingPredicate:filterPredicate];
             if (filteredUsersArr.count) {
-                
+                NSDictionary *userInfoDict = filteredUsersArr[0];
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setObject:filteredUsersArr[0] forKey:kUserInfo_Key];
+                [defaults setObject:userInfoDict forKey:kUserInfo_Key];
                 dbLog(@"User Details: %@",[defaults objectForKey:kUserInfo_Key]);
-                [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
+                
+                NSDictionary *methodIs = [userInfoDict objectForKey:@"password_hash"];
+                NSString *passWordHashStr = [methodIs valueForKey:@"__text"];
+                NSArray* pwdSplitValue = [passWordHashStr componentsSeparatedByString: @":"];
+                if (pwdSplitValue.count == 2) {
+                    
+                    NSString *passwordStr = [self.passwordTextfield.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                    NSString *hashSalt = [pwdSplitValue objectAtIndex:1];
+                    NSString *appendedString =[NSString stringWithFormat:@"%@%@",hashSalt,passwordStr];
+                    NSString *secureHash= [appendedString MD5];
+                    if ([secureHash compare:passWordHashStr options:NSCaseInsensitiveSearch]) { // Valid User Credentials
+                        dbLog(@"User Login Sucess.");
+                        [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
+                    }
+                    else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message"
+                                                                        message:@"Invalid credentials entered."
+                                                                       delegate:nil
+                                                              cancelButtonTitle:@"OK"
+                                                              otherButtonTitles: nil];
+                        [alert show];
+                    }
+                }
             }
             else { // Login Failed
                 [[[UIAlertView alloc] initWithTitle:@"Alert"
