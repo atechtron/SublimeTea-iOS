@@ -89,7 +89,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.isShippingISBillingAddress = YES;
     
-    [STUtility stopActivityIndicatorFromView:nil];    
+    [STUtility stopActivityIndicatorFromView:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -102,7 +102,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-//    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+    //    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
     //    self.navigationController.navigationBarHidden = YES;
     
     jsondict = [[NSMutableDictionary alloc]init];
@@ -138,7 +138,7 @@
     if ([message.name isEqualToString:@"FAILED_DICT"])
     {
         //You will get the failed transaction details in below log and in jsondict.
-        NSLog(@"Response json data = %@",[message object]);
+//        dbLog(@"Response json data = %@",[message object]);
         
         jsondict = [message object];
     }
@@ -207,43 +207,43 @@
     [defaults setObject:[NSString stringWithFormat:@"%.2f",MERCHANT_PRICE]     forKey:@"strSaleAmount"];
     [defaults setObject:MERCHANT_REFERENCENO forKey:@"reference_no"];
     [defaults synchronize];
-//    
-//    paymentView.descriptionString = @"Test Description";
-//    paymentView.strCurrency =   @"INR";
-//    paymentView.strDisplayCurrency =@"INR";
-//    paymentView.strDescription = @"Test Description";
-//    paymentView.strDescription = @"Test Description";
-//    
-//    paymentView.strBillingName = @"Test";
-//    paymentView.strBillingAddress = @"Bill address";
-//    paymentView.strBillingCity =@"Kanpur";
-//    paymentView.strBillingState = @"UP";
-//    paymentView.strBillingPostal =@"625000";
-//    paymentView.strBillingCountry = @"IND";
-//    paymentView.strBillingEmail =@"btecharpit@gmail.com";
-//    paymentView.strBillingTelephone =@"9363469999";
-//    
-//    // Non mandatory parameters
-//    paymentView.strDeliveryName = @"";
-//    paymentView.strDeliveryAddress = @"";
-//    paymentView.strDeliveryCity = @"";
-//    paymentView.strDeliveryState = @"";
-//    paymentView.strDeliveryPostal =@"";
-//    paymentView.strDeliveryCountry = @"";
-//    paymentView.strDeliveryTelephone =@"";
+    //
+    //    paymentView.descriptionString = @"Test Description";
+    //    paymentView.strCurrency =   @"INR";
+    //    paymentView.strDisplayCurrency =@"INR";
+    //    paymentView.strDescription = @"Test Description";
+    //    paymentView.strDescription = @"Test Description";
+    //
+    //    paymentView.strBillingName = @"Test";
+    //    paymentView.strBillingAddress = @"Bill address";
+    //    paymentView.strBillingCity =@"Kanpur";
+    //    paymentView.strBillingState = @"UP";
+    //    paymentView.strBillingPostal =@"625000";
+    //    paymentView.strBillingCountry = @"IND";
+    //    paymentView.strBillingEmail =@"btecharpit@gmail.com";
+    //    paymentView.strBillingTelephone =@"9363469999";
+    //
+    //    // Non mandatory parameters
+    //    paymentView.strDeliveryName = @"";
+    //    paymentView.strDeliveryAddress = @"";
+    //    paymentView.strDeliveryCity = @"";
+    //    paymentView.strDeliveryState = @"";
+    //    paymentView.strDeliveryPostal =@"";
+    //    paymentView.strDeliveryCountry = @"";
+    //    paymentView.strDeliveryTelephone =@"";
     
     paymentView.descriptionString = self.nameTextField.text;
     paymentView.strCurrency =   @"INR";
     paymentView.strDisplayCurrency = @"INR";
     paymentView.strDescription = self.nameTextField.text;
-        paymentView.strBillingName = self.nameTextField.text;
-        paymentView.strBillingAddress = self.addressTextView.text;
-        paymentView.strBillingCity = self.cityTextField.text;
-        paymentView.strBillingState = self.stateTextField.text;
-        paymentView.strBillingPostal = self.postalCodeTextField.text;
-        paymentView.strBillingCountry = self.countryextField.text;
-        paymentView.strBillingEmail = self.emailTextField.text;
-        paymentView.strBillingTelephone = self.phoneTextField.text;
+    paymentView.strBillingName = self.nameTextField.text;
+    paymentView.strBillingAddress = self.addressTextView.text;
+    paymentView.strBillingCity = self.cityTextField.text;
+    paymentView.strBillingState = self.stateTextField.text;
+    paymentView.strBillingPostal = self.postalCodeTextField.text;
+    paymentView.strBillingCountry = self.countryextField.text;
+    paymentView.strBillingEmail = self.emailTextField.text;
+    paymentView.strBillingTelephone = self.phoneTextField.text;
     
     paymentView.strDeliveryName = self.billingNameTextField.text.length?self.billingNameTextField.text:self.nameTextField.text;
     paymentView.strDeliveryAddress = self.billingAddressTextView.text.length ?self.billingAddressTextView.text:self.addressTextView.text;
@@ -532,9 +532,12 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     STOrderListHeaderView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderListHeaderView"];
-    NSString *titleStr = @"Shipping Details";
+    NSString *titleStr = @"";
+    footerView.titleImageView.contentMode = UIViewContentModeScaleAspectFit;
+    footerView.titleImageView.image = [UIImage imageNamed:@"Shipping details_Logo"];
     if (section == 1) {
-        titleStr = @"Billing Address";
+        titleStr = @"";
+        footerView.titleImageView.image = [UIImage imageNamed:@"billing address_title"];
     }
     footerView.titleLabel.text = titleStr;
     footerView._backgroundView.backgroundColor = [UIColor whiteColor];
@@ -603,10 +606,10 @@
                     }
                     else {
                         [[[UIAlertView alloc] initWithTitle:@"Message!"
-                                                   message:@"Please select valid country."
-                                                  delegate:nil
-                                         cancelButtonTitle:@"OK"
-                                         otherButtonTitles: nil] show];
+                                                    message:@"Please select valid country."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil] show];
                     }
                     break;
                 }
@@ -685,7 +688,7 @@
         id view =  _statesPopover.sourceView;
         if ([view isEqual:self.countryextField]) {
             if (indexpath.section == 0) {
-             self.countryextField.text = selectedItemStr;
+                self.countryextField.text = selectedItemStr;
             }
             else {
                 self.billingCountryextField.text = selectedItemStr;
@@ -722,6 +725,16 @@
 #pragma UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
 }
+- (NSString *)trimmedStateCode:(NSString *)rawStateCode {
+    NSString *stateCodestr;
+    if (rawStateCode.length) {
+        NSArray *stateCodeComponenets = [rawStateCode componentsSeparatedByString:@"-"];
+        if (stateCodeComponenets.count > 1) {
+            stateCodestr = stateCodeComponenets[1];
+        }
+    }
+    return stateCodestr;
+}
 - (void)setAddress {
     
     if (self.isShippingISBillingAddress) {
@@ -729,7 +742,8 @@
         NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *addressStr = [self.addressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *cityStr = [self.cityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *stateStr =  self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"];
+        NSString *stateStr =  [self trimmedStateCode:self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"]];//self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"];
+        NSLog(@"Selected State Code :-  %@",stateStr);
         stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *postalCodeStr = [self.postalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *countryStr = selectedCountryDict[@"country_id"][@"__text"];
@@ -742,9 +756,9 @@
         address.shipAddress.firstname = nameComponents.count ? nameComponents[0] :@"";
         NSMutableString *lastNameStr = [NSMutableString new];
         if(nameComponents.count > 1){
-        for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
-            [lastNameStr appendString:nameComponents[idx]];
-        }
+            for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
+                [lastNameStr appendString:nameComponents[idx]];
+            }
         }
         address.shipAddress.lastname = lastNameStr;
         address.shipAddress.city = cityStr;
@@ -762,7 +776,7 @@
         NSString *cityStr = [self.billingCityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *stateStr =  self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"];
         stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
+        
         NSString *postalCodeStr = [self.billingPostalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *countryStr = selectedCountryDict[@"country_id"][@"__text"];
         countryStr = countryStr?countryStr:[self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -785,23 +799,37 @@
         address.billedAddress.email = emailStr;
         address.billedAddress.telephone = phoneStr;
         address.billedAddress.street = addressStr;
-//        address.billedAddress.couponCode = couponCodeStr;
+        //        address.billedAddress.couponCode = couponCodeStr;
     }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-
+    
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if (textField == _phoneTextField || textField == _billingPhoneTextField || textField == _postalCodeTextField || textField == _billingPostalCodeTextField) {
-        if(range.length + range.location > textField.text.length)
-        {
-            return NO;
+    if (self.tableView.numberOfSections == 2) {
+        if (textField == _phoneTextField || textField == _billingPhoneTextField || textField == _postalCodeTextField || textField == _billingPostalCodeTextField) {
+            if(range.length + range.location > textField.text.length)
+            {
+                return NO;
+            }
+            
+            NSUInteger newLength = [textField.text length] + [string length] - range.length;
+            return newLength <= 10;
         }
-        
-        NSUInteger newLength = [textField.text length] + [string length] - range.length;
-        return newLength <= 10;
+    }else{
+        if (textField == _phoneTextField ||  textField == _postalCodeTextField) {
+            if(range.length + range.location > textField.text.length)
+            {
+                return NO;
+            }
+            
+            NSUInteger newLength = [textField.text length] + [string length] - range.length;
+            return newLength <= 10;
+        }
     }
+    
+    
     return YES;
 }
 
@@ -809,7 +837,7 @@
 #pragma mark -
 #pragma UITextViewDelegate
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-
+    
 }
 - (void)textViewDidEndEditing:(UITextView *)textView {
     if ([textView isEqual:self.addressTextView]) {
@@ -828,7 +856,7 @@
     if ([STUtility isNetworkAvailable]) {
         [STUtility startActivityIndicatorOnView:self.view withText:@"Fetching Countries."];
         NSString *requestBody = [STConstants countryListRequestBody];
-        NSLog(@"Countries list: %@",requestBody);
+//        dbLog(@"Countries list: %@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
@@ -839,9 +867,9 @@
                                                            successBlock:^(NSData *responseData){
                                                                dispatch_async(dispatch_get_main_queue(), ^{
                                                                    NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
-                                                                   NSLog(@"Countries list xml: %@",xmlString);
+//                                                                   dbLog(@"Countries list xml: %@",xmlString);
                                                                    NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
-                                                                   NSLog(@"Countries list %@",xmlDic);
+//                                                                   dbLog(@"Countries list %@",xmlDic);
                                                                    [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic withKey:kCountyList_key];
                                                                    [self parseCountriesMethodResponseWithDict:xmlDic];
                                                                });
@@ -854,12 +882,12 @@
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-fetchCountryList:- %@",error);
+//                                          dbLog(@"SublimeTea-STPlaceOrder-fetchCountryList:- %@",error);
                                       }];
         
         
         
-    [httpRequest start];
+        [httpRequest start];
     }
     else {
         [STUtility stopActivityIndicatorFromView:nil];
@@ -877,7 +905,7 @@
             [popoverViewController.tableView reloadData];
         }
         else {
-            NSLog(@"Error placing order...");
+//            dbLog(@"Error placing order...");
         }
     }else {
     }
@@ -888,7 +916,7 @@
     if ([STUtility isNetworkAvailable]) {
         [STUtility startActivityIndicatorOnView:self.view withText:@"Fetching states."];
         NSString *requestBody = [STConstants regionListequestBodyForCountry:countryCode];
-        NSLog(@"States list: %@ for country %@",requestBody, countryCode);
+//        dbLog(@"States list: %@ for country %@",requestBody, countryCode);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
@@ -899,9 +927,9 @@
                                                            successBlock:^(NSData *responseData){
                                                                dispatch_async(dispatch_get_main_queue(), ^{
                                                                    NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
-                                                                   NSLog(@"States list xml: %@ for country %@",xmlString,countryCode);
+//                                                                   dbLog(@"States list xml: %@ for country %@",xmlString,countryCode);
                                                                    NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
-                                                                   NSLog(@"States list %@ for country %@",xmlDic, countryCode);
+//                                                                   dbLog(@"States list %@ for country %@",xmlDic, countryCode);
                                                                    [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic withKey:kRegionList_key(countryCode)];
                                                                    [self parseRegionListMethodResponseWithDict:xmlDic];
                                                                });
@@ -914,7 +942,7 @@
                                                                      delegate:nil
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles: nil] show];
-                                          NSLog(@"SublimeTea-STPlaceOrder-fetchCountryList:- %@",error);
+//                                          dbLog(@"SublimeTea-STPlaceOrder-fetchCountryList:- %@",error);
                                       }];
         
         
@@ -942,7 +970,7 @@
             [popoverViewController.tableView reloadData];
         }
         else {
-            NSLog(@"Error placing order...");
+//            dbLog(@"Error placing order...");
         }
     }else {
     }

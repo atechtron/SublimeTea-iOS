@@ -127,7 +127,7 @@
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOR-FU-xu6">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOR-FU-xu6">
                                         <rect key="frame" x="25" y="118" width="549" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="PEi-IU-Vtm"/>
@@ -474,7 +474,6 @@
                                             <constraint firstItem="eko-Ma-gx5" firstAttribute="top" secondItem="Fah-Qv-xZr" secondAttribute="bottom" constant="8" id="QZs-Yf-gRW"/>
                                             <constraint firstItem="eko-Ma-gx5" firstAttribute="leading" secondItem="kE4-v9-EOw" secondAttribute="leading" constant="20" id="RTC-N3-Ytt"/>
                                             <constraint firstItem="WaU-vW-Ry5" firstAttribute="top" secondItem="sa4-GR-rNU" secondAttribute="bottom" constant="17" id="TCU-Ve-k8R"/>
-                                            <constraint firstItem="WaU-vW-Ry5" firstAttribute="centerX" secondItem="BIV-N5-SSk" secondAttribute="centerX" constant="-201" id="Xg8-BK-CI3"/>
                                             <constraint firstAttribute="trailing" secondItem="Fah-Qv-xZr" secondAttribute="trailing" constant="20" id="Xrl-vh-BeQ"/>
                                             <constraint firstAttribute="bottom" secondItem="eko-Ma-gx5" secondAttribute="bottom" id="Z4w-4e-E8K"/>
                                             <constraint firstItem="wdK-CW-EYE" firstAttribute="top" secondItem="BIV-N5-SSk" secondAttribute="bottom" constant="9" id="dOS-Yh-C4T"/>
@@ -1178,13 +1177,13 @@
                                                         <action selector="removeBtnAction:" destination="PXC-hf-ckM" eventType="touchUpInside" id="7FW-cG-a1N"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRi-m8-I5V">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRi-m8-I5V">
                                                     <rect key="frame" x="96" y="15" width="463" height="21"/>
                                                     <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CcD-fj-stT">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CcD-fj-stT">
                                                     <rect key="frame" x="96" y="38" width="496" height="21"/>
                                                     <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="15"/>
                                                     <color key="textColor" red="0.35294117650000001" green="0.14117647059999999" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
@@ -1856,7 +1855,6 @@
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
-                                                            <textInputTraits key="textInputTraits"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="padding">
                                                                     <real key="value" value="5"/>
@@ -2416,7 +2414,7 @@
         <image name="uncheck.png" width="28" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Cqv-Oa-wKY"/>
+        <segue reference="1xQ-H7-Nbe"/>
         <segue reference="CXD-3r-nry"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.41568627450980389" green="0.19215686274509802" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
