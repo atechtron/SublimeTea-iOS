@@ -7,17 +7,17 @@
 //
 
 #import "STCartViewController.h"
-#import "STCartTableViewCell.h"
-#import "STCartFooterView.h"
-#import "STOrderListHeaderView.h"
+//#import "STCartTableViewCell.h"
+//#import "STCartFooterView.h"
+//#import "STOrderListHeaderView.h"
 #import "STProductCategoriesViewController.h"
 #import "STUtility.h"
-
 #import "STCart.h"
 #import "STGlobalCacheManager.h"
 #import "STShippingDetailsViewController.h"
 #import "STPopoverTableViewController.h"
-
+#import "STCartSubTotalTableViewCell.h"
+#import "STCartProdTotalTableViewCell.h"
 
 @interface STCartViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, STCartTableViewCellDelegate, UIPopoverPresentationControllerDelegate,STPopoverTableViewControllerDelegate>
 
@@ -33,11 +33,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"STCartFooterView" bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:@"STCartFooterView"];
-    [self.tableView registerNib:[UINib nibWithNibName:@"STOrderListHeaderView" bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:@"STOrderListHeaderView"];
+//    [self.tableView registerNib:[UINib nibWithNibName:@"STCartFooterView" bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:@"STCartFooterView"];
+//    [self.tableView registerNib:[UINib nibWithNibName:@"STOrderListHeaderView" bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:@"STOrderListHeaderView"];
     
-    self.tableView.estimatedRowHeight = 44;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
+//    self.tableView.estimatedRowHeight = 44;
+//    self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
@@ -77,76 +77,126 @@
 #pragma UITableViewDelegates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.cartArr.count;
+    //FIXME: need to ask about this!!
+    return self.cartArr.count + 1;  // plus 1 because of 1st row!!
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 - ( UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellidentifier = @"cartCell";
-    STCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
-    cell.delegate = self;
-    Product *prod = self.cartArr[indexPath.row];
-    
-    NSString *prodId = prod.prodDict[@"product_id"][@"__text"];
-    NSString *name = prod.prodDict[@"name"][@"__text"];
-    NSString *shortDesc = prod.prodDict[@"short_description"][@"__text"];
-    NSString *price = prod.prodDict[@"special_price"][@"__text"];
-    NSLog(@"%@",prod.prodDict);
-    NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
-    if (prodImgArr.count) {
-        NSDictionary *imgUrlDict = [prodImgArr lastObject];
-        NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
-        NSLog(@"Image URL %@",imgUrl);
-        NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgUrl];
-        if (imgData) {
-            UIImage *prodImg = [UIImage imageWithData:imgData];
-            if (prodImg) {
-                [UIView transitionWithView:cell.porudctImageView duration:0.5
-                                   options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-                                       cell.porudctImageView.image = prodImg;
-                                       cell.porudctImageView.contentMode = UIViewContentModeScaleAspectFit;
-                                   } completion:nil];
-            }
+    NSLog(@"%ld, %ld",indexPath.row, self.cartArr.count);
+    if (indexPath.row == 0) {
+        STCartSubTotalTableViewCell *subTotalCell = [tableView dequeueReusableCellWithIdentifier:@"STCartSubTotalTableViewCell" forIndexPath:indexPath];
+        subTotalCell.subTotalValueLabel.text = @"\u20B9 124";
+        subTotalCell.totalItemsValueLabel.text = @"1";
+        subTotalCell.shippingChargesValueLabel.text = @"\u20B9 123";
+        return subTotalCell;
+    }else{
+        STCartProdTotalTableViewCell *prodTotalCell = [tableView dequeueReusableCellWithIdentifier:@"STCartProdTotalTableViewCell" forIndexPath:indexPath];
+        prodTotalCell.delegate = self;
+        if (self.cartArr.count > indexPath.row) {
+            Product *prod = self.cartArr[indexPath.row];
+//            NSString *prodId = prod.prodDict[@"product_id"][@"__text"];
+            NSString *name = prod.prodDict[@"name"][@"__text"];
+//            NSString *shortDesc = prod.prodDict[@"short_description"][@"__text"];
+            NSString *price = prod.prodDict[@"special_price"][@"__text"];
+            NSLog(@"%@",prod.prodDict);
+            prodTotalCell.productNameLabel.text = name;
+            //        prodTotalCell.descriptionLabel.text = shortDesc;
+            //        prodTotalCell.priceTitleLabel.text = @"Price";
+            prodTotalCell.prodTotalValueLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[price floatValue]]];
+            prodTotalCell.prodQuantityTextField.text = prod.prodQty> 0 ?[NSString stringWithFormat:@"%ld",(long)prod.prodQty]:@"";
+            prodTotalCell.prodQuantityTextField.tag = indexPath.row;
+            prodTotalCell.prodQuantityTextField.delegate = self;
+            self.qtyTxtField = prodTotalCell.prodQuantityTextField;
+            
+            prodTotalCell.removeProdButton.tag = indexPath.row;
+            
+            //        [prodTotalCell.checkboxButton addTarget:self action:@selector(checkBoxAction:) forControlEvents:UIControlEventTouchUpInside];
+        }else{
+            prodTotalCell.prodQuantityTextField.text = @"1";
+            prodTotalCell.prodTotalValueLabel.text = @"\u20B9 10";
         }
+        
+        prodTotalCell.mrpValueLabel.text = @"\u20B9 12";
+        prodTotalCell.splMrpValueLabel.text = @"\u20B9 10";
+        prodTotalCell.savingsValueLabel.text = @"\u20B9 2";
+        
+        return prodTotalCell;
     }
-    
-    cell.checkboxButton.tag = indexPath.row;
-    cell.titleLabel.text = name;
-    cell.descriptionLabel.text = shortDesc;
-    cell.priceTitleLabel.text = @"Price";
-    cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[price floatValue]]];
-    cell.qtyTextbox.text = prod.prodQty> 0 ?[NSString stringWithFormat:@"%ld",(long)prod.prodQty]:@"";
-    cell.qtyTextbox.tag = indexPath.row;
-    cell.qtyTextbox.delegate = self;
-    self.qtyTxtField = cell.qtyTextbox;
-    
-    cell.removeBtn.tag = indexPath.row;
-    
-    [cell.checkboxButton addTarget:self action:@selector(checkBoxAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return cell;
 }
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    STCartFooterView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STCartFooterView"];
-    footerView.topBorderView.backgroundColor = [STUtility getSublimeHeadingBGColor];
-    [footerView.continueShoppingButton addTarget:self action:@selector(continueShoppingButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [footerView.checkoutButton addTarget:self action:@selector(checkoutButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return footerView;
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 0) {
+        return 103;
+    }
+    return 195;
 }
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    STOrderListHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderListHeaderView"];
-    headerView._backgroundView.backgroundColor = [UIColor whiteColor];
-    headerView.titleLabel.text = @"Our Cart";
-    return headerView;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 77;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 62;
-}
+
+//    static NSString *cellidentifier = @"cartCell";
+//    STCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
+//    cell.delegate = self;
+//    Product *prod = self.cartArr[indexPath.row];
+//    
+//    NSString *prodId = prod.prodDict[@"product_id"][@"__text"];
+//    NSString *name = prod.prodDict[@"name"][@"__text"];
+//    NSString *shortDesc = prod.prodDict[@"short_description"][@"__text"];
+//    NSString *price = prod.prodDict[@"special_price"][@"__text"];
+//    NSLog(@"%@",prod.prodDict);
+//    NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
+//    if (prodImgArr.count) {
+//        NSDictionary *imgUrlDict = [prodImgArr lastObject];
+//        NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
+//        NSLog(@"Image URL %@",imgUrl);
+//        NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgUrl];
+//        if (imgData) {
+//            UIImage *prodImg = [UIImage imageWithData:imgData];
+//            if (prodImg) {
+//                [UIView transitionWithView:cell.porudctImageView duration:0.5
+//                                   options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+//                                       cell.porudctImageView.image = prodImg;
+//                                       cell.porudctImageView.contentMode = UIViewContentModeScaleAspectFit;
+//                                   } completion:nil];
+//            }
+//        }
+//    }
+//    
+//    cell.checkboxButton.tag = indexPath.row;
+//    cell.titleLabel.text = name;
+//    cell.descriptionLabel.text = shortDesc;
+//    cell.priceTitleLabel.text = @"Price";
+//    cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[price floatValue]]];
+//    cell.qtyTextbox.text = prod.prodQty> 0 ?[NSString stringWithFormat:@"%ld",(long)prod.prodQty]:@"";
+//    cell.qtyTextbox.tag = indexPath.row;
+//    cell.qtyTextbox.delegate = self;
+//    self.qtyTxtField = cell.qtyTextbox;
+//    
+//    cell.removeBtn.tag = indexPath.row;
+//    
+//    [cell.checkboxButton addTarget:self action:@selector(checkBoxAction:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    return cell;
+//}
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+//    STCartFooterView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STCartFooterView"];
+//    footerView.topBorderView.backgroundColor = [STUtility getSublimeHeadingBGColor];
+//    [footerView.continueShoppingButton addTarget:self action:@selector(continueShoppingButtonAction) forControlEvents:UIControlEventTouchUpInside];
+//    [footerView.checkoutButton addTarget:self action:@selector(checkoutButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    return footerView;
+//}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    STOrderListHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderListHeaderView"];
+//    headerView._backgroundView.backgroundColor = [UIColor whiteColor];
+//    headerView.titleLabel.text = @"Our Cart";
+//    return headerView;
+//}
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+//    return 77;
+//}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    return 62;
+//}
 - (void)checkBoxAction:(UIButton *)sender {
     UIImage *checkBoxSelectedImg = [UIImage imageNamed:@"checkboxSelected"];
     UIImage *checkBoxUnSelectedImg = [UIImage imageNamed:@"chekboxUnselected"];
@@ -223,7 +273,7 @@
     NSString *cartCount = [NSString stringWithFormat:@"%ld",(long)[[STCart defaultCart] numberOfProductsInCart]];
     cartBadgeView.badgeText = [cartCount integerValue]>0?cartCount:@"";
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag+1 inSection:0];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
