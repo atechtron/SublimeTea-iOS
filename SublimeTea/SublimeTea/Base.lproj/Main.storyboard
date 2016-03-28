@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="YQh-v6-bTo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="YQh-v6-bTo">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -421,7 +421,7 @@
                                                     <constraint firstAttribute="height" constant="21" id="dh6-NE-jT0"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mtI-B0-hvR">
@@ -434,7 +434,7 @@
                                                             <constraint firstAttribute="width" constant="68" id="CIP-YN-GOG"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="LucidaFax-Demi" family="Lucida Fax" pointSize="18"/>
-                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_logo" translatesAutoresizingMaskIntoConstraints="NO" id="2oZ-P0-Qj5">
@@ -895,13 +895,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="57"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L5z-GT-Q7o">
-                                                    <rect key="frame" x="8" y="13" width="170" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L5z-GT-Q7o">
+                                                    <rect key="frame" x="8" y="11" width="227" height="33"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="1vK-fL-bTu"/>
-                                                        <constraint firstAttribute="width" constant="170" id="x3o-hy-XsJ"/>
+                                                        <constraint firstAttribute="height" constant="33" id="1vK-fL-bTu"/>
+                                                        <constraint firstAttribute="width" constant="227" id="x3o-hy-XsJ"/>
                                                     </constraints>
-                                                    <state key="normal" title="Change Password">
+                                                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="7" maxY="0.0"/>
+                                                    <state key="normal" title="Change Password" image="edit_icon">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -910,8 +911,8 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="L5z-GT-Q7o" firstAttribute="top" secondItem="sE2-IM-Nfg" secondAttribute="top" constant="13" id="Jl8-ha-HXZ"/>
-                                                <constraint firstAttribute="bottom" secondItem="L5z-GT-Q7o" secondAttribute="bottom" constant="14" id="XLV-zW-yVV"/>
+                                                <constraint firstItem="L5z-GT-Q7o" firstAttribute="top" secondItem="sE2-IM-Nfg" secondAttribute="top" constant="11" id="Jl8-ha-HXZ"/>
+                                                <constraint firstAttribute="bottom" secondItem="L5z-GT-Q7o" secondAttribute="bottom" constant="13" id="XLV-zW-yVV"/>
                                                 <constraint firstItem="L5z-GT-Q7o" firstAttribute="leading" secondItem="sE2-IM-Nfg" secondAttribute="leading" constant="8" id="eQO-Yk-IWQ"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -1178,13 +1179,13 @@
                                                         <action selector="removeBtnAction:" destination="PXC-hf-ckM" eventType="touchUpInside" id="7FW-cG-a1N"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRi-m8-I5V">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRi-m8-I5V">
                                                     <rect key="frame" x="96" y="15" width="463" height="21"/>
                                                     <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CcD-fj-stT">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CcD-fj-stT">
                                                     <rect key="frame" x="96" y="38" width="496" height="21"/>
                                                     <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="15"/>
                                                     <color key="textColor" red="0.35294117650000001" green="0.14117647059999999" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
@@ -1856,7 +1857,6 @@
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
-                                                            <textInputTraits key="textInputTraits"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="padding">
                                                                     <real key="value" value="5"/>
@@ -2405,6 +2405,7 @@
         <image name="cancel_image" width="39" height="39"/>
         <image name="continue-shopping_button" width="150" height="64"/>
         <image name="create account_button" width="1435" height="116"/>
+        <image name="edit_icon" width="32" height="33"/>
         <image name="image_button" width="150" height="64"/>
         <image name="image_logo" width="259" height="67"/>
         <image name="launchImage" width="768" height="1024"/>

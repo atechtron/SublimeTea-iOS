@@ -60,17 +60,16 @@
 //    NSString *titleStr = orderDetails[];
     NSString *status = orderDetails[@"status"][@"__text"];
     NSString *qty = orderDetails[@"total_qty_ordered"][@"__text"];
-    double totalPaid = [orderDetails[@"total_paid"][@"__text"]doubleValue];
-    
+    NSString *totalPaid = orderDetails[@"subtotal_incl_tax"][@"__text"];
     
     cell.titleLabel.text = @"GREEN LONG DING";
     cell.descriptionLabel.text = @"This is a pure Green Tea. Fresh tender tea leaves are carefully processed to minimize oxidation and rolled using a very special process.";
-    cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%.2f",totalPaid]];
+    cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[totalPaid floatValue]]];
     cell.prodImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
     cell.statusLabel.text = [NSString stringWithFormat:@"Status: %@",status];
     
-    NSString *itemStr = [qty integerValue] > 0 ? @"ITEMS" :@"ITEM";
-    cell.qtyLabel.text = [NSString stringWithFormat:@"QUANTITY: %@ (%@)",qty,itemStr];
+    NSString *itemStr = [qty integerValue] > 1 ? @"ITEMS" :@"ITEM";
+    cell.qtyLabel.text = [NSString stringWithFormat:@"QUANTITY: %ld (%@)",(long)[qty integerValue],itemStr];
 
     return cell;
 }
@@ -143,6 +142,7 @@
             NSArray *orders = dataDict[@"item"];
             NSSortDescriptor *sortDisc = [NSSortDescriptor sortDescriptorWithKey:@"created_at.__text" ascending:YES];
             self.orderListArr = [orders sortedArrayUsingDescriptors:@[sortDisc]];
+            [self.tableView reloadData];
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];

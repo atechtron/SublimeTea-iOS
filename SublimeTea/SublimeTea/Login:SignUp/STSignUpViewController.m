@@ -17,8 +17,8 @@
 @implementation STSignUpViewController
 
 - (void)viewDidLoad {
-//    self.menuButtonHidden = YES;
-//    self.hideRightBarItems = YES;
+    self.menuButtonHidden = YES;
+    self.hideRightBarItems = YES;
 //    self.hideLeftBarItems = NO;
     
     [super viewDidLoad];

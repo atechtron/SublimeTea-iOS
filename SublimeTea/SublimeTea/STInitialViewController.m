@@ -15,12 +15,18 @@
 @implementation STInitialViewController
 
 - (void)viewDidLoad {
-    self.backButtonHidden = YES;
+//    self.backButtonHidden = YES;
     [super viewDidLoad];
 //    [self.navigationController setNavigationBarHidden:YES];
     self.backgroundImageView.image = [UIImage imageNamed:@"launchImage"];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:YES];
+}
+-(BOOL)prefersStatusBarHidden {
+    return YES;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
