@@ -11,6 +11,7 @@
         <mutableArray key="LFAX_0.TTF">
             <string>LucidaFax</string>
             <string>LucidaFax</string>
+            <string>LucidaFax</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -26,7 +27,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lmD-6h-OvF">
                             <rect key="frame" x="138" y="5" width="301" height="73"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oder Confirmation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n0z-Aj-ahg">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order Confirmation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n0z-Aj-ahg">
                                     <rect key="frame" x="0.0" y="26" width="301" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="gI6-cW-89l"/>
@@ -77,20 +78,32 @@
                                 <constraint firstAttribute="width" constant="301" id="Os1-vs-hMb"/>
                             </constraints>
                         </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order Id:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ViB-8p-6Kr">
+                            <rect key="frame" x="8" y="179" width="584" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="D9W-7k-nF3"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="LucidaFax" family="Lucida Fax" pointSize="17"/>
+                            <color key="textColor" red="0.80000000000000004" green="0.42745098040000001" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.90588235289999997" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="ViB-8p-6Kr" firstAttribute="leading" secondItem="vyG-ml-LPr" secondAttribute="leading" constant="8" id="18o-qr-gat"/>
                         <constraint firstItem="2J2-Hl-BJ8" firstAttribute="centerX" secondItem="vyG-ml-LPr" secondAttribute="centerX" constant="-11.5" id="3tA-kk-gLP"/>
                         <constraint firstAttribute="trailing" secondItem="2Pn-7v-t68" secondAttribute="trailing" constant="8" id="6HA-zL-64V"/>
-                        <constraint firstItem="48K-Ua-wKo" firstAttribute="top" secondItem="2Pn-7v-t68" secondAttribute="bottom" constant="63" id="718-k1-Bh0"/>
                         <constraint firstItem="48K-Ua-wKo" firstAttribute="leading" secondItem="vyG-ml-LPr" secondAttribute="leading" id="Aeb-UQ-8vn"/>
+                        <constraint firstItem="ViB-8p-6Kr" firstAttribute="top" secondItem="2Pn-7v-t68" secondAttribute="bottom" constant="2" id="Em9-0Z-Uk5"/>
                         <constraint firstItem="2Pn-7v-t68" firstAttribute="top" secondItem="BPG-pq-1ga" secondAttribute="bottom" constant="5" id="RJ9-kA-74g"/>
                         <constraint firstItem="BPG-pq-1ga" firstAttribute="leading" secondItem="vyG-ml-LPr" secondAttribute="leading" constant="8" id="TX9-U0-182"/>
+                        <constraint firstAttribute="trailing" secondItem="ViB-8p-6Kr" secondAttribute="trailing" constant="8" id="XnF-Om-dgt"/>
                         <constraint firstAttribute="trailing" secondItem="BPG-pq-1ga" secondAttribute="trailing" constant="8" id="ZIh-4V-20f"/>
                         <constraint firstAttribute="trailing" secondItem="48K-Ua-wKo" secondAttribute="trailing" id="be2-mB-YsC"/>
                         <constraint firstItem="lmD-6h-OvF" firstAttribute="centerX" secondItem="vyG-ml-LPr" secondAttribute="centerX" constant="-11.5" id="lb9-l9-TPe"/>
                         <constraint firstItem="BPG-pq-1ga" firstAttribute="top" secondItem="lmD-6h-OvF" secondAttribute="bottom" constant="52" id="mt9-rO-ZHU"/>
                         <constraint firstItem="2Pn-7v-t68" firstAttribute="leading" secondItem="vyG-ml-LPr" secondAttribute="leading" constant="8" id="nFp-8g-8rs"/>
+                        <constraint firstItem="48K-Ua-wKo" firstAttribute="top" secondItem="ViB-8p-6Kr" secondAttribute="bottom" constant="40" id="tes-wx-Twc"/>
                         <constraint firstItem="2J2-Hl-BJ8" firstAttribute="centerY" secondItem="lmD-6h-OvF" secondAttribute="centerY" id="xGp-BA-5ha"/>
                         <constraint firstAttribute="bottom" secondItem="48K-Ua-wKo" secondAttribute="bottom" constant="4" id="zsn-Xt-cgO"/>
                     </constraints>
@@ -107,6 +120,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="orderDescriptionImageView" destination="48K-Ua-wKo" id="GJ0-QM-lsD"/>
+                <outlet property="orderIdLabel" destination="ViB-8p-6Kr" id="9ou-OW-oMt"/>
                 <outlet property="orderStatusLabel" destination="2Pn-7v-t68" id="Qju-Ky-Tnf"/>
                 <outlet property="thankYouLabel" destination="BPG-pq-1ga" id="g4u-gH-PRr"/>
                 <outlet property="titleLabel" destination="n0z-Aj-ahg" id="Gpi-di-aG3"/>

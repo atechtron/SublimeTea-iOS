@@ -15,4 +15,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *orderStatusLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *orderDescriptionImageView;
 
+@property (weak, nonatomic) IBOutlet UILabel *orderIdLabel;
 @end

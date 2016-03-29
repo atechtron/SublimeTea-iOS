@@ -13,6 +13,7 @@
 		181C139C1C8E021B00A0A63A /* STCouponTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C139B1C8E021B00A0A63A /* STCouponTableViewCell.m */; };
 		18270B781CA945E700339E6A /* NSData+NSHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 18270B751CA945E700339E6A /* NSData+NSHash.m */; };
 		18270B791CA945E700339E6A /* NSString+NSHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 18270B771CA945E700339E6A /* NSString+NSHash.m */; };
+		18270B7C1CA9AD5000339E6A /* STOrderDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18270B7B1CA9AD5000339E6A /* STOrderDetailsViewController.m */; };
 		189C0A201CA42807002A40E0 /* EBSLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B98827F1C81E4D100BA5234 /* EBSLib.a */; };
 		189C0A211CA42859002A40E0 /* CashAndNetBankingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882831C81E4D100BA5234 /* CashAndNetBankingCell.xib */; };
 		189C0A221CA42893002A40E0 /* CashAndNetBankingCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882851C81E4D100BA5234 /* CashAndNetBankingCell_iPad.xib */; };
@@ -174,6 +175,8 @@
 		18270B751CA945E700339E6A /* NSData+NSHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+NSHash.m"; sourceTree = "<group>"; };
 		18270B761CA945E700339E6A /* NSString+NSHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+NSHash.h"; sourceTree = "<group>"; };
 		18270B771CA945E700339E6A /* NSString+NSHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+NSHash.m"; sourceTree = "<group>"; };
+		18270B7A1CA9AD5000339E6A /* STOrderDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STOrderDetailsViewController.h; path = User/Orders/STOrderDetailsViewController.h; sourceTree = "<group>"; };
+		18270B7B1CA9AD5000339E6A /* STOrderDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STOrderDetailsViewController.m; path = User/Orders/STOrderDetailsViewController.m; sourceTree = "<group>"; };
 		18AC924E1C9095A3002D91F4 /* STCart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STCart.h; path = User/STCart.h; sourceTree = "<group>"; };
 		18AC924F1C9095A3002D91F4 /* STCart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STCart.m; path = User/STCart.m; sourceTree = "<group>"; };
 		18B626CB1C91D9650018D260 /* STPopoverTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPopoverTableViewCell.h; path = User/Shipping/STPopoverTableViewCell.h; sourceTree = "<group>"; };
@@ -893,6 +896,8 @@
 				2BC0E5091C823125001085F8 /* STOrderListHeaderView.m */,
 				2BC0E50B1C823151001085F8 /* STOderListTableViewCell.h */,
 				2BC0E50C1C823151001085F8 /* STOderListTableViewCell.m */,
+				18270B7A1CA9AD5000339E6A /* STOrderDetailsViewController.h */,
+				18270B7B1CA9AD5000339E6A /* STOrderDetailsViewController.m */,
 			);
 			name = Orders;
 			sourceTree = "<group>";
@@ -1016,6 +1021,7 @@
 				TargetAttributes = {
 					2BA72EE11C7DC8F0006105B6 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = SFA4YUPQGD;
 					};
 					2BA72EFA1C7DC8F0006105B6 = {
 						CreatedOnToolsVersion = 7.2;
@@ -1141,6 +1147,7 @@
 				181C13991C8DFE2600A0A63A /* STDropDownTableViewCell.m in Sources */,
 				2B456FBB1C7F810F00C240A5 /* STProductDescriptionTableViewCell.m in Sources */,
 				2BFA1BB41C7E0966008C4833 /* STSignUpViewController.m in Sources */,
+				18270B7C1CA9AD5000339E6A /* STOrderDetailsViewController.m in Sources */,
 				18072F1F1C9AC48F000E5AEE /* STPlaceOrder.m in Sources */,
 				2BFA1B9F1C7E0574008C4833 /* STProductViewController.m in Sources */,
 				2BE835071C85E49C008BA172 /* NSMutableURLRequest+URLCookie.m in Sources */,
@@ -1343,6 +1350,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Anup Kumar (SFA4YUPQGD)";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SublimeTea/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1356,8 +1365,9 @@
 					"-all_load",
 					"-w",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Atechtron.SublimeTea;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Sublime.tea;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ee9615ad-1441-4ff5-9209-00abf093bc20";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1366,6 +1376,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Anup Kumar (SFA4YUPQGD)";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SublimeTea/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1379,8 +1391,9 @@
 					"-all_load",
 					"-w",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Atechtron.SublimeTea;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Sublime.tea;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ee9615ad-1441-4ff5-9209-00abf093bc20";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
