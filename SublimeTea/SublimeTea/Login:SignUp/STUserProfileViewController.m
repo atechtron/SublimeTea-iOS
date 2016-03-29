@@ -53,7 +53,7 @@
     [self.view addGestureRecognizer:tap];
 }
 - (void)viewDidAppear:(BOOL)animated {
-    [self fetchCustomerAddressList];
+//    [self fetchCustomerAddressList];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -183,7 +183,7 @@
     }
     else if ([self.dataArr[indexPath.row] isEqualToString:@"address"])
     {
-        rowHeight = 154;
+        rowHeight = 253;
     }
     else if ([self.dataArr[indexPath.row] isEqualToString:@"addAddress"] || [self.dataArr[indexPath.row] isEqualToString:@"changePwdBtn"])
     {

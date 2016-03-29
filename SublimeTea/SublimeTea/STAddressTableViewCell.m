@@ -53,7 +53,12 @@
     _stateTextField.rightView = paddingView;
     _stateTextField.rightViewMode = UITextFieldViewModeAlways;
     
-    _countryTextField.rightView = paddingView;
+    UIImageView *countryImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 13, 10, 5)];
+    countryImgView.image = [UIImage imageNamed:@"down-arrow"];
+    UIView *countryPaddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 18, CGRectGetHeight(_countryTextField.frame))];
+    [countryPaddingView addSubview:countryImgView];
+    
+    _countryTextField.rightView = countryPaddingView;
     _countryTextField.rightViewMode = UITextFieldViewModeAlways;
 }
 
