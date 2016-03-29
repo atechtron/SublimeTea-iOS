@@ -113,10 +113,10 @@
     return cell;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    STOrderConfirmationHeaderView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderConfirmationHeaderView"];
+    STOrderConfirmationHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderConfirmationHeaderView"];
 //    footerView.titleLabel.text = @"Orders";
-    
-    return footerView;
+    headerView.orderIdLabel.text = [[NSUserDefaults standardUserDefaults] valueForKey:kOderId_Key];
+    return headerView;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 273;

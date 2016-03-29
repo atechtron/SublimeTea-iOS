@@ -44,5 +44,6 @@
 + (NSString *)salesOrderListRequstBody;
 + (NSString *)customerInfoUpdateRequestBodyWithEmail:(NSString *)email password:(NSString *)password;
 + (NSString *)customerAddressListRequestBody;
++ (NSString *)salesOrderInfoRequstBodyWithOrderIncrementId:(NSString *)orderIncrementId;
 
 @end

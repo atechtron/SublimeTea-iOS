@@ -12,9 +12,13 @@
 #import "STDashboardViewController.h"
 #import "STUtility.h"
 #import "STHttpRequest.h"
+#import "STOrderDetailsViewController.h"
+#import "STGlobalCacheManager.h"
 
 @interface STOrderListViewController ()<UITabBarDelegate, UITableViewDataSource>
-
+{
+    NSDictionary *selectedOrderDict;
+}
 @property (strong, nonatomic)NSArray *orderListArr;
 @end
 
@@ -28,22 +32,30 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 - (void)viewWillAppear:(BOOL)animated {
-    [self orderList];
+    NSDictionary *xmlDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kOrderList_Key];
+    if (xmlDict) {
+        [self parseOrderDetailsResponseWithDict:xmlDict];
+    }
+    else {
+        [self orderList];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"orderDetailSegue"]) {
+     STOrderDetailsViewController *orderDetail = segue.destinationViewController;
+        orderDetail.selectedOrderDict = selectedOrderDict;
+    }
 }
-*/
+
 #pragma mark-
 #pragma UITableViewDelegates
 
@@ -57,15 +69,25 @@
     static NSString *cellidentifier = @"orderListCell";
     STOderListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
     NSDictionary *orderDetails = self.orderListArr[indexPath.row];
-//    NSString *titleStr = orderDetails[];
+    
     NSString *status = orderDetails[@"status"][@"__text"];
     NSString *qty = orderDetails[@"total_qty_ordered"][@"__text"];
     NSString *totalPaid = orderDetails[@"subtotal_incl_tax"][@"__text"];
+    NSString *orderId = orderDetails[@"increment_id"][@"__text"];
+    NSString *orderCreatedDate = orderDetails[@"created_at"][@"__text"];
     
-    cell.titleLabel.text = @"GREEN LONG DING";
-    cell.descriptionLabel.text = @"This is a pure Green Tea. Fresh tender tea leaves are carefully processed to minimize oxidation and rolled using a very special process.";
+    // Format order creation date
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSDate *formattedDate = [dateFormatter dateFromString:orderCreatedDate];
+    dateFormatter.dateFormat = @"dd-MMM-yyyy";
+    NSString *formatedOrderCreationDtae = [dateFormatter stringFromDate:formattedDate];
+    
+    
+    cell.titleLabel.text = [NSString stringWithFormat:@"Order Id: %@",orderId];
+    cell.descriptionLabel.text = [NSString stringWithFormat:@"Creation date: %@",formatedOrderCreationDtae];
     cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[totalPaid floatValue]]];
-    cell.prodImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
+//    cell.prodImageView.image = [UIImage imageNamed:@"teaCup.jpeg"];
     cell.statusLabel.text = [NSString stringWithFormat:@"Status: %@",status];
     
     NSString *itemStr = [qty integerValue] > 1 ? @"ITEMS" :@"ITEM";
@@ -76,9 +98,14 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     STOrderListHeaderView *footerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderListHeaderView"];
     footerView.titleLabel.text = @"Orders";
-    
     return footerView;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    selectedOrderDict = self.orderListArr[indexPath.row];
+    [self performSegueWithIdentifier:@"orderDetailSegue"
+                              sender:self];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 62;
 }
@@ -112,8 +139,9 @@
                                                            successBlock:^(NSData *responseData){
                                                                dispatch_async(dispatch_get_main_queue(), ^{
                                                                    NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                                                   [[STGlobalCacheManager defaultManager]addItemToCache:xmlDic withKey:kOrderList_Key];
                                                                    dbLog(@"Order Lists %@",xmlDic);
-                                                                        [self parseOrderListResponseWithDict:xmlDic];
+                                                                        [self parseOrderDetailsResponseWithDict:xmlDic];
                                                                });
                                                            }
                                                            failureBlock:^(NSError *error)
@@ -133,14 +161,14 @@
         
     }
 }
-- (void)parseOrderListResponseWithDict:(NSDictionary *)responseDict {
+- (void)parseOrderDetailsResponseWithDict:(NSDictionary *)responseDict {
     if(responseDict){
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
         //        dbLog(@"Image Data for ID %d %@",prodId, responseDict);
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
             NSDictionary *dataDict = parentDataDict[@"ns1:salesOrderListResponse"][@"result"];
             NSArray *orders = dataDict[@"item"];
-            NSSortDescriptor *sortDisc = [NSSortDescriptor sortDescriptorWithKey:@"created_at.__text" ascending:YES];
+            NSSortDescriptor *sortDisc = [NSSortDescriptor sortDescriptorWithKey:@"created_at.__text" ascending:NO];
             self.orderListArr = [orders sortedArrayUsingDescriptors:@[sortDisc]];
             [self.tableView reloadData];
         }
