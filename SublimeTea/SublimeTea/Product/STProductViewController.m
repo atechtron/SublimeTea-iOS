@@ -137,10 +137,20 @@
     NSString *name = prodDict[@"name"][@"__text"];
     NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
     if (prodImgArr.count) {
-        NSDictionary *imgUrlDict = [prodImgArr lastObject];
-        NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
-        dbLog(@"Image URL %@",imgUrl);
-        [self loadProdImageinView:cell.productImageView fromURL:imgUrl];
+        id imgObj = prodImgArr;
+        if ([imgObj isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *imgUrlDict = (NSDictionary *)imgObj;
+            NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
+            dbLog(@"Image URL %@",imgUrl);
+            [self loadProdImageinView:cell.productImageView fromURL:imgUrl];
+        }
+        else if ([imgObj isKindOfClass:[NSArray class]]) {
+            NSDictionary *imgUrlDict = [prodImgArr lastObject];
+            NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
+            dbLog(@"Image URL %@",imgUrl);
+            [self loadProdImageinView:cell.productImageView fromURL:imgUrl];
+        }
+        
     }
     cell.productTitleLabel.text = [name uppercaseString];
     

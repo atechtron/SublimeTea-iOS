@@ -234,7 +234,7 @@
     dbLog(@"Image Data for ID %ld %@",(long)prodId, xmlDic);
     [self parseImgData:xmlDic andProdId:prodId];
 }
-- (void)parseImgData:(NSDictionary *)responseDict andProdId:(NSString *)prodId {
+- (void)parseImgData :(NSDictionary *)responseDict andProdId:(NSString *)prodId {
     if(responseDict){
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
         dbLog(@"Image Data for ID %ld %@",(long)prodId, responseDict);

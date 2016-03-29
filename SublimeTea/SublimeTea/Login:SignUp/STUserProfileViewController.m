@@ -12,11 +12,14 @@
 #import "STUtility.h"
 #import "STConstants.h"
 #import "STHttpRequest.h"
+#import "STAddressTableViewCell.h"
+#import "STPopoverTableViewController.h"
 
 @interface STUserProfileViewController ()<UITableViewDelegate, UITableViewDataSource, STProfileTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate>
 {
     UIView *viewToScroll;
     NSString *passwordString;
+    STPopoverTableViewController *popoverViewController;
 }
 @property (strong, nonatomic) NSMutableArray *dataArr;
 @property (strong, nonatomic)NSMutableDictionary *userInfo;
@@ -88,14 +91,11 @@
     //    NSString *custId = userInfoDict[@"customer_id"][@"__text"];
     
     
-    NSArray *tempArr = @[@"email",
-                         @"addAddress",
-                         @"changePwdBtn"
-                         ];/*@[@"userName",
+    NSArray *tempArr = @[@"userName",
                          @"email",
                          @"addAddress",
                          @"changePwdBtn"
-                         ];*/
+                         ];
     self.dataArr = [NSMutableArray arrayWithArray:tempArr];
 }
 
@@ -138,14 +138,14 @@
     else if ([self.dataArr[indexPath.row] isEqualToString:@"address"])
     {
         static NSString *cellIdentifier = @"textViewCell";
-        STPrfileTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-        _cell.profileTextView.delegate = self;
-        _cell.profileTextView.keyboardType = UIKeyboardTypeDefault;
-        if (indexPath.row == 1) {
-            _cell.profileTextViewTitleLabel.text = @"My Addresses";
+        STAddressTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+//        _cell.profileTextView.delegate = self;
+        _cell.addressTextView.keyboardType = UIKeyboardTypeDefault;
+        if (indexPath.row == 2) {
+            _cell.addressTextViewTitleLabel.text = @"My Addresses";
         }
         else {
-            _cell.profileTextViewTitleLabel.text = @"";
+            _cell.addressTextViewTitleLabel.text = @"";
         }
         
         cell = _cell;
@@ -444,5 +444,101 @@
 //        if()
 //    return  status;
 //}
+//- (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture indexPath:(NSIndexPath *)indexPath {
+//    
+//    popoverViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
+//    popoverViewController.modalPresentationStyle = UIModalPresentationPopover;
+//    popoverViewController.delegate = self;
+//    popoverViewController.parentIndexPath = indexPath;
+//    
+//    switch (indexPath.section) {
+//        case 0: // Shipping
+//        {
+//            switch (sender.tag) {
+//                case 2: // States
+//                {
+//                    if (selectedCountryDict) {
+//                        NSDictionary *tempSelectedCountryDict = selectedCountryDict;
+//                        NSString *countryCode = tempSelectedCountryDict[@"country_id"][@"__text"];
+//                        NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kRegionList_key(countryCode)];
+//                        if (!dataDict) {
+//                            [self fetchStatesForCountry:countryCode];
+//                        }
+//                        else {
+//                            [self parseRegionListMethodResponseWithDict:dataDict];
+//                        }
+//                    }
+//                    else {
+//                        [[[UIAlertView alloc] initWithTitle:@"Message!"
+//                                                    message:@"Please select valid country."
+//                                                   delegate:nil
+//                                          cancelButtonTitle:@"OK"
+//                                          otherButtonTitles: nil] show];
+//                    }
+//                    break;
+//                }
+//                case 3: // Country
+//                {
+//                    NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kCountyList_key];
+//                    if (!dataDict) {
+//                        [self fetchCountryList];
+//                    }
+//                    else {
+//                        [self parseCountriesMethodResponseWithDict:dataDict];
+//                    }
+//                    break;
+//                }
+//                default:
+//                    break;
+//            }
+//            break;
+//        }
+//        case 1: // Billing
+//        {
+//            switch (sender.tag) {
+//                case 2: // States
+//                {
+//                    if (billingSelectedCountryDict) {
+//                        NSDictionary *tempSelectedCountryDict = billingSelectedCountryDict;
+//                        NSString *countryCode = tempSelectedCountryDict[@"country_id"][@"__text"];
+//                        NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kRegionList_key(countryCode)];
+//                        if (!dataDict) {
+//                            [self fetchStatesForCountry:countryCode];
+//                        }
+//                        else {
+//                            [self parseRegionListMethodResponseWithDict:dataDict];
+//                        }
+//                    }
+//                    break;
+//                }
+//                case 3: // Countries
+//                {
+//                    NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kCountyList_key];
+//                    if (!dataDict) {
+//                        [self fetchCountryList];
+//                    }
+//                    else {
+//                        [self parseCountriesMethodResponseWithDict:dataDict];
+//                    }
+//                    break;
+//                }
+//                default:
+//                    break;
+//            }
+//            break;
+//        }
+//        default:
+//            break;
+//    }
+//    
+//    _statesPopover = popoverViewController.popoverPresentationController;
+//    _statesPopover.delegate = self;
+//    _statesPopover.sourceView = sender;
+//    _statesPopover.sourceRect = sender.rightView.frame;
+//    [self presentViewController:popoverViewController animated:YES completion:nil];
+//}
+- (UIModalPresentationStyle) adaptivePresentationStyleForPresentationController: (UIPresentationController * ) controller {
+    return UIModalPresentationNone;
+}
 
 @end

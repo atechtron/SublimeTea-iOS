@@ -107,7 +107,7 @@
         NSString *userFirstName = userInfoDict[@"firstname"][@"__text"] ? userInfoDict[@"firstname"][@"__text"] :@"";
         NSString *userLastName = userInfoDict[@"lastname"][@"__text"] ? userInfoDict[@"lastname"][@"__text"] :@"";
         NSString *userFullName = [NSString stringWithFormat:@"%@ %@",userFirstName,userLastName];
-        
+        dbLog(@"%@\n%@",userEmail,userFirstName);
         headerView.TitleLabel.text = [userFullName uppercaseString];
         headerView.subTitleLabel.text = userEmail;
     }

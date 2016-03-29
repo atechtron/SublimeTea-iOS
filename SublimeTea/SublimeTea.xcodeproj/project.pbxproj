@@ -35,6 +35,7 @@
 		18C84B021CA1084500709974 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C84B011CA1084500709974 /* UIImage+animatedGIF.m */; };
 		18C84B041CA10A1F00709974 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 18C84B031CA10A1F00709974 /* loading.gif */; };
 		18C84B051CA2E28D00709974 /* STShippingDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C13951C8DF60400A0A63A /* STShippingDetailsViewController.m */; };
+		18D3BDA91CAA9EFE0090AE95 /* STAddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D3BDA81CAA9EFE0090AE95 /* STAddressTableViewCell.m */; };
 		18F61FB01C88B86B00FEB89C /* STDashboardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F61FAF1C88B86B00FEB89C /* STDashboardCollectionViewCell.m */; };
 		18F818991C95E4A40002F5AE /* country_states_city.json in Resources */ = {isa = PBXBuildFile; fileRef = 18F818981C95E4A40002F5AE /* country_states_city.json */; };
 		18F8DE371C972EEC008BFC55 /* Caviar_Dreams_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE331C972EEC008BFC55 /* Caviar_Dreams_Bold.ttf */; };
@@ -188,6 +189,8 @@
 		18C84B001CA1084500709974 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+animatedGIF.h"; path = "Utilities/UIImage+animatedGIF.h"; sourceTree = "<group>"; };
 		18C84B011CA1084500709974 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+animatedGIF.m"; path = "Utilities/UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		18C84B031CA10A1F00709974 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
+		18D3BDA71CAA9EFE0090AE95 /* STAddressTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STAddressTableViewCell.h; sourceTree = "<group>"; };
+		18D3BDA81CAA9EFE0090AE95 /* STAddressTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STAddressTableViewCell.m; sourceTree = "<group>"; };
 		18F61FAE1C88B86B00FEB89C /* STDashboardCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDashboardCollectionViewCell.h; path = Dashboard/STDashboardCollectionViewCell.h; sourceTree = "<group>"; };
 		18F61FAF1C88B86B00FEB89C /* STDashboardCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STDashboardCollectionViewCell.m; path = Dashboard/STDashboardCollectionViewCell.m; sourceTree = "<group>"; };
 		18F818981C95E4A40002F5AE /* country_states_city.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = country_states_city.json; path = Utilities/country_states_city.json; sourceTree = "<group>"; };
@@ -727,6 +730,8 @@
 		2BB2F42A1C842EA40024BB26 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				18D3BDA71CAA9EFE0090AE95 /* STAddressTableViewCell.h */,
+				18D3BDA81CAA9EFE0090AE95 /* STAddressTableViewCell.m */,
 				2BFA1BA81C7E07F3008C4833 /* STUserProfileViewController.h */,
 				2BFA1BA91C7E07F3008C4833 /* STUserProfileViewController.m */,
 				2BB2F42B1C842ED10024BB26 /* STProfileHeaderView.h */,
@@ -1148,6 +1153,7 @@
 				2B456FBB1C7F810F00C240A5 /* STProductDescriptionTableViewCell.m in Sources */,
 				2BFA1BB41C7E0966008C4833 /* STSignUpViewController.m in Sources */,
 				18270B7C1CA9AD5000339E6A /* STOrderDetailsViewController.m in Sources */,
+				18D3BDA91CAA9EFE0090AE95 /* STAddressTableViewCell.m in Sources */,
 				18072F1F1C9AC48F000E5AEE /* STPlaceOrder.m in Sources */,
 				2BFA1B9F1C7E0574008C4833 /* STProductViewController.m in Sources */,
 				2BE835071C85E49C008BA172 /* NSMutableURLRequest+URLCookie.m in Sources */,
@@ -1367,7 +1373,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Sublime.tea;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ee9615ad-1441-4ff5-9209-00abf093bc20";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1393,7 +1399,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Sublime.tea;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ee9615ad-1441-4ff5-9209-00abf093bc20";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
