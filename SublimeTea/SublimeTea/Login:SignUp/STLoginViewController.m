@@ -207,11 +207,13 @@
                     NSString *hashSalt = [pwdSplitValue objectAtIndex:1];
                     NSString *appendedString =[NSString stringWithFormat:@"%@%@",hashSalt,passwordStr];
                     NSString *secureHash= [appendedString MD5];
-                    if ([secureHash compare:passWordHashStr options:NSCaseInsensitiveSearch]) { // Valid User Credentials
+                    dbLog(@"Secure Password hash: %@\n User Password hash: %@",passWordHashStr,secureHash);
+                    if ([secureHash isEqualToString:pwdSplitValue[0]]) { // Valid User Credentials
                         dbLog(@"User Login Sucess.");
                         [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
                     }
                     else {
+                        [STUtility stopActivityIndicatorFromView:nil];
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message"
                                                                         message:@"Invalid credentials entered."
                                                                        delegate:nil
