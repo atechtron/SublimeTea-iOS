@@ -74,7 +74,9 @@ static STCart *sharedInstance;
         prod.prodQty = qty;
         [self.productsDataArr replaceObjectAtIndex:idx
                                         withObject:prod];
-        NSDictionary *prodDict = @{@"qty" :[NSNumber numberWithInteger:qty]};
+        
+        NSMutableDictionary *prodDict = [self.tempCartProducts[idx] mutableCopy];
+        [prodDict setObject:[NSNumber numberWithInteger:qty] forKey:@"qty"];
         
         [self.tempCartProducts replaceObjectAtIndex:idx
                                          withObject:prodDict];

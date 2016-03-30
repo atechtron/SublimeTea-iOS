@@ -36,6 +36,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    dbLog(@"%ld",(long)self.itemsArray.count);
     return self.itemsArray.count;
 }
 
