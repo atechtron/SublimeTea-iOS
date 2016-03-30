@@ -241,7 +241,7 @@
         paymentView.strBillingCity = self.cityTextField.text;
         paymentView.strBillingState = self.stateTextField.text;
         paymentView.strBillingPostal = self.postalCodeTextField.text;
-        paymentView.strBillingCountry = self.countryextField.text;
+        paymentView.strBillingCountry = selectedCountryDict[@"iso3_code"][@"__text"];//self.countryextField.text;
         paymentView.strBillingEmail = self.emailTextField.text;
         paymentView.strBillingTelephone = self.phoneTextField.text;
     
@@ -250,7 +250,7 @@
     paymentView.strDeliveryCity = self.billingCityTextField.text.length ?self.billingCityTextField.text:self.cityTextField.text;
     paymentView.strDeliveryState = self.billingStateTextField.text.length?self.billingStateTextField.text:self.stateTextField.text;
     paymentView.strDeliveryPostal = self.billingPostalCodeTextField.text.length?self.billingPostalCodeTextField.text:self.postalCodeTextField.text;
-    paymentView.strDeliveryCountry = self.billingCountryextField.text.length?self.billingCountryextField.text:self.countryextField.text;
+    paymentView.strDeliveryCountry = paymentView.strDeliveryCountry.length?billingSelectedCountryDict[@"iso3_code"][@"__text"]:paymentView.strBillingCountry ;//self.billingCountryextField.text.length?self.billingCountryextField.text:self.countryextField.text;
     paymentView.strDeliveryTelephone = self.billingPhoneTextField.text.length?self.billingPhoneTextField.text:self.phoneTextField.text;
     
     
@@ -422,8 +422,8 @@
             _cell.delegate = self;
             _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
-            _cell.dropDownTextField.text = @"TV";
-            _cell.textField.text = @"Treviso";
+//            _cell.dropDownTextField.text = @"TV";
+//            _cell.textField.text = @"Treviso";
             _cell.dropDownTitleLabel.text = @"Shipping State";
             _cell.textFieldTitleLabel.text = @"Shipping City";
             _cell.textField.keyboardType = UIKeyboardTypeDefault;
@@ -445,8 +445,8 @@
             _cell.delegate = self;
             _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
-            _cell.dropDownTextField.text = @"IT";
-            _cell.textField.text = @"31056";
+//            _cell.dropDownTextField.text = @"IT";
+//            _cell.textField.text = @"31056";
             _cell.dropDownTitleLabel.text = @"Shipping Country";
             _cell.textFieldTitleLabel.text = @"Shipping Postal Code";
             _cell.textField.keyboardType = UIKeyboardTypeNumberPad;
@@ -742,7 +742,7 @@
         NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *addressStr = [self.addressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *cityStr = [self.cityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *stateStr =  [self trimmedStateCode:self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"]];//self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"];
+        NSString *stateStr =  self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"name"][@"__text"];//[self trimmedStateCode:self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"]];
         NSLog(@"Selected State Code :-  %@",stateStr);
         stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *postalCodeStr = [self.postalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -762,19 +762,19 @@
         }
         address.shipAddress.lastname = lastNameStr;
         address.shipAddress.city = cityStr;
-        address.shipAddress.state = stateStr;
+        address.shipAddress.region = stateStr;
         address.shipAddress.postcode = postalCodeStr;
         address.shipAddress.country_id = countryStr;
         address.shipAddress.email = emailStr;
         address.shipAddress.telephone = phoneStr;
         address.shipAddress.street = addressStr;
-        
+        address.shipAddress.region_id = self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"region_id"][@"__text"];
     }
     else {
         NSString *nameStr = [self.billingNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *addressStr = [self.billingAddressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *cityStr = [self.billingCityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *stateStr =  [self trimmedStateCode:self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"]];//self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"];
+        NSString *stateStr =  self.listOfStatesForSelectedCountryForBilling[selectedStatesIdxForShipping][@"name"][@"__text"];//[self trimmedStateCode:self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"]];
         NSLog(@"Selected State Code :-  %@",stateStr);
         stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -795,12 +795,13 @@
         }
         address.billedAddress.lastname = lastNameStr;
         address.billedAddress.city = cityStr;
-        address.billedAddress.state = stateStr;
+        address.billedAddress.region = stateStr;
         address.billedAddress.postcode = postalCodeStr;
         address.billedAddress.country_id = countryStr;
         address.billedAddress.email = emailStr;
         address.billedAddress.telephone = phoneStr;
         address.billedAddress.street = addressStr;
+        address.billedAddress.region_id = self.listOfStatesForSelectedCountryForBilling[selectedStatesIdxForBilling][@"region_id"][@"__text"];
 //        address.billedAddress.couponCode = couponCodeStr;
     }
 }

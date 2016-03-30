@@ -533,26 +533,48 @@
 + (NSString *)userInfoRequstBodyWithCustomerId:(NSInteger)custId
                                  customerEmail:(NSString *)email
                                      firstName:(NSString *)firstName
-                                      lastName:(NSString *)lastName {
+                                      lastName:(NSString *)lastName
+                                      password:(NSString *)password {
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+    NSString *tempStr;
+    if (password.length) {
+         tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                             "<soapenv:Header/>"
+                             "<soapenv:Body>"
+                             "<urn:customerCustomerUpdate soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                             "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                             "<customerId xsi:type=\"xsd:int\">%ld</customerId>"
+                             "<customerData xsi:type=\"urn:customerCustomerEntityToCreate\">"
+                             "<email xsi:type=\"xsd:string\">%@</email>"
+                             "<firstname xsi:type=\"xsd:string\">%@</firstname>"
+                             "<lastname xsi:type=\"xsd:string\">%@</lastname>"
+                             "<password xsi:type=\"xsd:string\">%@</password>"
+                             "<store_id xsi:type=\"xsd:int\">%ld</store_id>"
+                             "</customerData>"
+                             "</urn:customerCustomerUpdate>"
+                             "</soapenv:Body>"
+                             "</soapenv:Envelope>",sessionId,(long)custId, email, firstName, lastName,password, (long)[[STConstants storeId] integerValue]];
+    }
+    else {
+        tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
+                   "<soapenv:Header/>"
+                   "<soapenv:Body>"
+                   "<urn:customerCustomerUpdate soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+                   "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
+                   "<customerId xsi:type=\"xsd:int\">%ld</customerId>"
+                   "<customerData xsi:type=\"urn:customerCustomerEntityToCreate\">"
+                   "<email xsi:type=\"xsd:string\">%@</email>"
+                   "<firstname xsi:type=\"xsd:string\">%@</firstname>"
+                   "<lastname xsi:type=\"xsd:string\">%@</lastname>"
+                   "<store_id xsi:type=\"xsd:int\">%ld</store_id>"
+                   "</customerData>"
+                   "</urn:customerCustomerUpdate>"
+                   "</soapenv:Body>"
+                   "</soapenv:Envelope>",sessionId,(long)custId, email, firstName, lastName, (long)[[STConstants storeId] integerValue]];
+    }
     
-    NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
-                         "<soapenv:Header/>"
-                         "<soapenv:Body>"
-                         "<urn:customerCustomerUpdate soapenv:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-                         "<sessionId xsi:type=\"xsd:string\">%@</sessionId>"
-                         "<customerId xsi:type=\"xsd:int\">%ld</customerId>"
-                         "<customerData xsi:type=\"urn:customerCustomerEntityToCreate\">"
-                         "<email xsi:type=\"xsd:string\">%@</email>"
-                         "<firstname xsi:type=\"xsd:string\">%@</firstname>"
-                         "<lastname xsi:type=\"xsd:string\">%@</lastname>"
-                         "<store_id xsi:type=\"xsd:int\">%ld</store_id>"
-                         "</customerData>"
-                         "</urn:customerCustomerUpdate>"
-                         "</soapenv:Body>"
-                         "</soapenv:Envelope>",sessionId,(long)custId, email, firstName, lastName, (long)[[STConstants storeId] integerValue]];
     return tempStr;
 }
 

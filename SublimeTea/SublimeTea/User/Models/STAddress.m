@@ -27,6 +27,9 @@
 - (NSString *)mode {
     return @"shipping";
 }
+//- (NSString *)region_id {
+//    return _region;
+//}
 - (NSDictionary *)dictionary {
     NSMutableArray *propertyKeys = [NSMutableArray array];
     Class currentClass = self.class;

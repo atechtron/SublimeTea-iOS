@@ -13,13 +13,13 @@
 
 - (void)drawRect:(CGRect)rect {
     
-    UITapGestureRecognizer *stateTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(stateFieldDropDownAction:)];
-    stateTap.numberOfTapsRequired = 1;
-    [self.stateTextField.superview addGestureRecognizer:stateTap];
-    
-    UITapGestureRecognizer *countryTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(countryFiledDropDownAction:)];
-    countryTap.numberOfTapsRequired = 1;
-    [self.countryTextField.superview addGestureRecognizer:countryTap];
+//    UITapGestureRecognizer *stateTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(stateFieldDropDownAction:)];
+//    stateTap.numberOfTapsRequired = 1;
+//    [self.stateTextField.superview addGestureRecognizer:stateTap];
+//    
+//    UITapGestureRecognizer *countryTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(countryFiledDropDownAction:)];
+//    countryTap.numberOfTapsRequired = 1;
+//    [self.countryTextField.superview addGestureRecognizer:countryTap];
     
 
     _addressTextView.layer.borderWidth = 1;
