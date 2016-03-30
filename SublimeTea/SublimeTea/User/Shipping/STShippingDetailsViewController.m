@@ -965,7 +965,7 @@
             [popoverViewController.tableView reloadData];
         }
         else {
-            dbLog(@"Error placing order...");
+            dbLog(@"Error fetching region list order...");
         }
     }else {
     }

@@ -14,6 +14,14 @@
 #import "STHttpRequest.h"
 #import "STAddressTableViewCell.h"
 #import "STPopoverTableViewController.h"
+#import <objc/runtime.h>
+#import "STGlobalCacheManager.h"
+
+#define kcityTag 10201
+#define kstateTag 20129
+#define kpostalCodeTag 319372
+#define kcountryTag 422431
+#define kstreetAddTag 521421
 
 @implementation Address
 - (NSInteger)is_default_billing {
@@ -22,10 +30,32 @@
 - (NSInteger)is_default_shipping {
     return 0;
 }
+- (NSDictionary *)dictionary {
+    NSMutableArray *propertyKeys = [NSMutableArray array];
+    Class currentClass = self.class;
+    
+    while ([currentClass superclass]) { // avoid printing NSObject's attributes
+        unsigned int outCount, i;
+        objc_property_t *properties = class_copyPropertyList(currentClass, &outCount);
+        for (i = 0; i < outCount; i++) {
+            objc_property_t property = properties[i];
+            const char *propName = property_getName(property);
+            if (propName) {
+                NSString *propertyName = [NSString stringWithUTF8String:propName];
+                [propertyKeys addObject:propertyName];
+            }
+        }
+        free(properties);
+        currentClass = [currentClass superclass];
+    }
+    
+    return [self dictionaryWithValuesForKeys:propertyKeys];
+}
 @end
 
-@interface STUserProfileViewController ()<UITableViewDelegate, UITableViewDataSource, STProfileTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, STAddressTableViewCellDelegate>
+@interface STUserProfileViewController ()<UITableViewDelegate, UITableViewDataSource, STProfileTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, STAddressTableViewCellDelegate,STPopoverTableViewControllerDelegate, UIPopoverPresentationControllerDelegate>
 {
+    NSDictionary *selectedCountryDict;
     UIView *viewToScroll;
     NSString *passwordString;
     STPopoverTableViewController *popoverViewController;
@@ -33,6 +63,9 @@
 @property (strong, nonatomic) NSMutableArray *dataArr;
 @property (strong, nonatomic) NSMutableArray *customerAddressList;
 @property (strong, nonatomic)NSMutableDictionary *userInfo;
+@property(nonatomic,retain)UIPopoverPresentationController *statesPopover;
+@property(strong, nonatomic)NSArray *listOfCountries;
+@property(strong, nonatomic)NSArray *listOfStatesForSelectedCountry;
 
 @property (weak, nonatomic)UITextField *nameTextField;
 @property (weak, nonatomic)UITextField *emailTextField;
@@ -43,6 +76,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.customerAddressList = [NSMutableArray new];
     
     [self prepareData];
     
@@ -67,7 +102,7 @@
     [self.view addGestureRecognizer:tap];
 }
 - (void)viewDidAppear:(BOOL)animated {
-//    [self fetchCustomerAddressList];
+    //    [self fetchCustomerAddressList];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -107,7 +142,7 @@
     NSString *userFirstName = self.userInfo[@"firstname"][@"__text"] ? self.userInfo[@"firstname"][@"__text"] :@"";
     NSString *userLastName = self.userInfo[@"lastname"][@"__text"] ? self.userInfo[@"lastname"][@"__text"] :@"";
     NSString *userFullName = [NSString stringWithFormat:@"%@ %@",userFirstName,userLastName];
-
+    
     //    NSString *custId = userInfoDict[@"customer_id"][@"__text"];
     NSDictionary *userNameDict = @{@"userName": userFullName};
     NSDictionary *emailDIct = @{@"email": userEmail};
@@ -183,6 +218,23 @@
         _cell.indexPath = indexPath;
         _cell.delegate = self;
         _cell.addressTextView.keyboardType = UIKeyboardTypeDefault;
+        
+        _cell.cityTextField.tag = kcityTag;
+        _cell.cityTextField.delegate = self;
+        _cell.stateTextField.tag = kstateTag;
+        _cell.stateTextField.delegate = self;
+        _cell.postalCodeTextField.tag = kpostalCodeTag;
+        _cell.postalCodeTextField.delegate = self;
+        _cell.countryTextField.tag = kcountryTag;
+        _cell.countryTextField.delegate = self;
+        _cell.addressTextView.tag = kstreetAddTag;
+        _cell.addressTextView.delegate = self;
+        
+        _cell.countryTextField.text = @"IT";
+        _cell.postalCodeTextField.text = @"31056";
+        _cell.stateTextField.text = @"TV";
+        _cell.cityTextField.text = @"Treviso";
+        
         if (indexPath.row == 2) {
             _cell.addressTextViewTitleLabel.text = @"My Addresses";
         }
@@ -292,7 +344,7 @@
                                   animated:YES];
 }
 - (BOOL)validateAdress:(Address *)add {
-//customerAddressList
+    //customerAddressList
     BOOL status = NO;
     
     if (add.firstname.length == 0) {
@@ -327,47 +379,67 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     viewToScroll = nil;
-    UIView *superView = textField.superview;
-//    if ([superView isKindOfClass:[STAddressTableViewCell class]]) {
-//        STAddressTableViewCell *cell = (STAddressTableViewCell *)superView;
-//        NSUInteger idx = cell.indexPath.row;
-//        if (idx != NSNotFound) {
-//            NSInteger idxToStore = idx-2;
-//            if (idxToStore > 1) {
-//                
-//                NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//                NSString *addressStr = [self.addressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//                NSString *cityStr = [self.cityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//                NSString *stateStr =  [self trimmedStateCode:self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"]];//self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"];
-//                NSLog(@"Selected State Code :-  %@",stateStr);
-//                stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//                NSString *postalCodeStr = [self.postalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//                NSString *countryStr = selectedCountryDict ? selectedCountryDict[@"country_id"][@"__text"] : [self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//                countryStr = countryStr?countryStr:[self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//                NSString *emailStr = [self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//                NSString *phoneStr = [self.phoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//                
-//                NSArray *nameComponents = [nameStr componentsSeparatedByString: @" "];
-//                
-//                address.shipAddress.firstname = nameComponents.count ? nameComponents[0] :@"";
-//                NSMutableString *lastNameStr = [NSMutableString new];
-//                if(nameComponents.count > 1){
-//                    for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
-//                        [lastNameStr appendString:nameComponents[idx]];
-//                    }
-//                }
-//                Address *add = [[Address alloc] init];
-//                address.shipAddress.lastname = lastNameStr;
-//                address.shipAddress.city = cityStr;
-//                address.shipAddress.state = stateStr;
-//                address.shipAddress.postcode = postalCodeStr;
-//                address.shipAddress.country_id = countryStr;
-//                address.shipAddress.email = emailStr;
-//                address.shipAddress.telephone = phoneStr;
-//                address.shipAddress.street = addressStr;
-//            }
-//        }
-//    }
+    UIView *superView = textField.superview.superview;
+    dbLog(@"%@",superView);
+    if ([superView isKindOfClass:[STAddressTableViewCell class]]) {
+        STAddressTableViewCell *cell = (STAddressTableViewCell *)superView;
+        NSUInteger idx = cell.indexPath.row;
+        if (idx != NSNotFound) {
+            NSInteger idxToStore = idx-2;
+            if (idxToStore >= 0)
+            {
+                NSString *textStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                
+                NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                
+                NSArray *nameComponents = [nameStr componentsSeparatedByString: @" "];
+                
+                NSString *firstName = nameComponents.count ? nameComponents[0] :@"";
+                NSMutableString *lastNameStr = [NSMutableString new];
+                if(nameComponents.count > 1){
+                    for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
+                        [lastNameStr appendString:nameComponents[idx]];
+                    }
+                }
+                
+                Address *address = (self.customerAddressList.count == 0)? [[Address alloc] init] : self.customerAddressList[idxToStore];
+                address.firstname = firstName;
+                address.lastname = lastNameStr;
+                
+                switch (textField.tag) {
+                    case kcityTag:
+                    {
+                        address.city = textStr;
+                    }
+                        break;
+                    case kstateTag:
+                    {
+                        address.region = textStr;
+                    }
+                        break;
+                    case kpostalCodeTag:
+                    {
+                        address.postcode = textStr;
+                    }
+                        break;
+                    case kcountryTag:
+                    {
+                        address.country_id = textStr;
+                    }
+                        break;
+                        
+                    default:
+                        break;
+                }
+                if (self.customerAddressList.count > idxToStore ) {
+                    [self.customerAddressList replaceObjectAtIndex:idxToStore withObject:address];
+                }
+                else {
+                    [self.customerAddressList addObject:address];
+                }
+            }
+        }
+    }
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     return NO;
@@ -380,6 +452,51 @@
 }
 - (void)textViewDidEndEditing:(UITextView *)textView {
     viewToScroll = nil;
+    UIView *superView = textView.superview.superview;
+    dbLog(@"%@",superView);
+    if ([superView isKindOfClass:[STAddressTableViewCell class]]) {
+        STAddressTableViewCell *cell = (STAddressTableViewCell *)superView;
+        NSUInteger idx = cell.indexPath.row;
+        if (idx != NSNotFound) {
+            NSInteger idxToStore = idx-2;
+            if (idxToStore >= 0)
+            {
+                NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                
+                NSArray *nameComponents = [nameStr componentsSeparatedByString: @" "];
+                
+                NSString *firstName = nameComponents.count ? nameComponents[0] :@"";
+                NSMutableString *lastNameStr = [NSMutableString new];
+                if(nameComponents.count > 1){
+                    for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
+                        [lastNameStr appendString:nameComponents[idx]];
+                    }
+                }
+                
+                NSString *textStr = [textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                Address *address = (self.customerAddressList.count == 0)? [[Address alloc] init] : self.customerAddressList[idxToStore];
+                address.firstname = firstName;
+                address.lastname = lastNameStr;
+                switch (textView.tag) {
+                    case kstreetAddTag:
+                    {
+                        address.street = textStr;
+                    }
+                        break;
+                        
+                    default:
+                        break;
+                }
+                if (self.customerAddressList.count > idxToStore ) {
+                    dbLog(@"%@",self.customerAddressList);
+                    [self.customerAddressList replaceObjectAtIndex:idxToStore withObject:address];
+                }
+                else {
+                    [self.customerAddressList addObject:address];
+                }
+            }
+        }
+    }
 }
 
 #pragma mark-
@@ -449,61 +566,62 @@
 
 - (IBAction)saveChangesButtonAction:(UIButton *)sender {
     [self.view endEditing:YES];
-    if ([STUtility isNetworkAvailable] && self.userInfo && [self validateName:self.nameTextField.text emailID:self.emailTextField.text]) {
-        NSString *custId = self.userInfo[@"customer_id"][@"__text"];
-        NSString *emailStr = [self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];//self.userInfo[@"email"][@"__text"];
-//        NSString *pwdStr = passwordString.length ? passwordString: nil;
-        NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        
-        NSArray *nameComponents = [nameStr componentsSeparatedByString: @" "];
-        
-        NSString *firstName = nameComponents.count ? nameComponents[0] :@"";
-        NSMutableString *lastNameStr = [NSMutableString new];
-        if(nameComponents.count > 1){
-            for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
-                [lastNameStr appendString:nameComponents[idx]];
+    
+        if ([STUtility isNetworkAvailable] && self.userInfo && [self validateName:self.nameTextField.text emailID:self.emailTextField.text]) {
+            NSString *custId = self.userInfo[@"customer_id"][@"__text"];
+            NSString *emailStr = [self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];//self.userInfo[@"email"][@"__text"];
+    //        NSString *pwdStr = passwordString.length ? passwordString: nil;
+            NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+            NSArray *nameComponents = [nameStr componentsSeparatedByString: @" "];
+    
+            NSString *firstName = nameComponents.count ? nameComponents[0] :@"";
+            NSMutableString *lastNameStr = [NSMutableString new];
+            if(nameComponents.count > 1){
+                for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
+                    [lastNameStr appendString:nameComponents[idx]];
+                }
             }
+            NSString *lastName = lastNameStr;
+    
+            NSString *requestBody = [STConstants userInfoRequstBodyWithCustomerId:[custId integerValue]
+                                                                    customerEmail:emailStr
+                                                                        firstName:firstName
+                                                                         lastName:lastName];
+            dbLog(@"User account : %@",requestBody);
+            NSString *urlString = [STConstants getAPIURLWithParams:nil];
+            NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+            STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                                 methodType:@"POST"
+                                                                       body:requestBody
+                                                        responseHeaderBlock:^(NSURLResponse *response){}
+                                                               successBlock:^(NSData *responseData){}
+                                                               failureBlock:^(NSError *error)
+                                          {
+                                              [STUtility stopActivityIndicatorFromView:nil];
+                                              [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                          message:@"Unexpected error has occured, Please try after some time."
+                                                                         delegate:nil
+                                                                cancelButtonTitle:@"OK"
+                                                                otherButtonTitles: nil] show];
+                                              dbLog(@"SublimeTea-STUserProfileViewController-saveChangesButtonAction:- %@",error);
+                                          }];
+    
+    
+    
+            NSData *responseData = [httpRequest synchronousStart];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
+                dbLog(@"User account xml : %@",xmlString);
+                NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
+                dbLog(@"User account : %@",xmlDic);
+                [self parseUserInfoUpdateMethodResponseWithDict:xmlDic];
+            });
         }
-        NSString *lastName = lastNameStr;
-        
-        NSString *requestBody = [STConstants userInfoRequstBodyWithCustomerId:[custId integerValue]
-                                                                customerEmail:emailStr
-                                                                    firstName:firstName
-                                                                     lastName:lastName];
-        dbLog(@"User account : %@",requestBody);
-        NSString *urlString = [STConstants getAPIURLWithParams:nil];
-        NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        
-        STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
-                                                             methodType:@"POST"
-                                                                   body:requestBody
-                                                    responseHeaderBlock:^(NSURLResponse *response){}
-                                                           successBlock:^(NSData *responseData){}
-                                                           failureBlock:^(NSError *error)
-                                      {
-                                          [STUtility stopActivityIndicatorFromView:nil];
-                                          [[[UIAlertView alloc] initWithTitle:@"Alert"
-                                                                      message:@"Unexpected error has occured, Please try after some time."
-                                                                     delegate:nil
-                                                            cancelButtonTitle:@"OK"
-                                                            otherButtonTitles: nil] show];
-                                          dbLog(@"SublimeTea-STUserProfileViewController-saveChangesButtonAction:- %@",error);
-                                      }];
-        
-        
-        
-        NSData *responseData = [httpRequest synchronousStart];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
-            dbLog(@"User account xml : %@",xmlString);
-            NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
-            dbLog(@"User account : %@",xmlDic);
-            [self parseUserInfoUpdateMethodResponseWithDict:xmlDic];
-        });
-    }
-    else {
-        [STUtility stopActivityIndicatorFromView:nil];
-    }
+        else {
+            [STUtility stopActivityIndicatorFromView:nil];
+        }
     [STUtility stopActivityIndicatorFromView:nil];
 }
 - (void)parseUserInfoUpdateMethodResponseWithDict:(NSDictionary *)responseDict {
@@ -513,7 +631,7 @@
             NSDictionary *responseDict = parentDataDict[@"ns1:customerCustomerUpdateResponse"][@"result"];
             BOOL requestStatus = [responseDict[@"__text"] boolValue];
             if (requestStatus) {// UserInfo updated sucessfully
-                [self customerAddressUpdate];
+                [self customerAddressUpdate];;
             }
         }
         else {
@@ -580,7 +698,7 @@
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];
-
+            
             dbLog(@"Error setting shipping method cart...");
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
         }
@@ -590,61 +708,84 @@
     //    [STUtility stopActivityIndicatorFromView:nil];
 }
 - (void)customerAddressUpdate {
-    [STUtility startActivityIndicatorOnView:nil withText:@""];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
-    NSString *custId = self.userInfo[@"customer_id"][@"__text"];
-    NSDictionary *paramDict = @{@"sessionId": sessionId,
-                                @"customerId": custId};
-    NSMutableDictionary *soapBodyDict = [NSMutableDictionary new];
-    [soapBodyDict addEntriesFromDictionary:paramDict];
     
-    [soapBodyDict setObject:@[] forKey:kAddressNodeName];
-    [soapBodyDict setValue:[STConstants storeId] forKey:@"storeId"];
-    
-    
-    if (soapBodyDict) {
-        NSString *requestBody = [STUtility prepareMethodSoapBody:@"customerAddressCreate"
-                                                          params:soapBodyDict];
-        dbLog(@"add product to Cart Request Body: %@",requestBody);
-    
+    dbLog(@"Adress List: %@",self.customerAddressList);
+    BOOL isValid = NO;
+    for (Address *add in self.customerAddressList) {
+        dbLog(@"Adress: %@",add.firstname);
+        dbLog(@"Adress: %@",add.city);
+        dbLog(@"Adress: %@",add.street);
+        dbLog(@"Adress: %@",add.country_id);
+        dbLog(@"Adress: %@",add.postcode);
+        
+        if ([self validateAdress:add]) {
+            isValid = YES;
+        }
+        else {
+            isValid = NO;
+            break;
+        }
     }
     
-    
-    
-    NSString *requestBody = [STConstants customerAddressListRequestBody];
-    
-    dbLog(@"Customer Address update : %@",requestBody);
-    NSString *urlString = [STConstants getAPIURLWithParams:nil];
-    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
-    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
-                                                         methodType:@"POST"
-                                                               body:requestBody
-                                                responseHeaderBlock:^(NSURLResponse *response){}
-                                                       successBlock:^(NSData *responseData){}
-                                                       failureBlock:^(NSError *error)
-                                  {
-                                      [STUtility stopActivityIndicatorFromView:nil];
-                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
-                                                                  message:@"Unexpected error has occured, Please try after some time."
-                                                                 delegate:nil
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles: nil] show];
-                                      dbLog(@"SublimeTea-STPlaceOrder-fetchCustomerAddressList:- %@",error);
-                                  }];
-    
-    
-    
-    NSData *responseData = [httpRequest synchronousStart];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
-        dbLog(@"Customer Address xml: %@",xmlString);
-        NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
-        dbLog(@"Customer Address update result : %@",xmlDic);
+    if (isValid) {
+        [STUtility startActivityIndicatorOnView:nil withText:@""];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
+        NSString *custId = self.userInfo[@"customer_id"][@"__text"];
+        NSDictionary *paramDict = @{@"sessionId": sessionId,
+                                    @"customerId": custId};
+        NSMutableDictionary *soapBodyDict = [NSMutableDictionary new];
+        [soapBodyDict addEntriesFromDictionary:paramDict];
         
-//        [self parseCustomerAddressListMethodResponseWithDict:xmlDic];
-    });
+        NSMutableArray *addArr = [NSMutableArray new];
+        for (Address *obj in self.customerAddressList) {
+            [addArr addObject:[obj dictionary]];
+        }
+        
+        [soapBodyDict setObject:addArr forKey:kCustomerAddressNodeName];
+        [soapBodyDict setValue:[STConstants storeId] forKey:@"storeId"];
+        
+        
+        if (soapBodyDict) {
+            NSString *requestBody = [STUtility prepareMethodSoapBody:@"customerAddressCreate"
+                                                              params:soapBodyDict];
+            dbLog(@"User account address: %@",requestBody);
+            NSString *urlString = [STConstants getAPIURLWithParams:nil];
+            NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            
+            STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                                 methodType:@"POST"
+                                                                       body:requestBody
+                                                        responseHeaderBlock:^(NSURLResponse *response){}
+                                                               successBlock:^(NSData *responseData){
+                                                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                                                       NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
+                                                                       dbLog(@"Customer Address xml: %@",xmlString);
+                                                                       NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
+                                                                       dbLog(@"Customer Address update result : %@",xmlDic);
+                                                                       
+                                                                       //        [self parseCustomerAddressListMethodResponseWithDict:xmlDic];
+                                                                   });
+                                                               }
+                                                               failureBlock:^(NSError *error)
+                                          {
+                                              [STUtility stopActivityIndicatorFromView:nil];
+                                              [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                          message:@"Unexpected error has occured, Please try after some time."
+                                                                         delegate:nil
+                                                                cancelButtonTitle:@"OK"
+                                                                otherButtonTitles: nil] show];
+                                              dbLog(@"SublimeTea-STPlaceOrder-fetchCustomerAddressList:- %@",error);
+                                          }];
+            
+            
+            
+            [httpRequest start];
+            
+            
+        }
+    }
+    
 }
 //- (BOOL)validateInputs {
 //    BOOL status = NO;
@@ -652,100 +793,58 @@
 //    return  status;
 //}
 - (void)dropDownItemDidSelect:(NSIndexPath *)indexPath withCell:(UITableViewCell *)cell {
-
+    
 }
 - (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture indexPath:(NSIndexPath *)indexPath {
-//
-//    popoverViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
-//    popoverViewController.modalPresentationStyle = UIModalPresentationPopover;
-//    popoverViewController.delegate = self;
-//    popoverViewController.parentIndexPath = indexPath;
-//    
-//    switch (indexPath.section) {
-//        case 0: // Shipping
-//        {
-//            switch (sender.tag) {
-//                case 2: // States
-//                {
-//                    if (selectedCountryDict) {
-//                        NSDictionary *tempSelectedCountryDict = selectedCountryDict;
-//                        NSString *countryCode = tempSelectedCountryDict[@"country_id"][@"__text"];
-//                        NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kRegionList_key(countryCode)];
-//                        if (!dataDict) {
-//                            [self fetchStatesForCountry:countryCode];
-//                        }
-//                        else {
-//                            [self parseRegionListMethodResponseWithDict:dataDict];
-//                        }
-//                    }
-//                    else {
-//                        [[[UIAlertView alloc] initWithTitle:@"Message!"
-//                                                    message:@"Please select valid country."
-//                                                   delegate:nil
-//                                          cancelButtonTitle:@"OK"
-//                                          otherButtonTitles: nil] show];
-//                    }
-//                    break;
-//                }
-//                case 3: // Country
-//                {
-//                    NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kCountyList_key];
-//                    if (!dataDict) {
-//                        [self fetchCountryList];
-//                    }
-//                    else {
-//                        [self parseCountriesMethodResponseWithDict:dataDict];
-//                    }
-//                    break;
-//                }
-//                default:
-//                    break;
-//            }
-//            break;
-//        }
-//        case 1: // Billing
-//        {
-//            switch (sender.tag) {
-//                case 2: // States
-//                {
-//                    if (billingSelectedCountryDict) {
-//                        NSDictionary *tempSelectedCountryDict = billingSelectedCountryDict;
-//                        NSString *countryCode = tempSelectedCountryDict[@"country_id"][@"__text"];
-//                        NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kRegionList_key(countryCode)];
-//                        if (!dataDict) {
-//                            [self fetchStatesForCountry:countryCode];
-//                        }
-//                        else {
-//                            [self parseRegionListMethodResponseWithDict:dataDict];
-//                        }
-//                    }
-//                    break;
-//                }
-//                case 3: // Countries
-//                {
-//                    NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kCountyList_key];
-//                    if (!dataDict) {
-//                        [self fetchCountryList];
-//                    }
-//                    else {
-//                        [self parseCountriesMethodResponseWithDict:dataDict];
-//                    }
-//                    break;
-//                }
-//                default:
-//                    break;
-//            }
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    
-//    _statesPopover = popoverViewController.popoverPresentationController;
-//    _statesPopover.delegate = self;
-//    _statesPopover.sourceView = sender;
-//    _statesPopover.sourceRect = sender.rightView.frame;
-//    [self presentViewController:popoverViewController animated:YES completion:nil];
+    
+    switch (sender.tag) {
+        case kstateTag: // States
+        {
+            if (selectedCountryDict) {
+                NSDictionary *tempSelectedCountryDict = selectedCountryDict;
+                NSString *countryCode = tempSelectedCountryDict[@"country_id"][@"__text"];
+                NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kRegionList_key(countryCode)];
+                if (!dataDict) {
+                    [self fetchStatesForCountry:countryCode];
+                }
+                else {
+                    [self parseRegionListMethodResponseWithDict:dataDict];
+                }
+            }
+            else {
+                [[[UIAlertView alloc] initWithTitle:@"Message!"
+                                            message:@"Please select valid country."
+                                           delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles: nil] show];
+            }
+            break;
+        }
+        case kcountryTag: // Country
+        {
+            NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kCountyList_key];
+            dbLog(@"%@",dataDict);
+            if (!dataDict) {
+                [self fetchCountryList];
+            }
+            else {
+                [self parseCountriesMethodResponseWithDict:dataDict];
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    
+    popoverViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
+    popoverViewController.modalPresentationStyle = UIModalPresentationPopover;
+    popoverViewController.delegate = self;
+    popoverViewController.parentIndexPath = indexPath;
+    _statesPopover = popoverViewController.popoverPresentationController;
+    _statesPopover.delegate = self;
+    _statesPopover.sourceView = sender;
+    _statesPopover.sourceRect = sender.rightView.frame;
+    [self presentViewController:popoverViewController animated:YES completion:nil];
 }
 - (UIModalPresentationStyle) adaptivePresentationStyleForPresentationController: (UIPresentationController * ) controller {
     return UIModalPresentationNone;
@@ -769,31 +868,31 @@
     else if (nameCompnents.count < 1){
         [self showAlertWithTitle:@"Message" msg:@"Last Name is required!"];
     }
-//    else if (addressStr.length == 0)
-//    {
-//        [self showAlertWithTitle:@"Message" msg:@"Address is required!"];
-//    }
-//    else if (cityStr.length == 0){
-//        [self showAlertWithTitle:@"Message" msg:@"City is required!"];
-//    }
-//    else if (stateStr.length == 0){
-//        [self showAlertWithTitle:@"Message" msg:@"State is required!"];
-//    }
-//    else if (postalCodeStr.length == 0) {
-//        [self showAlertWithTitle:@"Message" msg:@"Postalcode is required!"];
-//    }
-//    else if (countryStr.length == 0) {
-//        [self showAlertWithTitle:@"Message" msg:@"Country is required!"];
-//    }
-//    else if (emailStr.length == 0) {
-//        [self showAlertWithTitle:@"Message" msg:@"Email is required!"];
-//    }
-//    else if (phoneStr.length == 0) {
-//        [self showAlertWithTitle:@"Message" msg:@"Phone is required!"];
-//    }
-//    else if (phoneStr.length < 10){
-//        [self showAlertWithTitle:@"Message" msg:@"Valid Phone number required!"];
-//    }
+    //    else if (addressStr.length == 0)
+    //    {
+    //        [self showAlertWithTitle:@"Message" msg:@"Address is required!"];
+    //    }
+    //    else if (cityStr.length == 0){
+    //        [self showAlertWithTitle:@"Message" msg:@"City is required!"];
+    //    }
+    //    else if (stateStr.length == 0){
+    //        [self showAlertWithTitle:@"Message" msg:@"State is required!"];
+    //    }
+    //    else if (postalCodeStr.length == 0) {
+    //        [self showAlertWithTitle:@"Message" msg:@"Postalcode is required!"];
+    //    }
+    //    else if (countryStr.length == 0) {
+    //        [self showAlertWithTitle:@"Message" msg:@"Country is required!"];
+    //    }
+    //    else if (emailStr.length == 0) {
+    //        [self showAlertWithTitle:@"Message" msg:@"Email is required!"];
+    //    }
+    //    else if (phoneStr.length == 0) {
+    //        [self showAlertWithTitle:@"Message" msg:@"Phone is required!"];
+    //    }
+    //    else if (phoneStr.length < 10){
+    //        [self showAlertWithTitle:@"Message" msg:@"Valid Phone number required!"];
+    //    }
     else if (emailStr.length){
         NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,10}";
         NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
@@ -820,7 +919,7 @@
 //    NSString *countryStr = [self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 //    NSString *emailStr = [self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 //    NSString *phoneStr = [self.phoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//    
+//
 //    status = [self validateName:nameStr
 //                        address:addressStr
 //                           city:cityStr
@@ -834,10 +933,10 @@
 
 
 //- (void)updateUserInfo {
-//    
+//
 //    if ([STUtility isNetworkAvailable]) {
 //        [STUtility startActivityIndicatorOnView:self.view withText:@"Fetching states."];
-//        
+//
 //        NSDictionary *emailDIct = self.dataArr[1];
 //        NSDictionary *name = self.dataArr[1];
 //        NSString *custId = self.userInfo[@""];
@@ -849,7 +948,7 @@
 //        dbLog(@"States list: %@ for country %@",requestBody, countryCode);
 //        NSString *urlString = [STConstants getAPIURLWithParams:nil];
 //        NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-//        
+//
 //        STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
 //                                                             methodType:@"POST"
 //                                                                   body:requestBody
@@ -874,13 +973,208 @@
 //                                                            otherButtonTitles: nil] show];
 //                                          dbLog(@"SublimeTea-STPlaceOrder-fetchCountryList:- %@",error);
 //                                      }];
-//        
-//        
-//        
+//
+//
+//
 //        [httpRequest start];
 //    }
 //    else {
 //        [STUtility stopActivityIndicatorFromView:nil];
 //    }
 //}
+- (void)fetchCountryList {
+    
+    if ([STUtility isNetworkAvailable]) {
+        [STUtility startActivityIndicatorOnView:self.view withText:@"Fetching Countries."];
+        NSString *requestBody = [STConstants countryListRequestBody];
+        dbLog(@"Countries list: %@",requestBody);
+        NSString *urlString = [STConstants getAPIURLWithParams:nil];
+        NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        
+        STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                             methodType:@"POST"
+                                                                   body:requestBody
+                                                    responseHeaderBlock:^(NSURLResponse *response){}
+                                                           successBlock:^(NSData *responseData){
+                                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                                   NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
+                                                                   dbLog(@"Countries list xml: %@",xmlString);
+                                                                   NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
+                                                                   dbLog(@"Countries list %@",xmlDic);
+                                                                   [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic withKey:kCountyList_key];
+                                                                   [self parseCountriesMethodResponseWithDict:xmlDic];
+                                                               });
+                                                           }
+                                                           failureBlock:^(NSError *error)
+                                      {
+                                          [STUtility stopActivityIndicatorFromView:nil];
+                                          [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                      message:@"Unexpected error has occured, Please try after some time."
+                                                                     delegate:nil
+                                                            cancelButtonTitle:@"OK"
+                                                            otherButtonTitles: nil] show];
+                                          dbLog(@"SublimeTea-STPlaceOrder-fetchCountryList:- %@",error);
+                                      }];
+        
+        
+        
+        [httpRequest start];
+    }
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
+}
+- (void)parseCountriesMethodResponseWithDict:(NSDictionary *)responseDict {
+    if (responseDict) {
+        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
+        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
+            NSArray *dataArr = parentDataDict[@"ns1:directoryCountryListResponse"][@"countries"][@"item"];
+            NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name.__text" ascending:YES];
+            
+            self.listOfCountries = [dataArr sortedArrayUsingDescriptors:@[sort]];
+            popoverViewController.itemsArray = self.listOfCountries;
+            [popoverViewController.tableView reloadData];
+        }
+        else {
+            dbLog(@"Error placing order...");
+        }
+    }else {
+    }
+    [STUtility stopActivityIndicatorFromView:nil];
+}
+- (void)fetchStatesForCountry:(NSString *)countryCode {
+    
+    if ([STUtility isNetworkAvailable]) {
+        [STUtility startActivityIndicatorOnView:self.view withText:@"Fetching states."];
+        NSString *requestBody = [STConstants regionListequestBodyForCountry:countryCode];
+        dbLog(@"States list: %@ for country %@",requestBody, countryCode);
+        NSString *urlString = [STConstants getAPIURLWithParams:nil];
+        NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        
+        STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                             methodType:@"POST"
+                                                                   body:requestBody
+                                                    responseHeaderBlock:^(NSURLResponse *response){}
+                                                           successBlock:^(NSData *responseData){
+                                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                                   NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
+                                                                   dbLog(@"States list xml: %@ for country %@",xmlString,countryCode);
+                                                                   NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
+                                                                   dbLog(@"States list %@ for country %@",xmlDic, countryCode);
+                                                                   [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic withKey:kRegionList_key(countryCode)];
+                                                                   [self parseRegionListMethodResponseWithDict:xmlDic];
+                                                               });
+                                                           }
+                                                           failureBlock:^(NSError *error)
+                                      {
+                                          [STUtility stopActivityIndicatorFromView:nil];
+                                          [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                      message:@"Unexpected error has occured, Please try after some time."
+                                                                     delegate:nil
+                                                            cancelButtonTitle:@"OK"
+                                                            otherButtonTitles: nil] show];
+                                          dbLog(@"SublimeTea-STPlaceOrder-fetchCountryList:- %@",error);
+                                      }];
+        
+        
+        
+        [httpRequest start];
+    }
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
+}
+- (void)parseRegionListMethodResponseWithDict:(NSDictionary *)responseDict {
+    if (responseDict) {
+        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
+        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
+            NSArray *dataArr = parentDataDict[@"ns1:directoryRegionListResponse"][@"countries"][@"item"];
+            NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name.__text" ascending:YES];
+            
+            self.listOfStatesForSelectedCountry = [dataArr sortedArrayUsingDescriptors:@[sort]];
+            popoverViewController.itemsArray = self.listOfStatesForSelectedCountry;
+            [popoverViewController.tableView reloadData];
+        }
+        else {
+            dbLog(@"Error fetching region list order...");
+        }
+    }else {
+    }
+    [STUtility stopActivityIndicatorFromView:nil];
+}
+- (NSString *)trimmedStateCode:(NSString *)rawStateCode {
+    NSString *stateCodestr;
+    if (rawStateCode.length) {
+        NSArray *stateCodeComponenets = [rawStateCode componentsSeparatedByString:@"-"];
+        if (stateCodeComponenets.count > 1) {
+            stateCodestr = stateCodeComponenets[1];
+        }
+    }
+    return stateCodestr;
+}
+#pragma mark-
+#pragma STPopoverTableViewControllerDelegate
+
+- (void)itemDidSelect:(NSIndexPath *)indexpath selectedItemString:(NSString *)selectedItemStr parentIndexPath:(NSIndexPath *)pIndexPath{
+    if (selectedItemStr.length) {
+        
+        STAddressTableViewCell *cell = [self.tableView cellForRowAtIndexPath:pIndexPath];
+        if (cell) {
+            UITextField *textField =  (UITextField *)_statesPopover.sourceView;
+            switch (textField.tag) {
+                case kstateTag:
+                {
+                    cell.stateTextField.text = selectedItemStr;
+                    NSUInteger idx = cell.indexPath.row;
+                    if (idx != NSNotFound) {
+                        NSInteger idxToStore = idx-2;
+                        if (idxToStore >= 0)
+                        {
+                            Address *address = (self.customerAddressList.count == 0)? [[Address alloc] init] : self.customerAddressList[idxToStore];
+                            NSDictionary *states = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kRegionList_key(selectedCountryDict[@"country_id"][@"__text"])];
+                            NSString *stateStr =  [self trimmedStateCode:states[@"code"][@"__text"]];
+                            
+                            address.region = stateStr;
+                            
+                            
+                            if (self.customerAddressList.count > idxToStore ) {
+                                [self.customerAddressList replaceObjectAtIndex:idxToStore withObject:address];
+                            }
+                            else {
+                                [self.customerAddressList addObject:address];
+                            }
+                        }
+                    }
+                    break;
+                }
+                case kcountryTag:
+                {
+                    cell.countryTextField.text = selectedItemStr;
+                    NSUInteger idx = cell.indexPath.row;
+                    if (idx != NSNotFound) {
+                        NSInteger idxToStore = idx-2;
+                        if (idxToStore >= 0)
+                        {
+                            Address *address = (self.customerAddressList.count == 0)? [[Address alloc] init] : self.customerAddressList[idxToStore];
+                            NSString *countryStr = selectedCountryDict[@"country_id"][@"__text"];
+                            
+                            address.country_id = countryStr;
+                            
+                            if (self.customerAddressList.count > idxToStore ) {
+                                [self.customerAddressList replaceObjectAtIndex:idxToStore withObject:address];
+                            }
+                            else {
+                                [self.customerAddressList addObject:address];
+                            }
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    }
+    [popoverViewController dismissViewControllerAnimated:YES completion:nil];
+}
 @end

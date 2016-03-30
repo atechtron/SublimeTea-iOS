@@ -14,7 +14,7 @@
 @property (nonatomic,strong)NSString  *firstname;
 @property (nonatomic,strong)NSString  *lastname;
 @property (nonatomic,strong)NSString  *postcode;
-@property (nonatomic,strong)NSString  *region_id;
+//@property (nonatomic,strong)NSString  *region_id;
 @property (nonatomic,strong)NSString  *region;
 @property (nonatomic,strong)NSString  *street;
 @property (nonatomic)NSInteger is_default_billing;
