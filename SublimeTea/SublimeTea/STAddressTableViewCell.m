@@ -12,11 +12,12 @@
 @implementation STAddressTableViewCell
 
 - (void)drawRect:(CGRect)rect {
-    UITapGestureRecognizer *stateTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:)];
+    
+    UITapGestureRecognizer *stateTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(stateFieldDropDownAction:)];
     stateTap.numberOfTapsRequired = 1;
     [self.stateTextField.superview addGestureRecognizer:stateTap];
     
-    UITapGestureRecognizer *countryTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:)];
+    UITapGestureRecognizer *countryTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(countryFiledDropDownAction:)];
     countryTap.numberOfTapsRequired = 1;
     [self.countryTextField.superview addGestureRecognizer:countryTap];
     
@@ -71,18 +72,15 @@
 
     // Configure the view for the selected state
 }
-
-- (void)dropDownAction:(UITapGestureRecognizer *)tapGestureRecongnizer {
-    UIView *senderView = tapGestureRecongnizer.view;
-    if ([senderView isEqual:self.stateTextField]) {
-        if ([self.delegate respondsToSelector:@selector(droDownAction:tapGesture:indexPath:)]) {
-            [self.delegate droDownAction:self.stateTextField tapGesture:tapGestureRecongnizer indexPath:self.indexPath];
-        }
+- (void)stateFieldDropDownAction:(UITapGestureRecognizer *)tapGestureRecongnizer {
+    if ([self.delegate respondsToSelector:@selector(droDownAction:tapGesture:indexPath:)]) {
+        [self.delegate droDownAction:self.stateTextField tapGesture:tapGestureRecongnizer indexPath:self.indexPath];
     }
-    else if ([senderView isEqual:self.countryTextField]) {
+}
+- (void)countryFiledDropDownAction:(UITapGestureRecognizer *)tapGestureRecongnizer {
+
         if ([self.delegate respondsToSelector:@selector(droDownAction:tapGesture:indexPath:)]) {
             [self.delegate droDownAction:self.countryTextField tapGesture:tapGestureRecongnizer indexPath:self.indexPath];
         }
-    }
 }
 @end
