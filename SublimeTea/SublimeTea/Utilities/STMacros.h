@@ -54,7 +54,7 @@
 #define kCountyList_key @"LIST_OF_COUNTRIES"
 #define kRegionList_key(countryCode) [NSString stringWithFormat:@"REGION_COUNTRY_CODE-%@",countryCode]
 
-
+#define kAddressNodeName @"addressData"
 #define kOrderList_Key @"ORDERLIST"
 #define kOderId_Key @"ORDER_ID"
 #define kProductNodeName @"products"
