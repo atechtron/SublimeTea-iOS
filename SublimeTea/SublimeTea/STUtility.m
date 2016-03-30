@@ -195,7 +195,9 @@
     else if ([name isEqualToString:kAddressNodeName]) {
         str = @"shoppingCartCustomerAddressEntity";
     }
-    
+    else  {
+        str = @"";
+    }
     return str;
 }
 + (NSString *)prepareMethodSoapBody:(NSString *)actionMethodNameKey params:(NSDictionary *)paramDict  {
@@ -240,16 +242,35 @@
                         
                     {
                         NSArray *Keys=[value allKeys];
-                        [soapBody appendString:[NSString stringWithFormat:@"<%@>",entittyName]];                          
+                        if (![entittyName isEqualToString:@""]) {
+                            [soapBody appendString:[NSString stringWithFormat:@"<%@>",entittyName]];
+                        }
+                        
                         for (int k=0; k<[Keys count]; k++)
                             
                         {
                             [soapBody appendString:[NSString stringWithFormat:@"<%@>",[Keys objectAtIndex:k]]];
+                            id val = [value objectForKey:[Keys objectAtIndex:k]];
+                            if ([val isKindOfClass:[NSArray class]]) {
+                                NSMutableString *para = [NSMutableString new];
+                                int count = 1;
+                                for (NSString *valStr in val) {
+                                    NSString *tempstr = [NSString stringWithFormat:@"<line%ld>%@</line%ld>",(long)count,valStr,(long)count];
+                                    [para appendString:tempstr];
+                                    ++count;
+                                }
+                                [soapBody appendString:para];
+                            }
+                            else {
                             [soapBody appendString:[NSString stringWithFormat:@"%@",[value objectForKey:[Keys objectAtIndex:k]]]];
+                            }
+                            
                             [soapBody appendString:[NSString stringWithFormat:@"</%@>",[Keys objectAtIndex:k]]];
                             
                         }
-                        [soapBody appendString:[NSString stringWithFormat:@"</%@>\n",entittyName]];
+                        if (![entittyName isEqualToString:@""]) {
+                            [soapBody appendString:[NSString stringWithFormat:@"</%@>\n",entittyName]];
+                        }
                     }
                 }
                 [soapBody appendString:[NSString stringWithFormat:@"</%@>\n",keyVal]];

@@ -48,5 +48,6 @@
 + (NSString *)userInfoRequstBodyWithCustomerId:(NSInteger)custId
                                  customerEmail:(NSString *)email
                                      firstName:(NSString *)firstName
-                                      lastName:(NSString *)lastName;
+                                      lastName:(NSString *)lastName
+                                      password:(NSString *)password;
 @end
