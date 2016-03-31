@@ -89,7 +89,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.isShippingISBillingAddress = YES;
     
-    [STUtility stopActivityIndicatorFromView:nil];    
+    [STUtility stopActivityIndicatorFromView:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -102,7 +102,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-//    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+    //    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
     //    self.navigationController.navigationBarHidden = YES;
     
     jsondict = [[NSMutableDictionary alloc]init];
@@ -207,30 +207,30 @@
     [defaults setObject:[NSString stringWithFormat:@"%.2f",MERCHANT_PRICE]     forKey:@"strSaleAmount"];
     [defaults setObject:MERCHANT_REFERENCENO forKey:@"reference_no"];
     [defaults synchronize];
-//    
-//    paymentView.descriptionString = @"Test Description";
-//    paymentView.strCurrency =   @"INR";
-//    paymentView.strDisplayCurrency =@"INR";
-//    paymentView.strDescription = @"Test Description";
-//    paymentView.strDescription = @"Test Description";
-//    
-//    paymentView.strBillingName = @"Test";
-//    paymentView.strBillingAddress = @"Bill address";
-//    paymentView.strBillingCity =@"Kanpur";
-//    paymentView.strBillingState = @"UP";
-//    paymentView.strBillingPostal =@"625000";
-//    paymentView.strBillingCountry = @"IND";
-//    paymentView.strBillingEmail =@"btecharpit@gmail.com";
-//    paymentView.strBillingTelephone =@"9363469999";
-//    
-//    // Non mandatory parameters
-//    paymentView.strDeliveryName = @"";
-//    paymentView.strDeliveryAddress = @"";
-//    paymentView.strDeliveryCity = @"";
-//    paymentView.strDeliveryState = @"";
-//    paymentView.strDeliveryPostal =@"";
-//    paymentView.strDeliveryCountry = @"";
-//    paymentView.strDeliveryTelephone =@"";
+    //
+    //    paymentView.descriptionString = @"Test Description";
+    //    paymentView.strCurrency =   @"INR";
+    //    paymentView.strDisplayCurrency =@"INR";
+    //    paymentView.strDescription = @"Test Description";
+    //    paymentView.strDescription = @"Test Description";
+    //
+    //    paymentView.strBillingName = @"Test";
+    //    paymentView.strBillingAddress = @"Bill address";
+    //    paymentView.strBillingCity =@"Kanpur";
+    //    paymentView.strBillingState = @"UP";
+    //    paymentView.strBillingPostal =@"625000";
+    //    paymentView.strBillingCountry = @"IND";
+    //    paymentView.strBillingEmail =@"btecharpit@gmail.com";
+    //    paymentView.strBillingTelephone =@"9363469999";
+    //
+    //    // Non mandatory parameters
+    //    paymentView.strDeliveryName = @"";
+    //    paymentView.strDeliveryAddress = @"";
+    //    paymentView.strDeliveryCity = @"";
+    //    paymentView.strDeliveryState = @"";
+    //    paymentView.strDeliveryPostal =@"";
+    //    paymentView.strDeliveryCountry = @"";
+    //    paymentView.strDeliveryTelephone =@"";
     
     paymentView.descriptionString = self.nameTextField.text;
     paymentView.strCurrency =   @"INR";
@@ -353,6 +353,9 @@
         NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
         if ([emailTest evaluateWithObject:emailStr] == NO) {
             [self showAlertWithTitle:@"Message" msg:@"Valid Email required!"];
+        }
+        else {
+            status = YES;
         }
     }
     
@@ -606,10 +609,10 @@
                     }
                     else {
                         [[[UIAlertView alloc] initWithTitle:@"Message!"
-                                                   message:@"Please select valid country."
-                                                  delegate:nil
-                                         cancelButtonTitle:@"OK"
-                                         otherButtonTitles: nil] show];
+                                                    message:@"Please select valid country."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil] show];
                     }
                     break;
                 }
@@ -688,7 +691,7 @@
         id view =  _statesPopover.sourceView;
         if ([view isEqual:self.countryextField]) {
             if (indexpath.section == 0) {
-             self.countryextField.text = selectedItemStr;
+                self.countryextField.text = selectedItemStr;
             }
             else {
                 self.billingCountryextField.text = selectedItemStr;
@@ -756,9 +759,9 @@
         address.shipAddress.firstname = nameComponents.count ? nameComponents[0] :@"";
         NSMutableString *lastNameStr = [NSMutableString new];
         if(nameComponents.count > 1){
-        for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
-            [lastNameStr appendString:nameComponents[idx]];
-        }
+            for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
+                [lastNameStr appendString:nameComponents[idx]];
+            }
         }
         address.shipAddress.lastname = lastNameStr;
         address.shipAddress.city = cityStr;
@@ -778,7 +781,7 @@
         NSLog(@"Selected State Code :-  %@",stateStr);
         stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
+        
         NSString *postalCodeStr = [self.billingPostalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *countryStr = selectedCountryDict ? selectedCountryDict[@"country_id"][@"__text"] : [self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         countryStr = countryStr?countryStr:[self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -806,19 +809,33 @@
     }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-
+    
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if (textField == _phoneTextField || textField == _billingPhoneTextField || textField == _postalCodeTextField || textField == _billingPostalCodeTextField) {
-        if(range.length + range.location > textField.text.length)
-        {
-            return NO;
+    if (self.tableView.numberOfSections == 2) {
+        if (textField == _phoneTextField || textField == _billingPhoneTextField || textField == _postalCodeTextField || textField == _billingPostalCodeTextField) {
+            if(range.length + range.location > textField.text.length)
+            {
+                return NO;
+            }
+            
+            NSUInteger newLength = [textField.text length] + [string length] - range.length;
+            return newLength <= 10;
         }
-        
-        NSUInteger newLength = [textField.text length] + [string length] - range.length;
-        return newLength <= 10;
+    }else{
+        if (textField == _phoneTextField ||  textField == _postalCodeTextField) {
+            if(range.length + range.location > textField.text.length)
+            {
+                return NO;
+            }
+            
+            NSUInteger newLength = [textField.text length] + [string length] - range.length;
+            return newLength <= 10;
+        }
     }
+    
+    
     return YES;
 }
 
@@ -826,7 +843,7 @@
 #pragma mark -
 #pragma UITextViewDelegate
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-
+    
 }
 - (void)textViewDidEndEditing:(UITextView *)textView {
     if ([textView isEqual:self.addressTextView]) {
@@ -883,7 +900,7 @@
         
         
         
-    [httpRequest start];
+        [httpRequest start];
     }
     else {
         [STUtility stopActivityIndicatorFromView:nil];

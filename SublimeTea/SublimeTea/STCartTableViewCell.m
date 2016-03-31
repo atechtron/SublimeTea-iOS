@@ -38,13 +38,13 @@
 }
 
 - (IBAction)removeBtnAction:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(itemDidRemoveFromCart:)]) {
-        [self.delegate itemDidRemoveFromCart:sender];
-    }
+//    if ([self.delegate respondsToSelector:@selector(itemDidRemoveFromCart:)]) {
+//        [self.delegate itemDidRemoveFromCart:sender];
+//    }
 }
 - (void)dropDownAction:(UITapGestureRecognizer *)tapGestureRecongnizer {
-    if ([self.delegate respondsToSelector:@selector(droDownAction:tapGesture:)]) {
-        [self.delegate droDownAction:self.qtyTextbox tapGesture:tapGestureRecongnizer];
-    }
+//    if ([self.delegate respondsToSelector:@selector(droDownAction:tapGesture:)]) {
+//        [self.delegate droDownAction:self.qtyTextbox tapGesture:tapGestureRecongnizer];
+//    }
 }
 @end
