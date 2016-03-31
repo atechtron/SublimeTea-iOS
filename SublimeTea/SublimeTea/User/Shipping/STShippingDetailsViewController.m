@@ -354,6 +354,9 @@
         if ([emailTest evaluateWithObject:emailStr] == NO) {
             [self showAlertWithTitle:@"Message" msg:@"Valid Email required!"];
         }
+        else {
+            status = YES;
+        }
     }
     
     else {

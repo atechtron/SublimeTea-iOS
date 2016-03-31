@@ -84,43 +84,44 @@
     return 1;
 }
 - ( UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%ld, %ld",indexPath.row, self.cartArr.count);
+
     if (indexPath.row == 0) {
         STCartSubTotalTableViewCell *subTotalCell = [tableView dequeueReusableCellWithIdentifier:@"STCartSubTotalTableViewCell" forIndexPath:indexPath];
-        subTotalCell.subTotalValueLabel.text = @"\u20B9 124";
-        subTotalCell.totalItemsValueLabel.text = @"1";
-        subTotalCell.shippingChargesValueLabel.text = @"\u20B9 123";
+        subTotalCell.subTotalValueLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[self cartTotal]]];
+        subTotalCell.totalItemsValueLabel.text = [NSString stringWithFormat:@"%ld",(long)self.cartArr.count];
+        subTotalCell.shippingChargesValueLabel.text = @"\u20B9 0";
         return subTotalCell;
     }else{
         STCartProdTotalTableViewCell *prodTotalCell = [tableView dequeueReusableCellWithIdentifier:@"STCartProdTotalTableViewCell" forIndexPath:indexPath];
         prodTotalCell.delegate = self;
-        if (self.cartArr.count > indexPath.row) {
-            Product *prod = self.cartArr[indexPath.row];
+        if (self.cartArr.count > indexPath.row-1) {
+            Product *prod = self.cartArr[indexPath.row-1];
 //            NSString *prodId = prod.prodDict[@"product_id"][@"__text"];
             NSString *name = prod.prodDict[@"name"][@"__text"];
-//            NSString *shortDesc = prod.prodDict[@"short_description"][@"__text"];
-            NSString *price = prod.prodDict[@"special_price"][@"__text"];
-            NSLog(@"%@",prod.prodDict);
+            NSString *price = prod.prodDict[@"price"][@"__text"];
+            NSString *splPrice = prod.prodDict[@"special_price"][@"__text"];
+            double savings = [price floatValue]-[splPrice floatValue];
+            double totalPrice = prod.prodQty * [splPrice doubleValue];
+            
             prodTotalCell.productNameLabel.text = name;
-            //        prodTotalCell.descriptionLabel.text = shortDesc;
-            //        prodTotalCell.priceTitleLabel.text = @"Price";
-            prodTotalCell.prodTotalValueLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[price floatValue]]];
+            prodTotalCell.prodTotalValueLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",totalPrice]];
             prodTotalCell.prodQuantityTextField.text = prod.prodQty> 0 ?[NSString stringWithFormat:@"%ld",(long)prod.prodQty]:@"";
-            prodTotalCell.prodQuantityTextField.tag = indexPath.row;
+            prodTotalCell.prodQuantityTextField.tag = indexPath.row-1;
             prodTotalCell.prodQuantityTextField.delegate = self;
             self.qtyTxtField = prodTotalCell.prodQuantityTextField;
             
-            prodTotalCell.removeProdButton.tag = indexPath.row;
+            prodTotalCell.removeProdButton.tag = indexPath.row-1;
+            prodTotalCell.mrpValueLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[price floatValue]]];
+            prodTotalCell.splMrpValueLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[splPrice floatValue]]];
+            prodTotalCell.savingsValueLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",savings]];
+
             
             //        [prodTotalCell.checkboxButton addTarget:self action:@selector(checkBoxAction:) forControlEvents:UIControlEventTouchUpInside];
-        }else{
-            prodTotalCell.prodQuantityTextField.text = @"1";
-            prodTotalCell.prodTotalValueLabel.text = @"\u20B9 10";
+//        }else{
+//            prodTotalCell.prodQuantityTextField.text = @"1";
+//            prodTotalCell.prodTotalValueLabel.text = @"\u20B9 10";
         }
         
-        prodTotalCell.mrpValueLabel.text = @"\u20B9 12";
-        prodTotalCell.splMrpValueLabel.text = @"\u20B9 10";
-        prodTotalCell.savingsValueLabel.text = @"\u20B9 2";
         
         return prodTotalCell;
     }
@@ -132,7 +133,15 @@
     }
     return 195;
 }
-
+- (double)cartTotal {
+    double totalAmount = 0.0;
+    for (Product *prod in self.cartArr) {
+        double qty = prod.prodQty;
+        NSString  *price = prod.prodDict[@"special_price"][@"__text"];
+        totalAmount += (qty *[price doubleValue]);
+    }
+    return totalAmount;
+}
 //    static NSString *cellidentifier = @"cartCell";
 //    STCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
 //    cell.delegate = self;
@@ -223,11 +232,14 @@
     }
 }
 
-- (void)checkoutButtonAction:(UIButton *)sender {
+- (IBAction)checkoutButtonAction:(UIButton *)sender {
     if ([STUtility isNetworkAvailable] && [self validateInputs]) {
         [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
-        [self performSegueWithIdentifier:@"shippingSegue" sender:self];
+        [self performSelector:@selector(navigateToShippingDetails) withObject:nil afterDelay:0.5];
     }
+}
+-(void)navigateToShippingDetails {
+[self performSegueWithIdentifier:@"shippingSegue" sender:self];
 }
 - (BOOL)validateInputs {
     BOOL status = NO;
@@ -260,6 +272,7 @@
     self.popoverCtrl.modalPresentationStyle = UIModalPresentationPopover;
     self.popoverCtrl.delegate = self;
     self.popoverCtrl.itemsArray = [self getQTYArr];
+    self.popoverCtrl.parentIndexPath = [NSIndexPath indexPathForRow:sender.tag inSection:0];
     _statesPopover = self.popoverCtrl.popoverPresentationController;
     _statesPopover.delegate = self;
     _statesPopover.sourceView = sender;
@@ -267,14 +280,16 @@
     [self presentViewController:self.popoverCtrl animated:YES completion:nil];
 }
 - (void)itemDidRemoveFromCart:(UIButton *)sender {
-    
-    [[STCart defaultCart] removeProductFromCart:sender.tag];
-    self.cartArr = [[STCart defaultCart] productsDataArr];
-    NSString *cartCount = [NSString stringWithFormat:@"%ld",(long)[[STCart defaultCart] numberOfProductsInCart]];
-    cartBadgeView.badgeText = [cartCount integerValue]>0?cartCount:@"";
-    
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag+1 inSection:0];
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    if (self.cartArr.count+1 > indexPath.row) {
+        [[STCart defaultCart] removeProductFromCart:sender.tag];
+        self.cartArr = [[STCart defaultCart] productsDataArr];
+        NSString *cartCount = [NSString stringWithFormat:@"%ld",(long)[[STCart defaultCart] numberOfProductsInCart]];
+        cartBadgeView.badgeText = [cartCount integerValue]>0?cartCount:@"";
+        NSIndexPath *cartTotalIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView reloadRowsAtIndexPaths:@[cartTotalIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
 }
 
 #pragma mark-
@@ -286,8 +301,10 @@
     [[STCart defaultCart] updateProductToCartAtIndex:_statesPopover.sourceView.tag withQty:[qty integerValue]];
     self.cartArr = [[STCart defaultCart] productsDataArr];
     
-//    [self.tableView reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    self.qtyTxtField.text = [NSString stringWithFormat:@"%@",qty];
+    NSIndexPath *cartTotalIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSIndexPath *prodIndexPath = [NSIndexPath indexPathForRow:pIndexPath.row+1 inSection:pIndexPath.section];
+    [self.tableView reloadRowsAtIndexPaths:@[prodIndexPath,cartTotalIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    self.qtyTxtField.text = [NSString stringWithFormat:@"%@",qty];
     [self.popoverCtrl dismissViewControllerAnimated:YES completion:nil];
 }
 
