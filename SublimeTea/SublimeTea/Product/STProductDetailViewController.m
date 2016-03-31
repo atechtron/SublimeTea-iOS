@@ -20,7 +20,7 @@
 
 @end
 
-static NSInteger prodQtyCount = 0;
+static double prodQtyCount = 0.0;
 
 @implementation STProductDetailViewController
 

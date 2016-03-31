@@ -42,7 +42,7 @@ static STCart *sharedInstance;
     return [STCart defaultCart];
 }
 
--(void)addProductsInCart:(NSDictionary *)prodDict withQty:(NSInteger)qty {
+-(void)addProductsInCart:(NSDictionary *)prodDict withQty:(double)qty {
     
 //    [STUtility startActivityIndicatorOnView:nil withText:@"Please Wait.."];
     if (prodDict && qty >0) {
@@ -54,7 +54,7 @@ static STCart *sharedInstance;
         NSString *prodId = prodDict[@"product_id"][@"__text"];
         NSString *sku = prodDict[@"sku"][@"__text"];
         NSDictionary *dataDict = @{@"product_id" : prodId,
-                                   @"qty": [NSNumber numberWithInteger:qty],
+                                   @"qty": [NSNumber numberWithDouble:qty],
                                    @"sku": sku};
         [self.productsInCart addObject:dataDict];
         [self.tempCartProducts addObject:dataDict];
@@ -68,7 +68,7 @@ static STCart *sharedInstance;
     [self.tempCartProducts removeObjectAtIndex:idx];
     [self.productsInCart removeObjectAtIndex:idx];
 }
-- (void)updateProductToCartAtIndex:(NSInteger)idx withQty:(NSInteger)qty {
+- (void)updateProductToCartAtIndex:(NSInteger)idx withQty:(double)qty {
     if (qty > 0) {
         Product *prod = self.productsDataArr[idx];
         prod.prodQty = qty;
@@ -76,7 +76,7 @@ static STCart *sharedInstance;
                                         withObject:prod];
         
         NSMutableDictionary *prodDict = [self.tempCartProducts[idx] mutableCopy];
-        [prodDict setObject:[NSNumber numberWithInteger:qty] forKey:@"qty"];
+        [prodDict setObject:[NSNumber numberWithDouble:qty] forKey:@"qty"];
         
         [self.tempCartProducts replaceObjectAtIndex:idx
                                          withObject:prodDict];

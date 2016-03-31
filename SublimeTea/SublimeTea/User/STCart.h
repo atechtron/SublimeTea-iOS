@@ -11,7 +11,7 @@
 @interface Product:NSObject
 
 @property (strong,nonatomic) NSDictionary *prodDict;
-@property (nonatomic) NSInteger prodQty;
+@property (nonatomic) double prodQty;
 @property (nonatomic) BOOL buy;
 @end
 
@@ -32,9 +32,9 @@
 - (instancetype) init  __attribute__((unavailable("init not available, call defaultManager instead")));
 + (instancetype) new   __attribute__((unavailable("new not available, call defaultManager instead")));
 
-- (void)addProductsInCart:(NSDictionary *)prodDict withQty:(NSInteger)qty;
+- (void)addProductsInCart:(NSDictionary *)prodDict withQty:(double)qty;
 - (void)removeProductFromCart:(NSInteger)idx;
-- (void)updateProductToCartAtIndex:(NSInteger)idx withQty:(NSInteger)qty;
+- (void)updateProductToCartAtIndex:(NSInteger)idx withQty:(double)qty;
 
 - (NSInteger)numberOfProductsInCart;
 @end
