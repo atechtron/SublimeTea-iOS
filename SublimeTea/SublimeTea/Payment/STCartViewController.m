@@ -84,31 +84,42 @@
     return 1;
 }
 - ( UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellidentifier = @"cartCell";
-    STCartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
-    cell.delegate = self;
-    Product *prod = self.cartArr[indexPath.row];
-    
-    NSString *prodId = prod.prodDict[@"product_id"][@"__text"];
-    NSString *name = prod.prodDict[@"name"][@"__text"];
-    NSString *shortDesc = prod.prodDict[@"short_description"][@"__text"];
-    NSString *price = prod.prodDict[@"special_price"][@"__text"];
-    dbLog(@"%@",prod.prodDict);
-    NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
-    if (prodImgArr.count) {
-        NSDictionary *imgUrlDict = [prodImgArr lastObject];
-        NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
-        dbLog(@"Image URL %@",imgUrl);
-        NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgUrl];
-        if (imgData) {
-            UIImage *prodImg = [UIImage imageWithData:imgData];
-            if (prodImg) {
-                [UIView transitionWithView:cell.porudctImageView duration:0.5
-                                   options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-                                       cell.porudctImageView.image = prodImg;
-                                       cell.porudctImageView.contentMode = UIViewContentModeScaleAspectFit;
-                                   } completion:nil];
-            }
+
+    if (indexPath.row == 0) {
+        STCartSubTotalTableViewCell *subTotalCell = [tableView dequeueReusableCellWithIdentifier:@"STCartSubTotalTableViewCell" forIndexPath:indexPath];
+        subTotalCell.subTotalValueLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[self cartTotal]]];
+        subTotalCell.totalItemsValueLabel.text = [NSString stringWithFormat:@"%ld",(long)self.cartArr.count];
+        subTotalCell.shippingChargesValueLabel.text = @"\u20B9 0";
+        return subTotalCell;
+    }else{
+        STCartProdTotalTableViewCell *prodTotalCell = [tableView dequeueReusableCellWithIdentifier:@"STCartProdTotalTableViewCell" forIndexPath:indexPath];
+        prodTotalCell.delegate = self;
+        if (self.cartArr.count > indexPath.row-1) {
+            Product *prod = self.cartArr[indexPath.row-1];
+//            NSString *prodId = prod.prodDict[@"product_id"][@"__text"];
+            NSString *name = prod.prodDict[@"name"][@"__text"];
+            NSString *price = prod.prodDict[@"price"][@"__text"];
+            NSString *splPrice = prod.prodDict[@"special_price"][@"__text"];
+            double savings = [price floatValue]-[splPrice floatValue];
+            double totalPrice = prod.prodQty * [splPrice doubleValue];
+            
+            prodTotalCell.productNameLabel.text = name;
+            prodTotalCell.prodTotalValueLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",totalPrice]];
+            prodTotalCell.prodQuantityTextField.text = prod.prodQty> 0 ?[NSString stringWithFormat:@"%ld",(long)prod.prodQty]:@"";
+            prodTotalCell.prodQuantityTextField.tag = indexPath.row-1;
+            prodTotalCell.prodQuantityTextField.delegate = self;
+            self.qtyTxtField = prodTotalCell.prodQuantityTextField;
+            
+            prodTotalCell.removeProdButton.tag = indexPath.row-1;
+            prodTotalCell.mrpValueLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[price floatValue]]];
+            prodTotalCell.splMrpValueLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[splPrice floatValue]]];
+            prodTotalCell.savingsValueLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",savings]];
+
+            
+            //        [prodTotalCell.checkboxButton addTarget:self action:@selector(checkBoxAction:) forControlEvents:UIControlEventTouchUpInside];
+//        }else{
+//            prodTotalCell.prodQuantityTextField.text = @"1";
+//            prodTotalCell.prodTotalValueLabel.text = @"\u20B9 10";
         }
         
         

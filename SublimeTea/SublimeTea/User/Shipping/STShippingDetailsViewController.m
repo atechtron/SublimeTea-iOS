@@ -182,7 +182,7 @@
 - (IBAction)paymentButtonAction:(UIButton *)sender {
     [self.view endEditing:YES];
     // Check Internet Connsection
-    if ([STUtility isNetworkAvailable]) {
+    if ([STUtility isNetworkAvailable] && [self validateInputs]) {
         if (self.isShippingISBillingAddress) {
             [self setAddress];
             [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
@@ -609,10 +609,10 @@
                     }
                     else {
                         [[[UIAlertView alloc] initWithTitle:@"Message!"
-                                                    message:@"Please select valid country."
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles: nil] show];
+                                                   message:@"Please select valid country."
+                                                  delegate:nil
+                                         cancelButtonTitle:@"OK"
+                                         otherButtonTitles: nil] show];
                     }
                     break;
                 }
@@ -691,7 +691,7 @@
         id view =  _statesPopover.sourceView;
         if ([view isEqual:self.countryextField]) {
             if (indexpath.section == 0) {
-                self.countryextField.text = selectedItemStr;
+             self.countryextField.text = selectedItemStr;
             }
             else {
                 self.billingCountryextField.text = selectedItemStr;
@@ -759,9 +759,9 @@
         address.shipAddress.firstname = nameComponents.count ? nameComponents[0] :@"";
         NSMutableString *lastNameStr = [NSMutableString new];
         if(nameComponents.count > 1){
-            for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
-                [lastNameStr appendString:nameComponents[idx]];
-            }
+        for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
+            [lastNameStr appendString:nameComponents[idx]];
+        }
         }
         address.shipAddress.lastname = lastNameStr;
         address.shipAddress.city = cityStr;
@@ -781,7 +781,7 @@
         NSLog(@"Selected State Code :-  %@",stateStr);
         stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        
+
         NSString *postalCodeStr = [self.billingPostalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *countryStr = selectedCountryDict ? selectedCountryDict[@"country_id"][@"__text"] : [self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         countryStr = countryStr?countryStr:[self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -809,7 +809,7 @@
     }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    
+
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -869,7 +869,7 @@
     if ([STUtility isNetworkAvailable]) {
         [STUtility startActivityIndicatorOnView:self.view withText:@"Fetching Countries."];
         NSString *requestBody = [STConstants countryListRequestBody];
-        dbLog(@"Countries list: %@",requestBody);
+//        dbLog(@"Countries list: %@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
@@ -900,7 +900,7 @@
         
         
         
-        [httpRequest start];
+    [httpRequest start];
     }
     else {
         [STUtility stopActivityIndicatorFromView:nil];
