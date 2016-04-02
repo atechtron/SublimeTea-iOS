@@ -9,6 +9,5 @@
 
 @interface NSMutableURLRequest (URLCookie)
 
-//-(void)setAppCookie;
 -(void)clearCookiesForURL;
 @end

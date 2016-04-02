@@ -25,4 +25,6 @@
 
 + (NSString *)prepareMethodSoapBody:(NSString *)actionMethodNameKey params:(NSDictionary *)paramDict;
 + (UIColor *)getSublimeHeadingBGColor;
+
++ (UIColor *)colorForOrderStatus:(NSString *)statusOption;
 @end

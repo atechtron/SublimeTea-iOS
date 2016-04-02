@@ -220,7 +220,7 @@
     [self.cartArr replaceObjectAtIndex:sender.tag withObject:prod];
 }
 
-- (void)continueShoppingButtonAction {
+- (IBAction)continueShoppingButtonAction:(UIButton *)sender {
     
     NSArray *viewControllerArray = self.navigationController.viewControllers;
     if (viewControllerArray.count > 3 && [viewControllerArray[3] isKindOfClass:[STProductCategoriesViewController class]]) {

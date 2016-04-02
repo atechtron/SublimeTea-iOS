@@ -378,7 +378,11 @@
     return countries;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 7;
+    NSInteger rowCount = 7;
+    if (!self.isShippingISBillingAddress) {
+        rowCount = 6;
+    }
+    return rowCount;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger count = 1;

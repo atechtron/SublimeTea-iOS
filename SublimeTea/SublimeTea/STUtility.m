@@ -355,7 +355,20 @@
 + (UIColor *)getSublimeHeadingBGColor {
     return UIColorFromRGB(106.0, 49.0, 32.0, 1.0);
 }
-
++ (UIColor *)colorForOrderStatus:(NSString *)statusOption {
+    UIColor *statusColor;
+    
+    if ([statusOption isEqualToString:@"pending"] || [statusOption isEqualToString:@"pending Payment"]) {
+        statusColor = UIColorFromRGB(255.0, 140.0, 0.0, 1.0);
+    }
+    else if ([statusOption isEqualToString:@"complete"] || [statusOption isEqualToString:@"processing"]) {
+        statusColor = UIColorFromRGB(0.0, 128.0, 0.0, 1.0);
+    }
+    else if ([statusOption isEqualToString:@"cancelled"] || [statusOption isEqualToString:@"closed"]) {
+        statusColor = UIColorFromRGB(192.0, 192.0, 192.0, 1.0);
+    }
+    return statusColor;
+}
 
 //+(UIImage *)getImageWithColor:(UIColor *)color
 //{
