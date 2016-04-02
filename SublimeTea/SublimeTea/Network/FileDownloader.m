@@ -41,7 +41,7 @@
         
 //        [AppDelegate didStartNetworking];
         NSURL *imageURL = _fileURL;
-        if (imageURL) {
+        if ([STUtility isNetworkAvailable] && imageURL) {
             
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: imageURL
                                                                    cachePolicy: NSURLRequestUseProtocolCachePolicy
@@ -87,6 +87,9 @@
                                           }
                                       }];
             [imageDownloadTask resume];
+        }
+        else {
+            [STUtility stopActivityIndicatorFromView:nil];
         }
     }
     @catch (NSException *exception) {

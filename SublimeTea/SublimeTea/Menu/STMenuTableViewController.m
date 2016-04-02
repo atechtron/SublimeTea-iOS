@@ -53,7 +53,11 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"STMenuUserInfoTableHeaderView" bundle:[NSBundle mainBundle]] forHeaderFooterViewReuseIdentifier:@"STMenuUserInfoTableHeaderView"];
     
     self.dataArr = [NSMutableArray new];
-    self.sectionTitleDataArr = @[@"HOME",@"OUR RANGE",@"YOUR ORDERS",@"YOUR ACCOUNT",@"CUSTOMER SUPPORT",@"FAQ",@"LOGOUT"];
+    self.sectionTitleDataArr = @[@"HOME",
+                                 @"OUR RANGE",
+                                 @"YOUR ORDERS",
+                                 @"YOUR ACCOUNT",
+                                 @"LOGOUT"];
     self.view.backgroundColor = UIColorFromRGB(231, 230, 230, 1);
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(logOut)
@@ -164,7 +168,6 @@
     return 0.01f;
 }
 - (void)didSelectHeader:(STMenuTableHeaderView *)header AtSectionIndex:(NSInteger )section {
-    dbLog(@"SectionClicked %ld",section);
     if (section == 2 && self.dataArr.count == 0) {
         header.bottomImageview.hidden = YES;
         NSDictionary *resultXMLDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductCategory_Key];

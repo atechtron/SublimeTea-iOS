@@ -14,7 +14,19 @@
 #import "STSignUpViewController.h"
 #import "STProductViewController.h"
 
+#define kSearchBarTag 979742
+
 @interface STViewController ()<UISearchBarDelegate>
+{
+    CGRect navBarLeftContainerRect;
+    CGRect navBarRightContainerRect;
+    UISearchBar  *sBar;
+    UIButton *searchButton;
+    NSMutableArray *rightBarItems;
+    NSMutableArray *leftBarItems;
+    UIBarButtonItem *searchItem;
+    UIBarButtonItem *searchBarItem;
+}
 
 @property (strong,nonatomic)NSString *searchString;
 @end
@@ -26,7 +38,9 @@
     [self.navigationController setNavigationBarHidden:NO];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationItem.hidesBackButton = YES;
-    
+    navBarLeftContainerRect = CGRectMake(-5, 0, 110, 40);
+    rightBarItems = [NSMutableArray new];
+    leftBarItems = [NSMutableArray new];
 //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
 //    [self.view addGestureRecognizer:tap];
     [[UIApplication sharedApplication] setStatusBarHidden:NO
@@ -50,6 +64,10 @@
 }
 - (void)viewDidTapped:(id)sender {
     [self.view endEditing:YES];
+    [self hideSearchBar];
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [self hideSearchBar];
 }
 - (void)addNavBarButtons {
     CGRect btnFrame = CGRectMake(0, 5, 50, 30);
@@ -79,20 +97,22 @@
     UIImage *backBtnImg = [UIImage imageNamed:@"back_Btn"];
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x, btnFrame.origin.y, backBtnImg.size.width, backBtnImg.size.height)];
     [backButton setImage:backBtnImg forState:UIControlStateNormal];
-//    [backButton setTitle:@"Back" forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
     UIImage *menuBtnImg = [UIImage imageNamed:@"menu"];
     UIButton *menuButton = [[UIButton alloc] initWithFrame:CGRectMake(backButton.frame.origin.x + 35, backButton.frame.origin.y, menuBtnImg.size.width, menuBtnImg.size.height)];
-//    [menuButton setTitle:@"Menu" forState:UIControlStateNormal];
     [menuButton setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
     [menuButton addTarget:self action:@selector(slideMenuButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIView *leftContainerView = [[UIView alloc] initWithFrame:CGRectMake(-5, 0, 110, 40)];
+    UIView *leftContainerView = [[UIView alloc] initWithFrame:navBarLeftContainerRect];
     leftContainerView.backgroundColor = [UIColor clearColor];
     [leftContainerView addSubview:backButton];
     [leftContainerView addSubview:menuButton];
     UIBarButtonItem *leftBarButton;
+    
+    
+    UIBarButtonItem *menuBtnItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+    UIBarButtonItem *backBtnItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     
     if (self.menuButtonHidden) {
         leftBarButton =[[UIBarButtonItem alloc]initWithCustomView:backButton];
@@ -101,31 +121,29 @@
         leftBarButton =[[UIBarButtonItem alloc]initWithCustomView:menuButton];
     }
     else {
-        leftBarButton =[[UIBarButtonItem alloc]initWithCustomView:leftContainerView];
+        [leftBarItems addObjectsFromArray:@[backBtnItem,menuBtnItem]];
     }
     
-    self.navigationItem.leftBarButtonItem = leftBarButton;
+    if (leftBarButton) {
+        self.navigationItem.leftBarButtonItem = leftBarButton;
+    }
+    else if (leftBarItems.count > 0) {
+        self.navigationItem.leftBarButtonItems = leftBarItems;
+    }
 }
 
 - (void)addRightBarItemsWithFrame:(CGRect)btnFrame {
     
-    UIImage *searchBtnImg = [UIImage imageNamed:@"search_btn"];
-    UIButton *searchButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x, btnFrame.origin.y, searchBtnImg.size.width, searchBtnImg.size.height)];
-    searchButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [searchButton setImage:searchBtnImg forState:UIControlStateNormal];
-//    [searchButton setTitle:@"Search" forState:UIControlStateNormal];
-    [searchButton addTarget:self action:@selector(searchButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIButton *accountButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x + 35, btnFrame.origin.y-10 , btnFrame.size.width + 10, btnFrame.size.height)];
-    accountButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [accountButton setTitle:@"My Account" forState:UIControlStateNormal];
-    [accountButton addTarget:self action:@selector(accountButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    
+    double totalWidth = self.view.bounds.size.width;
     UIImage *cartBtnImg = [UIImage imageNamed:@"cart"];
-     UIButton *cartButton = [[UIButton alloc] initWithFrame:CGRectMake(btnFrame.origin.x + 105, btnFrame.origin.y, cartBtnImg.size.width+5, cartBtnImg.size.height)];
+    CGRect cartRect = CGRectMake(totalWidth-140, btnFrame.origin.y, cartBtnImg.size.width+5, cartBtnImg.size.height);
+//    CGRect accountRect = CGRectMake(accountBtnOrigin_X, btnFrame.origin.y-5 , btnFrame.size.width + 10, btnFrame.size.height);
+    
+    
+    // Add cart button
+    UIButton *cartButton = [[UIButton alloc] initWithFrame:cartRect];
     cartButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     [cartButton setImage:cartBtnImg forState:UIControlStateNormal];
-//    [cartButton setTitle:@"Cart" forState:UIControlStateNormal];
     [cartButton addTarget:self action:@selector(cartButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     cartBadgeView = [[JSBadgeView alloc] initWithParentView:cartButton alignment:JSBadgeViewAlignmentTopRight];
     cartBadgeView.badgeAlignment = JSBadgeViewAlignmentTopCenter;
@@ -134,26 +152,63 @@
     cartBadgeView.badgeTextFont = [UIFont fontWithName:@"Helvetica" size:10];
     cartBadgeView.badgeBackgroundColor = [UIColor clearColor];
     
-    NSInteger viewWidth = searchBtnImg.size.width + cartBtnImg.size.width + accountButton.frame.size.width +20;
-    UIView *rightContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, 30)];
-    rightContainerView.backgroundColor = [UIColor clearColor];
-    [rightContainerView addSubview:searchButton];
-    [rightContainerView addSubview:accountButton];
-    [rightContainerView addSubview:cartButton];
     
-    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc]initWithCustomView:rightContainerView];
-    self.navigationItem.rightBarButtonItem = rightBarButton;
+    // Add account button
+    NSInteger accountBtnOrigin_X = totalWidth - cartButton.frame.size.width - 180;
+    UIButton *accountButton = [[UIButton alloc] initWithFrame:CGRectMake(accountBtnOrigin_X, btnFrame.origin.y-5 , btnFrame.size.width + 10, btnFrame.size.height)];
+    accountButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    [accountButton setTitle:@"My Account" forState:UIControlStateNormal];
+    [accountButton addTarget:self action:@selector(accountButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // Add search icon
+    NSInteger searchBtnOrigin_X = totalWidth - (cartButton.frame.size.width + accountButton.frame.size.width + 152);
+    UIImage *searchBtnImg = [UIImage imageNamed:@"search_btn"];
+    searchButton = [[UIButton alloc] initWithFrame:CGRectMake(searchBtnOrigin_X, btnFrame.origin.y, searchBtnImg.size.width, searchBtnImg.size.height)];
+    searchButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    [searchButton setImage:searchBtnImg forState:UIControlStateNormal];
+    [searchButton addTarget:self action:@selector(searchButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    NSInteger viewWidth = searchBtnImg.size.width + cartBtnImg.size.width + accountButton.frame.size.width +20;
+    navBarRightContainerRect = CGRectMake(0, 0, viewWidth, self.navigationController.navigationBar.bounds.size.height/2);
+    
+    
+    double extraPadding =   0;
+    double freeSpaceWidth = totalWidth - (navBarLeftContainerRect.size.width + navBarRightContainerRect.size.width) - extraPadding;
+    freeSpaceWidth += searchButton.frame.size.width;
+    sBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,5,freeSpaceWidth,self.navigationController.navigationBar.bounds.size.height/2)];
+    sBar.tag = kSearchBarTag;
+    sBar.delegate = self;
+    [sBar becomeFirstResponder];
+
+    UIBarButtonItem *cartItem = [[UIBarButtonItem alloc] initWithCustomView:cartButton];
+    UIBarButtonItem *accountItem = [[UIBarButtonItem alloc] initWithCustomView:accountButton];
+    searchItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
+    searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:sBar];
+    
+    [rightBarItems addObjectsFromArray:@[cartItem,accountItem,searchItem]];
+    self.navigationItem.rightBarButtonItems = rightBarItems;
 }
 
 #pragma mark-
 #pragma RightBarButtonItems Action
 
 - (void)searchButtonAction:(UIButton *)sender {
-    UIView *containerView = sender.superview;
-    UISearchBar  *sBar = [[UISearchBar alloc]initWithFrame:CGRectMake(containerView.frame.origin.x-150,10,175,self.navigationController.navigationBar.bounds.size.height/2)];
-    [sBar becomeFirstResponder];
-    sBar.delegate = self;
-    [self.navigationController.navigationBar addSubview:sBar];
+    NSUInteger idx = [rightBarItems indexOfObject:searchItem];
+    if (idx != NSNotFound) {
+        [rightBarItems removeObjectIdenticalTo:searchItem];
+        [rightBarItems addObject:searchBarItem];
+        self.navigationItem.rightBarButtonItems = rightBarItems;
+        [sBar becomeFirstResponder];
+    }
+}
+- (void)hideSearchBar {
+    NSUInteger idx = [rightBarItems indexOfObject:searchBarItem];
+    if (idx != NSNotFound) {
+        [sBar resignFirstResponder];
+        [rightBarItems removeObjectIdenticalTo:searchBarItem];
+        [rightBarItems addObject:searchItem];
+        self.navigationItem.rightBarButtonItems = rightBarItems;
+    }
 }
 - (void)accountButtonAction:(id)sender {
     UIViewController *currentViewCtrl = self.navigationController.topViewController;
@@ -181,7 +236,7 @@
     //
     [self.view endEditing:YES];
     [self.frostedViewController.view endEditing:YES];
-    
+    [self hideSearchBar];
     // Present the view controller
     //
     [self.frostedViewController presentMenuViewController];

@@ -47,8 +47,6 @@
     
     if ([STUtility isNetworkAvailable]) {
         NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:self.url];
-//        [urlRequest clearCookiesForURL];
-//        [urlRequest setMazdaAppCookie];
         [urlRequest setHTTPMethod:self.methodType];
         NSString *sMessageLength = [NSString stringWithFormat:@"%lu", (unsigned long)self.requestBody.length];
         
@@ -66,14 +64,13 @@
                                                             delegate:self];
     } else {
         self.failureBlock(nil);
+        [STUtility stopActivityIndicatorFromView:nil];
     }
 }
 - (NSData *)synchronousStart {
     NSData *data;
     if ([STUtility isNetworkAvailable]) {
         NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:self.url];
-        //        [urlRequest clearCookiesForURL];
-        //        [urlRequest setMazdaAppCookie];
         [urlRequest setHTTPMethod:self.methodType];
         NSString *sMessageLength = [NSString stringWithFormat:@"%lu", (unsigned long)self.requestBody.length];
         
@@ -94,66 +91,12 @@
          self.failureBlock(error);
         }
     }
+    else {
+        [STUtility stopActivityIndicatorFromView:nil];
+    }
     return data;
 }
-//- (void)startSalesxMDS {
-//    [self startSalesxMDS:@"application/x-www-form-urlencoded" withAcceptHeader:@"application/xml"];
-//}
-//
-//- (void) startSalesxMDS:(NSString *)contentType withAcceptHeader:(NSString *)acceptHeader {
-//    Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
-//    if ([reachability isReachable]) {
-//        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:self.url];
-//        
-//        [urlRequest setHTTPMethod:self.methodType];
-//        [urlRequest setValue:contentType forHTTPHeaderField:@"Content-Type"];
-//        [urlRequest addValue:acceptHeader forHTTPHeaderField:kAccept_key];
-//        [urlRequest addValue:kRSHeaderIV_val forHTTPHeaderField:kRSHeaderIV_key];
-//        [urlRequest addValue:kRSHeaderTK_val forHTTPHeaderField:kRSHeaderTK_key];
-//        [urlRequest addValue:kRSHeaderVID_val forHTTPHeaderField:kRSHeaderVID_key];
-//        
-//        if(self.requestBody.length) {
-//            [urlRequest setHTTPBody:[self.requestBody dataUsingEncoding:NSUTF8StringEncoding]];
-//        }
-//        self.responseData = [[NSMutableData alloc] init];
-//        self.urlConnection = [[NSURLConnection alloc]initWithRequest:urlRequest
-//                                                            delegate:self];
-//    } else {
-//        self.failureBlock(nil);
-//        // Network not available
-//        [MazdaUtility showAlertForNoInternetConnectionWithMessage:NO_INTERNET_MSG];
-//    }
-//}
-//- (void)startWithAuth:(BOOL)isAuthReq {
-//    if (isAuthReq) {
-//        [self start];
-//    }else {
-//        Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
-//        if ([reachability isReachable]) {
-//            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:self.url];
-//
-//            [urlRequest setHTTPMethod:self.methodType];
-//            [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//            [urlRequest addValue:kAccept_val forHTTPHeaderField:kAccept_key];
-//            [urlRequest addValue:kRSHeaderIV_val forHTTPHeaderField:kRSHeaderIV_key];
-//            [urlRequest addValue:kRSHeaderTK_val forHTTPHeaderField:kRSHeaderTK_key];
-//            [urlRequest addValue:kRSHeaderVID_val forHTTPHeaderField:kRSHeaderVID_key];
-//            
-//            if(self.requestBody.length) {
-//                [urlRequest setHTTPBody:[self.requestBody dataUsingEncoding:NSUTF8StringEncoding]];
-//            }
-//            self.responseData = [[NSMutableData alloc] init];
-//            self.urlConnection = [[NSURLConnection alloc]initWithRequest:urlRequest
-//                                                                delegate:self];
-//        } else {
-//            self.failureBlock(nil);
-//            // Network not available
-//            // This method is only called from postUsageDataAnalyticsDataToServer, which is a background process and does not need to show the warning message, hence below line of code to show a warning pop up is commented.
-//            //[MazdaUtility showAlertForNoInternetConnectionWithMessage:NO_INTERNET_MSG];
-//        }
-//    }
-//}
-//
+
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     self.responseBlock(response);
 }

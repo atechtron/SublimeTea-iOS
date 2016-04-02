@@ -10,6 +10,8 @@
         <mutableArray key="Caviar_Dreams_Bold.ttf">
             <string>CaviarDreams-Bold</string>
             <string>CaviarDreams-Bold</string>
+            <string>CaviarDreams-Bold</string>
+            <string>CaviarDreams-Bold</string>
         </mutableArray>
         <mutableArray key="LFAXD_0.TTF">
             <string>LucidaFax-Demi</string>
@@ -36,8 +38,10 @@
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
+            <string>OpenSans-Semibold</string>
         </mutableArray>
         <mutableArray key="OpenSans.ttf">
+            <string>OpenSans</string>
             <string>OpenSans</string>
             <string>OpenSans</string>
             <string>OpenSans</string>
@@ -1065,61 +1069,33 @@
                                     <outlet property="delegate" destination="dDr-zW-YYq" id="7kD-sg-Nco"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rX0-tz-s49">
-                                <rect key="frame" x="114" y="523" width="372" height="77"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3J-a8-0bt">
-                                        <rect key="frame" x="20" y="13" width="127" height="51"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="51" id="4wm-eU-Yap"/>
-                                            <constraint firstAttribute="width" constant="127" id="Hc2-hf-1ks"/>
-                                        </constraints>
-                                        <state key="normal" title="Orders" backgroundImage="image_button">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="ordersButtonAction:" destination="dDr-zW-YYq" eventType="touchUpInside" id="bMv-Yc-jmS"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gAD-LI-X3v">
-                                        <rect key="frame" x="225" y="13" width="127" height="51"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="51" id="3uK-ch-Bon"/>
-                                            <constraint firstAttribute="width" constant="127" id="ZfM-QM-BEB"/>
-                                        </constraints>
-                                        <state key="normal" title="Save Changes" backgroundImage="image_button">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="saveChangesButtonAction:" destination="dDr-zW-YYq" eventType="touchUpInside" id="JmZ-tc-zi1"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gAD-LI-X3v">
+                                <rect key="frame" x="237" y="529" width="127" height="51"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="gAD-LI-X3v" secondAttribute="trailing" constant="20" id="0Er-7E-U0d"/>
-                                    <constraint firstAttribute="bottom" secondItem="G3J-a8-0bt" secondAttribute="bottom" constant="13" id="20u-j1-haI"/>
-                                    <constraint firstItem="G3J-a8-0bt" firstAttribute="leading" secondItem="rX0-tz-s49" secondAttribute="leading" constant="20" id="9Wh-KD-4sy"/>
-                                    <constraint firstItem="gAD-LI-X3v" firstAttribute="leading" secondItem="G3J-a8-0bt" secondAttribute="trailing" constant="78" id="Tb9-v5-el1"/>
-                                    <constraint firstItem="gAD-LI-X3v" firstAttribute="top" secondItem="rX0-tz-s49" secondAttribute="top" constant="13" id="a1c-Rv-bhc"/>
-                                    <constraint firstItem="G3J-a8-0bt" firstAttribute="top" secondItem="rX0-tz-s49" secondAttribute="top" constant="13" id="a58-KC-ROZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="gAD-LI-X3v" secondAttribute="bottom" constant="13" id="pbg-PD-p7F"/>
+                                    <constraint firstAttribute="height" constant="51" id="JTk-lj-ty2"/>
+                                    <constraint firstAttribute="width" constant="127" id="py9-XA-Ak8"/>
                                 </constraints>
-                            </view>
+                                <fontDescription key="fontDescription" name="CaviarDreams-Bold" family="Caviar Dreams" pointSize="15"/>
+                                <state key="normal" title="Save Changes" backgroundImage="image_button">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveChangesButtonAction:" destination="dDr-zW-YYq" eventType="touchUpInside" id="JmZ-tc-zi1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.90588235289999997" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="qFU-dh-fc3" firstAttribute="top" secondItem="6YH-d2-HQx" secondAttribute="bottom" id="Gc6-sQ-tcV"/>
                             <constraint firstItem="qFU-dh-fc3" firstAttribute="leading" secondItem="tZI-rh-2bx" secondAttribute="leading" id="T9c-tP-SjQ"/>
-                            <constraint firstItem="rX0-tz-s49" firstAttribute="top" secondItem="qFU-dh-fc3" secondAttribute="bottom" constant="2" id="tXp-2I-LFS"/>
+                            <constraint firstItem="gAD-LI-X3v" firstAttribute="top" secondItem="qFU-dh-fc3" secondAttribute="bottom" constant="8" id="bO4-Oe-Fdn"/>
+                            <constraint firstItem="cYu-M1-6we" firstAttribute="top" secondItem="gAD-LI-X3v" secondAttribute="bottom" constant="20" id="dUP-bH-Fsh"/>
+                            <constraint firstItem="gAD-LI-X3v" firstAttribute="centerX" secondItem="tZI-rh-2bx" secondAttribute="centerX" id="skB-RJ-hsy"/>
                             <constraint firstAttribute="trailing" secondItem="qFU-dh-fc3" secondAttribute="trailing" id="wmf-K9-dSM"/>
-                            <constraint firstItem="rX0-tz-s49" firstAttribute="centerX" secondItem="tZI-rh-2bx" secondAttribute="centerX" id="yEI-fb-JK6"/>
-                            <constraint firstItem="cYu-M1-6we" firstAttribute="top" secondItem="rX0-tz-s49" secondAttribute="bottom" id="yky-pd-6np"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ham-Hp-UUD"/>
                     <connections>
-                        <outlet property="ordersButton" destination="G3J-a8-0bt" id="Ekh-GA-zdo"/>
                         <outlet property="saveChangesButton" destination="gAD-LI-X3v" id="2Ew-ff-x5Z"/>
                         <outlet property="tableView" destination="qFU-dh-fc3" id="niu-Ls-OKn"/>
                     </connections>
@@ -1587,27 +1563,59 @@
                                 <rect key="frame" x="0.0" y="536" width="600" height="64"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q7Q-Xp-UqA">
-                                        <rect key="frame" x="211" y="6" width="179" height="51"/>
+                                        <rect key="frame" x="309" y="4" width="140" height="55"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="179" id="8tx-sL-gw3"/>
-                                            <constraint firstAttribute="height" constant="51" id="eUG-n2-m2T"/>
+                                            <constraint firstAttribute="height" constant="55" id="12N-EM-1Od"/>
+                                            <constraint firstAttribute="width" constant="140" id="zhe-4J-Pwq"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="CaviarDreams-Bold" family="Caviar Dreams" pointSize="17"/>
-                                        <state key="normal" title="Proceed to Checkout" backgroundImage="image_button">
+                                        <fontDescription key="fontDescription" name="CaviarDreams-Bold" family="Caviar Dreams" pointSize="13"/>
+                                        <inset key="titleEdgeInsets" minX="-155" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Proceed to Checkout" image="image_button">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="checkoutButtonAction:" destination="6Mb-72-CF6" eventType="touchUpInside" id="358-DW-hlV"/>
-                                            <action selector="paymentButtonAction:" destination="7ZO-OV-YOL" eventType="touchUpInside" id="as7-zz-p7q"/>
+                                            <action selector="checkoutButtonAction:" destination="6Mb-72-CF6" eventType="touchUpInside" id="oT0-cH-WDa"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MOc-Kz-5L6">
+                                        <rect key="frame" x="152" y="4" width="123" height="55"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="55" id="Aca-an-7Fv"/>
+                                            <constraint firstAttribute="width" constant="123" id="Ben-UI-eUf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="CaviarDreams-Bold" family="Caviar Dreams" pointSize="13"/>
+                                        <inset key="titleEdgeInsets" minX="-150" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Continue Shopping" image="image_button">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="continueShoppingButtonAction:" destination="6Mb-72-CF6" eventType="touchUpInside" id="94q-SK-kc7"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.90588235289999997" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="Q7Q-Xp-UqA" firstAttribute="centerX" secondItem="unt-pP-RGI" secondAttribute="centerX" id="EDJ-xO-tBe"/>
-                                    <constraint firstItem="Q7Q-Xp-UqA" firstAttribute="centerY" secondItem="unt-pP-RGI" secondAttribute="centerY" id="Ve3-gU-odx"/>
+                                    <constraint firstItem="Q7Q-Xp-UqA" firstAttribute="centerY" secondItem="unt-pP-RGI" secondAttribute="centerY" constant="-0.5" id="4pE-wx-JGp"/>
+                                    <constraint firstItem="Q7Q-Xp-UqA" firstAttribute="centerX" secondItem="unt-pP-RGI" secondAttribute="centerX" constant="79" id="6cS-tZ-xHL"/>
+                                    <constraint firstItem="MOc-Kz-5L6" firstAttribute="centerY" secondItem="unt-pP-RGI" secondAttribute="centerY" constant="-0.5" id="8fC-tG-CZz"/>
+                                    <constraint firstItem="Q7Q-Xp-UqA" firstAttribute="top" secondItem="unt-pP-RGI" secondAttribute="top" constant="1" id="AhC-BO-8Qu"/>
+                                    <constraint firstItem="MOc-Kz-5L6" firstAttribute="centerX" secondItem="unt-pP-RGI" secondAttribute="centerX" id="RnQ-5G-OBF"/>
+                                    <constraint firstAttribute="bottom" secondItem="MOc-Kz-5L6" secondAttribute="bottom" constant="8" id="XPT-gx-ABd"/>
+                                    <constraint firstItem="Q7Q-Xp-UqA" firstAttribute="leading" secondItem="MOc-Kz-5L6" secondAttribute="trailing" constant="34" id="d9D-aP-DOz"/>
+                                    <constraint firstAttribute="bottom" secondItem="Q7Q-Xp-UqA" secondAttribute="bottom" constant="8" id="fDm-95-hci"/>
                                     <constraint firstAttribute="height" constant="64" id="ltw-ZV-7mB"/>
+                                    <constraint firstItem="MOc-Kz-5L6" firstAttribute="top" secondItem="unt-pP-RGI" secondAttribute="top" constant="1" id="uk3-8d-vCr"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="RnQ-5G-OBF"/>
+                                        <exclude reference="XPT-gx-ABd"/>
+                                        <exclude reference="uk3-8d-vCr"/>
+                                        <exclude reference="AhC-BO-8Qu"/>
+                                        <exclude reference="fDm-95-hci"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Cart_Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Kqc-SJ-tSr">
                                 <rect key="frame" x="234" y="72" width="132" height="46"/>
@@ -2924,7 +2932,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lqO-Kr-Ux6"/>
-        <segue reference="CXD-3r-nry"/>
+        <segue reference="sDt-Dx-VQV"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.41568627450980389" green="0.19215686274509802" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
 </document>

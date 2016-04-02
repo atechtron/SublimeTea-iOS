@@ -1,4 +1,4 @@
-    //
+//
 //  STUserProfileViewController.m
 //  SublimeTea
 //
@@ -147,22 +147,23 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.userInfo = [defaults objectForKey:kUserInfo_Key];
-    
-    NSString *userEmail = self.userInfo[@"email"][@"__text"];
-    NSString *userFirstName = self.userInfo[@"firstname"][@"__text"] ? self.userInfo[@"firstname"][@"__text"] :@"";
-    NSString *userLastName = self.userInfo[@"lastname"][@"__text"] ? self.userInfo[@"lastname"][@"__text"] :@"";
-    NSString *userFullName = [NSString stringWithFormat:@"%@ %@",userFirstName,userLastName];
-    
-    //    NSString *custId = userInfoDict[@"customer_id"][@"__text"];
-    NSDictionary *userNameDict = @{@"userName": userFullName};
-    NSDictionary *emailDIct = @{@"email": userEmail};
-    
-    NSArray *tempArr = @[userNameDict,
-                         emailDIct,
-                         @"addAddress",
-                         @"changePwdBtn"
-                         ];
-    self.dataArr = [NSMutableArray arrayWithArray:tempArr];
+    if(self.userInfo) {
+        NSString *userEmail = self.userInfo[@"email"][@"__text"];
+        NSString *userFirstName = self.userInfo[@"firstname"][@"__text"] ? self.userInfo[@"firstname"][@"__text"] :@"";
+        NSString *userLastName = self.userInfo[@"lastname"][@"__text"] ? self.userInfo[@"lastname"][@"__text"] :@"";
+        NSString *userFullName = [NSString stringWithFormat:@"%@ %@",userFirstName,userLastName];
+        
+        //    NSString *custId = userInfoDict[@"customer_id"][@"__text"];
+        NSDictionary *userNameDict = @{@"userName": userFullName};
+        NSDictionary *emailDIct = @{@"email": userEmail};
+        
+        NSArray *tempArr = @[userNameDict,
+                             emailDIct,
+                             @"addAddress",
+                             @"changePwdBtn"
+                             ];
+        self.dataArr = [NSMutableArray arrayWithArray:tempArr];
+    }
 }
 
 - (void)viewDidTapped:(id)sender {
@@ -240,10 +241,10 @@
         _cell.addressTextView.tag = kstreetAddTag;
         _cell.addressTextView.delegate = self;
         
-//        _cell.countryTextField.text = @"IT";
-//        _cell.postalCodeTextField.text = @"31056";
-//        _cell.stateTextField.text = @"TV";
-//        _cell.cityTextField.text = @"Treviso";
+        //        _cell.countryTextField.text = @"IT";
+        //        _cell.postalCodeTextField.text = @"31056";
+        //        _cell.stateTextField.text = @"TV";
+        //        _cell.cityTextField.text = @"Treviso";
         
         if (indexPath.row == 2) {
             _cell.addressTextViewTitleLabel.text = @"My Addresses";
@@ -889,13 +890,12 @@
         default:
             break;
     }
-//    popoverViewController.itemsArray = nil;
+    //    popoverViewController.itemsArray = nil;
     popoverViewController.parentIndexPath = indexPath;
     _statesPopover = popoverViewController.popoverPresentationController;
     _statesPopover.delegate = self;
     _statesPopover.sourceView = sender;
     _statesPopover.sourceRect = sender.rightView.frame;
-    [self presentViewController:popoverViewController animated:YES completion:nil];
 }
 - (UIModalPresentationStyle) adaptivePresentationStyleForPresentationController: (UIPresentationController * ) controller {
     return UIModalPresentationNone;
@@ -1013,7 +1013,8 @@
             self.listOfCountries = [dataArr sortedArrayUsingDescriptors:@[sort]];
             popoverViewController.itemsArray = self.listOfCountries;
             dbLog(@"%@",popoverViewController.itemsArray);
-            [popoverViewController.tableView reloadData];
+            [self presentViewController:popoverViewController animated:YES completion:nil];
+//            [popoverViewController.tableView reloadData];
         }
         else {
             dbLog(@"Error placing order...");
@@ -1073,8 +1074,8 @@
             
             self.listOfStatesForSelectedCountry = [dataArr sortedArrayUsingDescriptors:@[sort]];
             popoverViewController.itemsArray = self.listOfStatesForSelectedCountry;
-            dbLog(@"%@",popoverViewController);
-            [popoverViewController.tableView reloadData];
+            [self presentViewController:popoverViewController animated:YES completion:nil];
+//            [popoverViewController.tableView reloadData];
         }
         else {
             dbLog(@"Error fetching region list order...");
@@ -1113,9 +1114,9 @@
                         if (idxToStore >= 0)
                         {
                             Address *address = (self.customerAddressList.count == 0)? [[Address alloc] init] : self.customerAddressList[idxToStore];
-//                            NSString *countryStr = selectedCountryDict[@"country_id"][@"__text"];
-//                            NSArray *states = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:kRegionList_key(countryStr)];
-//                            dbLog(@"%@",states);
+                            //                            NSString *countryStr = selectedCountryDict[@"country_id"][@"__text"];
+                            //                            NSArray *states = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:kRegionList_key(countryStr)];
+                            //                            dbLog(@"%@",states);
                             NSDictionary *dataDict = self.listOfStatesForSelectedCountry[indexpath.row];
                             NSString *stateStr =  dataDict[@"name"][@"__text"];//[self trimmedStateCode:dataDict[@"code"][@"__text"]];
                             

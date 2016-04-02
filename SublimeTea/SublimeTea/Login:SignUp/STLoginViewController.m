@@ -32,8 +32,8 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
     
-    UITapGestureRecognizer *checkBoxTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkBoxStateDidChanged:)];
-    [self.checkBoxTextLabel.superview addGestureRecognizer:checkBoxTap];
+//    UITapGestureRecognizer *checkBoxTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkBoxStateDidChanged:)];
+//    [self.checkBoxTextLabel.superview addGestureRecognizer:checkBoxTap];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLogInWIthSessionId:) name:@"APPVALIDATION" object:nil];
     
@@ -101,7 +101,7 @@
 }
 
 - (IBAction)submitButtonAction:(UIButton *)sender {
-    
+//     [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
     [self.view endEditing:YES];
     // Check Internet Connsection
     if ([STUtility isNetworkAvailable] && [self validateInputs]) {

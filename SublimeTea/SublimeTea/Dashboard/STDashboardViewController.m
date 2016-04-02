@@ -118,6 +118,21 @@
             }
         }
     }
+    else if (indexPath.row == 1) {
+    
+    }
+    else if (indexPath.row == 2) {
+        NSURL *url = [NSURL URLWithString:kBlogURL];
+        if ([STUtility isNetworkAvailable] && [[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
+    else if (indexPath.row == 3) {
+        NSURL *url = [NSURL URLWithString:kTeaRecipes];
+        if ([STUtility isNetworkAvailable] && [[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(0, 0, 0, 0);

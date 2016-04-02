@@ -15,6 +15,10 @@
 #define kAPIdomainName @"shot.beta.webenza.in" //dev.sublime-house-of-tea.com
 #define kUrlString @"/api/v2_soap" //  /index.php/api/v2_soap/index/
 
+#define kBlogURL @"http://sublimehouseoftea.com/blog"
+#define kTeaRecipes @"http://sublimehouseoftea.com/tea-tecipies"
+
+
 @interface STConstants : NSObject
 
 + (NSString *)getAPIURLWithParams:(NSString *)param;
