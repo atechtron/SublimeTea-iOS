@@ -93,6 +93,11 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    
+    popoverViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
+    popoverViewController.modalPresentationStyle = UIModalPresentationPopover;
+    popoverViewController.delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -429,8 +434,8 @@
             _cell.delegate = self;
             _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
-//            _cell.dropDownTextField.text = @"TV";
-//            _cell.textField.text = @"Treviso";
+            //            _cell.dropDownTextField.text = @"TV";
+            //            _cell.textField.text = @"Treviso";
             _cell.dropDownTitleLabel.text = @"Shipping State";
             _cell.textFieldTitleLabel.text = @"Shipping City";
             _cell.textField.keyboardType = UIKeyboardTypeDefault;
@@ -452,8 +457,8 @@
             _cell.delegate = self;
             _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
-//            _cell.dropDownTextField.text = @"IT";
-//            _cell.textField.text = @"31056";
+            //            _cell.dropDownTextField.text = @"IT";
+            //            _cell.textField.text = @"31056";
             _cell.dropDownTitleLabel.text = @"Shipping Country";
             _cell.textFieldTitleLabel.text = @"Shipping Postal Code";
             _cell.textField.keyboardType = UIKeyboardTypeNumberPad;
@@ -588,11 +593,8 @@
 }
 - (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture indexPath:(NSIndexPath *)indexPath {
     
-    popoverViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
-    popoverViewController.modalPresentationStyle = UIModalPresentationPopover;
-    popoverViewController.delegate = self;
     popoverViewController.parentIndexPath = indexPath;
-    
+    [STUtility startActivityIndicatorOnView:self.view withText:@"Fetching states."];
     switch (indexPath.section) {
         case 0: // Shipping
         {
@@ -605,18 +607,24 @@
                         NSString *countryCode = tempSelectedCountryDict[@"country_id"][@"__text"];
                         NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kRegionList_key(countryCode)];
                         if (!dataDict) {
-                            [self fetchStatesForCountry:countryCode];
+                            [self performSelector:@selector(fetchStatesForCountry:)
+                                       withObject:countryCode
+                                       afterDelay:0.5];
+//                            [self fetchStatesForCountry:countryCode];
                         }
                         else {
-                            [self parseRegionListMethodResponseWithDict:dataDict];
+                            [self performSelector:@selector(parseRegionListMethodResponseWithDict:)
+                                       withObject:dataDict
+                                       afterDelay:0.5];
+//                            [self parseRegionListMethodResponseWithDict:dataDict];
                         }
                     }
                     else {
                         [[[UIAlertView alloc] initWithTitle:@"Message!"
-                                                   message:@"Please select valid country."
-                                                  delegate:nil
-                                         cancelButtonTitle:@"OK"
-                                         otherButtonTitles: nil] show];
+                                                    message:@"Please select valid country."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil] show];
                     }
                     break;
                 }
@@ -624,10 +632,16 @@
                 {
                     NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kCountyList_key];
                     if (!dataDict) {
-                        [self fetchCountryList];
+                        [self performSelector:@selector(fetchCountryList)
+                                   withObject:nil
+                                   afterDelay:0.5];
+//                        [self fetchCountryList];
                     }
                     else {
-                        [self parseCountriesMethodResponseWithDict:dataDict];
+                        [self performSelector:@selector(parseCountriesMethodResponseWithDict:)
+                                   withObject:dataDict
+                                   afterDelay:0.5];
+//                        [self parseCountriesMethodResponseWithDict:dataDict];
                     }
                     break;
                 }
@@ -647,10 +661,16 @@
                         NSString *countryCode = tempSelectedCountryDict[@"country_id"][@"__text"];
                         NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kRegionList_key(countryCode)];
                         if (!dataDict) {
-                            [self fetchStatesForCountry:countryCode];
+                            [self performSelector:@selector(fetchStatesForCountry:)
+                                       withObject:countryCode
+                                       afterDelay:0.5];
+//                            [self fetchStatesForCountry:countryCode];
                         }
                         else {
-                            [self parseRegionListMethodResponseWithDict:dataDict];
+                            [self performSelector:@selector(parseRegionListMethodResponseWithDict:)
+                                       withObject:dataDict
+                                       afterDelay:0.5];
+//                            [self parseRegionListMethodResponseWithDict:dataDict];
                         }
                     }
                     break;
@@ -659,10 +679,14 @@
                 {
                     NSDictionary *dataDict = (NSDictionary*)[[STGlobalCacheManager defaultManager] getItemForKey:kCountyList_key];
                     if (!dataDict) {
-                        [self fetchCountryList];
+                        [self performSelector:@selector(fetchCountryList) withObject:nil afterDelay:0.5];
+//                        [self fetchCountryList];
                     }
                     else {
-                        [self parseCountriesMethodResponseWithDict:dataDict];
+                        [self performSelector:@selector(parseCountriesMethodResponseWithDict:)
+                                   withObject:dataDict
+                                   afterDelay:0.5];
+//                        [self parseCountriesMethodResponseWithDict:dataDict];
                     }
                     break;
                 }
@@ -676,10 +700,9 @@
     }
     
     _statesPopover = popoverViewController.popoverPresentationController;
-    _statesPopover.delegate = self;
     _statesPopover.sourceView = sender;
     _statesPopover.sourceRect = sender.rightView.frame;
-    [self presentViewController:popoverViewController animated:YES completion:nil];
+    _statesPopover.delegate = self;
 }
 
 - (UIModalPresentationStyle) adaptivePresentationStyleForPresentationController: (UIPresentationController * ) controller {
@@ -695,7 +718,7 @@
         id view =  _statesPopover.sourceView;
         if ([view isEqual:self.countryextField]) {
             if (indexpath.section == 0) {
-             self.countryextField.text = selectedItemStr;
+                self.countryextField.text = selectedItemStr;
             }
             else {
                 self.billingCountryextField.text = selectedItemStr;
@@ -749,7 +772,7 @@
         NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *addressStr = [self.addressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *cityStr = [self.cityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *stateStr =  self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"name"][@"__text"];//[self trimmedStateCode:self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"]];
+        NSString *stateStr =  self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"name"][@"__text"];
         NSLog(@"Selected State Code :-  %@",stateStr);
         stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *postalCodeStr = [self.postalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -763,9 +786,9 @@
         address.shipAddress.firstname = nameComponents.count ? nameComponents[0] :@"";
         NSMutableString *lastNameStr = [NSMutableString new];
         if(nameComponents.count > 1){
-        for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
-            [lastNameStr appendString:nameComponents[idx]];
-        }
+            for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
+                [lastNameStr appendString:nameComponents[idx]];
+            }
         }
         address.shipAddress.lastname = lastNameStr;
         address.shipAddress.city = cityStr;
@@ -781,17 +804,17 @@
         NSString *nameStr = [self.billingNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *addressStr = [self.billingAddressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *cityStr = [self.billingCityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *stateStr =  self.listOfStatesForSelectedCountryForBilling[selectedStatesIdxForShipping][@"name"][@"__text"];//[self trimmedStateCode:self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"code"][@"__text"]];
+        NSString *stateStr =  self.listOfStatesForSelectedCountryForBilling[selectedStatesIdxForShipping][@"name"][@"__text"];
         NSLog(@"Selected State Code :-  %@",stateStr);
         stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         stateStr = stateStr?stateStr:[self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
+        
         NSString *postalCodeStr = [self.billingPostalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *countryStr = selectedCountryDict ? selectedCountryDict[@"country_id"][@"__text"] : [self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         countryStr = countryStr?countryStr:[self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *emailStr = [self.billingEmailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *phoneStr = [self.billingPhoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *couponCodeStr = [self.couponCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        //        NSString *couponCodeStr = [self.couponCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
         NSArray *nameComponents = [nameStr componentsSeparatedByString: @" "];
         
@@ -809,11 +832,11 @@
         address.billedAddress.telephone = phoneStr;
         address.billedAddress.street = addressStr;
         address.billedAddress.region_id = self.listOfStatesForSelectedCountryForBilling[selectedStatesIdxForBilling][@"region_id"][@"__text"];
-//        address.billedAddress.couponCode = couponCodeStr;
+        //        address.billedAddress.couponCode = couponCodeStr;
     }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-
+    
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -861,7 +884,7 @@
     if (orderId.length) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:orderId forKey:kOderId_Key];
-        [self proceedForPayment];
+        //        [self proceedForPayment];
     }
     else {
         dbLog(@"In valid order id. ");
@@ -873,7 +896,7 @@
     if ([STUtility isNetworkAvailable]) {
         [STUtility startActivityIndicatorOnView:self.view withText:@"Fetching Countries."];
         NSString *requestBody = [STConstants countryListRequestBody];
-//        dbLog(@"Countries list: %@",requestBody);
+        //        dbLog(@"Countries list: %@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
         NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
@@ -882,14 +905,6 @@
                                                                    body:requestBody
                                                     responseHeaderBlock:^(NSURLResponse *response){}
                                                            successBlock:^(NSData *responseData){
-                                                               dispatch_async(dispatch_get_main_queue(), ^{
-                                                                   NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
-                                                                   dbLog(@"Countries list xml: %@",xmlString);
-                                                                   NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
-                                                                   dbLog(@"Countries list %@",xmlDic);
-                                                                   [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic withKey:kCountyList_key];
-                                                                   [self parseCountriesMethodResponseWithDict:xmlDic];
-                                                               });
                                                            }
                                                            failureBlock:^(NSError *error)
                                       {
@@ -904,7 +919,15 @@
         
         
         
-    [httpRequest start];
+        NSData *responseData = [httpRequest synchronousStart];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
+            dbLog(@"Countries list xml: %@",xmlString);
+            NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
+            dbLog(@"Countries list %@",xmlDic);
+            [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic withKey:kCountyList_key];
+            [self parseCountriesMethodResponseWithDict:xmlDic];
+        });
     }
     else {
         [STUtility stopActivityIndicatorFromView:nil];
@@ -919,7 +942,9 @@
             
             self.listOfCountries = [dataArr sortedArrayUsingDescriptors:@[sort]];
             popoverViewController.itemsArray = self.listOfCountries;
-            [popoverViewController.tableView reloadData];
+            
+            [self presentViewController:popoverViewController animated:YES completion:nil];
+//            [popoverViewController.tableView reloadData];
         }
         else {
             dbLog(@"Error placing order...");
@@ -931,7 +956,6 @@
 - (void)fetchStatesForCountry:(NSString *)countryCode {
     
     if ([STUtility isNetworkAvailable]) {
-        [STUtility startActivityIndicatorOnView:self.view withText:@"Fetching states."];
         NSString *requestBody = [STConstants regionListequestBodyForCountry:countryCode];
         dbLog(@"States list: %@ for country %@",requestBody, countryCode);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
@@ -942,14 +966,6 @@
                                                                    body:requestBody
                                                     responseHeaderBlock:^(NSURLResponse *response){}
                                                            successBlock:^(NSData *responseData){
-                                                               dispatch_async(dispatch_get_main_queue(), ^{
-                                                                   NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
-                                                                   dbLog(@"States list xml: %@ for country %@",xmlString,countryCode);
-                                                                   NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
-                                                                   dbLog(@"States list %@ for country %@",xmlDic, countryCode);
-                                                                   [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic withKey:kRegionList_key(countryCode)];
-                                                                   [self parseRegionListMethodResponseWithDict:xmlDic];
-                                                               });
                                                            }
                                                            failureBlock:^(NSError *error)
                                       {
@@ -964,7 +980,15 @@
         
         
         
-        [httpRequest start];
+        NSData *responseData = [httpRequest synchronousStart];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
+            dbLog(@"States list xml: %@ for country %@",xmlString,countryCode);
+            NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
+            dbLog(@"States list %@ for country %@",xmlDic, countryCode);
+            [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic withKey:kRegionList_key(countryCode)];
+            [self parseRegionListMethodResponseWithDict:xmlDic];
+        });
     }
     else {
         [STUtility stopActivityIndicatorFromView:nil];
@@ -984,7 +1008,9 @@
                 self.listOfStatesForSelectedCountryForShipping = [dataArr sortedArrayUsingDescriptors:@[sort]];
                 popoverViewController.itemsArray = self.listOfStatesForSelectedCountryForShipping;
             }
-            [popoverViewController.tableView reloadData];
+            
+            [self presentViewController:popoverViewController animated:YES completion:nil];
+            //            [popoverViewController.tableView reloadData];
         }
         else {
             dbLog(@"Error fetching region list order...");

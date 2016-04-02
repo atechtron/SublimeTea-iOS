@@ -896,7 +896,6 @@
     _statesPopover.delegate = self;
     _statesPopover.sourceView = sender;
     _statesPopover.sourceRect = sender.rightView.frame;
-    [self presentViewController:popoverViewController animated:YES completion:nil];
 }
 - (UIModalPresentationStyle) adaptivePresentationStyleForPresentationController: (UIPresentationController * ) controller {
     return UIModalPresentationNone;
@@ -1014,7 +1013,8 @@
             self.listOfCountries = [dataArr sortedArrayUsingDescriptors:@[sort]];
             popoverViewController.itemsArray = self.listOfCountries;
             dbLog(@"%@",popoverViewController.itemsArray);
-            [popoverViewController.tableView reloadData];
+            [self presentViewController:popoverViewController animated:YES completion:nil];
+//            [popoverViewController.tableView reloadData];
         }
         else {
             dbLog(@"Error placing order...");
@@ -1074,8 +1074,8 @@
             
             self.listOfStatesForSelectedCountry = [dataArr sortedArrayUsingDescriptors:@[sort]];
             popoverViewController.itemsArray = self.listOfStatesForSelectedCountry;
-            dbLog(@"%@",popoverViewController);
-            [popoverViewController.tableView reloadData];
+            [self presentViewController:popoverViewController animated:YES completion:nil];
+//            [popoverViewController.tableView reloadData];
         }
         else {
             dbLog(@"Error fetching region list order...");
