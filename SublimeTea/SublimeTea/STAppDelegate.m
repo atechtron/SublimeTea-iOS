@@ -175,22 +175,25 @@
                                                                                body:requestBody
                                                                 responseHeaderBlock:^(NSURLResponse *response)
                                                   {
-                                                      
                                                   }successBlock:^(NSData *responseData){
-                                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                                      dbLog(@"%@",xmlDic);
-                                                      NSDictionary *resultDict = xmlDic[@"SOAP-ENV:Body"][@"ns1:endSessionResponse"][@"endSessionReturn"];
-                                                      if ([resultDict[@"__text"] boolValue]) {
-                                                          [defaults removeObjectForKey:kUSerSession_Key];
-                                                          [defaults synchronize];
-                                                      }
-                                                      [STUtility stopActivityIndicatorFromView:nil];
+                                                      
                                                   }failureBlock:^(NSError *error) {
                                                       dbLog(@"SublimeTea-STAppDelegate-endUserSession:- %@",error);
                                                       [STUtility stopActivityIndicatorFromView:nil];
                                                   }];
         
-        [featureNSpecHttpRequest start];
+        NSData *responseData = [featureNSpecHttpRequest synchronousStart];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+            dbLog(@"%@",xmlDic);
+            NSDictionary *resultDict = xmlDic[@"SOAP-ENV:Body"][@"ns1:endSessionResponse"][@"endSessionReturn"];
+            if ([resultDict[@"__text"] boolValue]) {
+                [defaults removeObjectForKey:kUSerSession_Key];
+                [defaults removeObjectForKey:kUserInfo_Key];
+                [defaults synchronize];
+            }
+            [STUtility stopActivityIndicatorFromView:nil];
+        });
     }
 }
 

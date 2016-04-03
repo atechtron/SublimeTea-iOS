@@ -26,6 +26,7 @@
 #import "STGlobalCacheManager.h"
 #import "STProductViewController.h"
 #import "STRootViewController.h"
+#import "STInitialViewController.h"
 
 @interface STMenuTableViewController ()<STMenuTableHeaderViewDelegate>
 {
@@ -235,13 +236,13 @@
 //            self..viewControllers = viewControllers;
             break;
         }
-        case 5: // Customer Suppourt
-            
-            break;
-        case 6: // FAQ
-            
-            break;
-        case 7: // LogOut
+//        case 5: // Customer Suppourt
+//            
+//            break;
+//        case 6: // FAQ
+//            
+//            break;
+        case 5: // LogOut
             [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
             [self logOut];
             break;
@@ -269,15 +270,29 @@
 }
 
 - (void)logOut {
-    [AppDelegate endUserSession];
-    UIViewController *root = [self.navController.viewControllers lastObject];
-    if(![root isKindOfClass:[STDashboardViewController class]])
-        [self.navController popToRootViewControllerAnimated:YES];
-    else {
-        self.frostedViewController.contentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentController"];
+    {
+        [self.frostedViewController hideMenuViewController];
+        [AppDelegate endUserSession];
+        NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:self.navController.viewControllers];
+        NSUInteger idx = [viewControllers indexOfObjectPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isKindOfClass:[STInitialViewController class]]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.navController popToRootViewControllerAnimated:YES];
+                });
+                *stop = YES;
+                return YES;
+            }
+            return NO;
+        }];
+        
+        if (idx == NSNotFound) {
+            STInitialViewController *initialViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STInitialViewController"];
+            NSArray *navControllers = @[initialViewController];
+            self.navController.viewControllers = navControllers;
+            self.frostedViewController.contentViewController = self.navController;
+
+        }
     }
-//    self.frostedViewController.contentViewController = self.navController;
-    [self.frostedViewController hideMenuViewController];
 }
 - (void)parseResponseWithDict:(NSDictionary *)responseDict {
     if (responseDict) {

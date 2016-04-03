@@ -10,7 +10,7 @@
 #import "STHttpRequest.h"
 #import "STOderListTableViewCell.h"
 #import "STOrderListHeaderView.h"
-#import "STDashboardViewController.h"
+#import "STProductCategoriesViewController.h"
 #import "STUtility.h"
 #import "STGlobalCacheManager.h"
 #import "FileDownloader.h"
@@ -120,10 +120,10 @@
 - (IBAction)continueShoppingButtonAction:(UIButton *)sender {
     NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
     NSUInteger idx = [viewControllers indexOfObjectPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[STDashboardViewController class]]) {
+        if ([obj isKindOfClass:[STProductCategoriesViewController class]]) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                STDashboardViewController *dashBoard = (STDashboardViewController *)obj;
-                [self.navigationController popToViewController:dashBoard animated:YES];
+                STProductCategoriesViewController *categoryView = (STProductCategoriesViewController *)obj;
+                [self.navigationController popToViewController:categoryView animated:YES];
             });
             *stop = YES;
             return YES;
@@ -132,8 +132,8 @@
     }];
     
     if (idx == NSNotFound) {
-        STDashboardViewController *dashBoard = [self.storyboard instantiateViewControllerWithIdentifier:@"STDashboardViewController"];
-        [self.navigationController pushViewController:dashBoard animated:YES];
+         STProductCategoriesViewController *productCategoriesViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STProductCategoriesViewController"];
+        [self.navigationController pushViewController:productCategoriesViewController animated:YES];
     }
 }
 - (void)fetchOrderDetails {
