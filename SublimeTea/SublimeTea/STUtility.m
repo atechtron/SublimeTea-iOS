@@ -367,6 +367,9 @@
     else if ([statusOption isEqualToString:@"cancelled"] || [statusOption isEqualToString:@"closed"]) {
         statusColor = UIColorFromRGB(192.0, 192.0, 192.0, 1.0);
     }
+    else {
+        statusColor = UIColorFromRGB(0.0, 128.0, 0.0, 1.0);
+    }
     return statusColor;
 }
 
