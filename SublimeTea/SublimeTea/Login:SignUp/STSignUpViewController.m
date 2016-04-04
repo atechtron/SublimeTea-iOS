@@ -157,9 +157,7 @@
                                                   dbLog(@"%@",xmlDic);
                                                   if(!xmlDic[@"SOAP-ENV:Body"][@"SOAP-ENV:Fault"])
                                                   {
-                                                      [STUtility stopActivityIndicatorFromView:nil];
-                                                  
-                                                      [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
+                                                      [self getUserList];
                                                   }
                                                   else {
                                                       [STUtility stopActivityIndicatorFromView:nil];
@@ -181,8 +179,65 @@
     
     [httpRequest start];
 }
+-(void)getUserList {
+        
+        NSString *requestBody = [STConstants customerListReuestBody];
+        
+        NSString *urlString = [STConstants getAPIURLWithParams:nil];
+        NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        
+        STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                             methodType:@"POST"
+                                                                   body:requestBody
+                                                    responseHeaderBlock:^(NSURLResponse *response)
+                                      {
+                                          
+                                      }successBlock:^(NSData *responseData){
+                                          NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                          dbLog(@"%@",xmlDic);
+                                          [self parseUserListResponseWithDict:xmlDic];
+                                          
+                                      }failureBlock:^(NSError *error) {
+                                          [STUtility stopActivityIndicatorFromView:nil];
+                                          [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                      message:@"Unexpected error has occured, Please try after some time."
+                                                                     delegate:nil
+                                                            cancelButtonTitle:@"OK"
+                                                            otherButtonTitles: nil] show];
+                                          dbLog(@"SublimeTea-STSignUpViewController-userLogIn:- %@",error);
+                                      }];
+        
+        [httpRequest start];
+}
+- (void)parseUserListResponseWithDict:(NSDictionary *)responseDict {
+    if (responseDict) {
+        NSArray *userList = responseDict[@"SOAP-ENV:Body"][@"ns1:customerCustomerListResponse"][@"storeView"][@"item"];
+        if (userList.count) {
+            NSString *userNameStr = [self.emailAddressTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"email.__text LIKE %@",userNameStr];
+            NSArray *filteredUsersArr = [userList filteredArrayUsingPredicate:filterPredicate];
+            if (filteredUsersArr.count) {
+                NSDictionary *userInfoDict = filteredUsersArr[0];
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:userInfoDict forKey:kUserInfo_Key];
+                dbLog(@"User Details: %@",[defaults objectForKey:kUserInfo_Key]);
+                [STUtility stopActivityIndicatorFromView:nil];
+                
+                [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
+            }
+            else { // Login Failed
+                [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                            message:@"SignUp Failed, Please try after some time."
+                                           delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles: nil] show];
+            }
+        }
+    }
+    [STUtility stopActivityIndicatorFromView:nil];
+}
 -(void)loadDashboard {
-    [self performSegueWithIdentifier:@"dashBoardFromSigInSegue" sender:self
+    [self performSegueWithIdentifier:@"dashBoardFromSignUpSegue" sender:self
      ];
 }
 #define kOFFSET_FOR_KEYBOARD 80.0
