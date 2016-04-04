@@ -88,7 +88,7 @@
     cell.descriptionLabel.text = [NSString stringWithFormat:@"Creation date: %@",formatedOrderCreationDtae];
     cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%f",[totalPaid floatValue]]];
 
-    cell.statusLabel.attributedText = [self attributedStringForStataus:status];
+    cell.statusLabel.attributedText = [self attributedStringForStataus:[status capitalizedString]];
     
     NSString *itemStr = [qty integerValue] > 1 ? @"ITEMS" :@"ITEM";
     cell.qtyLabel.text = [NSString stringWithFormat:@"QUANTITY: %ld (%@)",(long)[qty integerValue],itemStr];
@@ -183,7 +183,7 @@
 - (NSAttributedString *)attributedStringForStataus:(NSString *)statusStr {
     NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] init];
     if (statusStr.length) {
-        NSAttributedString *statusAttrStr = [[NSAttributedString alloc] initWithString:@"Status:" attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
+        NSAttributedString *statusAttrStr = [[NSAttributedString alloc] initWithString:@"Status: " attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
         NSAttributedString *statusTextAttrStr = [[NSAttributedString alloc] initWithString:statusStr attributes:@{NSForegroundColorAttributeName: [STUtility colorForOrderStatus:statusStr]}];
         [attrStr appendAttributedString:statusAttrStr];
         [attrStr appendAttributedString:statusTextAttrStr];
