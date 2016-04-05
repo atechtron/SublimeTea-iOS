@@ -301,12 +301,14 @@
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
             NSDictionary *dataDict = parentDataDict[@"ns1:catalogProductInfoResponse"][@"info"];
-            prodDetailDict = dataDict;
-            [self performSegueWithIdentifier:@"productDetailViewSegue" sender:self];
+            if(dataDict) {
+                prodDetailDict = dataDict;
+                [self performSegueWithIdentifier:@"productDetailViewSegue" sender:self];
+            }
         }
         else {
-            [AppDelegate endUserSession];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT"
+                                                                object:nil];
         }
         
     }else {
@@ -428,8 +430,8 @@
             [self.collectionView reloadData];
         }
         else {
-            [AppDelegate endUserSession];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT"
+                                                                object:nil];
         }
     }else {
         //No products found.
@@ -466,8 +468,8 @@
             }
         }
         else {
-            [AppDelegate endUserSession];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT"
+                                                                object:nil];
         }
     }
     [STUtility stopActivityIndicatorFromView:nil];
