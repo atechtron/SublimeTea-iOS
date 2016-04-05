@@ -245,6 +245,17 @@
 #pragma mark-
 #pragma UISearchBarDelegate
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    
+    // The user clicked the [X] button or otherwise cleared the text.
+    if([searchText length] == 0) {
+        [self performSelector: @selector(hideSearchBar)
+                        withObject: nil
+                        afterDelay: 0.1];
+    }
+}
+
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
     NSString *searchBarStr = [searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     self.searchString = searchBarStr;

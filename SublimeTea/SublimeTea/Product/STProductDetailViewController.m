@@ -15,9 +15,13 @@
 #import "STHttpRequest.h"
 #import "STGlobalCacheManager.h"
 #import "STCart.h"
+#import "FileDownloader.h"
 
 @interface STProductDetailViewController ()<UITableViewDataSource, UITableViewDelegate, STProductInfo2TableViewCellDelegate>
-
+{
+    NSURLSession *downloadSession;
+    NSURLSessionConfiguration *downloadConfig;
+}
 @end
 
 static double prodQtyCount = 0.0;
@@ -33,6 +37,8 @@ static double prodQtyCount = 0.0;
     [self.tableView registerNib:[UINib nibWithNibName:@"STProductDescriptionTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"productDescriptioncell"];
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    downloadConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    downloadSession = [NSURLSession sessionWithConfiguration:downloadConfig];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,7 +83,7 @@ static double prodQtyCount = 0.0;
             static NSString *cellidentifier = @"productInfoCell";
             STProductInfoTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier forIndexPath:indexPath];
             
-            NSInteger prodStatus = [self.selectedProdDict[@"status"][@"__text"] integerValue];
+//            NSInteger prodStatus = [self.selectedProdDict[@"status"][@"__text"] integerValue];
             
             _cell.titleLabel.text = self.selectedProdDict[@"name"][@"__text"];
             _cell.numLabel.text = @"";
@@ -89,20 +95,20 @@ static double prodQtyCount = 0.0;
             _cell.extraLabel.text = @"";
             NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
             if (prodImgArr.count) {
-                NSDictionary *imgUrlDict = [prodImgArr lastObject];
-                NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
-                dbLog(@"Image URL %@",imgUrl);
-                NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgUrl];
-                if (imgData) {
-                    UIImage *prodImg = [UIImage imageWithData:imgData];
-                    if (prodImg) {
-                        [UIView transitionWithView:_cell.prodImageView duration:0.5
-                                           options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-                                               _cell.prodImageView.image = prodImg;
-                                               _cell.prodImageView.contentMode = UIViewContentModeScaleAspectFit;
-                                           } completion:nil];
-                    }
+                id imgObj = prodImgArr;
+                if ([imgObj isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *imgUrlDict = (NSDictionary *)imgObj;
+                    NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
+                    dbLog(@"Image URL %@",imgUrl);
+                    [self loadProdImageinView:_cell.prodImageView fromURL:imgUrl];
                 }
+                else if ([imgObj isKindOfClass:[NSArray class]]) {
+                    NSDictionary *imgUrlDict = [prodImgArr lastObject];
+                    NSString *imgUrl = imgUrlDict[@"url"][@"__text"];
+                    dbLog(@"Image URL %@",imgUrl);
+                    [self loadProdImageinView:_cell.prodImageView fromURL:imgUrl];
+                }
+                
             }
             cell = _cell;
             break;
@@ -149,6 +155,50 @@ static double prodQtyCount = 0.0;
     }
     return cell;
 }
+- (void)loadProdImageinView:(UIImageView *)imgView
+                    fromURL:(NSString *)imgURL {
+    
+    if (imgView && imgURL.length) {
+        
+        NSData *imgData = (NSData *)[[STGlobalCacheManager defaultManager] getItemForKey:imgURL];
+        if (imgData) {
+            UIImage *prodImg = [UIImage imageWithData:imgData];
+            if (prodImg) {
+                [UIView transitionWithView:imgView duration:0.5
+                                   options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                       imgView.image = prodImg;
+                                   } completion:nil];
+            }
+            
+        }
+        else {
+            // Download Image
+            __block UIImageView *prodImgView = imgView;
+            NSURL *url  = [[NSURL alloc] initWithString:[imgURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            NSURLSessionDataTask *imageDownloadTask;
+            FileDownloader *downloader = [[FileDownloader alloc] init];
+            [downloader asynchronousFiledownload:imageDownloadTask
+                          serviceUrlMethodString:url
+                                      urlSession:downloadSession
+                                       imageView:imgView
+                         displayLoadingIndicator:YES
+                                   completeBlock:^(NSData *data, NSURL *imgURL, UIView *imgView) {
+                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                           [[STGlobalCacheManager defaultManager] addItemToCache:data
+                                                                                         withKey:imgURL.absoluteString];
+                                           UIImage *_img = [UIImage imageWithData:data];
+                                           [UIView transitionWithView:imgView duration:0.5
+                                                              options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                                                  prodImgView.image = _img;
+                                                              } completion:nil];
+                                       });
+                                       
+                                   } errorBlock:^(NSError *error) {
+                                       dbLog(@"SublimeTea-STProductViewController-loadProdImageinView:- %@",error);
+                                   }];
+        }
+    }
+}
 #pragma mark-
 #pragma STProductInfo2TableViewCellDelegate
 
@@ -157,6 +207,14 @@ static double prodQtyCount = 0.0;
         [[STCart defaultCart] addProductsInCart:self.productInfoDict withQty:prodQtyCount];
         cartBadgeView.badgeText = [NSString stringWithFormat:@"%ld",(long)[[STCart defaultCart] numberOfProductsInCart]];
         [self performSegueWithIdentifier:@"carViewFromProductDetailSegue" sender:self];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message"
+                                                        message:@"Please select valid quantity."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles: nil];
+        [alert show];
     }
 }
 

@@ -32,7 +32,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rLh-iU-PpK">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="rLh-iU-PpK">
                         <rect key="frame" x="226" y="71" width="147" height="147"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="147" id="EsU-Qs-rZI"/>
@@ -133,6 +133,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="defaultImage" width="72" height="72"/>
         <image name="image_logo" width="259" height="67"/>
     </resources>
 </document>
