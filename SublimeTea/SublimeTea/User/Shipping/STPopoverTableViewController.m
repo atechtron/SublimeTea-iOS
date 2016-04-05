@@ -22,6 +22,9 @@
     self.tableView.estimatedRowHeight = 44.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
+-(void)viewWillAppear:(BOOL)animated {
+    [self.tableView reloadData];
+}
 - (void)viewWillLayoutSubviews {
     self.preferredContentSize = CGSizeMake(150, 300);
 }
