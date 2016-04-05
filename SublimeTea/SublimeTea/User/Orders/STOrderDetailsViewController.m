@@ -246,8 +246,8 @@
             }
         }
         else {
-            [AppDelegate endUserSession];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT"
+                                                                object:nil];
         }
     }
     [STUtility stopActivityIndicatorFromView:nil];
