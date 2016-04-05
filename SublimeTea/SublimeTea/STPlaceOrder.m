@@ -812,7 +812,7 @@ Create a cart */
                     NSArray *comp = [tempComponentsArr[1] componentsSeparatedByString:@"</result>"];
                     if (comp.count > 1) {
                         if ([self.delegate respondsToSelector:@selector(orderResultWithId:)]) {
-                            [self.delegate orderResultWithId:comp[1]];
+                            [self.delegate orderResultWithId:comp[0]];
                         }
                     }
                 }

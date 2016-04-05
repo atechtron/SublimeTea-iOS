@@ -221,12 +221,20 @@
 }
 
 - (IBAction)continueShoppingButtonAction:(UIButton *)sender {
+    NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+    NSUInteger idx = [viewControllers indexOfObjectPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[STProductCategoriesViewController class]]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                STProductCategoriesViewController *categoryView = (STProductCategoriesViewController *)obj;
+                [self.navigationController popToViewController:categoryView animated:YES];
+            });
+            *stop = YES;
+            return YES;
+        }
+        return NO;
+    }];
     
-    NSArray *viewControllerArray = self.navigationController.viewControllers;
-    if (viewControllerArray.count > 3 && [viewControllerArray[3] isKindOfClass:[STProductCategoriesViewController class]]) {
-        [self.navigationController popToViewController:viewControllerArray[3] animated:YES];
-    }
-    else {
+    if (idx == NSNotFound) {
         STProductCategoriesViewController *productCategoriesViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STProductCategoriesViewController"];
         [self.navigationController pushViewController:productCategoriesViewController animated:YES];
     }
