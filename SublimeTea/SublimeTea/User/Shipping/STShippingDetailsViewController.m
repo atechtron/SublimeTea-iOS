@@ -239,11 +239,11 @@
     //    paymentView.strDeliveryCountry = @"";
     //    paymentView.strDeliveryTelephone =@"";
     
-    paymentView.descriptionString = [NSString stringWithFormat:@"%@ %@",self.firstNameTextField.text,self.lastNameTextField];
+    paymentView.descriptionString = [NSString stringWithFormat:@"%@ %@",self.firstNameTextField.text,self.lastNameTextField.text];
     paymentView.strCurrency =   @"INR";
     paymentView.strDisplayCurrency = @"INR";
-    paymentView.strDescription = [NSString stringWithFormat:@"%@ %@",self.firstNameTextField.text,self.lastNameTextField];
-    paymentView.strBillingName = [NSString stringWithFormat:@"%@ %@",self.firstNameTextField.text,self.lastNameTextField];
+    paymentView.strDescription = [NSString stringWithFormat:@"%@ %@",self.firstNameTextField.text,self.lastNameTextField.text];
+    paymentView.strBillingName = [NSString stringWithFormat:@"%@ %@",self.firstNameTextField.text,self.lastNameTextField.text];
         paymentView.strBillingAddress = self.addressTextView.text;
         paymentView.strBillingCity = self.cityTextField.text;
         paymentView.strBillingState = self.stateTextField.text;
@@ -252,7 +252,7 @@
         paymentView.strBillingEmail = self.emailTextField.text;
         paymentView.strBillingTelephone = self.phoneTextField.text;
     
-    paymentView.strDeliveryName = self.billingFirstNameTextField.text.length?[NSString stringWithFormat:@"%@ %@",self.billingFirstNameTextField.text,self.billingLastNameTextField]:[NSString stringWithFormat:@"%@ %@",self.firstNameTextField.text,self.lastNameTextField];
+    paymentView.strDeliveryName = self.billingFirstNameTextField.text.length?[NSString stringWithFormat:@"%@ %@",self.billingFirstNameTextField.text,self.billingLastNameTextField.text]:[NSString stringWithFormat:@"%@ %@",self.firstNameTextField.text,self.lastNameTextField.text];
     paymentView.strDeliveryAddress = self.billingAddressTextView.text.length ?self.billingAddressTextView.text:self.addressTextView.text;
     paymentView.strDeliveryCity = self.billingCityTextField.text.length ?self.billingCityTextField.text:self.cityTextField.text;
     paymentView.strDeliveryState = self.billingStateTextField.text.length?self.billingStateTextField.text:self.stateTextField.text;
@@ -414,9 +414,14 @@
             _cell.profileTextField.delegate = self;
             if (indexPath.section == 0) {
                 self.firstNameTextField = _cell.profileTextField;
+                if(self.firstNameTextField.text.length)
+                    _cell.profileTextField.text = self.firstNameTextField.text;
             }
             else {
                 self.billingFirstNameTextField = _cell.profileTextField;
+                if (self.billingFirstNameTextField.text.length) {
+                    _cell.profileTextField.text = self.billingFirstNameTextField.text;
+                }
             }
             cell = _cell;
             break;
@@ -429,9 +434,15 @@
             _cell.profileTextField.delegate = self;
             if (indexPath.section == 0) {
                 self.lastNameTextField = _cell.profileTextField;
+                if (self.lastNameTextField.text.length) {
+                    _cell.profileTextField.text = self.lastNameTextField.text;
+                }
             }
             else {
                 self.billingLastNameTextField = _cell.profileTextField;
+                if (self.billingLastNameTextField.text.length) {
+                    _cell.profileTextField.text = self.billingLastNameTextField.text;
+                }
             }
             cell = _cell;
             break;
@@ -444,9 +455,15 @@
             _cell.profileTextField.delegate = self;
             if (indexPath.section == 0) {
                 self.addressTextView = _cell.profileTextView;
+                if (self.addressTextView.text.length) {
+                    _cell.profileTextView.text = self.addressTextView.text;
+                }
             }
             else {
                 self.billingAddressTextView = _cell.profileTextView;
+                if (self.billingAddressTextView.text.length) {
+                    _cell.profileTextView.text = self.billingAddressTextView.text;
+                }
             }
             cell = _cell;
             break;
@@ -467,10 +484,16 @@
             if (indexPath.section == 0) {
                 self.cityTextField = _cell.textField;
                 self.stateTextField = _cell.dropDownTextField;
+                if (self.stateTextField.text.length) {
+                    _cell.dropDownTextField.text = self.stateTextField.text;
+                }
             }
             else {
                 self.billingCityTextField = _cell.textField;
                 self.billingStateTextField = _cell.dropDownTextField;
+                if (self.billingStateTextField.text.length) {
+                    _cell.dropDownTextField.text = self.billingStateTextField.text;
+                }
             }
             cell = _cell;
             break;
@@ -491,10 +514,16 @@
             if (indexPath.section == 0) {
                 self.postalCodeTextField = _cell.textField;
                 self.countryextField = _cell.dropDownTextField;
+                if (self.countryextField.text.length) {
+                    _cell.dropDownTextField.text = self.countryextField.text;
+                }
             }
             else {
                 self.billingPostalCodeTextField = _cell.textField;
                 self.billingCountryextField = _cell.dropDownTextField;
+                if (self.billingCountryextField.text.length) {
+                    _cell.dropDownTextField.text = self.billingCountryextField.text;
+                }
             }
             cell = _cell;
             break;
@@ -507,8 +536,14 @@
             _cell.profileTextField.delegate = self;
             if (indexPath.section == 0) {
                 self.emailTextField = _cell.profileTextField;
+                if (self.emailTextField.text.length) {
+                    _cell.profileTextField.text = self.emailTextField.text;
+                }
             }else {
                 self.billingEmailTextField = _cell.profileTextField;
+                if (self.billingEmailTextField.text.length) {
+                    _cell.profileTextField.text = self.billingEmailTextField.text;
+                }
             }
             cell = _cell;
             break;
@@ -522,9 +557,15 @@
             _cell.phoneTextField.delegate = self;
             if (indexPath.section == 0) {
                 self.phoneTextField = _cell.phoneTextField;
+                if (self.phoneTextField.text.length) {
+                    _cell.phoneTextField.text = self.phoneTextField.text;
+                }
             }
             else {
                 self.billingPhoneTextField = _cell.phoneTextField;
+                if (self.billingPhoneTextField.text.length) {
+                    _cell.phoneTextField.text = self.billingPhoneTextField.text;
+                }
             }
             cell = _cell;
             break;
@@ -756,8 +797,8 @@
     if (selectedItemStr.length) {
         
         id view =  _statesPopover.sourceView;
-        if ([view isEqual:self.countryextField]) {
-            if (indexpath.section == 0) {
+        if ([view isEqual:self.countryextField] || [view isEqual:self.billingCountryextField]) {
+            if (pIndexPath.section == 0) {
                 self.countryextField.text = selectedItemStr;
             }
             else {
@@ -771,8 +812,8 @@
                 billingSelectedCountryDict = datadict;
             }
         }
-        else if ([view isEqual:self.stateTextField]) {
-            if (indexpath.section == 0) {
+        else if ([view isEqual:self.stateTextField] || [view isEqual:self.billingStateTextField]) {
+            if (pIndexPath.section == 0) {
                 selectedStatesIdxForShipping = indexpath.row;
                 self.stateTextField.text = selectedItemStr;
             }

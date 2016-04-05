@@ -115,7 +115,8 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     STOrderConfirmationHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderConfirmationHeaderView"];
 //    footerView.titleLabel.text = @"Orders";
-    headerView.orderIdLabel.text = [[NSUserDefaults standardUserDefaults] valueForKey:kOderId_Key];
+    NSString *orderId = [[NSUserDefaults standardUserDefaults] valueForKey:kOderId_Key];
+    headerView.orderIdLabel.text = orderId.length?[NSString stringWithFormat:@"Your Order id is %@",orderId]:@"";
     return headerView;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -135,11 +136,20 @@
     [self.navigationController pushViewController:orderListViewController animated:YES];
 }
 - (void)continueShoppingButtonClicked {
-    NSArray *viewControllerArray = self.navigationController.viewControllers;
-    if (viewControllerArray.count > 3 && [viewControllerArray[3] isKindOfClass:[STProductCategoriesViewController class]]) {
-        [self.navigationController popToViewController:viewControllerArray[3] animated:YES];
-    }
-    else {
+    NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+    NSUInteger idx = [viewControllers indexOfObjectPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[STProductCategoriesViewController class]]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                STProductCategoriesViewController *categoryView = (STProductCategoriesViewController *)obj;
+                [self.navigationController popToViewController:categoryView animated:YES];
+            });
+            *stop = YES;
+            return YES;
+        }
+        return NO;
+    }];
+    
+    if (idx == NSNotFound) {
         STProductCategoriesViewController *productCategoriesViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STProductCategoriesViewController"];
         [self.navigationController pushViewController:productCategoriesViewController animated:YES];
     }
