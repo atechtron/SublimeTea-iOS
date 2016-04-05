@@ -108,9 +108,19 @@
     NSString *confirmPasswordStr = [self.confirmPasswordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString *mobNumStr = [self.mobileNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
-    if (emailStr.length > 0 && passwordStr.length > 0 && confirmPasswordStr.length > 0 && mobNumStr.length > 0) {
+    if (emailStr.length > 0 && passwordStr.length >= 6 && confirmPasswordStr.length > 0 && mobNumStr.length > 0) {
         status = YES;
         self.errorLabel.hidden = YES;
+    }
+    else if (emailStr.length){
+        NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,10}";
+        NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
+        if ([emailTest evaluateWithObject:emailStr] == NO) {
+            [self showAlertWithTitle:@"Message" msg:@"Valid Email required!"];
+        }
+        else {
+            status = YES;
+        }
     }
     else {
 //        self.errorLabel.text = @"UserName and Password is required.";
@@ -121,7 +131,16 @@
         self.errorLabel.hidden = NO;
         status = NO;
     }
+    
     return status;
+}
+- (void)showAlertWithTitle:(NSString *)title msg:(NSString *)msg {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:msg
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil];
+    [alert show];
 }
 - (IBAction)submitButtonAction:(UIButton *)sender {
     [self.view endEditing:YES];
@@ -287,7 +306,19 @@
     }
     return NO;
 }
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
 
+        if (textField == _mobileNumberTextField) {
+            if(range.length + range.location > textField.text.length)
+            {
+                return NO;
+            }
+            
+            NSUInteger newLength = [textField.text length] + [string length] - range.length;
+            return newLength <= 10;
+        }
+    return YES;
+}
 
 //method to move the view up/down whenever the keyboard is shown/dismissed
 -(void)setViewMovedUp:(BOOL)movedUp

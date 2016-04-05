@@ -87,7 +87,7 @@
     cell.titleLabel.text = [titleStr uppercaseString];
     cell.descriptionLabel.text = [NSString stringWithFormat:@"OrderId: %@\nSKU: %@\nWeight: %@",orderId,sku, totalWeight];
     cell.priceLabel.text = [STUtility applyCurrencyFormat:[NSString stringWithFormat:@"%.2f",totalPaid]];
-    cell.statusLabel.text = [NSString stringWithFormat:@"Status: %@",status];
+    cell.statusLabel.attributedText = [self attributedStringForStataus:[status capitalizedString]];
     
     NSString *itemStr = [qty integerValue] > 0 ? @"ITEMS" :@"ITEM";
     cell.qtyLabel.text = [NSString stringWithFormat:@"QUANTITY: %ld (%@)",(long)[qty integerValue],itemStr];
@@ -296,6 +296,17 @@
                                    }];
         }
     }
+}
+
+- (NSAttributedString *)attributedStringForStataus:(NSString *)statusStr {
+    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] init];
+    if (statusStr.length) {
+        NSAttributedString *statusAttrStr = [[NSAttributedString alloc] initWithString:@"Status: " attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
+        NSAttributedString *statusTextAttrStr = [[NSAttributedString alloc] initWithString:statusStr attributes:@{NSForegroundColorAttributeName: [STUtility colorForOrderStatus:statusStr]}];
+        [attrStr appendAttributedString:statusAttrStr];
+        [attrStr appendAttributedString:statusTextAttrStr];
+    }
+    return attrStr;
 }
 
 @end
