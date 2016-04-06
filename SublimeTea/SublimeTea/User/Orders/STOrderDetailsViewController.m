@@ -256,8 +256,8 @@
             }
         }
         else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT"
-                                                                object:nil];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT"
+//                                                                object:nil];
         }
     }
     [STUtility stopActivityIndicatorFromView:nil];

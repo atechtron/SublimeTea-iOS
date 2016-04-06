@@ -27,6 +27,12 @@
 @property (weak, nonatomic) IBOutlet UITextField *countryTextField;
 @property (weak, nonatomic) IBOutlet UILabel *countryTitleLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+
+@property (weak, nonatomic) IBOutlet UITextField *phoneCountryCodeTextBox;
+@property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
+
 @property (strong, nonatomic) NSIndexPath* indexPath;
 @property (weak, nonatomic) id<STAddressTableViewCellDelegate> delegate;
 @end

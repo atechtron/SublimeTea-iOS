@@ -16,12 +16,15 @@
 #import "STPopoverTableViewController.h"
 #import <objc/runtime.h>
 #import "STGlobalCacheManager.h"
+#import "STPhoneNumberTableViewCell.h"
 
 #define kcityTag 10201
 #define kstateTag 20129
 #define kpostalCodeTag 319372
 #define kcountryTag 422431
 #define kstreetAddTag 521421
+#define ktelephoneCountryCodeTag 51656
+#define ktelephoneTag 521421324
 
 @implementation Address
 - (NSInteger)is_default_billing {
@@ -33,9 +36,9 @@
 - (NSString *)region_id {
     return _region;
 }
-- (NSString *)telephone {
-    return @"2332534534";
-}
+//- (NSString *)telephone {
+//    return @"2332534534";
+//}
 - (NSDictionary *)dictionary {
     NSMutableArray *propertyKeys = [NSMutableArray array];
     Class currentClass = self.class;
@@ -73,7 +76,8 @@
 @property(strong, nonatomic)NSArray *listOfCountries;
 @property(strong, nonatomic)NSArray *listOfStatesForSelectedCountry;
 
-@property (weak, nonatomic)UITextField *nameTextField;
+@property (weak, nonatomic)UITextField *firstNameTextField;
+@property (weak, nonatomic)UITextField *lastNameTextField;
 @property (weak, nonatomic)UITextField *emailTextField;
 @property (weak, nonatomic)UITextField *passwordTextField;
 @end
@@ -151,13 +155,16 @@
         NSString *userEmail = self.userInfo[@"email"][@"__text"];
         NSString *userFirstName = self.userInfo[@"firstname"][@"__text"] ? self.userInfo[@"firstname"][@"__text"] :@"";
         NSString *userLastName = self.userInfo[@"lastname"][@"__text"] ? self.userInfo[@"lastname"][@"__text"] :@"";
-        NSString *userFullName = [NSString stringWithFormat:@"%@ %@",userFirstName,userLastName];
+        
+//        NSString *userFullName = [NSString stringWithFormat:@"%@ %@",userFirstName,userLastName];
         
         //    NSString *custId = userInfoDict[@"customer_id"][@"__text"];
-        NSDictionary *userNameDict = @{@"userName": userFullName};
+        NSDictionary *userFirstNameDict = @{@"firstName": userFirstName};
+        NSDictionary *userLastNameDict = @{@"lastName": userLastName};
         NSDictionary *emailDIct = @{@"email": userEmail};
         
-        NSArray *tempArr = @[userNameDict,
+        NSArray *tempArr = @[userFirstNameDict,
+                             userLastNameDict,
                              emailDIct,
                              @"addAddress",
                              @"changePwdBtn"
@@ -190,18 +197,26 @@
     else if([obj isKindOfClass:[NSString class]]){
         keyName = (NSString *)obj;
     }
-    if ([keyName isEqualToString:@"userName"] || [keyName isEqualToString:@"email"]|| [keyName isEqualToString:@"changePwdTxtField"])
+    if ([keyName isEqualToString:@"firstName"] || [keyName isEqualToString:@"lastName"] || [keyName isEqualToString:@"email"] || [keyName isEqualToString:@"changePwdTxtField"])
     {
         static NSString *cellIdentifier = @"textFieldCell";
         STPrfileTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         _cell.profileTextField.delegate = self;
-        if ([keyName isEqualToString:@"userName"]) {
-            _cell.profileTextFieldTitleLabel.text = @"Name";
+        if ([keyName isEqualToString:@"firstName"]) {
+            _cell.profileTextFieldTitleLabel.text = @"First Name";
             _cell.profileTextField.text = obj[keyName];
             _cell.profileTextField.keyboardType = UIKeyboardTypeAlphabet;
             _cell.profileTextField.delegate = self;
             _cell.profileTextField.tag = indexPath.row;
-            self.nameTextField = _cell.profileTextField;
+            self.firstNameTextField = _cell.profileTextField;
+        }
+        else if ([keyName isEqualToString:@"lastName"]) {
+            _cell.profileTextFieldTitleLabel.text = @"Last Name";
+            _cell.profileTextField.text = obj[keyName];
+            _cell.profileTextField.keyboardType = UIKeyboardTypeAlphabet;
+            _cell.profileTextField.delegate = self;
+            _cell.profileTextField.tag = indexPath.row;
+            self.lastNameTextField = _cell.profileTextField;
         }
         else if([keyName isEqualToString:@"email"]) {
             _cell.profileTextFieldTitleLabel.text = @"Email id";
@@ -240,6 +255,11 @@
         _cell.countryTextField.delegate = self;
         _cell.addressTextView.tag = kstreetAddTag;
         _cell.addressTextView.delegate = self;
+        _cell.titleLabel.text = @"Phone Number";
+        _cell.phoneCountryCodeTextBox.tag = ktelephoneCountryCodeTag;
+        _cell.phoneCountryCodeTextBox.delegate = self;
+        _cell.phoneTextField.tag = ktelephoneTag;
+        _cell.phoneTextField.delegate = self;
         
         //        _cell.countryTextField.text = @"IT";
         //        _cell.postalCodeTextField.text = @"31056";
@@ -291,13 +311,13 @@
     else if([obj isKindOfClass:[NSString class]]){
         keyName = (NSString *)obj;
     }
-    if ([keyName isEqualToString:@"userName"] || [keyName isEqualToString:@"email"] || [keyName isEqualToString:@"changePwdTxtField"])
+    if ([keyName isEqualToString:@"firstName"] || [keyName isEqualToString:@"lastName"] || [keyName isEqualToString:@"email"] || [keyName isEqualToString:@"phone"] || [keyName isEqualToString:@"changePwdTxtField"])
     {
         rowHeight = 89;
     }
     else if ([self.dataArr[indexPath.row] isEqualToString:@"address"])
     {
-        rowHeight = 253;
+        rowHeight = 308;
     }
     else if ([self.dataArr[indexPath.row] isEqualToString:@"addAddress"] || [self.dataArr[indexPath.row] isEqualToString:@"changePwdBtn"])
     {
@@ -321,7 +341,7 @@
 #pragma STProfileTableViewCellDelegate
 
 - (void)addNewAddressesAtIndexPath:(NSIndexPath *)indexPath {
-    if(self.dataArr.count == 4)
+    if(self.dataArr.count == 5)
     {
         [self.dataArr insertObject:@"address" atIndex:indexPath.row];
         NSIndexPath *_indexPath = [NSIndexPath indexPathForRow:indexPath.row
@@ -362,6 +382,9 @@
     else if (add.lastname.length == 0) {
         [self showAlertWithTitle:@"Message" msg:@"Last Name is required!"];
     }
+    else if (add.telephone.length == 0) {
+        [self showAlertWithTitle:@"Message" msg:@"Phone Number is required!"];
+    }
     else if (add.city.length == 0) {
         [self showAlertWithTitle:@"Message" msg:@"City is required!"];
     }
@@ -385,6 +408,23 @@
 }
 #pragma mark-
 #pragma UITextFieldDelegate
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    UIView *superView = textField.superview.superview.superview;
+    if ([superView isKindOfClass:[STAddressTableViewCell class]]) {
+        STAddressTableViewCell *cell = (STAddressTableViewCell *)superView;
+        if (textField == cell.phoneTextField) {
+            if(range.length + range.location > textField.text.length)
+            {
+                return NO;
+            }
+            
+            NSUInteger newLength = [textField.text length] + [string length] - range.length;
+            return newLength <= 10;
+        }
+    }
+    
+    return YES;
+}
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     viewToScroll = textField;
 }
@@ -392,31 +432,26 @@
 {
     viewToScroll = nil;
     UIView *superView = textField.superview.superview;
+    superView = [superView isKindOfClass:[STAddressTableViewCell class]]?superView:textField.superview.superview.superview;
     dbLog(@"%@",superView);
     if ([superView isKindOfClass:[STAddressTableViewCell class]]) {
         STAddressTableViewCell *cell = (STAddressTableViewCell *)superView;
         NSUInteger idx = cell.indexPath.row;
         if (idx != NSNotFound) {
-            NSInteger idxToStore = idx-2;
+            NSInteger idxToStore = idx-3;
             if (idxToStore >= 0)
             {
                 NSString *textStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
                 
-                NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                NSString *firstNameStr = [self.firstNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                NSString *lastNameStr = [self.lastNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//                NSString *telephoneStr = [self.phoneNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
                 
-                NSArray *nameComponents = [nameStr componentsSeparatedByString: @" "];
-                
-                NSString *firstName = nameComponents.count ? nameComponents[0] :@"";
-                NSMutableString *lastNameStr = [NSMutableString new];
-                if(nameComponents.count > 1){
-                    for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
-                        [lastNameStr appendString:nameComponents[idx]];
-                    }
-                }
                 
                 Address *address = (self.customerAddressList.count == 0)? [[Address alloc] init] : self.customerAddressList[idxToStore];
-                address.firstname = firstName;
+                address.firstname = firstNameStr;
                 address.lastname = lastNameStr;
+//                address.telephone = telephoneStr;
                 
                 switch (textField.tag) {
                     case kcityTag:
@@ -438,6 +473,8 @@
                     {
                         address.country_id = textStr;
                     }
+                    case ktelephoneTag:
+                        address.telephone = textStr;
                         break;
                         
                     default:
@@ -491,25 +528,19 @@
         STAddressTableViewCell *cell = (STAddressTableViewCell *)superView;
         NSUInteger idx = cell.indexPath.row;
         if (idx != NSNotFound) {
-            NSInteger idxToStore = idx-2;
+            NSInteger idxToStore = idx-3;
             if (idxToStore >= 0)
             {
-                NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                
-                NSArray *nameComponents = [nameStr componentsSeparatedByString: @" "];
-                
-                NSString *firstName = nameComponents.count ? nameComponents[0] :@"";
-                NSMutableString *lastNameStr = [NSMutableString new];
-                if(nameComponents.count > 1){
-                    for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
-                        [lastNameStr appendString:nameComponents[idx]];
-                    }
-                }
+                NSString *firstNameStr = [self.firstNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                NSString *lastNameStr = [self.firstNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//                NSString *telephoneStr = [self.phoneNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
                 
                 NSString *textStr = [textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
                 Address *address = (self.customerAddressList.count == 0)? [[Address alloc] init] : self.customerAddressList[idxToStore];
-                address.firstname = firstName;
+                address.firstname = firstNameStr;
                 address.lastname = lastNameStr;
+//                address.telephone = telephoneStr;
+                
                 switch (textView.tag) {
                     case kstreetAddTag:
                     {
@@ -598,30 +629,22 @@
 }
 
 - (IBAction)saveChangesButtonAction:(UIButton *)sender {
-    [self.view endEditing:YES];
+    [self.tableView endEditing:YES];
     
-    if ([STUtility isNetworkAvailable] && self.userInfo && [self validateName:self.nameTextField.text emailID:self.emailTextField.text]) {
+    if ([STUtility isNetworkAvailable] && self.userInfo && [self validateName:self.firstNameTextField.text lastName:self.lastNameTextField.text  emailID:self.emailTextField.text]) {
         NSString *custId = self.userInfo[@"customer_id"][@"__text"];
         NSString *emailStr = [self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];//self.userInfo[@"email"][@"__text"];
         
         NSString *pwdStr = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *nameStr = [self.nameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *firstNameStr = [self.firstNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *lastNameStr = [self.lastNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
-        NSArray *nameComponents = [nameStr componentsSeparatedByString: @" "];
-        
-        NSString *firstName = nameComponents.count ? nameComponents[0] :@"";
-        NSMutableString *lastNameStr = [NSMutableString new];
-        if(nameComponents.count > 1){
-            for (NSInteger idx = 1; idx < nameComponents.count; idx ++) {
-                [lastNameStr appendString:nameComponents[idx]];
-            }
-        }
-        NSString *lastName = lastNameStr;
+//        NSString *telephoneStr = [self.phoneNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet 3whitespaceAndNewlineCharacterSet]];
         
         NSString *requestBody = [STConstants userInfoRequstBodyWithCustomerId:[custId integerValue]
                                                                 customerEmail:emailStr
-                                                                    firstName:firstName
-                                                                     lastName:lastName
+                                                                    firstName:firstNameStr
+                                                                     lastName:lastNameStr
                                                                      password:pwdStr];
         dbLog(@"User account : %@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
@@ -742,10 +765,66 @@
     }
     //    [STUtility stopActivityIndicatorFromView:nil];
 }
-- (void)customerAddressUpdate {
+-(void)getUserList {
     
+    NSString *requestBody = [STConstants customerListReuestBody];
+    
+    NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                         methodType:@"POST"
+                                                               body:requestBody
+                                                responseHeaderBlock:^(NSURLResponse *response)
+                                  {
+                                      
+                                  }successBlock:^(NSData *responseData){
+                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                      dbLog(@"%@",xmlDic);
+                                      [self parseUserListResponseWithDict:xmlDic];
+                                      
+                                  }failureBlock:^(NSError *error) {
+                                      [STUtility stopActivityIndicatorFromView:nil];
+                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                  message:@"Unexpected error has occured, Please try after some time."
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil] show];
+                                      dbLog(@"SublimeTea-STSignUpViewController-userLogIn:- %@",error);
+                                  }];
+    
+    [httpRequest start];
+}
+- (void)parseUserListResponseWithDict:(NSDictionary *)responseDict {
+    if (responseDict) {
+        NSArray *userList = responseDict[@"SOAP-ENV:Body"][@"ns1:customerCustomerListResponse"][@"storeView"][@"item"];
+        if (userList.count) {
+            NSString *userNameStr = [self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"email.__text LIKE %@",userNameStr];
+            NSArray *filteredUsersArr = [userList filteredArrayUsingPredicate:filterPredicate];
+            if (filteredUsersArr.count) {
+                NSDictionary *userInfoDict = filteredUsersArr[0];
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:userInfoDict forKey:kUserInfo_Key];
+                dbLog(@"User Details: %@",[defaults objectForKey:kUserInfo_Key]);
+                [STUtility stopActivityIndicatorFromView:nil];
+            }
+            else { // Login Failed
+                [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                            message:@"SignUp Failed, Please try after some time."
+                                           delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles: nil] show];
+            }
+        }
+    }
+    [STUtility stopActivityIndicatorFromView:nil];
+}
+- (void)customerAddressUpdate {
+    [self.view endEditing:YES];
     dbLog(@"Adress List: %@",self.customerAddressList);
     if(self.customerAddressList.count == 0) {
+        [self getUserList];
         [self showAlertWithTitle:@"Message" msg:@"Changes saved."];
         return;
     }
@@ -757,6 +836,7 @@
         dbLog(@"Adress: %@",add.country_id);
         dbLog(@"Adress: %@",add.postcode);
         dbLog(@"Adress: %@",add.region);
+        dbLog(@"Phone: %@",add.telephone);
         
         if ([self validateAdress:add]) {
             isValid = YES;
@@ -801,7 +881,7 @@
                                                                        NSString *xmlString = [[NSString alloc] initWithBytes: [responseData bytes] length:[responseData length] encoding:NSUTF8StringEncoding];
                                                                        dbLog(@"Customer Address xml: %@",xmlString);
                                                                        NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLString:xmlString];
-                                                                       dbLog(@"Customer Address update result : %@",xmlDic);
+                                                                       dbLog(@"Customer Address create result : %@",xmlDic);
                                                                        
                                                                        //        [self parseCustomerAddressListMethodResponseWithDict:xmlDic];
                                                                    });
@@ -833,6 +913,7 @@
             NSDictionary *dataDict = parentDataDict[@"ns1:customerAddressCreateResponse"][@"result"];
             if (dataDict) {
                 [self showAlertWithTitle:@"Message" msg:@"Changes saved."];
+                [self getUserList];
             }
         }
         else {
@@ -851,7 +932,7 @@
     
 }
 - (void)droDownAction:(UITextField *)sender tapGesture:(UITapGestureRecognizer *)tapGesture indexPath:(NSIndexPath *)indexPath {
-    
+    [self.view endEditing:YES];
     switch (sender.tag) {
         case kstateTag: // States
         {
@@ -908,15 +989,15 @@
                                           otherButtonTitles: nil];
     [alert show];
 }
-- (BOOL)validateName:(NSString *)nameStr
+- (BOOL)validateName:(NSString *)firstyNameStr
+            lastName:(NSString *)lastName
              emailID:(NSString *)emailStr {
     
     BOOL status = NO;
-    NSArray *nameCompnents = [nameStr componentsSeparatedByString:@" "];
-    if (nameStr.length == 0) {
+    if (firstyNameStr.length == 0) {
         [self showAlertWithTitle:@"Message" msg:@"Name is required!"];
     }
-    else if (nameCompnents.count < 1){
+    else if (lastName.length == 0){
         [self showAlertWithTitle:@"Message" msg:@"Last Name is required!"];
     }
     //    else if (addressStr.length == 0)
@@ -1110,7 +1191,7 @@
                     cell.stateTextField.text = selectedItemStr;
                     NSUInteger idx = cell.indexPath.row;
                     if (idx != NSNotFound) {
-                        NSInteger idxToStore = idx-2;
+                        NSInteger idxToStore = idx-3;
                         if (idxToStore >= 0)
                         {
                             Address *address = (self.customerAddressList.count == 0)? [[Address alloc] init] : self.customerAddressList[idxToStore];
@@ -1138,7 +1219,7 @@
                     NSDictionary *datadict = self.listOfCountries[indexpath.row];
                     selectedCountryDict = datadict;
                     if (idx != NSNotFound) {
-                        NSInteger idxToStore = idx-2;
+                        NSInteger idxToStore = idx-3;
                         if (idxToStore >= 0)
                         {
                             Address *address = (self.customerAddressList.count == 0)? [[Address alloc] init] : self.customerAddressList[idxToStore];

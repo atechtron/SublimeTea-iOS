@@ -16,13 +16,13 @@
     // Initialization code
 }
 - (void)drawRect:(CGRect)rect {
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:)];
-    tap.numberOfTapsRequired = 1;
-    [self.dropDownTextField.superview addGestureRecognizer:tap];
-    
-    UITapGestureRecognizer *CheckboxLabelTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkBoxButtonAction:)];
-    [self.firstradioButtonTitlrLabel.superview addGestureRecognizer:CheckboxLabelTap];
-    [self.secondRadioButtonTtitleLabel.superview addGestureRecognizer:CheckboxLabelTap];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:)];
+//    tap.numberOfTapsRequired = 1;
+//    [self.dropDownTextField.superview addGestureRecognizer:tap];
+//    
+//    UITapGestureRecognizer *CheckboxLabelTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkBoxButtonAction:)];
+//    [self.firstradioButtonTitlrLabel.superview addGestureRecognizer:CheckboxLabelTap];
+//    [self.secondRadioButtonTtitleLabel.superview addGestureRecognizer:CheckboxLabelTap];
     
     _textField.borderStyle = UITextBorderStyleNone;
     _textField.layer.borderWidth = 1;

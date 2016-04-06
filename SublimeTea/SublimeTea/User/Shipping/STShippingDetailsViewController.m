@@ -24,6 +24,7 @@
 #import "STAddress.h"
 #import "STPlaceOrder.h"
 
+
 @interface STShippingDetailsViewController ()<UITableViewDataSource, UITableViewDelegate, STDropDownTableViewCellDeleagte, STPopoverTableViewControllerDelegate, UIPopoverPresentationControllerDelegate, STCouponTableViewCellDelegate,UITextFieldDelegate, UITextViewDelegate, STPlaceOrderDelegate>
 {
     NSArray *listOfStates;
@@ -153,7 +154,27 @@
 -(void)viewDidTapped:(id)sender {
     [self.view endEditing:YES];
 }
-
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    UIView *superView = textField.superview.superview;
+    dbLog(@"%@",superView);
+    if (textField.tag == 3) {
+        if ([superView isKindOfClass:[STDropDownTableViewCell class]]) {
+            STDropDownTableViewCell *cell = (STDropDownTableViewCell *)superView;
+            
+            [self droDownAction:textField tapGesture:nil indexPath:cell.indexPath];
+        }
+        
+        return NO;
+    }
+    else if (textField.tag == 4) {
+        if ([superView isKindOfClass:[STDropDownTableViewCell class]]) {
+            STDropDownTableViewCell *cell = (STDropDownTableViewCell *)superView;
+            [self droDownAction:textField tapGesture:nil indexPath:cell.indexPath];
+        }
+        return NO;
+    }
+    return YES;
+}
 #pragma mark - keypad related methods
 
 - (void)keyboardWillShow:(NSNotification *)notification{
@@ -481,6 +502,7 @@
             _cell.textFieldTitleLabel.text = @"Shipping City";
             _cell.textField.keyboardType = UIKeyboardTypeDefault;
             _cell.textField.delegate = self;
+            _cell.dropDownTextField.delegate = self;
             if (indexPath.section == 0) {
                 self.cityTextField = _cell.textField;
                 self.stateTextField = _cell.dropDownTextField;
@@ -511,6 +533,7 @@
             _cell.textFieldTitleLabel.text = @"Shipping Postal Code";
             _cell.textField.keyboardType = UIKeyboardTypeNumberPad;
             _cell.textField.delegate = self;
+            _cell.dropDownTextField.delegate = self;
             if (indexPath.section == 0) {
                 self.postalCodeTextField = _cell.textField;
                 self.countryextField = _cell.dropDownTextField;

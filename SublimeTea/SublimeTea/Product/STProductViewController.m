@@ -307,8 +307,8 @@
             }
         }
         else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT"
-                                                                object:nil];
+            [AppDelegate startSession];
+            [self fetchProductDetails];
         }
         
     }else {
@@ -430,8 +430,8 @@
             [self.collectionView reloadData];
         }
         else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT"
-                                                                object:nil];
+            [AppDelegate startSession];
+            [self fetchProducts];
         }
     }else {
         //No products found.
@@ -468,8 +468,8 @@
             }
         }
         else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT"
-                                                                object:nil];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT"
+//                                                                object:nil];
         }
     }
     [STUtility stopActivityIndicatorFromView:nil];
