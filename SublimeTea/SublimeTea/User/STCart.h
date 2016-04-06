@@ -37,4 +37,5 @@
 - (void)updateProductToCartAtIndex:(NSInteger)idx withQty:(double)qty;
 
 - (NSInteger)numberOfProductsInCart;
+- (void)clearCart;
 @end

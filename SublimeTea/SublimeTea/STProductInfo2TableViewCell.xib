@@ -73,18 +73,18 @@
                                         <rect key="frame" x="158" y="0.0" width="69" height="110"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XK8-HS-asR">
-                                                <rect key="frame" x="4" y="25" width="60" height="60"/>
+                                                <rect key="frame" x="4" y="30" width="60" height="50"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="XK8-HS-asR" secondAttribute="height" multiplier="1:1" id="GGJ-iI-NqL"/>
+                                                    <constraint firstAttribute="width" secondItem="XK8-HS-asR" secondAttribute="height" multiplier="1:1" constant="10" id="GGJ-iI-NqL"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="CaviarDreams-Bold" family="Caviar Dreams" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yrd-Aj-8kb">
-                                                <rect key="frame" x="0.0" y="0.0" width="69" height="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="69" height="22"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="Yrd-Aj-8kb" secondAttribute="height" multiplier="5:2" constant="26.5" id="kOu-q8-yap"/>
+                                                    <constraint firstAttribute="width" secondItem="Yrd-Aj-8kb" secondAttribute="height" multiplier="5:2" constant="14" id="kOu-q8-yap"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <inset key="contentEdgeInsets" minX="0.0" minY="8" maxX="0.0" maxY="0.0"/>
@@ -93,10 +93,10 @@
                                                     <action selector="upArrowButtonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="GHd-Sc-hDs"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BT3-EG-ciL">
-                                                <rect key="frame" x="0.0" y="93" width="69" height="17"/>
+                                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BT3-EG-ciL">
+                                                <rect key="frame" x="0.0" y="88" width="69" height="22"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="BT3-EG-ciL" secondAttribute="height" multiplier="5:2" constant="-2" id="T7Q-oI-Asg"/>
+                                                    <constraint firstAttribute="width" secondItem="BT3-EG-ciL" secondAttribute="height" multiplier="5:2" constant="14" id="T7Q-oI-Asg"/>
                                                 </constraints>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="-6" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" image="down-arrow"/>
@@ -105,16 +105,16 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.92549019610000005" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="XK8-HS-asR" firstAttribute="top" secondItem="Yrd-Aj-8kb" secondAttribute="bottom" constant="8" id="38w-95-RSr"/>
                                             <constraint firstAttribute="trailing" secondItem="Yrd-Aj-8kb" secondAttribute="trailing" id="4XN-g4-It0"/>
                                             <constraint firstAttribute="width" secondItem="v7J-FN-P29" secondAttribute="height" multiplier="69:110" id="5bn-J6-cbQ"/>
-                                            <constraint firstAttribute="bottom" secondItem="BT3-EG-ciL" secondAttribute="bottom" constant="9" id="IgX-2L-93V"/>
+                                            <constraint firstAttribute="bottom" secondItem="BT3-EG-ciL" secondAttribute="bottom" id="IgX-2L-93V"/>
                                             <constraint firstAttribute="trailing" secondItem="XK8-HS-asR" secondAttribute="trailing" constant="5" id="KeO-As-QhE"/>
                                             <constraint firstItem="XK8-HS-asR" firstAttribute="leading" secondItem="v7J-FN-P29" secondAttribute="leading" constant="4" id="Ucg-L6-fxK"/>
-                                            <constraint firstItem="BT3-EG-ciL" firstAttribute="leading" secondItem="v7J-FN-P29" secondAttribute="leading" constant="25" id="bvb-wy-fDT"/>
-                                            <constraint firstAttribute="trailing" secondItem="BT3-EG-ciL" secondAttribute="trailing" constant="26" id="fw3-xo-Vvh"/>
+                                            <constraint firstItem="BT3-EG-ciL" firstAttribute="leading" secondItem="v7J-FN-P29" secondAttribute="leading" id="bvb-wy-fDT"/>
+                                            <constraint firstAttribute="trailing" secondItem="BT3-EG-ciL" secondAttribute="trailing" id="fw3-xo-Vvh"/>
                                             <constraint firstItem="BT3-EG-ciL" firstAttribute="top" secondItem="XK8-HS-asR" secondAttribute="bottom" constant="8" id="h2t-T8-1LI"/>
                                             <constraint firstItem="Yrd-Aj-8kb" firstAttribute="leading" secondItem="v7J-FN-P29" secondAttribute="leading" id="nQR-zW-cS0"/>
                                             <constraint firstItem="Yrd-Aj-8kb" firstAttribute="top" secondItem="v7J-FN-P29" secondAttribute="top" id="sYt-Yq-4Lh"/>

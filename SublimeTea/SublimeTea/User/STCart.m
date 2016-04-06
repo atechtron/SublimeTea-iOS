@@ -84,4 +84,9 @@ static STCart *sharedInstance;
                                        withObject:prodDict];
     }
 }
+- (void)clearCart {
+    [self.tempCartProducts removeAllObjects];
+    [self.productsDataArr removeAllObjects];
+    [self.productsInCart removeAllObjects];
+}
 @end

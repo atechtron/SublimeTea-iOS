@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     self.menuButtonHidden = YES;
     self.hideRightBarItems = YES;
-//    self.hideLeftBarItems = NO;
+    //    self.hideLeftBarItems = NO;
     
     [super viewDidLoad];
     self.mobileNumberTextField.enablesReturnKeyAutomatically = YES;
@@ -28,7 +28,7 @@
     self.passwordTextField.returnKeyType = UIReturnKeyNext;
     self.confirmPasswordTextField.returnKeyType = UIReturnKeyNext;
     self.mobileNumberTextField.keyboardType = UIKeyboardTypePhonePad;
-   
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
     
@@ -89,14 +89,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 - (void)viewDidTapped:(id)sender {
     self.contentScrollView.contentOffset = CGPointMake(0, 0);
     [self.view endEditing:YES];
@@ -109,21 +109,23 @@
     NSString *mobNumStr = [self.mobileNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     if (emailStr.length > 0 && passwordStr.length >= 6 && confirmPasswordStr.length > 0 && mobNumStr.length > 0) {
-        status = YES;
-        self.errorLabel.hidden = YES;
-    }
-    else if (emailStr.length){
         NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,10}";
         NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
         if ([emailTest evaluateWithObject:emailStr] == NO) {
             [self showAlertWithTitle:@"Message" msg:@"Valid Email required!"];
+            status = NO;
+            self.errorLabel.hidden = NO;
         }
         else {
             status = YES;
+            self.errorLabel.hidden = YES;
         }
     }
     else {
-//        self.errorLabel.text = @"UserName and Password is required.";
+        //        self.errorLabel.text = @"UserName and Password is required.";
+        if (passwordStr.length <= 6) {
+            [self showAlertWithTitle:@"Message" msg:@"Password should be more than 6 characters."];
+        }
         self.errorLabel.hidden = NO;
     }
     if (![passwordStr isEqualToString:confirmPasswordStr]) {
@@ -148,7 +150,7 @@
     // Check Internet Connsection
     if ([STUtility isNetworkAvailable] && [self validateInputs]) {
         [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
-         [self userRegistration];
+        [self userRegistration];
         
     }
 }
@@ -166,67 +168,67 @@
     NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
-                                                                     methodType:@"POST"
-                                                                           body:requestBody
-                                                            responseHeaderBlock:^(NSURLResponse *response)
-                                              {
-                                                  dbLog(@"%@",response);
-                                              }successBlock:^(NSData *responseData){
-                                                  NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                                  dbLog(@"%@",xmlDic);
-                                                  if(!xmlDic[@"SOAP-ENV:Body"][@"SOAP-ENV:Fault"])
-                                                  {
-                                                      [self getUserList];
-                                                  }
-                                                  else {
-                                                      [STUtility stopActivityIndicatorFromView:nil];
-                                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
-                                                                                  message:@"SignUp Failed, Please try after some time."
-                                                                                 delegate:nil
-                                                                        cancelButtonTitle:@"OK"
-                                                                        otherButtonTitles: nil] show];
-                                                }
-                                              }failureBlock:^(NSError *error) {
-                                                  [STUtility stopActivityIndicatorFromView:nil];
-                                                  [[[UIAlertView alloc] initWithTitle:@"Alert"
-                                                                              message:@"Unexpected error has occured, Please try after some time."
-                                                                             delegate:nil
-                                                                    cancelButtonTitle:@"OK"
-                                                                    otherButtonTitles: nil] show];
-                                                  dbLog(@"SublimeTea-STSignUpViewController-submitButtonAction:- %@",error);
-                                              }];
+                                                         methodType:@"POST"
+                                                               body:requestBody
+                                                responseHeaderBlock:^(NSURLResponse *response)
+                                  {
+                                      dbLog(@"%@",response);
+                                  }successBlock:^(NSData *responseData){
+                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                      dbLog(@"%@",xmlDic);
+                                      if(!xmlDic[@"SOAP-ENV:Body"][@"SOAP-ENV:Fault"])
+                                      {
+                                          [self getUserList];
+                                      }
+                                      else {
+                                          [STUtility stopActivityIndicatorFromView:nil];
+                                          [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                      message:@"SignUp Failed, Please try after some time."
+                                                                     delegate:nil
+                                                            cancelButtonTitle:@"OK"
+                                                            otherButtonTitles: nil] show];
+                                      }
+                                  }failureBlock:^(NSError *error) {
+                                      [STUtility stopActivityIndicatorFromView:nil];
+                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                  message:@"Unexpected error has occured, Please try after some time."
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil] show];
+                                      dbLog(@"SublimeTea-STSignUpViewController-submitButtonAction:- %@",error);
+                                  }];
     
     [httpRequest start];
 }
 -(void)getUserList {
-        
-        NSString *requestBody = [STConstants customerListReuestBody];
-        
-        NSString *urlString = [STConstants getAPIURLWithParams:nil];
-        NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        
-        STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
-                                                             methodType:@"POST"
-                                                                   body:requestBody
-                                                    responseHeaderBlock:^(NSURLResponse *response)
-                                      {
-                                          
-                                      }successBlock:^(NSData *responseData){
-                                          NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                          dbLog(@"%@",xmlDic);
-                                          [self parseUserListResponseWithDict:xmlDic];
-                                          
-                                      }failureBlock:^(NSError *error) {
-                                          [STUtility stopActivityIndicatorFromView:nil];
-                                          [[[UIAlertView alloc] initWithTitle:@"Alert"
-                                                                      message:@"Unexpected error has occured, Please try after some time."
-                                                                     delegate:nil
-                                                            cancelButtonTitle:@"OK"
-                                                            otherButtonTitles: nil] show];
-                                          dbLog(@"SublimeTea-STSignUpViewController-userLogIn:- %@",error);
-                                      }];
-        
-        [httpRequest start];
+    
+    NSString *requestBody = [STConstants customerListReuestBody];
+    
+    NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                         methodType:@"POST"
+                                                               body:requestBody
+                                                responseHeaderBlock:^(NSURLResponse *response)
+                                  {
+                                      
+                                  }successBlock:^(NSData *responseData){
+                                      NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                      dbLog(@"%@",xmlDic);
+                                      [self parseUserListResponseWithDict:xmlDic];
+                                      
+                                  }failureBlock:^(NSError *error) {
+                                      [STUtility stopActivityIndicatorFromView:nil];
+                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                  message:@"Unexpected error has occured, Please try after some time."
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil] show];
+                                      dbLog(@"SublimeTea-STSignUpViewController-userLogIn:- %@",error);
+                                  }];
+    
+    [httpRequest start];
 }
 - (void)parseUserListResponseWithDict:(NSDictionary *)responseDict {
     if (responseDict) {
@@ -307,16 +309,16 @@
     return NO;
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-
-        if (textField == _mobileNumberTextField) {
-            if(range.length + range.location > textField.text.length)
-            {
-                return NO;
-            }
-            
-            NSUInteger newLength = [textField.text length] + [string length] - range.length;
-            return newLength <= 10;
+    
+    if (textField == _mobileNumberTextField) {
+        if(range.length + range.location > textField.text.length)
+        {
+            return NO;
         }
+        
+        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+        return newLength <= 10;
+    }
     return YES;
 }
 

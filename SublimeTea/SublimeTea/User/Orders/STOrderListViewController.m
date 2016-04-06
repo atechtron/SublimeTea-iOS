@@ -14,6 +14,7 @@
 #import "STHttpRequest.h"
 #import "STOrderDetailsViewController.h"
 #import "STGlobalCacheManager.h"
+#import "STProductCategoriesViewController.h"
 
 @interface STOrderListViewController ()<UITabBarDelegate, UITableViewDataSource>
 {
@@ -114,13 +115,22 @@
 }
 
 - (IBAction)continueShoppingButtonAction:(UIButton *)sender {
-    NSArray *viewControllerArray = self.navigationController.viewControllers;
-    if(viewControllerArray.count > 2) {
-        [self.navigationController popToViewController:viewControllerArray[2] animated:YES];
-    }
-    else {
-        STDashboardViewController *dashBoard = [self.storyboard instantiateViewControllerWithIdentifier:@"STDashboardViewController"];
-        [self.navigationController pushViewController:dashBoard animated:YES];
+    NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+    NSUInteger idx = [viewControllers indexOfObjectPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[STProductCategoriesViewController class]]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                STProductCategoriesViewController *categoryView = (STProductCategoriesViewController *)obj;
+                [self.navigationController popToViewController:categoryView animated:YES];
+            });
+            *stop = YES;
+            return YES;
+        }
+        return NO;
+    }];
+    
+    if (idx == NSNotFound) {
+        STProductCategoriesViewController *productCategoriesViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STProductCategoriesViewController"];
+        [self.navigationController pushViewController:productCategoriesViewController animated:YES];
     }
 }
 - (void)orderList {
@@ -139,7 +149,6 @@
                                                            successBlock:^(NSData *responseData){
                                                                dispatch_async(dispatch_get_main_queue(), ^{
                                                                    NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                                                   [[STGlobalCacheManager defaultManager]addItemToCache:xmlDic withKey:kOrderList_Key];
                                                                    dbLog(@"Order Lists %@",xmlDic);
                                                                         [self parseOrderDetailsResponseWithDict:xmlDic];
                                                                });
@@ -168,9 +177,16 @@
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
             NSDictionary *dataDict = parentDataDict[@"ns1:salesOrderListResponse"][@"result"];
             NSArray *orders = dataDict[@"item"];
-            NSSortDescriptor *sortDisc = [NSSortDescriptor sortDescriptorWithKey:@"created_at.__text" ascending:NO];
-            self.orderListArr = [orders sortedArrayUsingDescriptors:@[sortDisc]];
-            [self.tableView reloadData];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSMutableDictionary *userInfoDict = [defaults objectForKey:kUserInfo_Key];
+            NSString *custId = userInfoDict[@"customer_id"][@"__text"];
+            NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"customer_id.__text LIKE %@",custId];
+            NSArray *filteredUserOrders = [orders filteredArrayUsingPredicate:filterPredicate];
+            if (filteredUserOrders) {
+                NSSortDescriptor *sortDisc = [NSSortDescriptor sortDescriptorWithKey:@"created_at.__text" ascending:NO];
+                self.orderListArr = [filteredUserOrders sortedArrayUsingDescriptors:@[sortDisc]];
+                [self.tableView reloadData];
+            }
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];

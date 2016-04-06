@@ -24,7 +24,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+    
     return YES;
 }
 
@@ -153,7 +153,6 @@
             [defaults synchronize];
         }
         //                                      [STUtility stopActivityIndicatorFromView:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"APPVALIDATION" object:nil];
         [STUtility stopActivityIndicatorFromView:nil];
         //                                      [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
     }
