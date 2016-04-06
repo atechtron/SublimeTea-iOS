@@ -152,7 +152,6 @@ Create a cart */
     if (responseDict) {
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
-            [[STCart defaultCart].tempCartProducts removeAllObjects];
             NSDictionary *dataDict = parentDataDict[@"ns1:shoppingCartProductAddResponse"][@"result"];
             BOOL requestStatus = [dataDict[@"__text"] boolValue];
             if (requestStatus) {

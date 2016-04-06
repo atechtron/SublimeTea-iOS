@@ -40,7 +40,9 @@ static double prodQtyCount = 0.0;
     downloadConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
     downloadSession = [NSURLSession sessionWithConfiguration:downloadConfig];
 }
-
+- (void)viewWillAppear:(BOOL)animated {
+    prodQtyCount = 0.0;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

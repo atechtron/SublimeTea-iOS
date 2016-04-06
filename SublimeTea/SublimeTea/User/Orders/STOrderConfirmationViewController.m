@@ -39,6 +39,9 @@
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [[STCart defaultCart] clearCart];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
