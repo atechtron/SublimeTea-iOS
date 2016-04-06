@@ -22,12 +22,9 @@
     //    self.hideLeftBarItems = NO;
     
     [super viewDidLoad];
-    self.mobileNumberTextField.enablesReturnKeyAutomatically = YES;
-    self.mobileNumberTextField.returnKeyType = UIReturnKeyDone;
     self.emailAddressTextField.returnKeyType = UIReturnKeyNext;
     self.passwordTextField.returnKeyType = UIReturnKeyNext;
     self.confirmPasswordTextField.returnKeyType = UIReturnKeyNext;
-    self.mobileNumberTextField.keyboardType = UIKeyboardTypePhonePad;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
@@ -51,10 +48,6 @@
     self.confirmPasswordTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     self.confirmPasswordTextField.layer.cornerRadius = 2;
     
-    self.mobileNumberTextField.borderStyle = UITextBorderStyleNone;
-    self.mobileNumberTextField.layer.borderWidth = 1;
-    self.mobileNumberTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
-    self.mobileNumberTextField.layer.cornerRadius = 2;
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -106,9 +99,8 @@
     NSString *emailStr = [self.emailAddressTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString *passwordStr = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString *confirmPasswordStr = [self.confirmPasswordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *mobNumStr = [self.mobileNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
-    if (emailStr.length > 0 && passwordStr.length >= 6 && confirmPasswordStr.length > 0 && mobNumStr.length > 0) {
+    if (emailStr.length > 0 && passwordStr.length >= 6 && confirmPasswordStr.length > 0) {
         NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,10}";
         NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
         if ([emailTest evaluateWithObject:emailStr] == NO) {
@@ -300,27 +292,12 @@
     else if ([textField isEqual:self.passwordTextField]) {
         [self.confirmPasswordTextField becomeFirstResponder];
     }
-    else if ([textField isEqual:self.confirmPasswordTextField]){
-        [self.mobileNumberTextField becomeFirstResponder];
-    }
     else {
         [self submitButtonAction:self.submitButton];
     }
     return NO;
 }
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    
-    if (textField == _mobileNumberTextField) {
-        if(range.length + range.location > textField.text.length)
-        {
-            return NO;
-        }
-        
-        NSUInteger newLength = [textField.text length] + [string length] - range.length;
-        return newLength <= 10;
-    }
-    return YES;
-}
+
 
 //method to move the view up/down whenever the keyboard is shown/dismissed
 -(void)setViewMovedUp:(BOOL)movedUp

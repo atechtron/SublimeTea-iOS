@@ -46,6 +46,19 @@
     _countryTextField.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
     _countryTextField.layer.cornerRadius = 2;
     
+    _phoneTextField.borderStyle = UITextBorderStyleNone;
+    
+    _containerView.layer.borderWidth = 1;
+    _containerView.layer.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
+    _containerView.layer.cornerRadius = 2;
+    
+    CALayer *rightBorder = [CALayer layer];
+    rightBorder.borderColor = [STUtility getSublimeHeadingBGColor].CGColor;
+    rightBorder.borderWidth = 1;
+    rightBorder.frame = CGRectMake(CGRectGetWidth(_phoneCountryCodeTextBox.frame)-1, -1, 1, CGRectGetHeight(_phoneCountryCodeTextBox.frame));
+    
+    [_phoneCountryCodeTextBox.layer addSublayer:rightBorder];
+    _phoneCountryCodeTextBox.clipsToBounds = NO;
     
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 13, 10, 5)];
     imgView.image = [UIImage imageNamed:@"down-arrow"];
