@@ -73,9 +73,9 @@
                                         <rect key="frame" x="158" y="0.0" width="69" height="110"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XK8-HS-asR">
-                                                <rect key="frame" x="4" y="30" width="60" height="50"/>
+                                                <rect key="frame" x="9" y="30" width="50" height="50"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="XK8-HS-asR" secondAttribute="height" multiplier="1:1" constant="10" id="GGJ-iI-NqL"/>
+                                                    <constraint firstAttribute="width" secondItem="XK8-HS-asR" secondAttribute="height" multiplier="1:1" id="GGJ-iI-NqL"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="CaviarDreams-Bold" family="Caviar Dreams" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -105,14 +105,14 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.92549019610000005" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="XK8-HS-asR" firstAttribute="top" secondItem="Yrd-Aj-8kb" secondAttribute="bottom" constant="8" id="38w-95-RSr"/>
                                             <constraint firstAttribute="trailing" secondItem="Yrd-Aj-8kb" secondAttribute="trailing" id="4XN-g4-It0"/>
                                             <constraint firstAttribute="width" secondItem="v7J-FN-P29" secondAttribute="height" multiplier="69:110" id="5bn-J6-cbQ"/>
                                             <constraint firstAttribute="bottom" secondItem="BT3-EG-ciL" secondAttribute="bottom" id="IgX-2L-93V"/>
-                                            <constraint firstAttribute="trailing" secondItem="XK8-HS-asR" secondAttribute="trailing" constant="5" id="KeO-As-QhE"/>
-                                            <constraint firstItem="XK8-HS-asR" firstAttribute="leading" secondItem="v7J-FN-P29" secondAttribute="leading" constant="4" id="Ucg-L6-fxK"/>
+                                            <constraint firstAttribute="trailing" secondItem="XK8-HS-asR" secondAttribute="trailing" constant="10" id="KeO-As-QhE"/>
+                                            <constraint firstItem="XK8-HS-asR" firstAttribute="leading" secondItem="v7J-FN-P29" secondAttribute="leading" constant="9" id="Ucg-L6-fxK"/>
                                             <constraint firstItem="BT3-EG-ciL" firstAttribute="leading" secondItem="v7J-FN-P29" secondAttribute="leading" id="bvb-wy-fDT"/>
                                             <constraint firstAttribute="trailing" secondItem="BT3-EG-ciL" secondAttribute="trailing" id="fw3-xo-Vvh"/>
                                             <constraint firstItem="BT3-EG-ciL" firstAttribute="top" secondItem="XK8-HS-asR" secondAttribute="bottom" constant="8" id="h2t-T8-1LI"/>
