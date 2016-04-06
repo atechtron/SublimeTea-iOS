@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     self.menuButtonHidden = YES;
     self.hideRightBarItems = YES;
-//    self.hideLeftBarItems = NO;
+    //    self.hideLeftBarItems = NO;
     [super viewDidLoad];
     
     self.useraNameTextField.delegate = self;
@@ -32,10 +32,8 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTapped:)];
     [self.view addGestureRecognizer:tap];
     
-//    UITapGestureRecognizer *checkBoxTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkBoxStateDidChanged:)];
-//    [self.checkBoxTextLabel.superview addGestureRecognizer:checkBoxTap];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLogInWIthSessionId:) name:@"APPVALIDATION" object:nil];
+    //    UITapGestureRecognizer *checkBoxTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkBoxStateDidChanged:)];
+    //    [self.checkBoxTextLabel.superview addGestureRecognizer:checkBoxTap];
     
     [self updateUI];
 }
@@ -83,7 +81,7 @@
     
     UIImage *unselectedCheckBox = [UIImage imageNamed:@"chekboxUnselected"];
     UIImage *selectedCheckBox = [UIImage imageNamed:@"checkboxSelected"];
-
+    
     if ([self.checkBoxButton.imageView.image isEqual:unselectedCheckBox]) {
         [self.checkBoxButton setImage:selectedCheckBox forState:UIControlStateNormal];
         self.passwordTextfield.secureTextEntry = NO;
@@ -101,12 +99,12 @@
 }
 
 - (IBAction)submitButtonAction:(UIButton *)sender {
-//     [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
+    //     [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
     [self.view endEditing:YES];
     // Check Internet Connsection
     if ([STUtility isNetworkAvailable] && [self validateInputs]) {
         // call webservice
-
+        
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
         [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
@@ -115,9 +113,10 @@
         }
         else {
             [AppDelegate startSession];
+            [self submitButtonAction:self.submitButton];
         }
         
-//        [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
+        //        [self performSelector:@selector(loadDashboard) withObject:nil afterDelay:0.4];
     }
 }
 
@@ -194,14 +193,14 @@
             NSArray *filteredUsersArr = [userList filteredArrayUsingPredicate:filterPredicate];
             if (filteredUsersArr.count) {
                 NSDictionary *userInfoDict = filteredUsersArr[0];
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setObject:userInfoDict forKey:kUserInfo_Key];
-                dbLog(@"User Details: %@",[defaults objectForKey:kUserInfo_Key]);
                 
                 NSDictionary *methodIs = [userInfoDict objectForKey:@"password_hash"];
                 NSString *passWordHashStr = [methodIs valueForKey:@"__text"];
                 NSArray* pwdSplitValue = [passWordHashStr componentsSeparatedByString: @":"];
                 if (pwdSplitValue.count == 2) {
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    [defaults setObject:userInfoDict forKey:kUserInfo_Key];
+                    dbLog(@"User Details: %@",[defaults objectForKey:kUserInfo_Key]);
                     
                     NSString *passwordStr = [self.passwordTextfield.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
                     NSString *hashSalt = [pwdSplitValue objectAtIndex:1];
@@ -224,6 +223,7 @@
                 }
             }
             else { // Login Failed
+                [STUtility stopActivityIndicatorFromView:nil];
                 [[[UIAlertView alloc] initWithTitle:@"Alert"
                                             message:@"Login Failed, Please try after some time."
                                            delegate:nil
@@ -241,12 +241,12 @@
 #pragma mark-
 #pragma UITextFieldDelegates
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-//    if (textField == self.passwordTextfield) {
-        [self.contentScrollView scrollRectToVisible:self.forgotPassword.bounds animated:YES];
-//    }
+    //    if (textField == self.passwordTextfield) {
+    [self.contentScrollView scrollRectToVisible:self.forgotPassword.bounds animated:YES];
+    //    }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-
+    
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.useraNameTextField) {
@@ -256,7 +256,7 @@
     else {
         [textField resignFirstResponder];
         [self submitButtonAction:self.submitButton];
-//        [self.useraNameTextField becomeFirstResponder];
+        //        [self.useraNameTextField becomeFirstResponder];
     }
     return NO;
 }

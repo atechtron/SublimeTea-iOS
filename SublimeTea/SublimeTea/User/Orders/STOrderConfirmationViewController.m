@@ -25,7 +25,7 @@
 @implementation STOrderConfirmationViewController
 
 - (void)viewDidLoad {
-    
+    self.backButtonHidden = YES;
     [super viewDidLoad];
     self.itemArray = [[STCart defaultCart] productsDataArr];
     
@@ -55,14 +55,14 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 #pragma mark-
 #pragma UITableViewDelegates
 
@@ -81,7 +81,7 @@
     NSString *name = prod.prodDict[@"name"][@"__text"];
     NSString *shortDesc = prod.prodDict[@"short_description"][@"__text"];
     double price = [prod.prodDict[@"special_price"][@"__text"]doubleValue];
-
+    
     NSArray *prodImgArr = (NSArray *)[[STGlobalCacheManager defaultManager] getItemForKey:[NSString stringWithFormat:@"PRODIMG_%@",prodId]];
     if (prodImgArr.count) {
         NSDictionary *imgUrlDict = [prodImgArr lastObject];
@@ -114,7 +114,7 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     STOrderConfirmationHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"STOrderConfirmationHeaderView"];
-//    footerView.titleLabel.text = @"Orders";
+    //    footerView.titleLabel.text = @"Orders";
     NSString *orderId = [[NSUserDefaults standardUserDefaults] valueForKey:kOderId_Key];
     headerView.orderIdLabel.text = orderId.length?[NSString stringWithFormat:@"Your Order id is %@",orderId]:@"";
     return headerView;
