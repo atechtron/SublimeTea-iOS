@@ -218,7 +218,8 @@
             }
         }
         else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGOUT" object:nil];
+            [AppDelegate startSession];
+            [self fetchProductCategories];
         }
     }else {
         //No categories found.

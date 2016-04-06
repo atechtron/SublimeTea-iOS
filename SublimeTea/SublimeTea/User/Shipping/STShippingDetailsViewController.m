@@ -24,6 +24,12 @@
 #import "STAddress.h"
 #import "STPlaceOrder.h"
 
+#define kcountryTag 422431
+#define kstateTag 201291
+
+#define kBillingcountryTag 42243
+#define kBillingstateTag 20129
+
 @interface STShippingDetailsViewController ()<UITableViewDataSource, UITableViewDelegate, STDropDownTableViewCellDeleagte, STPopoverTableViewControllerDelegate, UIPopoverPresentationControllerDelegate, STCouponTableViewCellDelegate,UITextFieldDelegate, UITextViewDelegate, STPlaceOrderDelegate>
 {
     NSArray *listOfStates;
@@ -153,7 +159,27 @@
 -(void)viewDidTapped:(id)sender {
     [self.view endEditing:YES];
 }
-
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    UIView *superView = textField.superview.superview;
+    dbLog(@"%@",superView);
+    if (textField.tag == kstateTag || textField.tag == kBillingstateTag) {
+        if ([superView isKindOfClass:[STDropDownTableViewCell class]]) {
+            STDropDownTableViewCell *cell = (STDropDownTableViewCell *)superView;
+            
+            [self droDownAction:textField tapGesture:nil indexPath:cell.indexPath];
+        }
+        
+        return NO;
+    }
+    else if (textField.tag == kcountryTag || textField.tag == kBillingcountryTag) {
+        if ([superView isKindOfClass:[STDropDownTableViewCell class]]) {
+            STDropDownTableViewCell *cell = (STDropDownTableViewCell *)superView;
+            [self droDownAction:textField tapGesture:nil indexPath:cell.indexPath];
+        }
+        return NO;
+    }
+    return YES;
+}
 #pragma mark - keypad related methods
 
 - (void)keyboardWillShow:(NSNotification *)notification{
@@ -481,14 +507,17 @@
             _cell.textFieldTitleLabel.text = @"Shipping City";
             _cell.textField.keyboardType = UIKeyboardTypeDefault;
             _cell.textField.delegate = self;
+            _cell.dropDownTextField.delegate = self;
             if (indexPath.section == 0) {
                 self.cityTextField = _cell.textField;
+                _cell.dropDownTextField.tag = kstateTag;
                 self.stateTextField = _cell.dropDownTextField;
                 if (self.stateTextField.text.length) {
                     _cell.dropDownTextField.text = self.stateTextField.text;
                 }
             }
             else {
+                _cell.dropDownTextField.tag = kBillingstateTag;
                 self.billingCityTextField = _cell.textField;
                 self.billingStateTextField = _cell.dropDownTextField;
                 if (self.billingStateTextField.text.length) {
@@ -511,7 +540,9 @@
             _cell.textFieldTitleLabel.text = @"Shipping Postal Code";
             _cell.textField.keyboardType = UIKeyboardTypeNumberPad;
             _cell.textField.delegate = self;
+            _cell.dropDownTextField.delegate = self;
             if (indexPath.section == 0) {
+                _cell.dropDownTextField.tag = kcountryTag;
                 self.postalCodeTextField = _cell.textField;
                 self.countryextField = _cell.dropDownTextField;
                 if (self.countryextField.text.length) {
@@ -519,6 +550,7 @@
                 }
             }
             else {
+                _cell.dropDownTextField.tag = kBillingcountryTag;
                 self.billingPostalCodeTextField = _cell.textField;
                 self.billingCountryextField = _cell.dropDownTextField;
                 if (self.billingCountryextField.text.length) {
