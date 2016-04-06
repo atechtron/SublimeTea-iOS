@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="YQh-v6-bTo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="YQh-v6-bTo">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Caviar_Dreams_Bold.ttf">
@@ -74,17 +75,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0eV-JE-AYr">
-                                <rect key="frame" x="135" y="361" width="329" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="0eV-JE-AYr" secondAttribute="height" multiplier="47:5" id="yS6-gy-YtD"/>
-                                </constraints>
+                                <rect key="frame" x="135" y="377" width="329" height="27"/>
                                 <state key="normal" image="sign In_button_main screen"/>
                                 <connections>
                                     <segue destination="BYZ-38-t0r" kind="push" identifier="loginSegue" id="QG6-wc-oc2"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgV-0q-ArR">
-                                <rect key="frame" x="135" y="407" width="329" height="35"/>
+                                <rect key="frame" x="135" y="415" width="329" height="27"/>
                                 <state key="normal" title="Sign Up" image="sign up_button_main screen"/>
                                 <connections>
                                     <segue destination="sod-tq-efW" kind="push" identifier="signUPSegue" id="Wx8-Gr-FI7"/>
@@ -94,13 +92,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0eV-JE-AYr" firstAttribute="centerX" secondItem="jWu-1X-BZV" secondAttribute="centerX" id="0Fg-ko-QnH"/>
-                            <constraint firstItem="0eV-JE-AYr" firstAttribute="height" secondItem="jgV-0q-ArR" secondAttribute="height" id="299-De-2En"/>
                             <constraint firstItem="3TV-3X-TnT" firstAttribute="top" secondItem="jgV-0q-ArR" secondAttribute="bottom" constant="158" id="56k-fq-FaO"/>
-                            <constraint firstItem="Vuf-ge-Fmx" firstAttribute="leading" secondItem="0eV-JE-AYr" secondAttribute="trailing" constant="-464" id="8s1-Vh-v9R"/>
-                            <constraint firstItem="0eV-JE-AYr" firstAttribute="width" secondItem="Vuf-ge-Fmx" secondAttribute="height" multiplier="329:600" id="HzS-hP-ONL"/>
+                            <constraint firstItem="jgV-0q-ArR" firstAttribute="height" secondItem="Vuf-ge-Fmx" secondAttribute="height" multiplier="27/600" id="Cio-LQ-nLF"/>
+                            <constraint firstItem="0eV-JE-AYr" firstAttribute="width" secondItem="jgV-0q-ArR" secondAttribute="width" id="DuJ-WQ-ie9"/>
+                            <constraint firstItem="jgV-0q-ArR" firstAttribute="width" secondItem="Vuf-ge-Fmx" secondAttribute="width" multiplier="329/600" id="NeC-ch-gPt"/>
                             <constraint firstItem="jgV-0q-ArR" firstAttribute="centerX" secondItem="jWu-1X-BZV" secondAttribute="centerX" id="dH4-v1-N6A"/>
                             <constraint firstItem="Vuf-ge-Fmx" firstAttribute="leading" secondItem="jWu-1X-BZV" secondAttribute="leading" id="dZc-20-JFU"/>
-                            <constraint firstItem="jgV-0q-ArR" firstAttribute="width" secondItem="Vuf-ge-Fmx" secondAttribute="height" multiplier="329:600" id="kZC-Ma-LGu"/>
+                            <constraint firstItem="0eV-JE-AYr" firstAttribute="height" secondItem="jgV-0q-ArR" secondAttribute="height" id="edW-rA-uLP"/>
                             <constraint firstItem="3TV-3X-TnT" firstAttribute="top" secondItem="Vuf-ge-Fmx" secondAttribute="bottom" id="lSZ-gC-UNn"/>
                             <constraint firstAttribute="trailing" secondItem="Vuf-ge-Fmx" secondAttribute="trailing" id="nL4-H2-FdH"/>
                             <constraint firstItem="0eV-JE-AYr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="1im-Dp-w7g" secondAttribute="bottom" constant="297" id="okQ-G1-pYU"/>
