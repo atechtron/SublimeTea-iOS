@@ -1036,7 +1036,7 @@
 				TargetAttributes = {
 					2BA72EE11C7DC8F0006105B6 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = SFA4YUPQGD;
+						DevelopmentTeam = 7G7ZNZ3U4P;
 					};
 					2BA72EFA1C7DC8F0006105B6 = {
 						CreatedOnToolsVersion = 7.2;
@@ -1368,7 +1368,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Anup Kumar (SFA4YUPQGD)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: WEBENZA INDIA PRIVATE LIMITED (7G7ZNZ3U4P)";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SublimeTea/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1383,7 +1383,7 @@
 					"-all_load",
 					"-w",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Sublime.tea;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Webenza.SublimeTea;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1394,7 +1394,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Anup Kumar (SFA4YUPQGD)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: WEBENZA INDIA PRIVATE LIMITED (7G7ZNZ3U4P)";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SublimeTea/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1409,7 +1409,7 @@
 					"-all_load",
 					"-w",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Sublime.tea;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Webenza.SublimeTea;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
