@@ -103,12 +103,6 @@
     popoverViewController.delegate = self;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self prepareCountryData];
-    });
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     //    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
     //    self.navigationController.navigationBarHidden = YES;
@@ -126,20 +120,6 @@
 - (void)dealloc {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-- (void)prepareCountryData {
-    NSDictionary *dataDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kCountries_key];
-    if (!dataDict) {
-        NSError *err;
-        NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"country_states_city" ofType:@"json"]];
-        NSJSONSerialization *jsonDict = [NSJSONSerialization JSONObjectWithData:data
-                                                                        options:kNilOptions
-                                                                          error:&err];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[STGlobalCacheManager defaultManager] addItemToCache:jsonDict withKey:kCountries_key];
-            [STUtility stopActivityIndicatorFromView:nil];
-        });
-    }
 }
 -(void) ResponseNew:(NSNotification *)message
 {
