@@ -17,8 +17,8 @@
 }
 
 - (void)drawRect:(CGRect)rect {
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:)];
-    [self.prodQuantityTextField.superview addGestureRecognizer:tap];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dropDownAction:)];
+//    [self.prodQuantityTextField.superview addGestureRecognizer:tap];
     
     self.prodQuantityTextField.borderStyle = UITextBorderStyleNone;
     self.prodQuantityTextField.layer.borderWidth = 0.5f;
