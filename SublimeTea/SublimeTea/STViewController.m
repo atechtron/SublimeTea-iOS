@@ -13,6 +13,7 @@
 #import "STLoginViewController.h"
 #import "STSignUpViewController.h"
 #import "STProductViewController.h"
+#import "STUtility.h"
 
 #define kSearchBarTag 979742
 
@@ -51,10 +52,11 @@
     self.navigationController.navigationBarHidden = NO;
     NSString *cartCount = [NSString stringWithFormat:@"%ld",(long)[[STCart defaultCart] numberOfProductsInCart]];
     cartBadgeView.badgeText = [cartCount integerValue]>0?cartCount:@"";
+    
     UIImage *image =[UIImage imageNamed:@"cancel_image"];
     [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setImage:image];
     [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTitle:@""];
-    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[STUtility getSublimeHeadingBGColor]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -161,7 +163,7 @@
     NSInteger accountBtnOrigin_X = totalWidth - cartButton.frame.size.width - 180;
     UIButton *accountButton = [[UIButton alloc] initWithFrame:CGRectMake(accountBtnOrigin_X, btnFrame.origin.y-5 , btnFrame.size.width + 10, btnFrame.size.height)];
     accountButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [accountButton setTitle:@"My Account" forState:UIControlStateNormal];
+    [accountButton setImage:[UIImage imageNamed:@"user_icon"] forState:UIControlStateNormal];
     [accountButton addTarget:self action:@selector(accountButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     
     // Add search icon

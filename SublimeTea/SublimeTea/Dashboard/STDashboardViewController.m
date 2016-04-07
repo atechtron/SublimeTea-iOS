@@ -11,9 +11,12 @@
 #import "STProductCategoriesViewController.h"
 #import "STDashboardCollectionViewCell.h"
 #import "STGlobalCacheManager.h"
-//#import "STPlaceOrder.h"
+#import "KASlideShow.h"
 
-@interface STDashboardViewController ()<UICollectionViewDelegateFlowLayout>
+@interface STDashboardViewController ()<UICollectionViewDelegateFlowLayout,KASlideShowDelegate>
+{
+    KASlideShow *_slideshow;
+}
 @property (strong, nonatomic)NSArray *categories;
 @end
 
@@ -25,7 +28,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.collectionView.scrollEnabled = NO;
-
+    
 //    STPlaceOrder *order = [[STPlaceOrder alloc] init];
 //    [order placeOrder];
 
@@ -66,8 +69,25 @@
             img = [UIImage imageNamed:@"tea_rangeImage"];
             break;
         case 1:
+        {
+            UIView *uiview = [cell.contentView viewWithTag:121333];
+            if (!uiview) {
+                _slideshow = [[KASlideShow alloc] initWithFrame:CGRectMake(0, 0, collectionView.frame.size.width, cell.contentView.frame.size.height-60)];
+                _slideshow.delegate = self;
+                _slideshow.tag = 121333;
+                [_slideshow setDelay:3]; // Delay between transitions
+                [_slideshow setTransitionDuration:1]; // Transition duration
+                [_slideshow setTransitionType:KASlideShowTransitionSlide]; // Choose a transition type (fade or slide)
+                [_slideshow setImagesContentMode:UIViewContentModeScaleAspectFit]; // Choose a content mode for images to display
+                [_slideshow addImagesFromResources:@[@"customer-testimonial_01",@"customer-testimonial_02",@"customer-testimonial_03"]]; // Add images from resources
+                [_slideshow addGesture:KASlideShowGestureTap]; // Gesture to go previous/next directly on the image
+                [cell.contentView addSubview:_slideshow];
+                [_slideshow start];
+            }
             img = [UIImage imageNamed:@"customerTestimonial"];
+            
             break;
+        }
         case 2:
             img = [UIImage imageNamed:@"read-our-blog"];
             break;
@@ -163,4 +183,16 @@
 - (void)loadProductCategories {
     [self performSegueWithIdentifier:@"productCategorySegue" sender:self];
 }
+
+#pragma mark-
+#pragma KASlideshowDelegate
+- (void) kaSlideShowDidShowNext:(KASlideShow *) slideShow {
+}
+- (void) kaSlideShowDidShowPrevious:(KASlideShow *) slideShow {
+}
+- (void) kaSlideShowWillShowNext:(KASlideShow *) slideShow {
+}
+- (void) kaSlideShowWillShowPrevious:(KASlideShow *) slideShow {
+}
+
 @end
