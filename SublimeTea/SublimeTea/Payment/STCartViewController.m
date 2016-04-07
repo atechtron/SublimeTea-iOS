@@ -108,6 +108,7 @@
             prodTotalCell.prodQuantityTextField.text = prod.prodQty> 0 ?[NSString stringWithFormat:@"%ld",(long)prod.prodQty]:@"";
             prodTotalCell.prodQuantityTextField.tag = indexPath.row-1;
             prodTotalCell.prodQuantityTextField.delegate = self;
+            prodTotalCell.prodQuantityTextField.enabled = YES;
             self.qtyTxtField = prodTotalCell.prodQuantityTextField;
             
             prodTotalCell.removeProdButton.tag = indexPath.row-1;
@@ -325,7 +326,17 @@
 
 #pragma mark-
 #pragma UITextFieldDelegate
-
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    UIView *superView = textField.superview.superview;
+    if ([superView isKindOfClass:[STCartProdTotalTableViewCell class]]) {
+        STCartProdTotalTableViewCell *cell = (STCartProdTotalTableViewCell *)superView;
+        if ([textField isEqual:cell.prodQuantityTextField]) {
+          [self droDownAction:textField tapGesture:nil];
+        }
+        return NO;
+    }
+    return YES;
+}
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
     
 }
