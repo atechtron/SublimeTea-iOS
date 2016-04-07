@@ -9,6 +9,7 @@
 #import "STViewController.h"
 
 @interface Address:NSObject
+@property (nonatomic,strong)NSString  *customer_address_id;
 @property (nonatomic,strong)NSString  *city;
 @property (nonatomic,strong)NSString  *country_id;
 @property (nonatomic,strong)NSString  *firstname;
