@@ -14,19 +14,7 @@
 		18270B781CA945E700339E6A /* NSData+NSHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 18270B751CA945E700339E6A /* NSData+NSHash.m */; };
 		18270B791CA945E700339E6A /* NSString+NSHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 18270B771CA945E700339E6A /* NSString+NSHash.m */; };
 		18270B7C1CA9AD5000339E6A /* STOrderDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18270B7B1CA9AD5000339E6A /* STOrderDetailsViewController.m */; };
-		189C0A201CA42807002A40E0 /* EBSLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B98827F1C81E4D100BA5234 /* EBSLib.a */; };
-		189C0A211CA42859002A40E0 /* CashAndNetBankingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882831C81E4D100BA5234 /* CashAndNetBankingCell.xib */; };
-		189C0A221CA42893002A40E0 /* CashAndNetBankingCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882851C81E4D100BA5234 /* CashAndNetBankingCell_iPad.xib */; };
-		189C0A231CA42898002A40E0 /* CreditAndDebitCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882871C81E4D100BA5234 /* CreditAndDebitCardCell.xib */; };
-		189C0A241CA4289C002A40E0 /* CreditCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882891C81E4D100BA5234 /* CreditCardCell.xib */; };
-		189C0A251CA428A0002A40E0 /* CreditCardCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B98828B1C81E4D100BA5234 /* CreditCardCell_iPad.xib */; };
-		189C0A261CA428A3002A40E0 /* DebitCardCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B98828D1C81E4D100BA5234 /* DebitCardCell_iPad.xib */; };
-		189C0A271CA428A7002A40E0 /* PaymentModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882911C81E4D100BA5234 /* PaymentModeViewController.xib */; };
-		189C0A281CA428AA002A40E0 /* PaymentModeViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882921C81E4D100BA5234 /* PaymentModeViewController_iPad.xib */; };
-		189C0A291CA428AE002A40E0 /* StoredCardCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882951C81E4D100BA5234 /* StoredCardCell_iPad.xib */; };
-		189C0A2A1CA428B2002A40E0 /* StoredCardCell_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882971C81E4D100BA5234 /* StoredCardCell_iPhone.xib */; };
-		189C0A2B1CA428B9002A40E0 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B98829B1C81E4D100BA5234 /* WebViewController.xib */; };
-		189C0A2C1CA428BD002A40E0 /* TIMERUIApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9882991C81E4D100BA5234 /* TIMERUIApplication.m */; };
+		18692FB81CB6E3CC00173D7C /* KASlideShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 18692FB71CB6E3CC00173D7C /* KASlideShow.m */; };
 		189C0A2D1CA428CD002A40E0 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B98827E1C81E4D100BA5234 /* Config.plist */; };
 		18AC92501C9095A3002D91F4 /* STCart.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AC924F1C9095A3002D91F4 /* STCart.m */; };
 		18B626CD1C91D9650018D260 /* STPopoverTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B626CC1C91D9650018D260 /* STPopoverTableViewCell.m */; };
@@ -180,6 +168,8 @@
 		18270B771CA945E700339E6A /* NSString+NSHash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+NSHash.m"; sourceTree = "<group>"; };
 		18270B7A1CA9AD5000339E6A /* STOrderDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STOrderDetailsViewController.h; path = User/Orders/STOrderDetailsViewController.h; sourceTree = "<group>"; };
 		18270B7B1CA9AD5000339E6A /* STOrderDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STOrderDetailsViewController.m; path = User/Orders/STOrderDetailsViewController.m; sourceTree = "<group>"; };
+		18692FB61CB6E3CC00173D7C /* KASlideShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KASlideShow.h; sourceTree = "<group>"; };
+		18692FB71CB6E3CC00173D7C /* KASlideShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KASlideShow.m; sourceTree = "<group>"; };
 		18AC924E1C9095A3002D91F4 /* STCart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STCart.h; path = User/STCart.h; sourceTree = "<group>"; };
 		18AC924F1C9095A3002D91F4 /* STCart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STCart.m; path = User/STCart.m; sourceTree = "<group>"; };
 		18B626CB1C91D9650018D260 /* STPopoverTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPopoverTableViewCell.h; path = User/Shipping/STPopoverTableViewCell.h; sourceTree = "<group>"; };
@@ -459,6 +449,15 @@
 				18270B771CA945E700339E6A /* NSString+NSHash.m */,
 			);
 			name = MD5_Encyption;
+			sourceTree = "<group>";
+		};
+		18692FB51CB6E3B300173D7C /* SlideShow */ = {
+			isa = PBXGroup;
+			children = (
+				18692FB61CB6E3CC00173D7C /* KASlideShow.h */,
+				18692FB71CB6E3CC00173D7C /* KASlideShow.m */,
+			);
+			name = SlideShow;
 			sourceTree = "<group>";
 		};
 		18C84AFE1CA1079700709974 /* customTextField */ = {
@@ -761,6 +760,7 @@
 		2BFA1B6C1C7DFD69008C4833 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				18692FB51CB6E3B300173D7C /* SlideShow */,
 				18270B731CA945BD00339E6A /* MD5_Encyption */,
 				18C84B031CA10A1F00709974 /* loading.gif */,
 				18C84AFF1CA107E900709974 /* GIF_indicator */,
@@ -1171,6 +1171,7 @@
 				18072F1C1C9A5522000E5AEE /* STAddress.m in Sources */,
 				2B98821D1C81B58A00BA5234 /* STCartTableViewCell.m in Sources */,
 				2BC0E50D1C823151001085F8 /* STOderListTableViewCell.m in Sources */,
+				18692FB81CB6E3CC00173D7C /* KASlideShow.m in Sources */,
 				2B456F951C7F558900C240A5 /* STRootViewController.m in Sources */,
 				18AC92501C9095A3002D91F4 /* STCart.m in Sources */,
 				2BFA1BD21C7E3118008C4833 /* STProductCategoryCollectionViewCell.m in Sources */,
