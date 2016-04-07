@@ -15,6 +15,19 @@
 		18270B791CA945E700339E6A /* NSString+NSHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 18270B771CA945E700339E6A /* NSString+NSHash.m */; };
 		18270B7C1CA9AD5000339E6A /* STOrderDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18270B7B1CA9AD5000339E6A /* STOrderDetailsViewController.m */; };
 		18692FB81CB6E3CC00173D7C /* KASlideShow.m in Sources */ = {isa = PBXBuildFile; fileRef = 18692FB71CB6E3CC00173D7C /* KASlideShow.m */; };
+		18692FBF1CB6F27F00173D7C /* EBSLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B98827F1C81E4D100BA5234 /* EBSLib.a */; };
+		18692FC01CB6F29900173D7C /* CashAndNetBankingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882831C81E4D100BA5234 /* CashAndNetBankingCell.xib */; };
+		18692FC11CB6F29900173D7C /* CashAndNetBankingCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882851C81E4D100BA5234 /* CashAndNetBankingCell_iPad.xib */; };
+		18692FC21CB6F29900173D7C /* CreditAndDebitCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882871C81E4D100BA5234 /* CreditAndDebitCardCell.xib */; };
+		18692FC31CB6F29900173D7C /* CreditCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882891C81E4D100BA5234 /* CreditCardCell.xib */; };
+		18692FC41CB6F29900173D7C /* CreditCardCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B98828B1C81E4D100BA5234 /* CreditCardCell_iPad.xib */; };
+		18692FC51CB6F29900173D7C /* DebitCardCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B98828D1C81E4D100BA5234 /* DebitCardCell_iPad.xib */; };
+		18692FC61CB6F29900173D7C /* PaymentModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882911C81E4D100BA5234 /* PaymentModeViewController.xib */; };
+		18692FC71CB6F29900173D7C /* PaymentModeViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882921C81E4D100BA5234 /* PaymentModeViewController_iPad.xib */; };
+		18692FC81CB6F29900173D7C /* StoredCardCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882951C81E4D100BA5234 /* StoredCardCell_iPad.xib */; };
+		18692FC91CB6F29900173D7C /* StoredCardCell_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9882971C81E4D100BA5234 /* StoredCardCell_iPhone.xib */; };
+		18692FCA1CB6F29900173D7C /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B98829B1C81E4D100BA5234 /* WebViewController.xib */; };
+		18692FCB1CB6F29E00173D7C /* TIMERUIApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9882991C81E4D100BA5234 /* TIMERUIApplication.m */; };
 		189C0A2D1CA428CD002A40E0 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B98827E1C81E4D100BA5234 /* Config.plist */; };
 		18AC92501C9095A3002D91F4 /* STCart.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AC924F1C9095A3002D91F4 /* STCart.m */; };
 		18B626CD1C91D9650018D260 /* STPopoverTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B626CC1C91D9650018D260 /* STPopoverTableViewCell.m */; };
@@ -389,7 +402,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				189C0A201CA42807002A40E0 /* EBSLib.a in Frameworks */,
+				18692FBF1CB6F27F00173D7C /* EBSLib.a in Frameworks */,
 				2B9882CA1C81E67500BA5234 /* SystemConfiguration.framework in Frameworks */,
 				2B9882C81C81E65F00BA5234 /* CFNetwork.framework in Frameworks */,
 				2B9882C61C81E65500BA5234 /* MobileCoreServices.framework in Frameworks */,
@@ -1073,21 +1086,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				189C0A291CA428AE002A40E0 /* StoredCardCell_iPad.xib in Resources */,
 				2B9882BC1C81E4D100BA5234 /* close@2x.png in Resources */,
 				18F8DE551C972F0D008BFC55 /* OpenSans-Italic.ttf in Resources */,
 				2B9882B81C81E4D100BA5234 /* arrow.png in Resources */,
-				189C0A281CA428AA002A40E0 /* PaymentModeViewController_iPad.xib in Resources */,
-				189C0A2B1CA428B9002A40E0 /* WebViewController.xib in Resources */,
-				189C0A261CA428A3002A40E0 /* DebitCardCell_iPad.xib in Resources */,
 				18F8DE371C972EEC008BFC55 /* Caviar_Dreams_Bold.ttf in Resources */,
 				2B456FA81C7F603800C240A5 /* STMenuUserInfoTableHeaderView.xib in Resources */,
 				2BA72EF51C7DC8F0006105B6 /* LaunchScreen.storyboard in Resources */,
-				189C0A251CA428A0002A40E0 /* CreditCardCell_iPad.xib in Resources */,
 				18F8DE391C972EEC008BFC55 /* CaviarDreams_Italic.ttf in Resources */,
 				18F8DE421C972F01008BFC55 /* LFAXI_0.TTF in Resources */,
+				18692FC31CB6F29900173D7C /* CreditCardCell.xib in Resources */,
 				2B9882BF1C81E4D100BA5234 /* RadioOff.png in Resources */,
-				189C0A231CA42898002A40E0 /* CreditAndDebitCardCell.xib in Resources */,
+				18692FCA1CB6F29900173D7C /* WebViewController.xib in Resources */,
 				18F8DE5A1C972F0D008BFC55 /* OpenSansLight-Italic.ttf in Resources */,
 				2B9882C01C81E4D100BA5234 /* RadioOn.png in Resources */,
 				18F8DE521C972F0D008BFC55 /* OpenSans-CondensedLightItalic.ttf in Resources */,
@@ -1095,6 +1104,7 @@
 				18F8DE511C972F0D008BFC55 /* OpenSans-CondensedLight.ttf in Resources */,
 				2BA72EF21C7DC8F0006105B6 /* Assets.xcassets in Resources */,
 				18C84B041CA10A1F00709974 /* loading.gif in Resources */,
+				18692FC41CB6F29900173D7C /* CreditCardCell_iPad.xib in Resources */,
 				2B456FA11C7F5C4400C240A5 /* STMenuTableHeaderView.xib in Resources */,
 				2B9882BD1C81E4D100BA5234 /* cvv_no.jpg in Resources */,
 				18F8DE4F1C972F0D008BFC55 /* OpenSans-Bold.ttf in Resources */,
@@ -1108,30 +1118,33 @@
 				2B2E57B41C836FFC00351F39 /* STOrderConfirmationFooterView.xib in Resources */,
 				18F8DE381C972EEC008BFC55 /* CaviarDreams_BoldItalic.ttf in Resources */,
 				2BC0E5101C8231A1001085F8 /* STOrderListHeaderView.xib in Resources */,
+				18692FC81CB6F29900173D7C /* StoredCardCell_iPad.xib in Resources */,
 				2B9882C11C81E4D100BA5234 /* sachin_book1.png in Resources */,
 				18F8DE531C972F0D008BFC55 /* OpenSans-ExtraBold.ttf in Resources */,
+				18692FC11CB6F29900173D7C /* CashAndNetBankingCell_iPad.xib in Resources */,
+				18692FC71CB6F29900173D7C /* PaymentModeViewController_iPad.xib in Resources */,
+				18692FC51CB6F29900173D7C /* DebitCardCell_iPad.xib in Resources */,
 				18F8DE571C972F0D008BFC55 /* OpenSans-Semibold.ttf in Resources */,
 				18F8DE501C972F0D008BFC55 /* OpenSans-BoldItalic.ttf in Resources */,
-				189C0A271CA428A7002A40E0 /* PaymentModeViewController.xib in Resources */,
-				189C0A2A1CA428B2002A40E0 /* StoredCardCell_iPhone.xib in Resources */,
 				2B2DC0B41C82D76A00A29459 /* STCartHeaderView.xib in Resources */,
+				18692FC01CB6F29900173D7C /* CashAndNetBankingCell.xib in Resources */,
 				18F8DE541C972F0D008BFC55 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
+				18692FC21CB6F29900173D7C /* CreditAndDebitCardCell.xib in Resources */,
 				2B9882BE1C81E4D100BA5234 /* inputBgDrop.png in Resources */,
 				18F8DE411C972F01008BFC55 /* LFAXDI_0.TTF in Resources */,
+				18692FC91CB6F29900173D7C /* StoredCardCell_iPhone.xib in Resources */,
 				2B9882B91C81E4D100BA5234 /* check.png in Resources */,
 				18F8DE561C972F0D008BFC55 /* OpenSans-Light.ttf in Resources */,
 				18F8DE3C1C972EF5008BFC55 /* LFAX_0.TTF in Resources */,
-				189C0A221CA42893002A40E0 /* CashAndNetBankingCell_iPad.xib in Resources */,
 				2B9882BB1C81E4D100BA5234 /* close.png in Resources */,
-				189C0A241CA4289C002A40E0 /* CreditCardCell.xib in Resources */,
 				2B9882C31C81E4D100BA5234 /* uncheck@2x.png in Resources */,
 				18F8DE401C972F01008BFC55 /* LFAXD_0.TTF in Resources */,
 				2B9882BA1C81E4D100BA5234 /* check@2x.png in Resources */,
 				189C0A2D1CA428CD002A40E0 /* Config.plist in Resources */,
 				18F8DE3A1C972EEC008BFC55 /* CaviarDreams.ttf in Resources */,
-				189C0A211CA42859002A40E0 /* CashAndNetBankingCell.xib in Resources */,
 				2B456FB61C7F80E600C240A5 /* STProductInfo2TableViewCell.xib in Resources */,
 				2B456FBC1C7F810F00C240A5 /* STProductDescriptionTableViewCell.xib in Resources */,
+				18692FC61CB6F29900173D7C /* PaymentModeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1156,7 +1169,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				189C0A2C1CA428BD002A40E0 /* TIMERUIApplication.m in Sources */,
 				2BE835041C85E278008BA172 /* FileDownloader.m in Sources */,
 				2BB2F42D1C842ED10024BB26 /* STProfileHeaderView.m in Sources */,
 				181C13991C8DFE2600A0A63A /* STDropDownTableViewCell.m in Sources */,
@@ -1169,6 +1181,7 @@
 				2BE835071C85E49C008BA172 /* NSMutableURLRequest+URLCookie.m in Sources */,
 				2BFA1BA21C7E058B008C4833 /* STProductDetailViewController.m in Sources */,
 				18072F1C1C9A5522000E5AEE /* STAddress.m in Sources */,
+				18692FCB1CB6F29E00173D7C /* TIMERUIApplication.m in Sources */,
 				2B98821D1C81B58A00BA5234 /* STCartTableViewCell.m in Sources */,
 				2BC0E50D1C823151001085F8 /* STOderListTableViewCell.m in Sources */,
 				18692FB81CB6E3CC00173D7C /* KASlideShow.m in Sources */,
