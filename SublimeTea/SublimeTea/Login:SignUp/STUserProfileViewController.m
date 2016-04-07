@@ -68,6 +68,7 @@
     UIView *viewToScroll;
     NSString *passwordString;
     STPopoverTableViewController *popoverViewController;
+    CGRect tableFrame;
 }
 @property (strong, nonatomic) NSMutableArray *dataArr;
 @property (strong, nonatomic) NSMutableArray *customerAddressList;
@@ -118,6 +119,7 @@
 }
 - (void)viewDidAppear:(BOOL)animated {
     [self fetchCustomerAddressList];
+    tableFrame = self.tableView.frame;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -636,21 +638,14 @@
     [[note.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue: &keyboardBounds];
     
     // Detect orientation
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    CGRect frame = self.tableView.frame;
+//    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:0.3f];
     
-    // Increase size of the Table view
-    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
-        frame.size.height += keyboardBounds.size.height;
-    else
-        frame.size.height += keyboardBounds.size.width;
-    
     // Apply new size of table view
-    self.tableView.frame = frame;
+    self.tableView.frame = tableFrame;
     
     [UIView commitAnimations];
 }
