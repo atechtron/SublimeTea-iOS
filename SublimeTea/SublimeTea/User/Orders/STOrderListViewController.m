@@ -33,6 +33,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     NSDictionary *xmlDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kOrderList_Key];
     if (xmlDict) {
         [self parseOrderDetailsResponseWithDict:xmlDict];

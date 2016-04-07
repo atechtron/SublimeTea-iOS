@@ -34,6 +34,7 @@
     downloadSession = [NSURLSession sessionWithConfiguration:downloadConfig];
 }
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
 }
 - (void)viewDidAppear:(BOOL)animated {

@@ -152,7 +152,7 @@
                         "<customerId xsi:type=\"xsd:int\">%ld</customerId>"
                         "</urn:customerAddressList>"
                         "</soapenv:Body>"
-                        "</soapenv:Envelope>",sessionId,(long)custId];
+                        "</soapenv:Envelope>",sessionId,(long)[custId integerValue]];
     return tempStr;
 }
 

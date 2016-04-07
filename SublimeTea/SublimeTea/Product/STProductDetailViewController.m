@@ -41,7 +41,9 @@ static double prodQtyCount = 0.0;
     downloadSession = [NSURLSession sessionWithConfiguration:downloadConfig];
 }
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     prodQtyCount = 0.0;
+    [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

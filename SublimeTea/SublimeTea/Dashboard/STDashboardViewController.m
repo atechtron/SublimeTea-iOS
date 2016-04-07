@@ -42,8 +42,8 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"productCategorySegue"]) {
-        STProductCategoriesViewController *catVC = segue.destinationViewController;
-        catVC.prodCategories = self.categories;
+//        STProductCategoriesViewController *catVC = segue.destinationViewController;
+//        catVC.prodCategories = self.categories;
     }
 }
 
@@ -107,16 +107,7 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        if ([STUtility isNetworkAvailable]) {
-            [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
-            NSDictionary *xmlDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductCategory_Key];
-            if (xmlDict) {
-                [self parseResponseWithDict:xmlDict];
-            }
-            else {
-                [self fetchProductCategories];
-            }
-        }
+        [self loadProductCategories];
     }
     else if (indexPath.row == 1) {
     
@@ -168,64 +159,7 @@
 - (IBAction)cartButtonAction:(UIBarButtonItem *)sender {
     [self performSegueWithIdentifier:@"carViewFromDashboardSegue" sender:self];
 }
-- (void)fetchProductCategories {
-    
-    NSString *requestBody = [STConstants categoryListRequestBody];
-    
-    NSString *urlString = [STConstants getAPIURLWithParams:nil];
-    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
-    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
-                                                         methodType:@"POST"
-                                                               body:requestBody
-                                                responseHeaderBlock:^(NSURLResponse *response)
-                                  {
-                                      
-                                  }successBlock:^(NSData *responseData){
-                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                          NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
-                                          [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic
-                                                                                        withKey:kProductCategory_Key];
-                                          dbLog(@"%@",xmlDic);
 
-                                          [self parseResponseWithDict:xmlDic];
-                                      });
-                                      
-                                  }failureBlock:^(NSError *error) {
-                                      [STUtility stopActivityIndicatorFromView:nil];
-                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
-                                                                  message:@"Unexpected error has occured, Please try after some time."
-                                                                 delegate:nil
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles: nil] show];
-                                      dbLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
-                                  }];
-    
-    [httpRequest start];
-}
-- (void)parseResponseWithDict:(NSDictionary *)responseDict {
-    if (responseDict) {
-        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
-        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
-            NSArray *productCategoriesArr = responseDict[@"SOAP-ENV:Body"][@"ns1:catalogCategoryTreeResponse"][@"tree"][@"children"][@"item"][@"children"][@"item"][@"children"][@"item"];
-            dbLog(@"%@",productCategoriesArr);
-            if (productCategoriesArr.count) {
-                self.categories = [NSArray arrayWithArray:productCategoriesArr];
-                [self performSelector:@selector(loadProductCategories) withObject:nil afterDelay:0.4];
-            }
-            else{
-                // No categories found.
-            }
-        }
-        else {
-            [AppDelegate startSession];
-            [self fetchProductCategories];
-        }
-    }else {
-        //No categories found.
-    }
-    [STUtility stopActivityIndicatorFromView:nil];
-}
 - (void)loadProductCategories {
     [self performSegueWithIdentifier:@"productCategorySegue" sender:self];
 }
