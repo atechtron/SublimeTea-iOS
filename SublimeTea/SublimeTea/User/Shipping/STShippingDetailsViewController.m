@@ -433,15 +433,16 @@
             STPrfileTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.profileTextFieldTitleLabel.text = @"First Name";
             _cell.profileTextField.delegate = self;
+            _cell.profileTextField.text = @"";
             if (indexPath.section == 0) {
                 self.firstNameTextField = _cell.profileTextField;
-                if(self.firstNameTextField.text.length)
-                    _cell.profileTextField.text = self.firstNameTextField.text;
+                if(address.shipAddress.firstname.length)
+                    _cell.profileTextField.text = address.shipAddress.firstname;
             }
             else {
                 self.billingFirstNameTextField = _cell.profileTextField;
-                if (self.billingFirstNameTextField.text.length) {
-                    _cell.profileTextField.text = self.billingFirstNameTextField.text;
+                if (address.billedAddress.firstname.length) {
+                    _cell.profileTextField.text = address.billedAddress.firstname;
                 }
             }
             cell = _cell;
@@ -453,16 +454,17 @@
             STPrfileTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.profileTextFieldTitleLabel.text = @" Last Name";
             _cell.profileTextField.delegate = self;
+            _cell.profileTextField.text = @"";
             if (indexPath.section == 0) {
                 self.lastNameTextField = _cell.profileTextField;
-                if (self.lastNameTextField.text.length) {
-                    _cell.profileTextField.text = self.lastNameTextField.text;
+                if (address.shipAddress.lastname.length) {
+                    _cell.profileTextField.text = address.shipAddress.lastname;
                 }
             }
             else {
                 self.billingLastNameTextField = _cell.profileTextField;
-                if (self.billingLastNameTextField.text.length) {
-                    _cell.profileTextField.text = self.billingLastNameTextField.text;
+                if (address.billedAddress.lastname.length) {
+                    _cell.profileTextField.text = address.billedAddress.lastname;
                 }
             }
             cell = _cell;
@@ -473,17 +475,18 @@
             NSString *cellIdentifier = @"textViewCell";
             STPrfileTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.profileTextViewTitleLabel.text = @"Shipping Address";
-            _cell.profileTextField.delegate = self;
+            _cell.profileTextView.delegate = self;
+            _cell.profileTextView.text = @"";
             if (indexPath.section == 0) {
                 self.addressTextView = _cell.profileTextView;
-                if (self.addressTextView.text.length) {
-                    _cell.profileTextView.text = self.addressTextView.text;
+                if (address.shipAddress.street.length) {
+                    _cell.profileTextView.text = address.shipAddress.street;
                 }
             }
             else {
                 self.billingAddressTextView = _cell.profileTextView;
-                if (self.billingAddressTextView.text.length) {
-                    _cell.profileTextView.text = self.billingAddressTextView.text;
+                if (address.billedAddress.street.length) {
+                    _cell.profileTextView.text = address.billedAddress.street;
                 }
             }
             cell = _cell;
@@ -496,25 +499,31 @@
             _cell.delegate = self;
             _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
-            //            _cell.dropDownTextField.text = @"TV";
-            //            _cell.textField.text = @"Treviso";
             _cell.dropDownTitleLabel.text = @"Shipping State";
             _cell.textFieldTitleLabel.text = @"Shipping City";
             _cell.textField.keyboardType = UIKeyboardTypeDefault;
             _cell.textField.delegate = self;
             _cell.dropDownTextField.delegate = self;
+            _cell.dropDownTextField.text = @"";
+            _cell.textField.text = @"";
             if (indexPath.section == 0) {
                 self.cityTextField = _cell.textField;
                 self.stateTextField = _cell.dropDownTextField;
-                if (self.stateTextField.text.length) {
-                    _cell.dropDownTextField.text = self.stateTextField.text;
+                if (address.shipAddress.region.length) {
+                    _cell.dropDownTextField.text = address.shipAddress.region;
+                }
+                if(address.shipAddress.city.length){
+                    _cell.textField.text = address.shipAddress.city;
                 }
             }
             else {
                 self.billingCityTextField = _cell.textField;
                 self.billingStateTextField = _cell.dropDownTextField;
-                if (self.billingStateTextField.text.length) {
-                    _cell.dropDownTextField.text = self.billingStateTextField.text;
+                if (address.billedAddress.region.length) {
+                    _cell.dropDownTextField.text = address.billedAddress.region;
+                }
+                if(address.billedAddress.city.length){
+                    _cell.textField.text = address.billedAddress.city;
                 }
             }
             cell = _cell;
@@ -527,25 +536,31 @@
             _cell.delegate = self;
             _cell.indexPath = indexPath;
             _cell.dropDownTextField.tag = indexPath.row;
-            //            _cell.dropDownTextField.text = @"IT";
-            //            _cell.textField.text = @"31056";
             _cell.dropDownTitleLabel.text = @"Shipping Country";
             _cell.textFieldTitleLabel.text = @"Shipping Postal Code";
             _cell.textField.keyboardType = UIKeyboardTypeNumberPad;
             _cell.textField.delegate = self;
             _cell.dropDownTextField.delegate = self;
+            _cell.dropDownTextField.text = @"";
+            _cell.textField.text = @"";
             if (indexPath.section == 0) {
                 self.postalCodeTextField = _cell.textField;
                 self.countryextField = _cell.dropDownTextField;
-                if (self.countryextField.text.length) {
-                    _cell.dropDownTextField.text = self.countryextField.text;
+                if (address.shipAddress.country_id.length) {
+                    _cell.dropDownTextField.text = selectedCountryDict[@"country_id"][@"__text"];
+                }
+                if (address.shipAddress.postcode.length) {
+                    _cell.textField.text = address.shipAddress.postcode;
                 }
             }
             else {
                 self.billingPostalCodeTextField = _cell.textField;
                 self.billingCountryextField = _cell.dropDownTextField;
-                if (self.billingCountryextField.text.length) {
-                    _cell.dropDownTextField.text = self.billingCountryextField.text;
+                if (address.billedAddress.country_id.length) {
+                    _cell.dropDownTextField.text = billingSelectedCountryDict[@"country_id"][@"__text"];
+                }
+                if (address.billedAddress.postcode.length) {
+                    _cell.textField.text = address.billedAddress.postcode;
                 }
             }
             cell = _cell;
@@ -557,15 +572,16 @@
             STPrfileTableViewCell *_cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             _cell.profileTextFieldTitleLabel.text = @"Shipping Email";
             _cell.profileTextField.delegate = self;
+            _cell.profileTextField.text = @"";
             if (indexPath.section == 0) {
                 self.emailTextField = _cell.profileTextField;
-                if (self.emailTextField.text.length) {
-                    _cell.profileTextField.text = self.emailTextField.text;
+                if (address.shipAddress.email.length) {
+                    _cell.profileTextField.text = address.shipAddress.email;
                 }
             }else {
                 self.billingEmailTextField = _cell.profileTextField;
-                if (self.billingEmailTextField.text.length) {
-                    _cell.profileTextField.text = self.billingEmailTextField.text;
+                if (address.billedAddress.email.length) {
+                    _cell.profileTextField.text = address.billedAddress.email;
                 }
             }
             cell = _cell;
@@ -578,16 +594,17 @@
             _cell.titleLabel.text = @"Shipping Phone";
             _cell.phoneCountryCodeTextBox.text = @"+91";
             _cell.phoneTextField.delegate = self;
+            _cell.phoneTextField.text = @"";
             if (indexPath.section == 0) {
                 self.phoneTextField = _cell.phoneTextField;
-                if (self.phoneTextField.text.length) {
-                    _cell.phoneTextField.text = self.phoneTextField.text;
+                if (address.shipAddress.telephone.length) {
+                    _cell.phoneTextField.text = address.shipAddress.telephone;
                 }
             }
             else {
                 self.billingPhoneTextField = _cell.phoneTextField;
-                if (self.billingPhoneTextField.text.length) {
-                    _cell.phoneTextField.text = self.billingPhoneTextField.text;
+                if (address.billedAddress.telephone.length) {
+                    _cell.phoneTextField.text = address.billedAddress.telephone;
                 }
             }
             cell = _cell;
@@ -931,6 +948,102 @@
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     
+    if (self.isShippingISBillingAddress) {
+        
+        address.shipAddress.region_id = self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"region_id"][@"__text"];
+        
+        if ([textField isEqual:self.firstNameTextField]) {
+            NSString *firstNameStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.firstname = firstNameStr;
+        }
+        else if([textField isEqual:self.lastNameTextField])
+        {
+            NSString *lastNameStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.lastname = lastNameStr;
+        }
+        else if([textField isEqual:self.cityTextField])
+        {
+            NSString *cityStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.city = cityStr;
+        }
+        else if([textField isEqual:self.stateTextField])
+        {
+            NSString *stateStr =  self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"name"][@"__text"];
+            stateStr = stateStr?stateStr:[textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.region = stateStr;
+        }
+        else if([textField isEqual:self.postalCodeTextField])
+        {
+         NSString *postalCodeStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.postcode = postalCodeStr;
+        }
+        else if([textField isEqual:self.countryextField])
+        {
+            NSString *countryStr = selectedCountryDict ? selectedCountryDict[@"country_id"][@"__text"] : [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            countryStr = countryStr?countryStr:[textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.country_id = countryStr;
+        }
+        else if([textField isEqual:self.emailTextField])
+        {
+            NSString *emailStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.email = emailStr;
+        }
+        else if([textField isEqual:self.phoneTextField])
+        {
+            NSString *phoneStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.telephone = phoneStr;
+        }
+//        else if([textField isEqual:self.addressTextView])
+//        {
+//            
+//        }
+        
+    }
+    else {
+        address.billedAddress.region_id = self.listOfStatesForSelectedCountryForBilling[selectedStatesIdxForBilling][@"region_id"][@"__text"];
+        //        address.billedAddress.couponCode = couponCodeStr;
+        if ([textField isEqual:self.firstNameTextField]) {
+            NSString *firstNameStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.billedAddress.firstname = firstNameStr;
+        }
+        else if([textField isEqual:self.lastNameTextField])
+        {
+            NSString *lastNameStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.billedAddress.lastname = lastNameStr;
+        }
+        else if([textField isEqual:self.cityTextField])
+        {
+            NSString *cityStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.billedAddress.city = cityStr;
+        }
+        else if([textField isEqual:self.stateTextField])
+        {
+            NSString *stateStr =  self.listOfStatesForSelectedCountryForBilling[selectedStatesIdxForBilling][@"name"][@"__text"];
+            stateStr = stateStr?stateStr:[textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.billedAddress.region = stateStr;
+        }
+        else if([textField isEqual:self.postalCodeTextField])
+        {
+            NSString *postalCodeStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.billedAddress.postcode = postalCodeStr;
+        }
+        else if([textField isEqual:self.countryextField])
+        {
+            NSString *countryStr = billingSelectedCountryDict ? billingSelectedCountryDict[@"country_id"][@"__text"] : [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            countryStr = countryStr?countryStr:[textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.billedAddress.country_id = countryStr;
+        }
+        else if([textField isEqual:self.emailTextField])
+        {
+            NSString *emailStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.billedAddress.email = emailStr;
+        }
+        else if([textField isEqual:self.phoneTextField])
+        {
+            NSString *phoneStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.billedAddress.telephone = phoneStr;
+        }
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -964,11 +1077,20 @@
 #pragma mark -
 #pragma UITextViewDelegate
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    
+
 }
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    if ([textView isEqual:self.addressTextView]) {
-        
+    if (self.isShippingISBillingAddress) {
+        if ([textView isEqual:self.addressTextView]) {
+            NSString *addressStr = [textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.street = addressStr;
+        }
+    }
+    else {
+        if ([textView isEqual:self.billingAddressTextView]) {
+            NSString *addressStr = [textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.billedAddress.street = addressStr;
+        }
     }
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
