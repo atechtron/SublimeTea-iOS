@@ -58,67 +58,6 @@
         </mutableArray>
     </customFonts>
     <scenes>
-        <!--Initial View Controller-->
-        <scene sceneID="g27-Mk-rYm">
-            <objects>
-                <viewController storyboardIdentifier="STInitialViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="n50-TW-iqQ" customClass="STInitialViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="1im-Dp-w7g"/>
-                        <viewControllerLayoutGuide type="bottom" id="3TV-3X-TnT"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="jWu-1X-BZV">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchImage" translatesAutoresizingMaskIntoConstraints="NO" id="Vuf-ge-Fmx">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0eV-JE-AYr">
-                                <rect key="frame" x="135" y="361" width="329" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="0eV-JE-AYr" secondAttribute="height" multiplier="47:5" id="yS6-gy-YtD"/>
-                                </constraints>
-                                <state key="normal" image="sign In_button_main screen"/>
-                                <connections>
-                                    <segue destination="BYZ-38-t0r" kind="push" identifier="loginSegue" id="QG6-wc-oc2"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgV-0q-ArR">
-                                <rect key="frame" x="135" y="407" width="329" height="35"/>
-                                <state key="normal" title="Sign Up" image="sign up_button_main screen"/>
-                                <connections>
-                                    <segue destination="sod-tq-efW" kind="push" identifier="signUPSegue" id="Wx8-Gr-FI7"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="0eV-JE-AYr" firstAttribute="centerX" secondItem="jWu-1X-BZV" secondAttribute="centerX" id="0Fg-ko-QnH"/>
-                            <constraint firstItem="0eV-JE-AYr" firstAttribute="height" secondItem="jgV-0q-ArR" secondAttribute="height" id="299-De-2En"/>
-                            <constraint firstItem="3TV-3X-TnT" firstAttribute="top" secondItem="jgV-0q-ArR" secondAttribute="bottom" constant="158" id="56k-fq-FaO"/>
-                            <constraint firstItem="Vuf-ge-Fmx" firstAttribute="leading" secondItem="0eV-JE-AYr" secondAttribute="trailing" constant="-464" id="8s1-Vh-v9R"/>
-                            <constraint firstItem="0eV-JE-AYr" firstAttribute="width" secondItem="Vuf-ge-Fmx" secondAttribute="height" multiplier="329:600" id="HzS-hP-ONL"/>
-                            <constraint firstItem="jgV-0q-ArR" firstAttribute="centerX" secondItem="jWu-1X-BZV" secondAttribute="centerX" id="dH4-v1-N6A"/>
-                            <constraint firstItem="Vuf-ge-Fmx" firstAttribute="leading" secondItem="jWu-1X-BZV" secondAttribute="leading" id="dZc-20-JFU"/>
-                            <constraint firstItem="jgV-0q-ArR" firstAttribute="width" secondItem="Vuf-ge-Fmx" secondAttribute="height" multiplier="329:600" id="kZC-Ma-LGu"/>
-                            <constraint firstItem="3TV-3X-TnT" firstAttribute="top" secondItem="Vuf-ge-Fmx" secondAttribute="bottom" id="lSZ-gC-UNn"/>
-                            <constraint firstAttribute="trailing" secondItem="Vuf-ge-Fmx" secondAttribute="trailing" id="nL4-H2-FdH"/>
-                            <constraint firstItem="0eV-JE-AYr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="1im-Dp-w7g" secondAttribute="bottom" constant="297" id="okQ-G1-pYU"/>
-                            <constraint firstItem="Vuf-ge-Fmx" firstAttribute="top" secondItem="jWu-1X-BZV" secondAttribute="top" id="tKG-4v-XoM"/>
-                            <constraint firstItem="jgV-0q-ArR" firstAttribute="top" secondItem="0eV-JE-AYr" secondAttribute="bottom" constant="11" id="yg1-lL-LbV"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="eqG-nQ-BrC"/>
-                    <connections>
-                        <outlet property="backgroundImageView" destination="Vuf-ge-Fmx" id="0BF-QX-Xe9"/>
-                        <outlet property="signInButton" destination="0eV-JE-AYr" id="cbh-Kk-2VI"/>
-                        <outlet property="signUp" destination="jgV-0q-ArR" id="xnX-iX-Gc4"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="a2A-7Q-1bW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="548" y="304"/>
-        </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="2Nq-FX-6eV">
             <objects>
@@ -2082,9 +2021,9 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="n50-TW-iqQ" kind="relationship" relationship="rootViewController" id="E8m-Hn-V65"/>
                         <segue destination="PQu-zL-pGB" kind="push" identifier="orderListSegue" id="rZx-wF-H0W"/>
                         <segue destination="dDr-zW-YYq" kind="push" identifier="userProfileSegue" id="JoG-ud-5Fw"/>
+                        <segue destination="8LO-TD-tRt" kind="relationship" relationship="rootViewController" id="ZsY-gr-yFp"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wOM-g3-oRG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2953,6 +2892,96 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xrt-ij-O0e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1449" y="1795"/>
+        </scene>
+        <!--Initial View Controller-->
+        <scene sceneID="Ueb-SJ-MH2">
+            <objects>
+                <viewController storyboardIdentifier="STInitialViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8LO-TD-tRt" customClass="STInitialViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="phT-kv-ZQF"/>
+                        <viewControllerLayoutGuide type="bottom" id="A9g-dG-nl6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7tM-JU-xvd">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchImage" translatesAutoresizingMaskIntoConstraints="NO" id="7Sh-SF-0BU">
+                                <rect key="frame" x="0.0" y="-8" width="600" height="608"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Qp-4V-0RN">
+                                <rect key="frame" x="135" y="407" width="329" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="VpO-cs-b2C">
+                                        <variation key="heightClass=regular" constant="45"/>
+                                        <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                    </constraint>
+                                </constraints>
+                                <state key="normal" title="Sign Up" image="sign up_button_main screen"/>
+                                <connections>
+                                    <segue destination="sod-tq-efW" kind="push" identifier="signUPSegue" id="czx-pE-UCe"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IWu-7x-2LA">
+                                <rect key="frame" x="136" y="350" width="329" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="zEb-h7-9Iz">
+                                        <variation key="heightClass=regular" constant="45"/>
+                                        <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                    </constraint>
+                                </constraints>
+                                <state key="normal" image="sign In_button_main screen"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="push" identifier="loginSegue" id="0b4-nV-LUr"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="7Qp-4V-0RN" firstAttribute="top" secondItem="IWu-7x-2LA" secondAttribute="bottom" constant="22" id="5v6-aZ-6rm">
+                                <variation key="heightClass=regular" constant="27"/>
+                                <variation key="widthClass=compact" constant="20"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="21"/>
+                            </constraint>
+                            <constraint firstItem="7Sh-SF-0BU" firstAttribute="top" secondItem="7tM-JU-xvd" secondAttribute="top" constant="-8" id="EbK-wI-XAx"/>
+                            <constraint firstItem="A9g-dG-nl6" firstAttribute="top" secondItem="7Sh-SF-0BU" secondAttribute="bottom" id="K1R-17-aB8"/>
+                            <constraint firstAttribute="trailing" secondItem="7Sh-SF-0BU" secondAttribute="trailing" id="PUu-FU-f4h"/>
+                            <constraint firstItem="IWu-7x-2LA" firstAttribute="leading" secondItem="7tM-JU-xvd" secondAttribute="leading" constant="136" id="SDx-DJ-IXV">
+                                <variation key="heightClass=regular" constant="83"/>
+                                <variation key="widthClass=compact" constant="59"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="41"/>
+                            </constraint>
+                            <constraint firstItem="IWu-7x-2LA" firstAttribute="top" secondItem="phT-kv-ZQF" secondAttribute="bottom" constant="286" id="iSn-K0-KQd">
+                                <variation key="heightClass=regular" constant="375"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="375"/>
+                            </constraint>
+                            <constraint firstAttribute="trailingMargin" secondItem="7Qp-4V-0RN" secondAttribute="trailing" constant="116" id="jaR-EF-3u9">
+                                <variation key="heightClass=regular" constant="56"/>
+                                <variation key="widthClass=compact" constant="35"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="14"/>
+                            </constraint>
+                            <constraint firstAttribute="trailing" secondItem="IWu-7x-2LA" secondAttribute="trailing" constant="135" id="wQr-L1-uIN">
+                                <variation key="heightClass=regular" constant="76"/>
+                                <variation key="widthClass=compact" constant="55"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="34"/>
+                            </constraint>
+                            <constraint firstItem="7Sh-SF-0BU" firstAttribute="leading" secondItem="7tM-JU-xvd" secondAttribute="leading" id="xHc-cL-zai"/>
+                            <constraint firstItem="7Qp-4V-0RN" firstAttribute="leading" secondItem="7tM-JU-xvd" secondAttribute="leadingMargin" constant="115" id="ye2-8X-yuX">
+                                <variation key="heightClass=regular" constant="63"/>
+                                <variation key="widthClass=compact" constant="39"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="21"/>
+                            </constraint>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="4Dk-rx-hoM"/>
+                    <connections>
+                        <outlet property="backgroundImageView" destination="7Sh-SF-0BU" id="lZj-eI-xAn"/>
+                        <outlet property="signInButton" destination="IWu-7x-2LA" id="ry4-oW-EsH"/>
+                        <outlet property="signUp" destination="7Qp-4V-0RN" id="w8F-qJ-fV1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lkD-8t-NF3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="435" y="321"/>
         </scene>
     </scenes>
     <resources>

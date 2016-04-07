@@ -112,7 +112,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     //    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
     //    self.navigationController.navigationBarHidden = YES;
-    
+    [super viewWillAppear:animated];
     jsondict = [[NSMutableDictionary alloc]init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ResponseNew:) name:@"FAILED_DICT" object:nil];
     

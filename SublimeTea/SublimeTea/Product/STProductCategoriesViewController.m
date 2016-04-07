@@ -31,6 +31,18 @@
 //    [self.view bringSubviewToFront:self.pageControl];
     self.pageControl.hidden = YES;
 }
+- (void)viewDidAppear:(BOOL)animated {
+    if ([STUtility isNetworkAvailable]) {
+        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+        NSDictionary *xmlDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductCategory_Key];
+        if (xmlDict) {
+            [self parseResponseWithDict:xmlDict];
+        }
+        else {
+            [self fetchProductCategories];
+        }
+    }
+}
 - (NSInteger)numberOfPages {
     NSInteger singlePageElementHeightCount = 0;
     NSInteger singlePageElementWidthCount = 0;
@@ -172,7 +184,64 @@
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
-
+- (void)fetchProductCategories {
+    
+    NSString *requestBody = [STConstants categoryListRequestBody];
+    
+    NSString *urlString = [STConstants getAPIURLWithParams:nil];
+    NSURL *url  = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    STHttpRequest *httpRequest = [[STHttpRequest alloc] initWithURL:url
+                                                         methodType:@"POST"
+                                                               body:requestBody
+                                                responseHeaderBlock:^(NSURLResponse *response)
+                                  {
+                                      
+                                  }successBlock:^(NSData *responseData){
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          NSDictionary *xmlDic = [NSDictionary dictionaryWithXMLData:responseData];
+                                          [[STGlobalCacheManager defaultManager] addItemToCache:xmlDic
+                                                                                        withKey:kProductCategory_Key];
+                                          dbLog(@"%@",xmlDic);
+                                          
+                                          [self parseResponseWithDict:xmlDic];
+                                      });
+                                      
+                                  }failureBlock:^(NSError *error) {
+                                      [STUtility stopActivityIndicatorFromView:nil];
+                                      [[[UIAlertView alloc] initWithTitle:@"Alert"
+                                                                  message:@"Unexpected error has occured, Please try after some time."
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil] show];
+                                      dbLog(@"SublimeTea-STSignUpViewController-fetchProductCategories:- %@",error);
+                                  }];
+    
+    [httpRequest start];
+}
+- (void)parseResponseWithDict:(NSDictionary *)responseDict {
+    if (responseDict) {
+        NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
+        if (!parentDataDict[@"SOAP-ENV:Fault"]) {
+            NSArray *productCategoriesArr = responseDict[@"SOAP-ENV:Body"][@"ns1:catalogCategoryTreeResponse"][@"tree"][@"children"][@"item"][@"children"][@"item"][@"children"][@"item"];
+            dbLog(@"%@",productCategoriesArr);
+            if (productCategoriesArr.count) {
+                self.prodCategories = [NSArray arrayWithArray:productCategoriesArr];
+                [self.collectionView reloadData];
+            }
+            else{
+                // No categories found.
+            }
+        }
+        else {
+            [AppDelegate startSession];
+            [self fetchProductCategories];
+        }
+    }else {
+        //No categories found.
+    }
+    [STUtility stopActivityIndicatorFromView:nil];
+}
 
 
 @end

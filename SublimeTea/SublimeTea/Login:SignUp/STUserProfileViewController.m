@@ -114,9 +114,10 @@
     popoverViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
     popoverViewController.modalPresentationStyle = UIModalPresentationPopover;
     popoverViewController.delegate = self;
+    [STUtility startActivityIndicatorOnView:nil withText:@""];
 }
 - (void)viewDidAppear:(BOOL)animated {
-    //    [self fetchCustomerAddressList];
+    [self fetchCustomerAddressList];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -163,12 +164,16 @@
         NSDictionary *userLastNameDict = @{@"lastName": userLastName};
         NSDictionary *emailDIct = @{@"email": userEmail};
         
-        NSArray *tempArr = @[userFirstNameDict,
-                             userLastNameDict,
-                             emailDIct,
-                             @"addAddress",
-                             @"changePwdBtn"
-                             ];
+        NSArray *tempArr;
+        if (self.customerAddressList.count) {
+            tempArr = @[userFirstNameDict,
+                        userLastNameDict,
+                        emailDIct,
+                        @"address",
+                        @"changePwdBtn"
+                        ];
+        }
+        
         self.dataArr = [NSMutableArray arrayWithArray:tempArr];
     }
 }
@@ -265,9 +270,23 @@
         //        _cell.postalCodeTextField.text = @"31056";
         //        _cell.stateTextField.text = @"TV";
         //        _cell.cityTextField.text = @"Treviso";
+        NSInteger idx = indexPath.row -3;
+        Address *add;
+        if (self.customerAddressList.count > idx) {
+            add = self.customerAddressList[idx];
+        }
         
-        if (indexPath.row == 2) {
-            _cell.addressTextViewTitleLabel.text = @"My Addresses";
+        
+        _cell.cityTextField.text = add.city;
+        _cell.stateTextField.text = add.region;
+        _cell.postalCodeTextField.text = add.postcode;
+        _cell.countryTextField.text = add.country_id;
+        _cell.phoneTextField.text = add.telephone;
+        
+        _cell.addressTextView.text = [add.street componentsJoinedByString:@"\n"];
+        
+        if (indexPath.row == 3) {
+            _cell.addressTextViewTitleLabel.text = @"My Address";
         }
         else {
             _cell.addressTextViewTitleLabel.text = @"";
@@ -408,6 +427,10 @@
 }
 #pragma mark-
 #pragma UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     UIView *superView = textField.superview.superview.superview;
     if ([superView isKindOfClass:[STAddressTableViewCell class]]) {
@@ -489,9 +512,6 @@
             }
         }
     }
-}
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
-    return NO;
 }
 
 #pragma mark-
@@ -743,16 +763,38 @@
     }
     [STUtility stopActivityIndicatorFromView:nil];
 }
-
+- (Address *)getAddressFromDict:(NSDictionary *)addressDict {
+    Address *tempAdd = [Address new];
+    if (addressDict) {
+        tempAdd.customer_address_id = addressDict[@"customer_address_id"][@"__text"];
+        tempAdd.city = addressDict[@"city"][@"__text"];
+        tempAdd.country_id = addressDict[@"country_id"][@"__text"];
+        tempAdd.firstname = addressDict[@"firstname"][@"__text"];
+        tempAdd.lastname = addressDict[@"lastname"][@"__text"];
+        tempAdd.postcode = addressDict[@"postcode"][@"__text"];
+        tempAdd.telephone = addressDict[@"telephone"][@"__text"];
+        tempAdd.region = addressDict[@"region"][@"__text"];
+        tempAdd.street = @[addressDict[@"street"][@"__text"]];
+    }
+    return tempAdd;
+}
 - (void)parseCustomerAddressListMethodResponseWithDict:(NSDictionary *)responseDict {
     if (responseDict) {
         NSDictionary *parentDataDict = responseDict[@"SOAP-ENV:Body"];
         if (!parentDataDict[@"SOAP-ENV:Fault"]) {
-            NSDictionary *dataDict = parentDataDict[@"ns1:shoppingCartShippingMethodResponse"][@"result"];
-            BOOL requestStatus = [dataDict[@"__text"] boolValue];
-            if (requestStatus) {
-                // Sucess
+            NSDictionary *dataDict = parentDataDict[@"ns1:customerAddressListResponse"][@"result"];
+            id Obj = dataDict[@"item"];
+           
+            if ([Obj isKindOfClass:[NSDictionary class]]) {
+                [self.customerAddressList addObject:[self getAddressFromDict:Obj]];
             }
+            else if ([Obj isKindOfClass:[NSArray class]]) {
+                for (NSDictionary *addDict in Obj) {
+                    [self.customerAddressList addObject:[self getAddressFromDict:addDict]];
+                }
+            }
+            [self prepareData];
+            [self.tableView reloadData];
         }
         else {
             [STUtility stopActivityIndicatorFromView:nil];
@@ -1214,7 +1256,6 @@
                 }
                 case kcountryTag:
                 {
-                    cell.countryTextField.text = selectedItemStr;
                     NSUInteger idx = cell.indexPath.row;
                     NSDictionary *datadict = self.listOfCountries[indexpath.row];
                     selectedCountryDict = datadict;
@@ -1224,7 +1265,7 @@
                         {
                             Address *address = (self.customerAddressList.count == 0)? [[Address alloc] init] : self.customerAddressList[idxToStore];
                             NSString *countryStr = selectedCountryDict[@"country_id"][@"__text"];
-                            
+                            cell.countryTextField.text = countryStr;
                             address.country_id = countryStr;
                             
                             if (self.customerAddressList.count > idxToStore ) {

@@ -51,6 +51,10 @@
     self.navigationController.navigationBarHidden = NO;
     NSString *cartCount = [NSString stringWithFormat:@"%ld",(long)[[STCart defaultCart] numberOfProductsInCart]];
     cartBadgeView.badgeText = [cartCount integerValue]>0?cartCount:@"";
+    UIImage *image =[UIImage imageNamed:@"cancel_image"];
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setImage:image];
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTitle:@""];
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
 }
 
 - (void)didReceiveMemoryWarning {
