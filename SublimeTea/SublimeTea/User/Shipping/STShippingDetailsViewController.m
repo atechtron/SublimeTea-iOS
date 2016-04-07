@@ -1105,8 +1105,13 @@
                 self.listOfStatesForSelectedCountryForShipping = [dataArr sortedArrayUsingDescriptors:@[sort]];
                 popoverViewController.itemsArray = self.listOfStatesForSelectedCountryForShipping;
             }
-            
-            [self presentViewController:popoverViewController animated:YES completion:nil];
+            if (popoverViewController.itemsArray.count) {
+             [self presentViewController:popoverViewController animated:YES completion:nil];
+            }
+            else {
+                [STUtility stopActivityIndicatorFromView:nil];
+                [self showAlertWithTitle:@"Message!" msg:@"No states foung for selected country."];
+            }
             //            [popoverViewController.tableView reloadData];
         }
         else {

@@ -36,6 +36,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *userInfoDict = [defaults objectForKey:kUserInfo_Key];
     NSString *storeIDStr = userInfoDict ? userInfoDict[@"store_id"][@"__text"] : @1;
+    storeIDStr = [storeIDStr integerValue] > 0 ? storeIDStr : @"1";
     return storeIDStr;
 }
 
@@ -43,7 +44,7 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
-    
+    NSString *websiteId = @"1";
     NSString *tempStr = [NSString stringWithFormat:@"<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:Magento\">"
                          "<soapenv:Header/>"
                          "<soapenv:Body>"
@@ -52,10 +53,11 @@
                          "<customerData xsi:type=\"urn:customerCustomerEntityToCreate\">"
                          "<email xsi:type=\"xsd:string\">%@</email>"
                          "<password xsi:type=\"xsd:string\">%@</password>"
+                         "<website_id xsi:type=\"xsd:int\">%ld</website_id>"
                          "</customerData>"
                          "</urn:customerCustomerCreate>"
                          "</soapenv:Body>"
-                         "</soapenv:Envelope>",sessionId,emailStr,passwordStr];
+                         "</soapenv:Envelope>",sessionId,emailStr,passwordStr,(long)[websiteId integerValue]];
     return tempStr;
 }
 

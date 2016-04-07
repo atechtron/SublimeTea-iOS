@@ -249,6 +249,14 @@
 #pragma mark-
 #pragma UISearchBarDelegate
 
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    searchBar.tintColor = [UIColor grayColor];
+    searchBar.showsCancelButton = YES;
+    
+    
+}
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     
@@ -289,5 +297,8 @@
 //        }
 //    }];
 }
-
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self hideSearchBar];
+}
 @end

@@ -249,23 +249,26 @@
                         for (int k=0; k<[Keys count]; k++)
                             
                         {
-                            [soapBody appendString:[NSString stringWithFormat:@"<%@>",[Keys objectAtIndex:k]]];
                             id val = [value objectForKey:[Keys objectAtIndex:k]];
-                            if ([val isKindOfClass:[NSArray class]]) {
-                                NSMutableString *para = [NSMutableString new];
-                                int count = 1;
-                                for (NSString *valStr in val) {
-                                    NSString *tempstr = [NSString stringWithFormat:@"<line%ld>%@</line%ld>",(long)count,valStr,(long)count];
-                                    [para appendString:tempstr];
-                                    ++count;
+                            if (![val isKindOfClass:[NSNull class]]) {
+                                [soapBody appendString:[NSString stringWithFormat:@"<%@>",[Keys objectAtIndex:k]]];
+                                
+                                if ([val isKindOfClass:[NSArray class]]) {
+                                    NSMutableString *para = [NSMutableString new];
+                                    int count = 1;
+                                    for (NSString *valStr in val) {
+                                        NSString *tempstr = [NSString stringWithFormat:@"<line%ld>%@</line%ld>",(long)count,valStr,(long)count];
+                                        [para appendString:tempstr];
+                                        ++count;
+                                    }
+                                    [soapBody appendString:para];
                                 }
-                                [soapBody appendString:para];
+                                else {
+                                    [soapBody appendString:[NSString stringWithFormat:@"%@",[value objectForKey:[Keys objectAtIndex:k]]]];
+                                }
+                                
+                                [soapBody appendString:[NSString stringWithFormat:@"</%@>",[Keys objectAtIndex:k]]];
                             }
-                            else {
-                            [soapBody appendString:[NSString stringWithFormat:@"%@",[value objectForKey:[Keys objectAtIndex:k]]]];
-                            }
-                            
-                            [soapBody appendString:[NSString stringWithFormat:@"</%@>",[Keys objectAtIndex:k]]];
                             
                         }
                         if (![entittyName isEqualToString:@""]) {
