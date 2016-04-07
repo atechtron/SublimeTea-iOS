@@ -1232,7 +1232,7 @@
             }
             else {
                 [STUtility stopActivityIndicatorFromView:nil];
-                [self showAlertWithTitle:@"Message!" msg:@"No states foung for selected country."];
+                [self showAlertWithTitle:@"Message!" msg:@"No states found for selected country."];
             }
             //            [popoverViewController.tableView reloadData];
         }
