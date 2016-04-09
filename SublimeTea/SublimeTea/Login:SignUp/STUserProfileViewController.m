@@ -65,10 +65,13 @@
 @interface STUserProfileViewController ()<UITableViewDelegate, UITableViewDataSource, STProfileTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, STAddressTableViewCellDelegate,STPopoverTableViewControllerDelegate, UIPopoverPresentationControllerDelegate>
 {
     NSDictionary *selectedCountryDict;
-    UIView *viewToScroll;
     NSString *passwordString;
     STPopoverTableViewController *popoverViewController;
     CGRect tableFrame;
+    NSString *first_name;
+    NSString *last_name;
+    NSString *email;
+    NSString *pwd;
 }
 @property (strong, nonatomic) NSMutableArray *dataArr;
 @property (strong, nonatomic) NSMutableArray *customerAddressList;
@@ -158,7 +161,9 @@
         NSString *userEmail = self.userInfo[@"email"][@"__text"];
         NSString *userFirstName = self.userInfo[@"firstname"][@"__text"] ? self.userInfo[@"firstname"][@"__text"] :@"";
         NSString *userLastName = self.userInfo[@"lastname"][@"__text"] ? self.userInfo[@"lastname"][@"__text"] :@"";
-        
+        first_name = userFirstName;
+        last_name = userLastName;
+        email = userEmail;
 //        NSString *userFullName = [NSString stringWithFormat:@"%@ %@",userFirstName,userLastName];
         
         //    NSString *custId = userInfoDict[@"customer_id"][@"__text"];
@@ -219,28 +224,49 @@
         if ([keyName isEqualToString:@"firstName"]) {
             _cell.profileTextFieldTitleLabel.text = @"First Name";
             NSString *nameStr = obj[keyName];
-            _cell.profileTextField.text = nameStr.length ? nameStr : self.firstNameTextField.text;
+            
             _cell.profileTextField.keyboardType = UIKeyboardTypeAlphabet;
             _cell.profileTextField.delegate = self;
+            _cell.profileTextField.secureTextEntry = NO;
             _cell.profileTextField.tag = indexPath.row;
-            self.firstNameTextField = _cell.profileTextField;
+            if (!self.firstNameTextField) {
+             self.firstNameTextField = _cell.profileTextField;
+            _cell.profileTextField.text = nameStr.length ? nameStr : self.firstNameTextField.text;
+            }
+            else{
+                _cell.profileTextField.text = first_name;
+            }
         }
         else if ([keyName isEqualToString:@"lastName"]) {
             _cell.profileTextFieldTitleLabel.text = @"Last Name";
             NSString *nameStr =obj[keyName];
-            _cell.profileTextField.text = nameStr.length ? nameStr : self.lastNameTextField.text;
+            
             _cell.profileTextField.keyboardType = UIKeyboardTypeAlphabet;
             _cell.profileTextField.delegate = self;
             _cell.profileTextField.tag = indexPath.row;
-            self.lastNameTextField = _cell.profileTextField;
+            if (!self.lastNameTextField) {
+                self.lastNameTextField = _cell.profileTextField;
+                _cell.profileTextField.text = nameStr.length ? nameStr : self.lastNameTextField.text;
+            }
+            else{
+                _cell.profileTextField.text = last_name;
+            }
+            _cell.profileTextField.secureTextEntry = NO;
         }
         else if([keyName isEqualToString:@"email"]) {
             _cell.profileTextFieldTitleLabel.text = @"Email id";
-            _cell.profileTextField.text = obj[keyName];
+            
             _cell.profileTextField.keyboardType = UIKeyboardTypeEmailAddress;
             _cell.profileTextField.delegate = self;
             _cell.profileTextField.tag = indexPath.row;
-            self.emailTextField = _cell.profileTextField;
+            if (!self.emailTextField) {
+                self.emailTextField = _cell.profileTextField;
+                _cell.profileTextField.text = obj[keyName];
+            }
+            else{
+                _cell.profileTextField.text = email;
+            }
+            _cell.profileTextField.secureTextEntry = NO;
         }
         else {
             _cell.profileTextFieldTitleLabel.text = @"Change Password";
@@ -248,7 +274,14 @@
             _cell.profileTextField.keyboardType = UIKeyboardTypeDefault;
             _cell.profileTextField.delegate = self;
             _cell.profileTextField.tag = indexPath.row;
-            self.passwordTextField = _cell.profileTextField;
+            _cell.profileTextField.text = @"";
+            if (!self.passwordTextField) {
+                self.passwordTextField = _cell.profileTextField;
+            }
+            else{
+                _cell.profileTextField.text = pwd;
+            }
+            _cell.profileTextField.secureTextEntry = NO;
         }
         cell = _cell;
     }
@@ -460,11 +493,23 @@
     return YES;
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    viewToScroll = textField;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    viewToScroll = nil;
+    
+    if (textField.tag == 0) {
+        first_name = self.firstNameTextField.text;
+    }
+    else if (textField.tag == 1) {
+        last_name = self.lastNameTextField.text;
+    }
+    else if (textField.tag == 2) {
+        email = self.emailTextField.text;
+    }
+    else if (textField.tag == 4) {
+        pwd = self.passwordTextField.text;
+    }
+    
     UIView *superView = textField.superview.superview;
     superView = [superView isKindOfClass:[STAddressTableViewCell class]]? superView: superView.superview;
     dbLog(@"%@",superView);
@@ -549,10 +594,9 @@
     return YES;
 }
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    viewToScroll = textView;
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:3 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    viewToScroll = nil;
     UIView *superView = textView.superview.superview;
     dbLog(@"%@",superView);
     if ([superView isKindOfClass:[STAddressTableViewCell class]]) {
@@ -597,57 +641,36 @@
 #pragma mark-
 #pragma UIKeyboard Notification Selector
 
--(void) keyboardWillShow:(NSNotification *)note
+-(void) keyboardWillShow:(NSNotification *)sender
 {
-    // Get the keyboard size
-    CGRect keyboardBounds;
-    [[note.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue: &keyboardBounds];
+    CGSize kbSize = [[[sender userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    NSTimeInterval duration = [[[sender userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
-    // Detect orientation
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    CGRect frame = self.tableView.frame;
+    CGFloat height = UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation]) ? kbSize.height : kbSize.width;
+    height = kbSize.height;
     
-    // Start animation
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:0.3f];
-    
-    // Reduce size of the Table view
-    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
-        frame.size.height -= keyboardBounds.size.height;
-    else
-        frame.size.height -= keyboardBounds.size.width;
-    
-    // Apply new size of table view
-    self.tableView.frame = frame;
-    
-    // Scroll the table view to see the TextField just above the keyboard
-    if (viewToScroll)
-    {
-        CGRect textFieldRect = [self.tableView convertRect:viewToScroll.bounds fromView:viewToScroll];
-        [self.tableView scrollRectToVisible:textFieldRect animated:NO];
-    }
-    
-    [UIView commitAnimations];
+    [UIView animateWithDuration:duration animations:^{
+        UIEdgeInsets edgeInsets = [[self tableView] contentInset];
+        edgeInsets.bottom = height;
+        [[self tableView] setContentInset:edgeInsets];
+        edgeInsets = [[self tableView] scrollIndicatorInsets];
+        edgeInsets.bottom = height;
+        [[self tableView] setScrollIndicatorInsets:edgeInsets];
+    }];
 }
 
--(void) keyboardWillHide:(NSNotification *)note
+-(void) keyboardWillHide:(NSNotification *)sender
 {
-    // Get the keyboard size
-    CGRect keyboardBounds;
-    [[note.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue: &keyboardBounds];
+    NSTimeInterval duration = [[[sender userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
-    // Detect orientation
-//    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:0.3f];
-    
-    // Apply new size of table view
-    self.tableView.frame = tableFrame;
-    
-    [UIView commitAnimations];
+    [UIView animateWithDuration:duration animations:^{
+        UIEdgeInsets edgeInsets = [[self tableView] contentInset];
+        edgeInsets.bottom = 0;
+        [[self tableView] setContentInset:edgeInsets];
+        edgeInsets = [[self tableView] scrollIndicatorInsets];
+        edgeInsets.bottom = 0;
+        [[self tableView] setScrollIndicatorInsets:edgeInsets];
+    }];
 }
 - (IBAction)ordersButtonAction:(UIButton *)sender {
 }
@@ -657,11 +680,11 @@
     
     if ([STUtility isNetworkAvailable] && self.userInfo && [self validateName:self.firstNameTextField.text lastName:self.lastNameTextField.text  emailID:self.emailTextField.text]) {
         NSString *custId = self.userInfo[@"customer_id"][@"__text"];
-        NSString *emailStr = [self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];//self.userInfo[@"email"][@"__text"];
+        NSString *emailStr = [email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];//self.userInfo[@"email"][@"__text"];
         
-        NSString *pwdStr = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *firstNameStr = [self.firstNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *lastNameStr = [self.lastNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *pwdStr = [pwd stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *firstNameStr = [first_name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *lastNameStr = [last_name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
 //        NSString *telephoneStr = [self.phoneNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet 3whitespaceAndNewlineCharacterSet]];
         
