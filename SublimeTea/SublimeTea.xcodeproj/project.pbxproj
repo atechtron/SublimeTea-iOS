@@ -38,6 +38,9 @@
 		18C84B051CA2E28D00709974 /* STShippingDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 181C13951C8DF60400A0A63A /* STShippingDetailsViewController.m */; };
 		18D3BDA91CAA9EFE0090AE95 /* STAddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D3BDA81CAA9EFE0090AE95 /* STAddressTableViewCell.m */; };
 		18D7C6AF1CB8DC63006136A6 /* STPrfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180B47911CB8BD7D00116C45 /* STPrfileTableViewCell.xib */; };
+		18D7C6B01CB8DD76006136A6 /* STDropDownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180B478F1CB8B84100116C45 /* STDropDownTableViewCell.xib */; };
+		18D7C6B11CB8DD7B006136A6 /* STPhoneNumberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180B47931CB8BEA600116C45 /* STPhoneNumberTableViewCell.xib */; };
+		18D7C6B21CB8DD85006136A6 /* STPrfileStreetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180B47961CB8C24100116C45 /* STPrfileStreetTableViewCell.xib */; };
 		18F61FB01C88B86B00FEB89C /* STDashboardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F61FAF1C88B86B00FEB89C /* STDashboardCollectionViewCell.m */; };
 		18F8DE371C972EEC008BFC55 /* Caviar_Dreams_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE331C972EEC008BFC55 /* Caviar_Dreams_Bold.ttf */; };
 		18F8DE381C972EEC008BFC55 /* CaviarDreams_BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F8DE341C972EEC008BFC55 /* CaviarDreams_BoldItalic.ttf */; };
@@ -1112,6 +1115,7 @@
 				2B9882BF1C81E4D100BA5234 /* RadioOff.png in Resources */,
 				18692FCA1CB6F29900173D7C /* WebViewController.xib in Resources */,
 				18F8DE5A1C972F0D008BFC55 /* OpenSansLight-Italic.ttf in Resources */,
+				18D7C6B11CB8DD7B006136A6 /* STPhoneNumberTableViewCell.xib in Resources */,
 				2B9882C01C81E4D100BA5234 /* RadioOn.png in Resources */,
 				18D7C6AF1CB8DC63006136A6 /* STPrfileTableViewCell.xib in Resources */,
 				18F8DE521C972F0D008BFC55 /* OpenSans-CondensedLightItalic.ttf in Resources */,
@@ -1119,6 +1123,7 @@
 				18F8DE511C972F0D008BFC55 /* OpenSans-CondensedLight.ttf in Resources */,
 				2BA72EF21C7DC8F0006105B6 /* Assets.xcassets in Resources */,
 				18C84B041CA10A1F00709974 /* loading.gif in Resources */,
+				18D7C6B01CB8DD76006136A6 /* STDropDownTableViewCell.xib in Resources */,
 				18692FC41CB6F29900173D7C /* CreditCardCell_iPad.xib in Resources */,
 				2B456FA11C7F5C4400C240A5 /* STMenuTableHeaderView.xib in Resources */,
 				2B9882BD1C81E4D100BA5234 /* cvv_no.jpg in Resources */,
@@ -1137,6 +1142,7 @@
 				18F8DE531C972F0D008BFC55 /* OpenSans-ExtraBold.ttf in Resources */,
 				18692FC11CB6F29900173D7C /* CashAndNetBankingCell_iPad.xib in Resources */,
 				18692FC71CB6F29900173D7C /* PaymentModeViewController_iPad.xib in Resources */,
+				18D7C6B21CB8DD85006136A6 /* STPrfileStreetTableViewCell.xib in Resources */,
 				18692FC51CB6F29900173D7C /* DebitCardCell_iPad.xib in Resources */,
 				18F8DE571C972F0D008BFC55 /* OpenSans-Semibold.ttf in Resources */,
 				18F8DE501C972F0D008BFC55 /* OpenSans-BoldItalic.ttf in Resources */,

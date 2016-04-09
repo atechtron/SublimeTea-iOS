@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
@@ -83,19 +82,19 @@
                         <include reference="y6W-S6-KCn"/>
                     </mask>
                     <mask key="constraints">
+                        <include reference="3IB-Hf-qED"/>
                         <include reference="4Iu-wS-6hC"/>
                         <include reference="K8C-jq-jPo"/>
-                        <include reference="3IB-Hf-qED"/>
-                        <include reference="guD-Gh-fN2"/>
                         <include reference="UhC-ix-2aa"/>
-                        <include reference="oKM-7g-w1i"/>
+                        <include reference="guD-Gh-fN2"/>
                         <include reference="n9d-Jb-7Xl"/>
-                        <include reference="uUv-15-jlg"/>
-                        <include reference="YmT-Ms-tPq"/>
+                        <include reference="oKM-7g-w1i"/>
                         <include reference="JTb-4h-mFc"/>
-                        <include reference="QRd-Fc-ILg"/>
-                        <include reference="CQU-Pc-UjO"/>
+                        <include reference="YmT-Ms-tPq"/>
+                        <include reference="uUv-15-jlg"/>
                         <include reference="1VB-sb-XWN"/>
+                        <include reference="CQU-Pc-UjO"/>
+                        <include reference="QRd-Fc-ILg"/>
                         <include reference="ofS-52-4I0"/>
                     </mask>
                 </variation>
