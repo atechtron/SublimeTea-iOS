@@ -29,6 +29,7 @@
     Reachability *reachability = [Reachability reachabilityWithHostName:@"www.google.com"];
     if([reachability currentReachabilityStatus] == NotReachable)
     {
+        [STUtility stopActivityIndicatorFromView:nil];
         [self showAlertForNoInternetConnectionWithMessage:nil];
         networkAvailable = NO;
     }
