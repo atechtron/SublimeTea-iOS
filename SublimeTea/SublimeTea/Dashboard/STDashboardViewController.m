@@ -74,7 +74,7 @@
         {
             UIView *uiview = [cell.contentView viewWithTag:121333];
             if (!uiview) {
-                _slideshow = [[KASlideShow alloc] initWithFrame:CGRectMake(0, 0, collectionView.frame.size.width, cell.contentView.frame.size.height/2 + 20)];
+                _slideshow = [[KASlideShow alloc] initWithFrame:CGRectMake(0, 0, collectionView.frame.size.width, cell.contentView.frame.size.height-60)];
                 _slideshow.delegate = self;
                 _slideshow.tag = 121333;
                 [_slideshow setDelay:3]; // Delay between transitions
