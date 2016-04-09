@@ -168,6 +168,10 @@
 		18072F1B1C9A5522000E5AEE /* STAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STAddress.m; path = User/Models/STAddress.m; sourceTree = "<group>"; };
 		18072F1D1C9AC48F000E5AEE /* STPlaceOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPlaceOrder.h; sourceTree = "<group>"; };
 		18072F1E1C9AC48F000E5AEE /* STPlaceOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPlaceOrder.m; sourceTree = "<group>"; };
+		180B478F1CB8B84100116C45 /* STDropDownTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STDropDownTableViewCell.xib; sourceTree = "<group>"; };
+		180B47911CB8BD7D00116C45 /* STPrfileTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STPrfileTableViewCell.xib; sourceTree = "<group>"; };
+		180B47931CB8BEA600116C45 /* STPhoneNumberTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STPhoneNumberTableViewCell.xib; sourceTree = "<group>"; };
+		180B47961CB8C24100116C45 /* STPrfileStreetTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STPrfileStreetTableViewCell.xib; sourceTree = "<group>"; };
 		181C13941C8DF60400A0A63A /* STShippingDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STShippingDetailsViewController.h; path = User/Shipping/STShippingDetailsViewController.h; sourceTree = "<group>"; };
 		181C13951C8DF60400A0A63A /* STShippingDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STShippingDetailsViewController.m; path = User/Shipping/STShippingDetailsViewController.m; sourceTree = "<group>"; };
 		181C13971C8DFE2600A0A63A /* STDropDownTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDropDownTableViewCell.h; path = User/Shipping/STDropDownTableViewCell.h; sourceTree = "<group>"; };
@@ -431,6 +435,17 @@
 				18072F1B1C9A5522000E5AEE /* STAddress.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		180B47951CB8C03A00116C45 /* Shipping */ = {
+			isa = PBXGroup;
+			children = (
+				180B478F1CB8B84100116C45 /* STDropDownTableViewCell.xib */,
+				180B47911CB8BD7D00116C45 /* STPrfileTableViewCell.xib */,
+				180B47931CB8BEA600116C45 /* STPhoneNumberTableViewCell.xib */,
+				180B47961CB8C24100116C45 /* STPrfileStreetTableViewCell.xib */,
+			);
+			name = Shipping;
 			sourceTree = "<group>";
 		};
 		181C13931C8DF5B500A0A63A /* Shipping */ = {
@@ -829,6 +844,7 @@
 		2BFA1B6F1C7DFDCE008C4833 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				180B47951CB8C03A00116C45 /* Shipping */,
 				2B2E57B01C836FC400351F39 /* OrderConfirmation */,
 				2BC0E50E1C82316E001085F8 /* OrederList */,
 				2B9882CB1C81F44200BA5234 /* Cart */,
@@ -1095,6 +1111,8 @@
 				2B9882BF1C81E4D100BA5234 /* RadioOff.png in Resources */,
 				18692FCA1CB6F29900173D7C /* WebViewController.xib in Resources */,
 				18F8DE5A1C972F0D008BFC55 /* OpenSansLight-Italic.ttf in Resources */,
+				180B47941CB8BEA600116C45 /* STPhoneNumberTableViewCell.xib in Resources */,
+				180B47921CB8BD7D00116C45 /* STPrfileTableViewCell.xib in Resources */,
 				2B9882C01C81E4D100BA5234 /* RadioOn.png in Resources */,
 				18F8DE521C972F0D008BFC55 /* OpenSans-CondensedLightItalic.ttf in Resources */,
 				2B9882C21C81E4D100BA5234 /* uncheck.png in Resources */,
@@ -1109,6 +1127,7 @@
 				2BA72EF01C7DC8F0006105B6 /* Main.storyboard in Resources */,
 				18F8DE581C972F0D008BFC55 /* OpenSans-SemiboldItalic.ttf in Resources */,
 				2B2E57B21C836FE200351F39 /* STOrderConfirmationHeaderView.xib in Resources */,
+				180B47901CB8B84100116C45 /* STDropDownTableViewCell.xib in Resources */,
 				2B9882CD1C81F47200BA5234 /* STCartFooterView.xib in Resources */,
 				18F8DE591C972F0D008BFC55 /* OpenSans.ttf in Resources */,
 				2B2E57B41C836FFC00351F39 /* STOrderConfirmationFooterView.xib in Resources */,
@@ -1131,6 +1150,7 @@
 				18692FC91CB6F29900173D7C /* StoredCardCell_iPhone.xib in Resources */,
 				2B9882B91C81E4D100BA5234 /* check.png in Resources */,
 				18F8DE561C972F0D008BFC55 /* OpenSans-Light.ttf in Resources */,
+				180B47971CB8C24100116C45 /* STPrfileStreetTableViewCell.xib in Resources */,
 				18F8DE3C1C972EF5008BFC55 /* LFAX_0.TTF in Resources */,
 				2B9882BB1C81E4D100BA5234 /* close.png in Resources */,
 				2B9882C31C81E4D100BA5234 /* uncheck@2x.png in Resources */,

@@ -243,7 +243,7 @@
 //            
 //            break;
         case 5: // LogOut
-            [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+            [STUtility startActivityIndicatorOnView:nil withText:@"Brewing"];
             [self logOut];
             break;
         default:

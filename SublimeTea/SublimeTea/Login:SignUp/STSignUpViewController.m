@@ -141,7 +141,7 @@
     
     // Check Internet Connsection
     if ([STUtility isNetworkAvailable] && [self validateInputs]) {
-        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+        [STUtility startActivityIndicatorOnView:nil withText:@"Brewing"];
         [self userRegistration];
         
     }

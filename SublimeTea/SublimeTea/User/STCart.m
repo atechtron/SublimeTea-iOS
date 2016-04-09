@@ -44,7 +44,7 @@ static STCart *sharedInstance;
 
 -(void)addProductsInCart:(NSDictionary *)prodDict withQty:(double)qty {
     
-//    [STUtility startActivityIndicatorOnView:nil withText:@"Please Wait.."];
+//    [STUtility startActivityIndicatorOnView:nil withText:@"Brewing"];
     if (prodDict && qty >0) {
         Product *prod = [Product new];
         prod.prodDict = prodDict;

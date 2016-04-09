@@ -243,7 +243,7 @@
 
 - (IBAction)checkoutButtonAction:(UIButton *)sender {
     if ([STUtility isNetworkAvailable] && [self validateInputs]) {
-        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+        [STUtility startActivityIndicatorOnView:nil withText:@"Brewing"];
         [self performSelector:@selector(navigateToShippingDetails) withObject:nil afterDelay:0.5];
     }
 }

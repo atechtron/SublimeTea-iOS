@@ -35,7 +35,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+    [STUtility startActivityIndicatorOnView:nil withText:@"Brewing"];
 }
 - (void)viewDidAppear:(BOOL)animated {
     
@@ -257,7 +257,7 @@
 }
 - (void)fetchProductDetails {
     
-    [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+    [STUtility startActivityIndicatorOnView:nil withText:@"Brewing"];
     
     NSDictionary *prodDict = self.productsInSelectedCat[selectedProductIndex];
     NSString *prodId = prodDict[@"product_id"][@"__text"];

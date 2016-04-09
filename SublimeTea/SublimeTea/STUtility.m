@@ -133,7 +133,7 @@
             mLoadingScreen = [MBProgressHUD showHUDAddedTo:inView animated:YES];
             mLoadingScreen.customView = img;
             mLoadingScreen.mode = MBProgressHUDModeCustomView;
-//            mLoadingScreen.label.text = inStr;
+            mLoadingScreen.label.text = inStr;
             mLoadingScreen.tag = 123123123;
             mLoadingScreen.alpha = 1;
             [inView addSubview:mLoadingScreen];
