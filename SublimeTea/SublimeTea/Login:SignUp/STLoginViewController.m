@@ -108,7 +108,7 @@
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *sessionId = [defaults objectForKey:kUSerSession_Key];
-        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+        [STUtility startActivityIndicatorOnView:nil withText:@"Brewing"];
         if (sessionId.length) {
             [self userLogInWIthSessionId:sessionId];
         }

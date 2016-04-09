@@ -136,7 +136,7 @@
 }
 - (void)orderList {
     if ([STUtility isNetworkAvailable]) {
-        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+        [STUtility startActivityIndicatorOnView:nil withText:@"Brewing"];
         NSString *requestBody = [STConstants salesOrderListRequstBody];
         dbLog(@"Order List: %@",requestBody);
         

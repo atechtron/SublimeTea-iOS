@@ -115,7 +115,7 @@
     popoverViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"STPopoverTableViewController"];
     popoverViewController.modalPresentationStyle = UIModalPresentationPopover;
     popoverViewController.delegate = self;
-    [STUtility startActivityIndicatorOnView:nil withText:@""];
+    [STUtility startActivityIndicatorOnView:nil withText:@"Brewing"];
 }
 - (void)viewDidAppear:(BOOL)animated {
     [self fetchCustomerAddressList];
@@ -726,7 +726,7 @@
 - (void)fetchCustomerAddressList {
     
     if ([STUtility isNetworkAvailable] && self.userInfo) {
-        [STUtility startActivityIndicatorOnView:nil withText:@""];
+        [STUtility startActivityIndicatorOnView:nil withText:@"Brewing"];
         
         NSString *requestBody = [STConstants customerAddressListRequestBody];
         
@@ -902,7 +902,7 @@
     }
     
     if (isValid) {
-        [STUtility startActivityIndicatorOnView:nil withText:@""];
+        [STUtility startActivityIndicatorOnView:nil withText:@"Brewing"];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *sessionId =   [defaults objectForKey:kUSerSession_Key];
         NSString *custId = self.userInfo[@"customer_id"][@"__text"];
@@ -1110,7 +1110,7 @@
 - (void)fetchCountryList {
     
     if ([STUtility isNetworkAvailable]) {
-        [STUtility startActivityIndicatorOnView:self.view withText:@"Fetching Countries."];
+        [STUtility startActivityIndicatorOnView:self.view withText:@"Brewing"];
         NSString *requestBody = [STConstants countryListRequestBody];
         dbLog(@"Countries list: %@",requestBody);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];
@@ -1174,7 +1174,7 @@
 - (void)fetchStatesForCountry:(NSString *)countryCode {
     
     if ([STUtility isNetworkAvailable]) {
-        [STUtility startActivityIndicatorOnView:self.view withText:@"Fetching states."];
+        [STUtility startActivityIndicatorOnView:self.view withText:@"Brewing"];
         NSString *requestBody = [STConstants regionListequestBodyForCountry:countryCode];
         dbLog(@"States list: %@ for country %@",requestBody, countryCode);
         NSString *urlString = [STConstants getAPIURLWithParams:nil];

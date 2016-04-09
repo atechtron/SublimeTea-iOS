@@ -98,10 +98,4 @@
     }
     return self;
 }
-- (void)setIsBillingIsShipping:(BOOL)isBillingIsShipping {
-    if (isBillingIsShipping) {
-//        _billedAddress = [_shipAddress copy];
-        _isBillingIsShipping = isBillingIsShipping;
-    }
-}
 @end

@@ -33,7 +33,7 @@
 }
 - (void)viewDidAppear:(BOOL)animated {
     if ([STUtility isNetworkAvailable]) {
-        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+        [STUtility startActivityIndicatorOnView:nil withText:@"Brewing"];
         NSDictionary *xmlDict = (NSDictionary *)[[STGlobalCacheManager defaultManager] getItemForKey:kProductCategory_Key];
         if (xmlDict) {
             [self parseResponseWithDict:xmlDict];

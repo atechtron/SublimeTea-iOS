@@ -149,7 +149,7 @@
 - (void)fetchOrderDetails {
     
     if ([STUtility isNetworkAvailable]) {
-        [STUtility startActivityIndicatorOnView:nil withText:@"The page is brewing"];
+        [STUtility startActivityIndicatorOnView:nil withText:@"Brewing"];
         NSString *orderId = self.selectedOrderDict[@"increment_id"][@"__text"];
         NSString *requestBody = [STConstants salesOrderInfoRequstBodyWithOrderIncrementId:orderId];
         dbLog(@"Order Details: %@",requestBody);

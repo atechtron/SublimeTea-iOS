@@ -33,7 +33,9 @@
 //    [order placeOrder];
 
 }
-
+- (void)viewDidDisappear:(BOOL)animated {
+    [_slideshow stop];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
