@@ -42,27 +42,27 @@
 
 @property(nonatomic,retain)UIPopoverPresentationController *statesPopover;
 
-@property(weak,nonatomic) UITextField *firstNameTextField;
-@property(weak,nonatomic) UITextField *lastNameTextField;
-@property(weak,nonatomic) UITextView  *addressTextView;
-@property(weak,nonatomic) UITextField *cityTextField;
-@property(weak,nonatomic) UITextField *stateTextField;
-@property(weak,nonatomic) UITextField *postalCodeTextField;
-@property(weak,nonatomic) UITextField *countryextField;
-@property(weak,nonatomic) UITextField *emailTextField;
-@property(weak,nonatomic) UITextField *phoneTextField;
+@property(strong,nonatomic) UITextField *firstNameTextField;
+@property(strong,nonatomic) UITextField *lastNameTextField;
+@property(strong,nonatomic) UITextView  *addressTextView;
+@property(strong,nonatomic) UITextField *cityTextField;
+@property(strong,nonatomic) UITextField *stateTextField;
+@property(strong,nonatomic) UITextField *postalCodeTextField;
+@property(strong,nonatomic) UITextField *countryextField;
+@property(strong,nonatomic) UITextField *emailTextField;
+@property(strong,nonatomic) UITextField *phoneTextField;
 
-@property(weak,nonatomic) UITextField *billingFirstNameTextField;
-@property(weak,nonatomic) UITextField *billingLastNameTextField;
-@property(weak,nonatomic) UITextView  *billingAddressTextView;
-@property(weak,nonatomic) UITextField *billingCityTextField;
-@property(weak,nonatomic) UITextField *billingStateTextField;
-@property(weak,nonatomic) UITextField *billingPostalCodeTextField;
-@property(weak,nonatomic) UITextField *billingCountryextField;
-@property(weak,nonatomic) UITextField *billingEmailTextField;
-@property(weak,nonatomic) UITextField *billingPhoneTextField;
+@property(strong,nonatomic) UITextField *billingFirstNameTextField;
+@property(strong,nonatomic) UITextField *billingLastNameTextField;
+@property(strong,nonatomic) UITextView  *billingAddressTextView;
+@property(strong,nonatomic) UITextField *billingCityTextField;
+@property(strong,nonatomic) UITextField *billingStateTextField;
+@property(strong,nonatomic) UITextField *billingPostalCodeTextField;
+@property(strong,nonatomic) UITextField *billingCountryextField;
+@property(strong,nonatomic) UITextField *billingEmailTextField;
+@property(strong,nonatomic) UITextField *billingPhoneTextField;
 
-@property(weak,nonatomic) UITextField *couponCodeTextField;
+@property(strong,nonatomic) UITextField *couponCodeTextField;
 
 @property(nonatomic) BOOL isShippingISBillingAddress;
 
@@ -270,15 +270,15 @@
 
 - (BOOL)validateInputs {
     BOOL status = NO;
-    NSString *firstNameStr = [address.shipAddress.firstname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *lastNameStr = [address.shipAddress.lastname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *addressStr = [address.shipAddress.street stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *cityStr = [address.shipAddress.city stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *stateStr = [address.shipAddress.region stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *postalCodeStr = [address.shipAddress.postcode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *countryStr = [address.shipAddress.country_id stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *emailStr = [address.shipAddress.email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *phoneStr = [address.shipAddress.telephone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *firstNameStr = [self.firstNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *lastNameStr = [self.lastNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *addressStr = [self.addressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *cityStr = [self.cityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *stateStr = [self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *postalCodeStr = [self.postalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *countryStr = [self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *emailStr = [self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *phoneStr = [self.phoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     status = [self validateName:firstNameStr
                        lastName:lastNameStr
@@ -291,15 +291,15 @@
                           phone:phoneStr];
     if (!self.isShippingISBillingAddress) {
         
-        NSString *firstNameStr = [address.billedAddress.firstname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *lastNameStr = [address.billedAddress.lastname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *addressStr = [address.billedAddress.street stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *cityStr = [address.billedAddress.city stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *stateStr = [address.billedAddress.region stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *postalCodeStr = [address.billedAddress.postcode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *countryStr = [address.billedAddress.country_id stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *emailStr = [address.billedAddress.email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *phoneStr = [address.billedAddress.telephone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *firstNameStr = [self.billingFirstNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *lastNameStr = [self.billingLastNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *addressStr = [self.billingAddressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *cityStr = [self.billingCityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *stateStr = [self.billingStateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *postalCodeStr = [self.billingPostalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *countryStr = [self.billingCountryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *emailStr = [self.billingEmailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *phoneStr = [self.billingPhoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
         
         status = [self validateName:firstNameStr

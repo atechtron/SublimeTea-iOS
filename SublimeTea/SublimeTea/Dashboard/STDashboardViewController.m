@@ -33,6 +33,11 @@
 //    [order placeOrder];
 
 }
+- (void)viewWillAppear:(BOOL)animated {
+    if (!_slideshow.state) {
+        [_slideshow start];
+    }
+}
 - (void)viewDidDisappear:(BOOL)animated {
     [_slideshow stop];
 }
