@@ -270,15 +270,15 @@
 
 - (BOOL)validateInputs {
     BOOL status = NO;
-    NSString *firstNameStr = [self.firstNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *lastNameStr = [self.lastNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *addressStr = [self.addressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *cityStr = [self.cityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *stateStr = [self.stateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *postalCodeStr = [self.postalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *countryStr = [self.countryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *emailStr = [self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *phoneStr = [self.phoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *firstNameStr = [address.shipAddress.firstname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *lastNameStr = [address.shipAddress.lastname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *addressStr = [address.shipAddress.street stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *cityStr = [address.shipAddress.city stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *stateStr = [address.shipAddress.region stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *postalCodeStr = [address.shipAddress.postcode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *countryStr = [address.shipAddress.country_id stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *emailStr = [address.shipAddress.email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *phoneStr = [address.shipAddress.telephone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     status = [self validateName:firstNameStr
                        lastName:lastNameStr
@@ -291,15 +291,15 @@
                           phone:phoneStr];
     if (!self.isShippingISBillingAddress) {
         
-        NSString *firstNameStr = [self.billingFirstNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *lastNameStr = [self.billingLastNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *addressStr = [self.billingAddressTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *cityStr = [self.billingCityTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *stateStr = [self.billingStateTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *postalCodeStr = [self.billingPostalCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *countryStr = [self.billingCountryextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *emailStr = [self.billingEmailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *phoneStr = [self.billingPhoneTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *firstNameStr = [address.billedAddress.firstname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *lastNameStr = [address.billedAddress.lastname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *addressStr = [address.billedAddress.street stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *cityStr = [address.billedAddress.city stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *stateStr = [address.billedAddress.region stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *postalCodeStr = [address.billedAddress.postcode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *countryStr = [address.billedAddress.country_id stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *emailStr = [address.billedAddress.email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *phoneStr = [address.billedAddress.telephone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
         
         status = [self validateName:firstNameStr
@@ -1001,6 +1001,53 @@
         
     }
     else {
+        address.shipAddress.region_id = self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"region_id"][@"__text"];
+        address.shipAddress.mode = @"shipping";
+        
+        if ([textField isEqual:self.firstNameTextField]) {
+            NSString *firstNameStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.firstname = firstNameStr;
+        }
+        else if([textField isEqual:self.lastNameTextField])
+        {
+            NSString *lastNameStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.lastname = lastNameStr;
+        }
+        else if([textField isEqual:self.cityTextField])
+        {
+            NSString *cityStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.city = cityStr;
+        }
+        else if([textField isEqual:self.stateTextField])
+        {
+            NSString *stateStr =  self.listOfStatesForSelectedCountryForShipping[selectedStatesIdxForShipping][@"name"][@"__text"];
+            stateStr = stateStr?stateStr:[textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.region = stateStr;
+        }
+        else if([textField isEqual:self.postalCodeTextField])
+        {
+            NSString *postalCodeStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.postcode = postalCodeStr;
+        }
+        else if([textField isEqual:self.countryextField])
+        {
+            NSString *countryStr = selectedCountryDict ? selectedCountryDict[@"country_id"][@"__text"] : [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            countryStr = countryStr?countryStr:[textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.country_id = countryStr;
+        }
+        else if([textField isEqual:self.emailTextField])
+        {
+            NSString *emailStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.email = emailStr;
+        }
+        else if([textField isEqual:self.phoneTextField])
+        {
+            NSString *phoneStr = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            address.shipAddress.telephone = phoneStr;
+        }
+        
+        
+        
         address.billedAddress.mode = @"billing";
         address.billedAddress.region_id = self.listOfStatesForSelectedCountryForBilling[selectedStatesIdxForBilling][@"region_id"][@"__text"];
         //        address.billedAddress.couponCode = couponCodeStr;
